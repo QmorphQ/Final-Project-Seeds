@@ -25,7 +25,8 @@
     "check-style": "npx stylelint **/*.scss",
     "fix-js": "npx eslint **/*.js --fix",
     "check-js": "npx eslint **/*.js",
-    "pretier": "npx prettier --write /src"
+    "pretier": "npx prettier --write /src",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -54,6 +55,7 @@
     "stylelint": "^14.3.0",
     "stylelint-config-standard-scss": "^3.0.0",
     "stylelint-webpack-plugin": "^3.1.1",
-    "webpack": "^5.67.0"
+    "webpack": "^5.67.0",
+    "husky": "^7.0.0"
   }
 }

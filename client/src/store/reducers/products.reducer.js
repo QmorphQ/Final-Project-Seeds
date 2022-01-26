@@ -9,7 +9,7 @@ const initialState = {
   productList: [],
 };
 
-const productsReducer = (state = initialState, action) => {
+const productsReducer = (action, state = initialState) => {
   switch (action.type) {
     case DOWNLOAD_ALL_PRODUCTS_REQUESTED:
       return {

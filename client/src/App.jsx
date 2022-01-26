@@ -1,8 +1,8 @@
-import React from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { fetchProducts } from "./store/thunks/products.thunks";
+import React, { useEffect } from "react";
+
+import { useSelector , useDispatch } from "react-redux";
+
+import fetchProducts from "./store/thunks/products.thunks";
 import {
   downloadRequestStateSelector,
   productsSelector,
@@ -19,12 +19,14 @@ function App() {
   }, []);
 
   return (
+    <div>
+    <h1 style={{textAlign: "center"}}>APP TEST</h1>{/* <---test */}
     <ul>
       {downloadRequestState === "success" &&
-        productList.map((product) => {
-          return <li key={product.id}>{product.name}</li>;
-        })}
+        productList.map((product) => <li key={product.id}>{product.name}</li>)}
     </ul>
+    <button onClick={ () => console.log(productsSelector)}>GET LOG OF PRODUCTS</button>{/* <---test */}
+    </div>
   );
 }
 export default App;

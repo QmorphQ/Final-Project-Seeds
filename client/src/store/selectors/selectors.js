@@ -1,7 +1,4 @@
-export const downloadRequestStateSelector = (state) => {
-    return state.products.downloadRequestState;
-  };
-  
-  export const productsSelector = (state) => {
-    return state.products.productList;
-  };
+export const downloadRequestStateSelector = (state) =>
+  state.products.downloadRequestState;
+
+export const productsSelector = (state) => state.products.productList;

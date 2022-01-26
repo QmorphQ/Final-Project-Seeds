@@ -1,12 +1,11 @@
+import axios from "axios";
 import {
   downloadAllProductsRequested,
   downloadAllProductsSuccess,
   downloadAllProductsError,
 } from "../actions/products.actions";
-import axios from "axios";
 
-export const fetchProducts = () => {
-  return (dispatch) => {
+const fetchProducts = () => (dispatch) => {
     dispatch(downloadAllProductsRequested());
     axios
       .get("http://localhost:5000/api/products")
@@ -17,4 +16,5 @@ export const fetchProducts = () => {
         dispatch(downloadAllProductsError());
       });
   };
-};
+
+  export default fetchProducts;

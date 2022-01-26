@@ -1,5 +1,5 @@
 import React from "react";
-import Icon from "./UI/Icon/Icon"
+import Icon from "./ui/components/Icon/Icon"
 
 function App() {
 

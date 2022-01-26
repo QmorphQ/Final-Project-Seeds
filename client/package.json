@@ -33,7 +33,8 @@
     "check-jsx": "npx eslint **/*.jsx",
     "fix-all": "npx eslint **/*.js --fix && npx eslint **/*.jsx --fix",
     "fix-jsx": "npx eslint **/*.jsx --fix",
-    "pretier": "npx prettier --write /src"
+    "pretier": "npx prettier --write /src",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -58,6 +59,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-react": "^7.28.0",
     "eslint-webpack-plugin": "^3.1.1",
+    "husky": "^7.0.0",
     "prettier": "2.5.1",
     "sass": "^1.49.0",
     "sass-loader": "^12.4.0",

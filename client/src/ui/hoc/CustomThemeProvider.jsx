@@ -1,5 +1,6 @@
-import { useTheme } from '@mui/material/styles';
+import { useTheme, ThemeProvider } from '@mui/material/styles';
 import createCustomTheme from '../styles/theme';
+
 
 const CustomThemeProvider = (props) => {
     const {children} = props;
@@ -12,3 +13,5 @@ const CustomThemeProvider = (props) => {
 
     )
 }
+
+export default CustomThemeProvider;

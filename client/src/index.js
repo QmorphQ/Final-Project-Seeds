@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import { Provider } from "react-redux";
+import App from "./App.jsx";
 import store from "./store/store";
-import CustomThemeProvider from "./ui/hoc/CustomThemeProvider";
+import CustomThemeProvider from "./ui/hoc/CustomThemeProvider.jsx";
 
 ReactDOM.render(
   <React.StrictMode>

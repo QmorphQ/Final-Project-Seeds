@@ -1,5 +1,7 @@
+/*eslint-disable*/
 import { useTheme } from '@mui/material/styles';
 import createCustomTheme from '../styles/theme';
+import { ThemeProvider } from '@mui/material'; 
 
 const CustomThemeProvider = (props) => {
     const {children} = props;
@@ -12,3 +14,6 @@ const CustomThemeProvider = (props) => {
 
     )
 }
+
+export default CustomThemeProvider
+

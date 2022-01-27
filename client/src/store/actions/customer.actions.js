@@ -20,8 +20,9 @@ export const loginCustomerRequested = () => ({
 });
 
 export const LOGIN_CUSTOMER_SUCCESS = "LOGIN_CUSTOMER_SUCCESS";
-export const loginCustomerSuccess = () => ({
+export const loginCustomerSuccess = (loginResult) => ({
   type: LOGIN_CUSTOMER_SUCCESS,
+  payload: loginResult,
 });
 
 export const LOGIN_CUSTOMER_ERROR = "LOGIN_CUSTOMER_ERROR";

@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import {
   DOWNLOAD_ALL_PRODUCTS_SUCCESS,
   DOWNLOAD_ALL_PRODUCTS_REQUESTED,

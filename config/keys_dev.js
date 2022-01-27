@@ -1,6 +1,6 @@
-require("dotenv").config();
-
 module.exports = {
-  mongoURI: process.env.MONGO_URI,
-  secretOrKey: process.env.SECRET_OR_KEY,
+  mongoURI:
+    'mongodb+srv://danbeavers:justbeavers@cluster0.d8v8d.mongodb.net/seedra',
+  secretOrKey: 'random very very secret string',
 };
+

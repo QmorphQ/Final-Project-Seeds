@@ -3,18 +3,23 @@ import {
   downloadAllProductsRequested,
   downloadAllProductsSuccess,
   downloadAllProductsError,
+  filterByCategory,
 } from "../actions/products.actions";
 
 const fetchProducts = () => (dispatch) => {
-    dispatch(downloadAllProductsRequested());
-    axios
-      .get("http://localhost:5000/api/products")
-      .then((products) => {
-        dispatch(downloadAllProductsSuccess(products));
-      })
-      .catch(() => {
-        dispatch(downloadAllProductsError());
-      });
-  };
+  dispatch(downloadAllProductsRequested());
+  axios
+    .get("http://localhost:5000/api/products")
+    .then((products) => {
+      dispatch(downloadAllProductsSuccess(products));
+    })
+    .catch(() => {
+      dispatch(downloadAllProductsError());
+    });
+};
 
-  export default fetchProducts;
+const filterProductsByCategory = (category) => (dispatch) => {
+  dispatch(filterByCategory(category));
+};
+
+export { fetchProducts, filterProductsByCategory };

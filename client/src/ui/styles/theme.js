@@ -25,6 +25,15 @@ const createCustomTheme = (theme) => {
         primary: "rgba(31, 37, 51, 1)",
         secondary: "rgba(112, 115, 124, 1)",
       },
+      grey: {
+        ...theme.palette.grey,
+        300: "rgba(239, 239, 239, 1)",
+      },
+      action: {
+        ...theme.palette.action,
+        hover: "rgba(53, 151, 64, 0.4)",
+        hoverOpacity: 0.4,
+      },
     },
     typography: {
       ...theme.typography,

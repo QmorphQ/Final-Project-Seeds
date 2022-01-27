@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-
 import { useSelector , useDispatch } from "react-redux";
-
 import fetchProducts from "./store/thunks/products.thunks";
 import {
   downloadRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
+
 
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
@@ -26,7 +25,11 @@ function App() {
         productList.map((product) => <li key={product.id}>{product.name}</li>)}
     </ul>
     <button onClick={ () => console.log(productsSelector)}>GET LOG OF PRODUCTS</button>{/* <---test */}
+
+    
     </div>
+
+    
   );
 }
 export default App;

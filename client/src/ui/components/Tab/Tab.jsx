@@ -18,9 +18,6 @@ const StyledTab = styled((props) => (
         border: 1px solid ${theme.palette.primary.main};
         color: ${theme.palette.primary.main}
     }
-    &.${tabClasses.selected} span {
-        display: none;
-    }
     `
 )
 

@@ -5,7 +5,7 @@ import {
   downloadRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
-import ProductsList from "./ui/components/ProductsList.jsx";
+import ProductsList from "./ui/components/ProductsList/ProductsList.jsx";
 
 
 function App() {

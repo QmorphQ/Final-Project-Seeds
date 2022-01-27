@@ -1,3 +1,4 @@
+import React from 'react';
 import {styled, Tab as MUITab, tabClasses} from '@mui/material';
 
 const StyledTab = styled((props) => (
@@ -23,10 +24,8 @@ const StyledTab = styled((props) => (
     `
 )
 
-const Tab = (props) => {
-    return (
+const Tab = (props) => (
         <StyledTab {...props}/>
     )
-}
 
 export default Tab;

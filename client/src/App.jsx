@@ -5,6 +5,7 @@ import {
   downloadRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
+import Icon from "./ui/components/Icon/Icon.jsx";
 
 
 function App() {
@@ -26,7 +27,10 @@ function App() {
     </ul>
     <button onClick={ () => console.log(productsSelector)}>GET LOG OF PRODUCTS</button>{/* <---test */}
 
-    
+    <button style={{color: "red"}}>
+      <Icon icon={Icon.icons.Strawberry}/>
+    </button>
+
     </div>
 
     

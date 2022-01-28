@@ -5,7 +5,7 @@ import {
   downloadRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
-import Home from "./app/pages/Home.jsx";
+import Home from "./app/pages/Home";
 
 
 function App() {
@@ -15,24 +15,16 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts("Products.json"));
   }, []);
 
   return (
-    <div>
-    <h1 style={{textAlign: "center"}}>APP TEST</h1>{/* <---test */}
-    <ul>
-      {downloadRequestState === "success" &&
-        productList.map((product) => <li key={product.id}>{product.name}</li>)}
-    </ul>
-    <button onClick={ () => console.log(productsSelector)}>GET LOG OF PRODUCTS</button>{/* <---test */}
-
-    <Home />
-
-    
-
-    </div>
-
+    <>
+      <Home 
+        loading={downloadRequestState} 
+        productList={productList} 
+      />
+    </>
     
   );
 }

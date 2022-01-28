@@ -1,6 +1,5 @@
 module.exports = {
   mongoURI:
-    'mongodb+srv://danbeavers:justbeavers@cluster0.d8v8d.mongodb.net/seedra',
+    'Сюда копируем URI для доступа в БД, например: mongodb+srv://username:password@..........................',
   secretOrKey: 'random very very secret string',
 };
-

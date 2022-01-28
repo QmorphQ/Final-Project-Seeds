@@ -1,18 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import App from "./App.jsx";
-import store from "./store/store";
-import CustomThemeProvider from "./ui/hoc/CustomThemeProvider.jsx";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <CustomThemeProvider>
-        <App />
-      </CustomThemeProvider>
-    </Provider>
+    <App />
   </React.StrictMode>,
-
-  document.getElementById("root")
+  document.getElementById('root')
 );

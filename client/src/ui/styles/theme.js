@@ -38,6 +38,58 @@ const createCustomTheme = (theme) => {
     typography: {
       ...theme.typography,
       fontFamily: "'Lexend', sans-serif",
+      h1: {
+        ...theme.typography.h1,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      h2: {
+        ...theme.typography.h2,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      h3: {
+        ...theme.typography.h3,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      h4: {
+        ...theme.typography.h4,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      h5: {
+        ...theme.typography.h5,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      h6: {
+        ...theme.typography.h6,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      subtitle1: {
+        ...theme.typography.subtitle1,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      subtitle2: {
+        ...theme.typography.subtitle2,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      body1: {
+        ...theme.typography.body1,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      body2: {
+        ...theme.typography.body2,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      button: {
+        ...theme.typography.button,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      caption: {
+        ...theme.typography.caption,
+        fontFamily: "'Lexend', sans-serif",
+      },
+      overline: {
+        ...theme.typography.overline,
+        fontFamily: "'Lexend', sans-serif",
+      },
     },
   });
 

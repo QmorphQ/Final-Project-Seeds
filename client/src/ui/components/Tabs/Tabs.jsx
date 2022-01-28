@@ -5,6 +5,7 @@ const StyledTabs = styled((props) => (
 ))(
     () => `
     box-sizing: border-box;
+    
 
     & .${tabsClasses.indicator} {
         display: none;  
@@ -12,11 +13,8 @@ const StyledTabs = styled((props) => (
     `
 )
 
-const Tabs = (props) => {
-    console.log(tabsClasses)
-    return (
+const Tabs = (props) => (
         <StyledTabs {...props}/>
     )
-}
 
 export default Tabs;

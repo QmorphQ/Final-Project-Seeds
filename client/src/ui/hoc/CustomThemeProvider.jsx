@@ -15,7 +15,7 @@ const CustomThemeProvider = (props) => {
 }
 
 CustomThemeProvider.propTypes = {
-    children: PropTypes.element,
+    children: PropTypes 
 }
 
 export default CustomThemeProvider;

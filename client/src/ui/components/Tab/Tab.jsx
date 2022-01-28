@@ -4,10 +4,15 @@ const StyledTab = styled((props) => (
     <MUITab {...props} />
 ))(
     ({theme}) => `
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-right: 12px;
     color: ${theme.palette.text.primary};
     border: 2px solid ${theme.palette.grey["300"]};
     box-sizing: border-box;
     border-radius: 8px;
+
 
     &:hover {
         border-color: ${theme.palette.action.hover};
@@ -17,16 +22,11 @@ const StyledTab = styled((props) => (
         border: 1px solid ${theme.palette.primary.main};
         color: ${theme.palette.primary.main}
     }
-    &.${tabClasses.selected} span {
-        display: none;
-    }
     `
 )
 
-const Tab = (props) => {
-    return (
+const Tab = (props) => (
         <StyledTab {...props}/>
     )
-}
 
 export default Tab;

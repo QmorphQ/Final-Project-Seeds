@@ -1,20 +1,11 @@
 import { useEffect } from "react";
 import { useSelector , useDispatch } from "react-redux";
-import { Box } from "@mui/material";
-import HeaderMobile from "./ui/components/Header/HeaderMobile.jsx";
-import HeaderDesktop from "./ui/components/Header/HeaderDesktop.jsx";
-import FooterDesktop from "./ui/components/ Footer/FooterDesktop.jsx";
-import FooterMobile from "./ui/components/ Footer/FooterMobile.jsx";
-import { useEffect } from "react";
-import { useSelector , useDispatch } from "react-redux";
 import {fetchProducts} from "./store/thunks/products.thunks";
 import {
   downloadRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
-import ProductsList from "./ui/components/ProductsList/ProductsList.jsx";
-
-
+import Home from "./app/pages/Home.jsx";
 
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
@@ -28,24 +19,11 @@ function App() {
 
   return (
     <div>
-      <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        <HeaderMobile />
-      </Box>
-      <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <HeaderDesktop />
-     </Box>
-
-     <ProductsList products={productList} loading={downloadRequestState} />
-       
-     <Box display={{ xs: "block", sm: "block", md: "none" }} >
-        <FooterMobile />
-     </Box>
-     <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <FooterDesktop  />
-     </Box>
-     
+      <Home 
+        loading={downloadRequestState} 
+        productList={productList} 
+      />
     </div>
-
   );
 }
 export default App;

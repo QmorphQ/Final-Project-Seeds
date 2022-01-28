@@ -1,7 +1,10 @@
-const ESLintPlugin = require('eslint-webpack-plugin');
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
-  plugins: [new ESLintPlugin({
-    extensions: ["js", "jsx"]
-  })],
+  plugins: [
+    new ESLintPlugin({
+      extensions: ["js", "jsx"],
+      failOnError: false,
+    }),
+  ],
 };

@@ -1,11 +1,8 @@
-import Box from '@mui/material/Box';
-import Typography from "@mui/material/Typography";
-import Link from '@mui/material/Link';
-import Divider from "@mui/material/Divider";
+import { Box, Typography, Link, Divider  } from '@mui/material';
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 
 
-export default function Footer() {
+export default function FooterDesktop() {
 
   return (
     <Box>

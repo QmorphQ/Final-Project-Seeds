@@ -1,15 +1,5 @@
-import Box from '@mui/material/Box';
-import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
-import MenuList from "@mui/material/MenuList";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemText from "@mui/material/ListItemText";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
+import { Box, Divider, Paper, MenuList, MenuItem, ListItemText, Accordion, AccordionSummary, AccordionDetails, Typography, Link  } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Link from '@mui/material/Link';
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 
@@ -22,13 +12,10 @@ export default function Menu() {
     <Paper  sx={{p: 2, width: "50%", maxWidth: "100%", position: "absolute", left: "45%", boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)"}}>
       {/* <Box display={{ xs: "flex", sm: "block", md: "none" }} sx={{flexWrap: "wrap"}}> */}
       <SearchAppBar />
-      
         <MenuList>
-       
         <MenuItem>
           <ListItemText>All vegetables</ListItemText>
         </MenuItem>
-        
         <Accordion sx={{boxShadow: "none"}}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -41,9 +28,7 @@ export default function Menu() {
           </AccordionSummary>
           <AccordionDetails>
           <Link href="#" underline="none">{'12 Herb Seeds'}</Link>
-              
-           
-          </AccordionDetails>
+        </AccordionDetails>
         </Accordion>
         <Accordion sx={{boxShadow: "none"}}>
           <AccordionSummary

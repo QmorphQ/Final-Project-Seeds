@@ -5,11 +5,12 @@
 1. **Primakov Sergey** - Teamlead;
 2. **Molchanova Daria** - Project Manager;
 3. **Bondarenko Serhiy** - Developer;
-4. **Rakhil Igor** - Developer;
-5. **Koshelivskiy Alexey** - Developer;
-6. **Motsnyi Yurii** - Developer;
-7. **Stavnyackij Valerij** - Developer;
-8. **Makovskij Vladislav** - Developer;
+4. **Anton Ogniev** - Developer;
+5. **Rakhil Igor** - Developer;
+6. **Koshelivskiy Alexey** - Developer;
+7. **Motsnyi Yurii** - Developer;
+8. **Stavnyackij Valerij** - Developer;
+9. **Makovskij Vladislav** - Developer;
 
 ### List of technologies:
 

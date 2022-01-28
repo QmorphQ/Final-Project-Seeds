@@ -1,11 +1,9 @@
-import TestStore from "./store/TestStore.jsx";
+import Header from "./ui/components/Header/Header.jsx"
 
 function App() {
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>APP TEST</h1>
-      {/* <---test */}
-      <TestStore />
+     <Header />
     </div>
   );
 }

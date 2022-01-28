@@ -3,9 +3,27 @@ import HeaderMobile from "./ui/components/Header/HeaderMobile.jsx";
 import HeaderDesktop from "./ui/components/Header/HeaderDesktop.jsx";
 import FooterDesktop from "./ui/components/ Footer/FooterDesktop.jsx";
 import FooterMobile from "./ui/components/ Footer/FooterMobile.jsx";
+import { useEffect } from "react";
+import { useSelector , useDispatch } from "react-redux";
+import {fetchProducts} from "./store/thunks/products.thunks";
+import {
+  downloadRequestStateSelector,
+  productsSelector,
+} from "./store/selectors/selectors";
+import ProductsList from "./ui/components/ProductsList/ProductsList.jsx";
+
 
 
 function App() {
+  const downloadRequestState = useSelector(downloadRequestStateSelector);
+  const productList = useSelector(productsSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
   return (
     <div>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
@@ -14,6 +32,9 @@ function App() {
       <Box display={{ xs: "none", sm: "none", md: "block" }}>
         <HeaderDesktop />
      </Box>
+
+     <ProductsList products={productList} loading={downloadRequestState} />
+       
      <Box display={{ xs: "block", sm: "block", md: "none" }} >
         <FooterMobile />
      </Box>
@@ -22,6 +43,7 @@ function App() {
      </Box>
      
     </div>
+
   );
 }
 export default App;

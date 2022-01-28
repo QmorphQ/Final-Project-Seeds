@@ -1,3 +1,8 @@
+import { Box } from "@mui/material";
+import HeaderMobile from "./ui/components/Header/HeaderMobile.jsx";
+import HeaderDesktop from "./ui/components/Header/HeaderDesktop.jsx";
+import FooterDesktop from "./ui/components/ Footer/FooterDesktop.jsx";
+import FooterMobile from "./ui/components/ Footer/FooterMobile.jsx";
 import { useEffect } from "react";
 import { useSelector , useDispatch } from "react-redux";
 import {fetchProducts} from "./store/thunks/products.thunks";
@@ -6,6 +11,7 @@ import {
   productsSelector,
 } from "./store/selectors/selectors";
 import ProductsList from "./ui/components/ProductsList/ProductsList.jsx";
+
 
 
 function App() {
@@ -19,22 +25,25 @@ function App() {
   }, []);
 
   return (
-    <>
-      <ProductsList products={productList} loading={downloadRequestState} />
-      <div>
-      <h1 style={{textAlign: "center"}}>APP TEST</h1>{/* <---test */}
-      <ul>
-      {downloadRequestState === "success" &&
-      productList.map((product) => <li key={product.id}>{product.name}</li>)}
-      </ul>
-      <button onClick={ () => console.log(productsSelector)}>GET LOG OF PRODUCTS</button>{/* <---test */}
+    <div>
+      <Box display={{ xs: "block", sm: "block", md: "none" }}>
+        <HeaderMobile />
+      </Box>
+      <Box display={{ xs: "none", sm: "none", md: "block" }}>
+        <HeaderDesktop />
+     </Box>
 
-          
-      </div>
+     <ProductsList products={productList} loading={downloadRequestState} />
+       
+     <Box display={{ xs: "block", sm: "block", md: "none" }} >
+        <FooterMobile />
+     </Box>
+     <Box display={{ xs: "none", sm: "none", md: "block" }}>
+        <FooterDesktop  />
+     </Box>
+     
+    </div>
 
-    </>
-
-    
   );
 }
 export default App;

@@ -6,10 +6,10 @@ export default function SocialNetworks() {
     return (
       <>
         <IconButton>
-        <InstagramIcon />
+        <InstagramIcon color="primary" />
       </IconButton>
       <IconButton>
-        <FacebookOutlinedIcon />
+        <FacebookOutlinedIcon color="primary" />
       </IconButton>  
       </>    
     );

@@ -29,11 +29,6 @@ export default function Menu() {
           <ListItemText>All vegetables</ListItemText>
         </MenuItem>
         
-      {/* <MenuList>
-        <MenuItem>
-          <ListItemText>All vegetables</ListItemText>
-        </MenuItem> */}
-        
         <Accordion sx={{boxShadow: "none"}}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

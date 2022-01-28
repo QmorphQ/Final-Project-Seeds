@@ -17,19 +17,12 @@ const Header = () => {
     const favoritesLength = 3;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-   
-
-
-    
     const clickButton = () => {
-      
-      setIsMenuOpen(prevIsMenuOpen => !prevIsMenuOpen);
-      
+      setIsMenuOpen(prevIsMenuOpen => !prevIsMenuOpen); 
     }
 
 
-    
-
+  
   return (
     <header className="header">
       <AppBar position="static" color="inherit" sx={{boxShadow: "none"}}>

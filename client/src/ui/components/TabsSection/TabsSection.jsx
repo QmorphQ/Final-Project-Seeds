@@ -5,8 +5,8 @@ import Tab from "../Tab/Tab.jsx";
 import Tabs from "../Tabs/Tabs.jsx"; 
 import Icon from "../Icon/Icon.jsx"; 
 import { useDispatch, useSelector } from 'react-redux';
-import { downloadRequestStateSelector, productsSelector } from '../../../store/selectors/selectors.js';
-import fetchProducts from '../../../store/thunks/products.thunks.js';
+import { downloadRequestStateSelector, productsSelector } from '../../../store/selectors/selectors';
+import fetchProducts from '../../../store/thunks/products.thunks';
 
 
 const useStyles = makeStyles(() => ({
@@ -37,7 +37,7 @@ const categoriies = [
         id: "vegetables",
         name: "vegetables", 
         parentId: "null",
-        icon: "Bundles"
+        icon: "Tomato"
     },
     {
         id: "herbs",
@@ -49,7 +49,7 @@ const categoriies = [
         id: "flowers",
         name: "flowers", 
         parentId: "null",
-        icon: "CurlyLeaf"
+        icon: "Flower"
     }
 
 ]

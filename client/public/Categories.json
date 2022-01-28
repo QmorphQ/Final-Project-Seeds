@@ -10,23 +10,23 @@
       "name": "Bundles", 
       "parentId": "null",
       "icon": "Bundles"
-  },
+    },
+    {
+        "id": "herbs",
+        "name": "herbs", 
+        "parentId": "null",
+        "icon": "CurlyLeaf"
+    },
   {
       "id": "vegetables",
       "name": "vegetables", 
       "parentId": "null",
-      "icon": "Bundles"
-  },
-  {
-      "id": "herbs",
-      "name": "herbs", 
-      "parentId": "null",
-      "icon": "CurlyLeaf"
+      "icon": "Tomato"
   },
   {
       "id": "flowers",
       "name": "flowers", 
       "parentId": "null",
-      "icon": "CurlyLeaf"
+      "icon": "Flower"
   }
 ]

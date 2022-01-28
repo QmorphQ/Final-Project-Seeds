@@ -30,9 +30,25 @@ function TestStore() {
     dispatch(fetchProducts());
   }, []);
 
+
   useEffect(() => {
     dispatch(fetchSlides());
   }, []);
+  
+//   const newCustomer = {
+//     "firstName": "Valeron",
+//     "lastName": "Drinkins",
+//     "login": "valeron",
+//     "email": "valeron.it@gmail.com",
+//     "password": "justdrink",
+//     "telephone": "+380679007060",
+//     "gender": "male",
+//     "isAdmin": false
+// };
+
+  // useEffect(() => {
+  //   dispatch(addCustomer(newCustomer));
+  // }, []);
 
   //   const newCustomer = {
   //     "firstName": "Valeron",

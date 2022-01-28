@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import {
   DOWNLOAD_ALL_PRODUCTS_SUCCESS,
   DOWNLOAD_ALL_PRODUCTS_REQUESTED,
@@ -11,7 +12,7 @@ const initialState = {
   selectedCategories: "all",
 };
 
-const productsReducer = (action, state = initialState) => {
+const productsReducer = (state = initialState, action) => {
   switch (action.type) {
     case DOWNLOAD_ALL_PRODUCTS_REQUESTED:
       return {

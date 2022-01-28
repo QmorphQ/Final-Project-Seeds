@@ -39,9 +39,9 @@ function TestStore() {
     "isAdmin": false
 };
 
-  useEffect(() => {
-    dispatch(addCustomer(newCustomer));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(addCustomer(newCustomer));
+  // }, []);
 
   const userData = {
     loginOrEmail: "valeron",

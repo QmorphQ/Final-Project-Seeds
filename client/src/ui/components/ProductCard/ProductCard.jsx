@@ -5,7 +5,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 /* eslint-disable  */
 
 const ProductCard = ({product}) => {
-  const {name, price, categories, imageUrls} = product;
+  const {name, currentPrice, categories, imageUrls} = product;
   const localPrice = Intl.NumberFormat("us", {style: "currency", currency: "USD"});
 return (
   <Grid item xs="12" md="6" lg="4">
@@ -34,7 +34,7 @@ return (
           {name}
         </Typography>
         <Typography sx={{margin: "0px", lineHeight: "54px", fontWeight:"bold"}} align="left" variant="h5" color="text.secondary">
-          {localPrice.format(price)}
+          {localPrice.format(currentPrice)}
         </Typography>
       </CardContent>
       <CardActions>

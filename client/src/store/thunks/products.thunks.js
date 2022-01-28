@@ -12,6 +12,7 @@ const fetchProducts = (uri = "http://localhost:5000/api/products") => (dispatch)
       .get(uri)
       .then((products) => {
         dispatch(downloadAllProductsSuccess(products));
+        return products;
       })
       .catch(() => {
         dispatch(downloadAllProductsError());

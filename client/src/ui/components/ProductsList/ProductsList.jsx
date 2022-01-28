@@ -7,7 +7,7 @@ import ProductCard from '../ProductCard/ProductCard.jsx';
 const ProductsList = ({products, loading, totalLength = 6}) => {
   if(loading === "loading") return <div>Loading...</div>; // Here must be a loarer
   if(loading === "error") return <div>Error :(</div>; 
-
+  console.log(products);
   return (
     <Container>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

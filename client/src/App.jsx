@@ -1,11 +1,4 @@
-import { useEffect } from "react";
-import { useSelector , useDispatch } from "react-redux";
-import {fetchProducts} from "./store/thunks/products.thunks";
-import {
-  downloadRequestStateSelector,
-  productsSelector,
-} from "./store/selectors/selectors";
-import Home from "./app/pages/Home.jsx";
+import React from "react";
 
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);

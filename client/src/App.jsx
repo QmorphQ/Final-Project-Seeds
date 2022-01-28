@@ -15,7 +15,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts("/Products.json"));
   }, []);
 
   return (

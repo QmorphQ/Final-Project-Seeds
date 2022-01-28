@@ -1,30 +1,21 @@
-import {SvgIcon} from "@mui/material";
-import bundles from "./icons/bundles.svg";
-import curlyLeaf from "./icons/curly-leaf.svg";
-import flower from "./icons/flower.svg";
-import leaf from "./icons/leaf.svg";
-import strawberry from "./icons/strawberry.svg";
-import supplies from "./icons/supplies.svg";
-import tomato from "./icons/tomato.svg"
+import React from 'react';
+import PropTypes from "prop-types";
+import * as icons from "./icons"
+
+
 
 const Icon = (props) => {
-
-    const {icon, ...other} = props;
- 
+// SelectedIcon - псевдоним той иконки, которая будет выбрана.
+    const {icon: SelectedIcon, ...other} = props;
     return (
-        <SvgIcon {...other}>
-            <use xlinkHref={`#${icon.id}`}/>
-        </SvgIcon>
+        <SelectedIcon {...other} />
     )
 }
 
-Icon.icons = {
-    bundles,
-    curlyLeaf,
-    flower,
-    leaf,
-    strawberry,
-    supplies,
-    tomato,
+Icon.propTypes ={
+    icon: PropTypes.element.isRequired
 }
+
+Icon.icons = icons;
+
 export default Icon;

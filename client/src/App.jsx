@@ -10,9 +10,8 @@ import {
   downloadRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
+import Home from "./app/pages/Home";
 import ProductsList from "./ui/components/ProductsList/ProductsList.jsx";
-
-
 
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
@@ -21,11 +20,15 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts("Products.json"));
   }, []);
 
   return (
     <div>
+      <Home 
+        loading={downloadRequestState} 
+        productList={productList} 
+      />
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
         <HeaderMobile />
       </Box>
@@ -43,7 +46,6 @@ function App() {
      </Box>
      
     </div>
-
   );
 }
 export default App;

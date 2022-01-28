@@ -1,3 +1,4 @@
+import React from 'react';
 import {styled, Tabs as MUITabs, tabsClasses } from '@mui/material';
 
 const StyledTabs = styled((props) => (
@@ -5,6 +6,7 @@ const StyledTabs = styled((props) => (
 ))(
     () => `
     box-sizing: border-box;
+    
 
     & .${tabsClasses.indicator} {
         display: none;  
@@ -12,11 +14,8 @@ const StyledTabs = styled((props) => (
     `
 )
 
-const Tabs = (props) => {
-    console.log(tabsClasses)
-    return (
+const Tabs = (props) => (
         <StyledTabs {...props}/>
     )
-}
 
 export default Tabs;

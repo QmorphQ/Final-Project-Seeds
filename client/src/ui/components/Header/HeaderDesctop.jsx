@@ -1,20 +1,15 @@
 import { useState } from "react";
-import Box from '@mui/material/Box';
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
+import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/material';
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import Badge from "@mui/material/Badge";
 import Menu from "../Menu/Menu.jsx";
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx"
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx"
 
 const Header = () => {
-    const orderLength = 2;
-    const favoritesLength = 3;
+    const orderLength = 0;
+    const favoritesLength = 0;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const clickButton = () => {
@@ -28,12 +23,14 @@ const Header = () => {
       <AppBar position="static" color="inherit" sx={{boxShadow: "none"}}>
         <Toolbar>
           <Typography
+          
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, color: "#359740", fontWeight: "bold" }}
+            sx={{flexGrow: 1, color: "#359740", fontWeight: "bold" }}
           >
             SEEDRA
           </Typography>
+
           <Box display={{ xs: "none", sm: "none", md: "flex" }}>
           <SocialNetworks />
           <SearchAppBar />

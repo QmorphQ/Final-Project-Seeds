@@ -1,4 +1,3 @@
-import React from 'react';
 import {styled, Tabs as MUITabs, tabsClasses } from '@mui/material';
 
 const StyledTabs = styled((props) => (

@@ -23,5 +23,4 @@ const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
-export { filterProductsByCategory };
-export default fetchProducts;
+export { fetchProducts, filterProductsByCategory };

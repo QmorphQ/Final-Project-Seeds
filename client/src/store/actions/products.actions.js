@@ -14,3 +14,9 @@ export const downloadAllProductsError = () => ({
   type: DOWNLOAD_ALL_PRODUCTS_ERROR,
 });
 
+export const FILTER_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
+export const filterByCategory = (category) => ({
+  type: FILTER_BY_CATEGORY,
+  payload: category,
+});
+

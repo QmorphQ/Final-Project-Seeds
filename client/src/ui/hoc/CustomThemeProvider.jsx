@@ -3,7 +3,6 @@ import { useTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import createCustomTheme from '../styles/theme';
 
-
 const CustomThemeProvider = (props) => {
     const {children} = props;
     const theme = useTheme()

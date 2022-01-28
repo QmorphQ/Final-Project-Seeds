@@ -3,6 +3,7 @@ import {
   downloadAllProductsRequested,
   downloadAllProductsSuccess,
   downloadAllProductsError,
+  filterByCategory,
 } from "../actions/products.actions";
 
 const fetchProducts = (uri = "http://localhost:5000/api/products") => (dispatch) => {
@@ -18,4 +19,9 @@ const fetchProducts = (uri = "http://localhost:5000/api/products") => (dispatch)
       });
   };
 
+const filterProductsByCategory = (category) => (dispatch) => {
+  dispatch(filterByCategory(category));
+};
+
+export { filterProductsByCategory };
 export default fetchProducts;

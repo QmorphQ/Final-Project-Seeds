@@ -5,6 +5,7 @@ import Tab from "../../ui/components/Tab/Tab.jsx";
 import Tabs from "../../ui/components/Tabs/Tabs.jsx"; 
 import Icon from "../../ui/components/Icon/Icon.jsx"; 
 
+
 const useStyles = makeStyles(() => ({
         ourProducts: {
             maxWidth: "1110px",   

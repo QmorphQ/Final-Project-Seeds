@@ -6,15 +6,15 @@ import {
 } from "../actions/products.actions";
 
 const fetchProducts = () => (dispatch) => {
-    dispatch(downloadAllProductsRequested());
-    axios
-      .get("http://localhost:5000/api/products")
-      .then((products) => {
-        dispatch(downloadAllProductsSuccess(products));
-      })
-      .catch(() => {
-        dispatch(downloadAllProductsError());
-      });
-  };
+  dispatch(downloadAllProductsRequested());
+  axios
+    .get("Products.json")
+    .then((products) => {
+      dispatch(downloadAllProductsSuccess(products));
+    })
+    .catch(() => {
+      dispatch(downloadAllProductsError());
+    });
+};
 
-  export default fetchProducts;
+export default fetchProducts;

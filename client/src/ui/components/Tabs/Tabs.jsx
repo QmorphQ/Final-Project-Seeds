@@ -6,6 +6,7 @@ const StyledTabs = styled((props) => (
 ))(
     () => `
     box-sizing: border-box;
+    
 
     & .${tabsClasses.indicator} {
         display: none;  

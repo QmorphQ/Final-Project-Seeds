@@ -3,7 +3,7 @@ import {styled, Tabs as MUITabs, tabsClasses } from '@mui/material';
 const StyledTabs = styled((props) => (
 <MUITabs {...props} />
 ))(
-    ({theme}) => `
+    () => `
     box-sizing: border-box;
 
     & .${tabsClasses.indicator} {

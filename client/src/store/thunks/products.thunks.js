@@ -18,6 +18,7 @@ const fetchProducts = (uri = "http://localhost:5000/api/products") => (dispatch)
         dispatch(downloadAllProductsError());
       });
   };
+
 const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };

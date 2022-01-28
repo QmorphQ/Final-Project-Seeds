@@ -5,50 +5,71 @@ import {
   filterProductsByCategory,
 } from "./thunks/products.thunks";
 
-import { addCustomer, loginCustomer } from "./thunks/customer.thunk";
+import { loginCustomer } from "./thunks/customer.thunk";
 
 import {
   downloadRequestStateSelector,
   productsSelector,
-  customersSelector
+  customersSelector,
+  slidesSelector,
 } from "./selectors/selectors";
+import fetchSlides from "./thunks/slides.thunks";
 
 function TestStore() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
   const productList = useSelector(productsSelector);
+  const slideList = useSelector(slidesSelector);
   const customerInfo = useSelector(customersSelector);
-  
+
   console.log(customerInfo);
+  console.log(slideList);
 
   const dispatch = useDispatch();
 
-  
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
 
+
+  useEffect(() => {
+    dispatch(fetchSlides());
+  }, []);
   
-  const newCustomer = {
-    "firstName": "Valeron",
-    "lastName": "Drinkins",
-    "login": "valeron",
-    "email": "valeron.it@gmail.com",
-    "password": "justdrink",
-    "telephone": "+380679007060",
-    "gender": "male",
-    "isAdmin": false
-};
+//   const newCustomer = {
+//     "firstName": "Valeron",
+//     "lastName": "Drinkins",
+//     "login": "valeron",
+//     "email": "valeron.it@gmail.com",
+//     "password": "justdrink",
+//     "telephone": "+380679007060",
+//     "gender": "male",
+//     "isAdmin": false
+// };
 
   // useEffect(() => {
   //   dispatch(addCustomer(newCustomer));
   // }, []);
 
+  //   const newCustomer = {
+  //     "firstName": "Valeron",
+  //     "lastName": "Drinkins",
+  //     "login": "valeron",
+  //     "email": "valeron.it@gmail.com",
+  //     "password": "justdrink",
+  //     "telephone": "+380679007060",
+  //     "gender": "male",
+  //     "isAdmin": false
+  // };
+
+  //   useEffect(() => {
+  //     dispatch(addCustomer(newCustomer));
+  //   }, []);
+
   const userData = {
     loginOrEmail: "valeron",
-    password: "justdrink"
+    password: "justdrink",
   };
 
-  
   return (
     <div>
       <ul>
@@ -60,9 +81,7 @@ function TestStore() {
       <button onClick={() => dispatch(filterProductsByCategory("herbs"))}>
         ONLY HERBS
       </button>
-      <button onClick={() => dispatch(loginCustomer(userData))}>
-        LOGIN
-      </button>
+      <button onClick={() => dispatch(loginCustomer(userData))}>LOGIN</button>
       {/* <---test */}
     </div>
   );

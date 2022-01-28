@@ -13,5 +13,7 @@ export const productsSelector = (state) => {
   return filteredProducts;
 };
 
-export const customersSelector = (state) =>
-  state.customer;
+export const slidesSelector = (state) => 
+  state.slides.slideList;
+
+export const customersSelector = (state) => state.customer;

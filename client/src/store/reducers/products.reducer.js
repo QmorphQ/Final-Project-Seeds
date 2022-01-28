@@ -2,11 +2,13 @@ import {
   DOWNLOAD_ALL_PRODUCTS_SUCCESS,
   DOWNLOAD_ALL_PRODUCTS_REQUESTED,
   DOWNLOAD_ALL_PRODUCTS_ERROR,
+  FILTER_BY_CATEGORY
 } from "../actions/products.actions";
 
 const initialState = {
   downloadRequestState: "idle",
   productList: [],
+  selectedCategories: "all",
 };
 
 const productsReducer = (action, state = initialState) => {
@@ -28,6 +30,12 @@ const productsReducer = (action, state = initialState) => {
       return {
         ...state,
         downloadRequestState: "error",
+      };
+
+    case FILTER_BY_CATEGORY:
+      return {
+        ...state,
+        selectedCategories: action.payload,
       };
 
     default:

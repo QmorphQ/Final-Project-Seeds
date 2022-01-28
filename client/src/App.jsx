@@ -7,17 +7,7 @@ import {
 } from "./store/selectors/selectors";
 import ProductsList from "./ui/components/ProductsList/ProductsList.jsx";
 
-
 function App() {
-  const downloadRequestState = useSelector(downloadRequestStateSelector);
-  const productList = useSelector(productsSelector);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
-
   return (
     <>
       <ProductsList products={productList} loading={downloadRequestState} />
@@ -27,14 +17,9 @@ function App() {
       {downloadRequestState === "success" &&
       productList.map((product) => <li key={product.id}>{product.name}</li>)}
       </ul>
-      <button onClick={ () => console.log(productsSelector)}>GET LOG OF PRODUCTS</button>{/* <---test */}
-
-          
+      <button onClick={ () => console.log(productsSelector)}>GET LOG OF PRODUCTS</button>{/* <---test */}       
       </div>
-
     </>
-
-    
   );
 }
 export default App;

@@ -5,10 +5,11 @@ import {
   downloadAllProductsError,
 } from "../actions/products.actions";
 
-const fetchProducts = () => (dispatch) => {
+
+const fetchProducts = (uri = "http://localhost:5000/api/products") => (dispatch) => {
     dispatch(downloadAllProductsRequested());
     axios
-      .get("http://localhost:5000/api/products")
+      .get(uri)
       .then((products) => {
         dispatch(downloadAllProductsSuccess(products));
       })

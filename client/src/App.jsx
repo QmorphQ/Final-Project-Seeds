@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      <ProductsList />
+      <ProductsList products={productList} loading={downloadRequestState} />
       <div>
       <h1 style={{textAlign: "center"}}>APP TEST</h1>{/* <---test */}
       <ul>

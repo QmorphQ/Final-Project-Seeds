@@ -5,6 +5,7 @@ import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
 import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
 import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
 import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx";
+import MainPageCarousel from "../../ui/components/MainPageCarousel/MainPageCarousel.jsx"
 
 /* eslint-disable  */
 const Home = ({loading, productList}) => {
@@ -17,7 +18,7 @@ const Home = ({loading, productList}) => {
       <Box display={{ xs: "none", sm: "none", md: "block" }}>
         <HeaderDesktop />
      </Box>
-
+    <MainPageCarousel />
      <TabsSection loading={loading} productList={productList} />
      <ProductsList products={productList} loading={loading} />
        

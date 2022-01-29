@@ -5,9 +5,10 @@ import {
   DOWNLOAD_ALL_PRODUCTS_ERROR,
   FILTER_BY_CATEGORY
 } from "../actions/products.actions";
+import { downloadRequestStates } from "../../app/constants";
 
 const initialState = {
-  downloadRequestState: "idle",
+  downloadRequestState: downloadRequestStates.IDLE,
   productList: [],
   selectedCategories: "all",
 };
@@ -17,20 +18,20 @@ const productsReducer = (state = initialState, action) => {
     case DOWNLOAD_ALL_PRODUCTS_REQUESTED:
       return {
         ...state,
-        downloadRequestState: "loading",
+        downloadRequestState: downloadRequestStates.LOADING,
       };
 
     case DOWNLOAD_ALL_PRODUCTS_SUCCESS:
       return {
         ...state,
-        downloadRequestState: "success",
+        downloadRequestState: downloadRequestStates.SUCCESS,
         productList: action.payload.data,
       };
 
     case DOWNLOAD_ALL_PRODUCTS_ERROR:
       return {
         ...state,
-        downloadRequestState: "error",
+        downloadRequestState: downloadRequestStates.ERROR,
       };
 
     case FILTER_BY_CATEGORY:

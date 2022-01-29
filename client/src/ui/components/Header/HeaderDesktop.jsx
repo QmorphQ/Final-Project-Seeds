@@ -1,8 +1,10 @@
 import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/material';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
 import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
+
 
 
 const HeaderDesktop = () => {
@@ -37,6 +39,17 @@ const HeaderDesktop = () => {
             <Badge badgeContent={orderLength} color="primary">
             <ShoppingCartOutlinedIcon sx={{ color: "#359740" }} />
           </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              // aria-controls={menuId}
+              aria-haspopup="true"
+              // onClick={handleProfileMenuOpen}
+              color="primary"
+            >
+              <AccountCircle />
             </IconButton>
         </Toolbar>
       </AppBar>

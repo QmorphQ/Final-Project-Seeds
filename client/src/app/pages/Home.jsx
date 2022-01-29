@@ -11,6 +11,7 @@ import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx"
 
 
 
+
 const Home = ({loading, productList}) => (
     <>
     <Box display={{ xs: "block", sm: "block", md: "none" }}>

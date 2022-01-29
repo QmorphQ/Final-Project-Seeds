@@ -6,7 +6,9 @@ import {
   filterByCategory,
 } from "../actions/products.actions";
 
-const fetchProducts = (uri = "http://localhost:5000/api/products") => (dispatch) => {
+const fetchProducts =
+  (uri = "http://localhost:5000/api/products") =>
+  (dispatch) => {
     dispatch(downloadAllProductsRequested());
     axios
       .get(uri)
@@ -23,4 +25,4 @@ const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
-export { fetchProducts, filterProductsByCategory };
+export { filterProductsByCategory, fetchProducts };

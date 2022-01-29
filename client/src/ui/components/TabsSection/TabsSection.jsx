@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from "mui/styles";
 import { Typography } from '@mui/material';
 import Tab from "../Tab/Tab.jsx"; 
 import Tabs from "../Tabs/Tabs.jsx"; 

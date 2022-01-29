@@ -8,6 +8,7 @@ import {
 import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 
+
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
   const productList = useSelector(productsSelector);

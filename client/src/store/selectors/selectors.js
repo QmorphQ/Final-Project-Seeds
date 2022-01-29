@@ -1,3 +1,10 @@
+
+/**
+ * 
+ * @param {Object} state 
+ * @returns {String} - one of downloadRequestStates
+ */
+
 export const downloadRequestStateSelector = (state) =>
   state.products.downloadRequestState;
 

@@ -9,8 +9,8 @@ const Icon = (props) => {
     )
 }
 
-Icon.propTypes ={
-    icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+Icon.propTypes = {
+    icon: PropTypes.func.isRequired
 }
 
 Icon.icons = icons;

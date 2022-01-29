@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import TabsSection from "../../ui/components/TabsSection/TabsSection.jsx"
+// import TabsSection from "../../ui/components/TabsSection/TabsSection.jsx"
 import HeaderMobile from "../../ui/components/Header/HeaderMobile.jsx";
 import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
 import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
@@ -18,7 +18,7 @@ const Home = ({loading, productList}) => {
         <HeaderDesktop />
      </Box>
 
-     <TabsSection loading={loading} productList={productList} />
+     {/* <TabsSection loading={loading} productList={productList} /> */}
      <ProductsList products={productList} loading={loading} />
        
      <Box display={{ xs: "block", sm: "block", md: "none" }} >

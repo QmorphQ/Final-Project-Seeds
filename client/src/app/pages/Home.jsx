@@ -6,8 +6,8 @@ import HeaderMobile from "../../ui/components/Header/HeaderMobile.jsx";
 import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
 import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
 import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
-import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx";
 import MainPageCarousel from "../../ui/components/MainPageCarousel/MainPageCarousel.jsx"
+import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx"
 
 
 

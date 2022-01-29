@@ -4,8 +4,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Menu from "../Menu/Menu.jsx";
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx"
-import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx"
+import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
+import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
+import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
 const HeaderMobile = () => {
     const orderLength = 0;
@@ -27,7 +28,7 @@ const HeaderMobile = () => {
             component="div"
             sx={{flexGrow: 1, color: "#359740", fontWeight: "bold" }}
           >
-            SEEDRA
+            <PreloaderIcon iconWidth="100px" iconHeight="20px" />
           </Typography>
           <Box display="none">
           <SocialNetworks />

@@ -1,24 +1,10 @@
 import { Box, Typography, Link, Divider } from "@mui/material";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
+import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
 export default function FooterDesktop() {
   return (
     <Box>
-      <Typography
-        display={{ xs: "block", sm: "block", md: "none" }}
-        variant="h5"
-        component="div"
-        sx={{
-          mb: "36px",
-          flexGrow: 1,
-          color: "#359740",
-          fontWeight: "bold",
-          textAlign: "center",
-        }}
-      >
-        SEEDRA
-      </Typography>
-
       <Box
         display="flex"
         sx={{ pl: "5%", pr: "5%", justifyContent: "space-between" }}
@@ -59,7 +45,7 @@ export default function FooterDesktop() {
             textAlign: "center",
           }}
         >
-          SEEDRA
+         <PreloaderIcon iconWidth="130px" iconHeight="26px" />
         </Typography>
 
         {/* <Box display="flex" sx={{flexDirection: "column", width: "45%"}}> */}

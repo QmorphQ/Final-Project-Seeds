@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import createCustomTheme from '../styles/theme';
@@ -16,7 +15,7 @@ const CustomThemeProvider = (props) => {
 }
 
 CustomThemeProvider.propTypes = {
-    children: PropTypes 
+    children: PropTypes.element
 }
 
 export default CustomThemeProvider;

@@ -6,6 +6,8 @@ import {
   productsSelector,
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
+import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+
 
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
@@ -14,17 +16,19 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts("Products.json"));
+    dispatch(fetchProducts("/Products.json"));
   }, []);
-
+  if (downloadRequestState === "loading") {
+   return <Preloader />
+  } 
   return (
     <div>
       <Home 
         loading={downloadRequestState} 
         productList={productList} 
       />
-     
     </div>
   );
 }
+
 export default App;

@@ -8,6 +8,7 @@ import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
 import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
 
 
+
 const Home = ({loading, productList}) => (
     <>
     <Box display={{ xs: "block", sm: "block", md: "none" }}>
@@ -16,8 +17,10 @@ const Home = ({loading, productList}) => (
       <Box display={{ xs: "none", sm: "none", md: "block" }}>
         <HeaderDesktop />
      </Box>
-      <TabsSection loading={loading} productList={productList} />
-      <Box display={{ xs: "block", sm: "block", md: "none" }} >
+    <MainPageCarousel />
+     <TabsSection loading={loading} productList={productList} />
+     <ProductsList products={productList} loading={loading} />
+     <Box display={{ xs: "block", sm: "block", md: "none" }} >
         <FooterMobile />
      </Box>
      <Box display={{ xs: "none", sm: "none", md: "block" }}>

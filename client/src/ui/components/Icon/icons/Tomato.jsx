@@ -1,5 +1,4 @@
 import { SvgIcon } from '@mui/material';
-import React from 'react';
 
 export default function Tomato(props) {
   return <SvgIcon {...props}>

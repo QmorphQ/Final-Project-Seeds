@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import * as icons from "./icons"
 
-
-
 const Icon = (props) => {
 // SelectedIcon - псевдоним той иконки, которая будет выбрана.
     const {icon: SelectedIcon, ...other} = props;
@@ -11,8 +9,8 @@ const Icon = (props) => {
     )
 }
 
-Icon.propTypes ={
-    icon: PropTypes.element.isRequired
+Icon.propTypes = {
+    icon: PropTypes.func.isRequired
 }
 
 Icon.icons = icons;

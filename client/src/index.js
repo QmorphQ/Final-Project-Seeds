@@ -6,13 +6,10 @@ import store from "./store/store";
 import CustomThemeProvider from "./ui/hoc/CustomThemeProvider.jsx";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <CustomThemeProvider>
-        <App />
-      </CustomThemeProvider>
-    </Provider>
-  </React.StrictMode>,
-
+  <Provider store={store}>
+    <CustomThemeProvider>
+      <App />
+    </CustomThemeProvider>
+  </Provider>,
   document.getElementById("root")
 );

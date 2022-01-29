@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles } from "mui/styles";
+import PropTypes from 'prop-types';
+import { makeStyles } from "@mui/styles";
 import { Typography } from '@mui/material';
 import Tab from "../Tab/Tab.jsx"; 
 import Tabs from "../Tabs/Tabs.jsx"; 
 import Icon from "../Icon/Icon.jsx"; 
 
-/* eslint-disable  */
 const useStyles = makeStyles(() => ({
         ourProducts: {
             maxWidth: "1110px",   
@@ -81,6 +81,14 @@ const categoriies = [
         </main>
         </>
     )
+}
+
+TabsSection.defaultProps = {
+    loading: 'test',
+}
+
+TabsSection.propTypes = {
+    loading: PropTypes.string,
 }
 
 export default TabsSection;

@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import {
   DOWNLOAD_ALL_SLIDES_REQUESTED,
   DOWNLOAD_ALL_SLIDES_SUCCESS,

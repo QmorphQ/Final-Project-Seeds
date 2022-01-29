@@ -15,11 +15,15 @@ const ProductsList = ({ products, loading, totalLength = 6 }) => {
     <Container>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {productsFlteredArr.map((product, i) => (
-          <ProductCard key={product.id || i} product={product} />
+          <ProductCard key={product.id || i} product={product} />/* MVP-key of Product Card */
         ))}
       </Grid>
     </Container>
   );
+};
+
+ProductsList.defaultProps = {
+  totalLength: 6
 };
 
 ProductsList.propTypes = {

@@ -2,7 +2,7 @@ import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx"
-import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx"
+
 
 const HeaderDesktop = () => {
     const orderLength = 0;
@@ -25,13 +25,8 @@ const HeaderDesktop = () => {
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'ALL PRODUCTS'}</Link>
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'ABOUT SEEDRA'}</Link>
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'CONTACTS'}</Link>
-             </Box>
-
-
-          <Box display= "flex">
-          <SocialNetworks />
-          <SearchAppBar />
           </Box>
+          <SearchAppBar />
           <IconButton sx={{ mr: 4 }}>
           <Badge badgeContent={favoritesLength} color="primary">
             <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />

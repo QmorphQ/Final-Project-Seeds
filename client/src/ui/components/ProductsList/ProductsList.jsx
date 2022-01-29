@@ -14,8 +14,8 @@ const ProductsList = ({ products, loading, totalLength = 6 }) => {
   return (
     <Container>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {productsFlteredArr.map((product) => (
-          <ProductCard key={product.id} product={product} />
+        {productsFlteredArr.map((product, i) => (
+          <ProductCard key={product.id || i} product={product} />
         ))}
       </Grid>
     </Container>

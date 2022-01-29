@@ -1,14 +1,13 @@
 import { Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, Rating, Typography } from "@mui/material";
+import PropTypes from 'prop-types';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-/* eslint-disable  */
-
-const ProductCard = ({product}) => {
-  const {name, currentPrice, categories, imageUrls} = product;
+const ProductCard = ({ product }) => {
+  const {name, currentPrice, categories, imageUrls} = product; /* eslint-disable-line*/
   const localPrice = Intl.NumberFormat("us", {style: "currency", currency: "USD"});
 return (
-  <Grid item xs="12" md="6" lg="4">
+  <Grid item xs={12} md={6} lg={4}>
     <Card sx={{position:"relative", border: "2px solid #EFEFEF", borderRadius: "8px", boxShadow:"none", minHeight:"512px"}}>
       <CardHeader sx={{ position: "absolute", top:"0", right:"0" }}
         action={
@@ -21,7 +20,7 @@ return (
         sx={{width: "294px", margin: "28px auto", borderRadius: "12px"}}
         component="img"
         width="294px"
-        image={imageUrls}
+        image={`${imageUrls}`}
         alt="SEEDRA 600 English Lavender Seeds for Indoor and Outdoor Planting"
       />
       <Rating
@@ -46,5 +45,9 @@ return (
   </Grid>
 )
 }
+
+ProductCard.propTypes = {
+  product: PropTypes.object,
+};
 
 export default ProductCard;

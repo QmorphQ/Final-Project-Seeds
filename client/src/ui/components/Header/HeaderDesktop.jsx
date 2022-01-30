@@ -1,15 +1,23 @@
+import { useSelector } from "react-redux";
 import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/material';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
 import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
+import {
+  mainCategoriesSelector,
+} from "../../../store/selectors/selectors";
 
 
 
 const HeaderDesktop = () => {
     const orderLength = 0;
     const favoritesLength = 0;
+    
+    const mainCategories = useSelector(mainCategoriesSelector);
+    console.log(mainCategories);
+  
     
   return (
     <header className="header">

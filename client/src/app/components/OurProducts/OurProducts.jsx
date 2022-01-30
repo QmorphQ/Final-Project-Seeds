@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
                 marginRight: "12px"
             },
             "& > svg": {
-                marginRight: "20px"
+                marginRight: "20px",
+                color: theme.palette.primary.main
             }
         },
 

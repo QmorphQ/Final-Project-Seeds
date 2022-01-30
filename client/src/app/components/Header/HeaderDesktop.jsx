@@ -4,6 +4,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
+import SocialNetworks from '../SocialNetworks/SocialNetworks.jsx';
 
 const HeaderDesktop = () => {
     const orderLength = 0;

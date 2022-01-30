@@ -6,7 +6,7 @@ import {
 } from "../actions/catalog.actions";
 
 const fetchCategories =
-  (uri = "http://localhost:5000/api/catalog") =>
+  (uri = "http://localhost:8000/api/catalog") =>
   (dispatch) => {
     dispatch(downloadAllCategoriesRequested());
     axios

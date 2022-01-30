@@ -26,11 +26,11 @@ const ProductsListSection = ({ data }, totalLength = 6) => {
   const dispatch = useDispatch();
 
   const productsFlteredArr = data
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value)
-    .filter((product, index) => index < totalLength);
-    
+  .map((value) => ({ value, sort: Math.random() }))
+  .sort((a, b) => a.sort - b.sort)
+  .map(({ value }) => value)
+  .filter((product, index) => index < totalLength);
+  
   return (
     <>
       <button onClick={() => dispatch(loginCustomer(userData))}>LOGIN</button>
@@ -44,15 +44,25 @@ const ProductsListSection = ({ data }, totalLength = 6) => {
     </>
   );
 };
+const ProductsList = ({ products, loading }) => (
+    <Fetch
+      loading={loading}
+      data={products}
+      renderSuccess={ProductsListSection}
+      loadingFallback={<p>Loading...</p>}
+      renderError={<p>Error</p>}
+    />
+  )
 
-ProductsList.defaultProps = {
-  totalLength: 6
-};
+
+ProductsListSection.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}
 
 ProductsList.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
-  totalLength: PropTypes.number,
   loading: PropTypes.string,
 };
+
 
 export default ProductsList;

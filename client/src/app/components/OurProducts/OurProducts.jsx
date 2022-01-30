@@ -2,16 +2,38 @@ import React from 'react';
 import { makeStyles } from "@mui/styles";
 import { Typography, Box } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useSelector } from "react-redux";
 import Tab from "../../../ui/components/Tab/Tab.jsx"; 
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx"; 
 import Icon from "../../../ui/components/Icon/Icon.jsx"; 
+import ProductsList from '../ProductsList/ProductsList.jsx';
 import { downloadRequestStates } from '../../constants';
+import { mainCategoriesSelector } from "../../../store/selectors/selectors";
 
 
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+        tab: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            flexGrow: "1",
+            "&:not(:last-child)": {
+                marginRight: "12px"
+            },
+            "& > svg": {
+                marginRight: "20px",
+                color: theme.palette.primary.main
+            }
+        },
+
         ourProducts: {
-            maxWidth: "1110px",   
+            ...theme.mixins.wrapper, 
+            paddingTop: "60px",
+            paddingBottom: "60px" 
+        },
+        navigation: {
+            marginBottom: "25px"
         },
         ourProductHeading: {
             marginBottom: "40px !important",
@@ -20,59 +42,27 @@ const useStyles = makeStyles(() => ({
     
 }))
 
-const categoriies = [
-    {
-        id: "All",
-        name: "All", 
-        parentId: "null",
-        icon: "Leaf"
-    },
-    {
-        id: "Bundles",
-        name: "Bundles", 
-        parentId: "null",
-        icon: "Bundles"
-    },
-    {
-        id: "vegetables",
-        name: "vegetables", 
-        parentId: "null",
-        icon: "Tomato"
-    },
-    {
-        id: "herbs",
-        name: "herbs", 
-        parentId: "null",
-        icon: "CurlyLeaf"
-    },
-    {
-        id: "flowers",
-        name: "flowers", 
-        parentId: "null",
-        icon: "Flower"
-    }
+ const OurProducts = ({loading, productList}) => {
 
-]
-
- const TabsSection = ({loading, productList}) => {
     if(loading === downloadRequestStates.LOADING) return <div>Loading...</div>; // Here must be a loader
     if(loading === downloadRequestStates.ERROR) return <div>Error :(</div>; 
     
+    const categories = useSelector(mainCategoriesSelector)
+
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const categoriesTabs = categoriies.map(category => <Tab label={category.name} id={category.id} key={category.id} icon={<Icon icon={Icon.icons[category.icon]}/>}/>)
     const classes = useStyles();
+
+    const categoriesTabs = categories.map(category => <Tab className={classes.tab} label={category.name} id={category.id} key={category.id} title={category.description} icon={<Icon icon={Icon.icons[category.icon]}/>}/>)
 
     return (
         <>
-        <Box component="main">
             <Box component="section" className={classes.ourProducts}>
             <Box> 
-                <Box>
+                <Box className={classes.navigation}>
                     <Typography className={classes.ourProductHeading} variant="h3" component="h3">
                         Our products.
                     </Typography>
@@ -80,14 +70,14 @@ const categoriies = [
                         <Tabs value={value} onChange={handleChange}>{categoriesTabs}</Tabs>  
                     </Box>
                 </Box>
+                <ProductsList loading={loading} products={productList}/>
             </Box>  
             </Box>
-        </Box>
         </>
     )
 }
 
-TabsSection.propTypes = {
+OurProducts.propTypes = {
         loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
         productList: PropTypes.arrayOf(PropTypes.shape({
           name: PropTypes.string,
@@ -101,4 +91,4 @@ TabsSection.propTypes = {
     
 }
 
-export default TabsSection;
+export default OurProducts;

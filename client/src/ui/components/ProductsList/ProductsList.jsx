@@ -27,11 +27,15 @@ const ProductsListSection = ({ data }, totalLength = 6) => {
     <Container fixed="true" sx={{marginTop:"30px", marginBottom:"89px"}}>
       <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {productsFlteredArr.map((product, i) => (
-          <ProductCard key={product.id || i} product={product} />
+          <ProductCard key={product.id || i} product={product} />/* MVP-key of Product Card */
         ))}
       </Grid>
     </Container>
   );
+};
+
+ProductsList.defaultProps = {
+  totalLength: 6
 };
 
 ProductsList.propTypes = {

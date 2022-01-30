@@ -8,7 +8,7 @@ import CustomThemeProvider from "./ui/hoc/CustomThemeProvider.jsx";
 ReactDOM.render(
   <Provider store={store}>
     <CustomThemeProvider>
-      <App />
+      <App/>
     </CustomThemeProvider>
   </Provider>,
   document.getElementById("root")

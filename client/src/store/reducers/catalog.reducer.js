@@ -1,31 +1,32 @@
+/*eslint-disable*/
 import {
-  DOWNLOAD_ALL_SLIDES_REQUESTED,
-  DOWNLOAD_ALL_SLIDES_SUCCESS,
-  DOWNLOAD_ALL_SLIDES_ERROR,
-} from "../actions/slides.actions";
+  DOWNLOAD_ALL_CATEGORIES_SUCCESS,
+  DOWNLOAD_ALL_CATEGORIES_REQUESTED,
+  DOWNLOAD_ALL_CATEGORIES_ERROR,
+} from "../actions/catalog.actions";
 import { downloadRequestStates } from "../../app/constants";
 
 const initialState = {
   downloadRequestState: downloadRequestStates.IDLE,
-  slideList: [],
+  categoriesList: [],
 };
 
-const slidesReducer = (state = initialState, action) => {
+const catalogReducer = (state = initialState, action) => {
   switch (action.type) {
-    case DOWNLOAD_ALL_SLIDES_REQUESTED:
+    case DOWNLOAD_ALL_CATEGORIES_REQUESTED:
       return {
         ...state,
         downloadRequestState: downloadRequestStates.LOADING,
       };
 
-    case DOWNLOAD_ALL_SLIDES_SUCCESS:
+    case DOWNLOAD_ALL_CATEGORIES_SUCCESS:
       return {
         ...state,
         downloadRequestState: downloadRequestStates.SUCCESS,
-        slideList: action.payload.data,
+        categoriesList: action.payload.data,
       };
 
-    case DOWNLOAD_ALL_SLIDES_ERROR:
+    case DOWNLOAD_ALL_CATEGORIES_ERROR:
       return {
         ...state,
         downloadRequestState: downloadRequestStates.ERROR,
@@ -36,4 +37,4 @@ const slidesReducer = (state = initialState, action) => {
   }
 };
 
-export default slidesReducer;
+export default catalogReducer;

@@ -3,9 +3,11 @@ import { Box, AppBar, Toolbar, Typography, IconButton, Badge } from '@mui/materi
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from "../Menu/Menu.jsx";
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx"
-import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx"
+import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
+import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
+import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
 const HeaderMobile = () => {
     const orderLength = 0;
@@ -27,7 +29,7 @@ const HeaderMobile = () => {
             component="div"
             sx={{flexGrow: 1, color: "#359740", fontWeight: "bold" }}
           >
-            SEEDRA
+            <PreloaderIcon iconWidth="100px" iconHeight="20px" />
           </Typography>
           <Box display="none">
           <SocialNetworks />
@@ -42,6 +44,18 @@ const HeaderMobile = () => {
             <Badge badgeContent={orderLength} color="primary">
             <ShoppingCartOutlinedIcon sx={{ color: "#359740" }} />
           </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              // aria-controls={menuId}
+              aria-haspopup="true"
+              // onClick={handleProfileMenuOpen}
+              color="primary"
+              sx={{ mr: 2 }}
+            >
+              <AccountCircle />
             </IconButton>
             
             <Box display= "block">

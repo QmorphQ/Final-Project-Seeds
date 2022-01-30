@@ -11,6 +11,7 @@ import ProductsListSection from "../../ui/components/ProductsList/ProductsList.j
 
 
 
+
 const Home = ({loading, productList}) => (
     <>
     <Box display={{ xs: "block", sm: "block", md: "none" }}>

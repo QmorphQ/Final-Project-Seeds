@@ -118,6 +118,15 @@ const ProductCard = ({ product }) => {
   )
 }
 
+ProductCard.defaultProps = {
+  product: {
+    name: 'test name',
+    currentPrice: 'test price',
+    imageUrls: 'test imageUrls',
+    categories: [''],
+  }
+};
+
 ProductCard.propTypes = {
   product: PropTypes.object,
 };

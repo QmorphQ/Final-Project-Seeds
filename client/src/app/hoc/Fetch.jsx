@@ -1,6 +1,6 @@
 export default function Fetch({
   loading,
-  data,
+  data = [],
   renderSuccess,
   loadingFallback = <p>Loading...</p>,
   renderError = <p>Error</p>

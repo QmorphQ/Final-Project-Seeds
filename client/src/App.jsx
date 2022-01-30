@@ -22,7 +22,6 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchProducts());
-
   }, []);
   if (downloadRequestState === "loading") {
    return <Preloader />

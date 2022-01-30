@@ -31,15 +31,6 @@ const ProductsList = ({ products, loading }) => (
     />
   )
 
-const ProductsList = ({ products, loading }) => (
-  <Fetch
-    loading={loading}
-    data={products}
-    renderSuccess={ProductsListSection}
-    loadingFallback={<p>Loading...</p>}
-    renderError={<p>Error</p>}
-  />
-)
 
 ProductsListSection.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object)

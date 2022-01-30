@@ -42,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
     
 }))
 
-
  const OurProducts = ({loading, productList}) => {
+
     if(loading === downloadRequestStates.LOADING) return <div>Loading...</div>; // Here must be a loader
     if(loading === downloadRequestStates.ERROR) return <div>Error :(</div>; 
     

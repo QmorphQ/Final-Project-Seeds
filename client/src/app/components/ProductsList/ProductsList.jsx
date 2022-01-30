@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Fetch from "../../hoc/Fetch.jsx";
 import ProductCard from "../ProductCard/ProductCard.jsx";
 
-
 const ProductsListSection = ({ data }, totalLength = 6) => {
   
   const productsFlteredArr = data
@@ -32,14 +31,24 @@ const ProductsList = ({ products, loading }) => (
     />
   )
 
-ProductsList.defaultProps = {
-  totalLength: 6
-};
+const ProductsList = ({ products, loading }) => (
+  <Fetch
+    loading={loading}
+    data={products}
+    renderSuccess={ProductsListSection}
+    loadingFallback={<p>Loading...</p>}
+    renderError={<p>Error</p>}
+  />
+)
+
+ProductsListSection.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}
 
 ProductsList.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
-  totalLength: PropTypes.number,
   loading: PropTypes.string,
 };
+
 
 export default ProductsList;

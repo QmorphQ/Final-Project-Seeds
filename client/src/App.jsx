@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useSelector , useDispatch } from "react-redux";
-import { useTheme } from "@mui/styles";
-import {fetchProducts} from "./store/thunks/products.thunks";
+import { useSelector, useDispatch } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
 import {
   downloadRequestStateSelector,
@@ -10,29 +10,27 @@ import {
 import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 
-
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
   const productList = useSelector(productsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCategories())
-  }, [])
+    dispatch(fetchCategories());
+  }, []);
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
   if (downloadRequestState === "loading") {
-   return <Preloader />
-  } 
+    return <Preloader />;
+  }
   return (
+    <BrowserRouter>
     <div>
-      <Home 
-        loading={downloadRequestState} 
-        productList={productList} 
-      />
+      <Home loading={downloadRequestState} productList={productList} />
     </div>
+    </BrowserRouter>
   );
 }
 

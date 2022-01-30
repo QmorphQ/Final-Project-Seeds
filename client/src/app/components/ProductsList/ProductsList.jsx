@@ -1,12 +1,8 @@
-import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { loginCustomer } from "../../../store/thunks/customer.thunks.js";
 import Fetch from "../../hoc/Fetch.jsx";
-import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection";
+import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection.jsx";
 
-const ProductsList = ({ products, loading }) => {
-  return (
+const ProductsList = ({ products, loading }) => 
     <Fetch
       loading={loading}
       data={products}
@@ -14,8 +10,8 @@ const ProductsList = ({ products, loading }) => {
       loadingFallback={<p>Loading...</p>}
       renderError={<p>Error</p>}
     />
-  )
-}
+  
+
 
 ProductsList.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),

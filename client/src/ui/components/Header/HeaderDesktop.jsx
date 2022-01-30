@@ -5,19 +5,14 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
 import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
-import {
-  mainCategoriesSelector,
-} from "../../../store/selectors/selectors";
-
+import SocialNetworks from '../SocialNetworks/SocialNetworks.jsx';
 
 
 const HeaderDesktop = () => {
     const orderLength = 0;
     const favoritesLength = 0;
     
-    const mainCategories = useSelector(mainCategoriesSelector);
-    console.log(mainCategories);
-  
+    
     
   return (
     <header className="header">
@@ -36,8 +31,13 @@ const HeaderDesktop = () => {
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'ALL PRODUCTS'}</Link>
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'ABOUT SEEDRA'}</Link>
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'CONTACTS'}</Link>
-          </Box>
+             </Box>
+
+
+          <Box display= "flex">
+          <SocialNetworks />
           <SearchAppBar />
+          </Box>
           <IconButton sx={{ mr: 4 }}>
           <Badge badgeContent={favoritesLength} color="primary">
             <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />

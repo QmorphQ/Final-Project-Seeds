@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/material';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";

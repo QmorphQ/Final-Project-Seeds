@@ -3,18 +3,6 @@ import PropTypes from "prop-types";
 import Fetch from "../../hoc/Fetch.jsx";
 import ProductCard from "../ProductCard/ProductCard.jsx";
 
-const ProductsList = ({ products, loading }) => {
-  return (
-    <Fetch
-      loading={loading}
-      data={products}
-      renderSuccess={ProductsListSection}
-      loadingFallback={<p>Loading...</p>}
-      renderError={<p>Error</p>}
-    />
-  )
-}
-
 const ProductsListSection = ({ data }, totalLength = 6) => {
 
   const productsFlteredArr = data
@@ -24,7 +12,7 @@ const ProductsListSection = ({ data }, totalLength = 6) => {
     .filter((product, index) => index < totalLength);
     
   return (
-    <Container fixed="true" sx={{marginTop:"30px", marginBottom:"89px"}}>
+    <Container fixed={true} sx={{marginTop:"30px", marginBottom:"89px"}}>
       <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {productsFlteredArr.map((product, i) => (
           <ProductCard key={product.id || i} product={product} />/* MVP-key of Product Card */
@@ -34,14 +22,24 @@ const ProductsListSection = ({ data }, totalLength = 6) => {
   );
 };
 
-ProductsList.defaultProps = {
-  totalLength: 6
-};
+const ProductsList = ({ products, loading }) => (
+  <Fetch
+    loading={loading}
+    data={products}
+    renderSuccess={ProductsListSection}
+    loadingFallback={<p>Loading...</p>}
+    renderError={<p>Error</p>}
+  />
+)
+
+ProductsListSection.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}
 
 ProductsList.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
-  totalLength: PropTypes.number,
   loading: PropTypes.string,
 };
+
 
 export default ProductsList;

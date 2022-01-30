@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSelector , useDispatch } from "react-redux";
+import { useTheme } from "@mui/styles";
 import {fetchProducts} from "./store/thunks/products.thunks";
 import {
   downloadRequestStateSelector,
@@ -7,7 +8,6 @@ import {
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
-import { useTheme } from "@mui/styles";
 
 
 function App() {

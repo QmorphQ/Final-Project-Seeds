@@ -41,7 +41,7 @@
     "check-jsx": "npx eslint **/*.jsx",
     "fix-all": "npx eslint **/*.js --fix && npx eslint **/*.jsx --fix",
     "fix-jsx": "npx eslint **/*.jsx --fix",
-    "pretier": "npx prettier --write /src"
+    "prettier": "npx prettier --write ."
   },
   "repository": {
     "type": "git",

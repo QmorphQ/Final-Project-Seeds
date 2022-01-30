@@ -38,7 +38,7 @@ const ProductCard = ({ product }) => {
         <Rating 
           className={classes.productCardRating}
           name="half-rating" defaultValue={2.5} precision={0.5}
-          onChange={f => f}
+          onChange={e => e}
         />
         <CardContent className={classes.productCardContent}>
           <Typography 

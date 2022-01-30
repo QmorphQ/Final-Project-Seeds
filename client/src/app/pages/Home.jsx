@@ -7,29 +7,31 @@ import HeaderDesktop from "../components/Header/HeaderDesktop.jsx";
 import FooterDesktop from "../components/ Footer/FooterDesktop.jsx";
 import FooterMobile from "../components/ Footer/FooterMobile.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
+import ProductsList from "../components/ProductsList/ProductsList.jsx";
 
 
 const Home = ({loading, productList}) => (
-    <>
+  <>
     <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        <HeaderMobile />
-      </Box>
-      <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <HeaderDesktop />
-     </Box>
+      <HeaderMobile />
+    </Box>
+    <Box display={{ xs: "none", sm: "none", md: "block" }}>
+      <HeaderDesktop />
+    </Box>
 
-     <Box component="main">
-      <MainPageCarousel />
-        <OurProducts loading={loading} productList={productList} />
-     </Box>
+    <Box component="main">
+    <MainPageCarousel />
+    <OurProducts loading={loading} productList={productList} />
+    <ProductsList loading={loading} productList={productList} />
+    </Box>
 
-     <Box display={{ xs: "block", sm: "block", md: "none" }} >
-        <FooterMobile />
-     </Box>
-     <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <FooterDesktop  />
-     </Box>
-    </>
+    <Box display={{ xs: "block", sm: "block", md: "none" }} >
+    <FooterMobile />
+    </Box>
+    <Box display={{ xs: "none", sm: "none", md: "block" }}>
+    <FooterDesktop  />
+    </Box>
+  </>
   )
 
 Home.propTypes = {

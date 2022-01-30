@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useStyles } from "./productCardStyles";
-import { useDispatch } from "react-redux";
-import { rateProduct } from "../../../store/thunks/products.thunks";
 
 const ProductCard = ({ product }) => {
   const {name, currentPrice, imageUrls} = product;
@@ -14,8 +12,6 @@ const ProductCard = ({ product }) => {
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency", currency: "USD", currencyDisplay: 'symbol'
   });
-
-  const dispatch = useDispatch();
 
   return (
     <Grid item xs={12} md={6} lg={4}>
@@ -42,7 +38,7 @@ const ProductCard = ({ product }) => {
         <Rating 
           className={classes.productCardRating}
           name="half-rating" defaultValue={2.5} precision={0.5}
-          onChange={e => dispatch(rateProduct(product.itemNo, {...product, currentPrice: e.target.value}))}
+          onChange={e => e}
         />
         <CardContent className={classes.productCardContent}>
           <Typography 

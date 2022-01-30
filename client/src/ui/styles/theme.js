@@ -91,6 +91,20 @@ const createCustomTheme = (theme) => {
         fontFamily: "'Lexend', sans-serif",
       },
     },
+    mixins: {
+      ...theme.mixins,
+      wrapper: {
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: "1110px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+      },
+      "@media (max-width: 480px)": {
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      },
+    },
   });
 
   return customTheme;

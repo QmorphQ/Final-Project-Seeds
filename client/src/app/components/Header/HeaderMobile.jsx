@@ -5,9 +5,9 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from "../Menu/Menu.jsx";
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
+import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
-import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
+import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
 const HeaderMobile = () => {
     const orderLength = 0;

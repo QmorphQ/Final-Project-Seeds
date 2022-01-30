@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector , useDispatch } from "react-redux";
 import {fetchProducts} from "./store/thunks/products.thunks";
+import fetchCategories from "./store/thunks/catalog.thunks";
 import {
   downloadRequestStateSelector,
   productsSelector,
@@ -14,6 +15,10 @@ function App() {
   const productList = useSelector(productsSelector);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories())
+  }, [])
 
   useEffect(() => {
     dispatch(fetchProducts("/Products.json"));

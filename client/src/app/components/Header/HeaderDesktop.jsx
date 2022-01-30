@@ -2,8 +2,8 @@ import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
-import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
+import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
+import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
 
 

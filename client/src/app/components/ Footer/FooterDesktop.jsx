@@ -1,6 +1,6 @@
 import { Box, Typography, Link, Divider } from "@mui/material";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
-import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
+import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
 export default function FooterDesktop() {
   return (

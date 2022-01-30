@@ -10,7 +10,6 @@ const ProductsList = ({ products, loading, totalLength = 6 }) => {
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value)
     .filter((product, index) => product.popular && index < totalLength);
-  console.log(products);
   return (
     <Container>
       <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

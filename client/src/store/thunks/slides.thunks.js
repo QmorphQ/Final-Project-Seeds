@@ -6,7 +6,7 @@ import {
 } from "../actions/slides.actions";
 
 const fetchSlides =
-  (uri = "http://localhost:5000/api/slides") =>
+  (uri = "http://localhost:8000/api/slides") =>
   (dispatch) => {
     dispatch(downloadAllSlidesRequested());
     axios

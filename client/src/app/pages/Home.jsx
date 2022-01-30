@@ -1,15 +1,12 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/material";
-import TabsSection from "../components/TabsSection/TabsSection.jsx";
+import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
-import HeaderMobile from "../../ui/components/Header/HeaderMobile.jsx";
-import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
-import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
-import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
-import MainPageCarousel from "../../ui/components/MainPageCarousel/MainPageCarousel.jsx";
-import ProductsListSection from "../../ui/components/ProductsList/ProductsList.jsx";
-
-
+import HeaderMobile from "../components/Header/HeaderMobile.jsx";
+import HeaderDesktop from "../components/Header/HeaderDesktop.jsx";
+import FooterDesktop from "../components/ Footer/FooterDesktop.jsx";
+import FooterMobile from "../components/ Footer/FooterMobile.jsx";
+import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 
 
 const Home = ({loading, productList}) => (
@@ -20,9 +17,12 @@ const Home = ({loading, productList}) => (
       <Box display={{ xs: "none", sm: "none", md: "block" }}>
         <HeaderDesktop />
      </Box>
-    <MainPageCarousel />
-     <TabsSection loading={loading} productList={productList} />
-     <ProductsListSection products={productList} loading={loading} />
+
+     <Box component="main">
+      <MainPageCarousel />
+        <OurProducts loading={loading} productList={productList} />
+     </Box>
+
      <Box display={{ xs: "block", sm: "block", md: "none" }} >
         <FooterMobile />
      </Box>

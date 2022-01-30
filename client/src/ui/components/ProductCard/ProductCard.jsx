@@ -4,7 +4,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const ProductCard = ({ product }) => {
-  const {name, currentPrice, categories, imageUrls} = product; /* eslint-disable-line*/
+  const {name, currentPrice, categories, imageUrls} = product; /* eslint-disable-line */ /* MVP-categories ProdCard */
   const localPrice = Intl.NumberFormat("us", {style: "currency", currency: "USD"});
 return (
   <Grid item xs={12} md={6} lg={4}>
@@ -45,6 +45,15 @@ return (
   </Grid>
 )
 }
+
+ProductCard.defaultProps = {
+  product: {
+    name: 'test name',
+    currentPrice: 'test price',
+    imageUrls: 'test imageUrls',
+    categories: [''],
+  }
+};
 
 ProductCard.propTypes = {
   product: PropTypes.object,

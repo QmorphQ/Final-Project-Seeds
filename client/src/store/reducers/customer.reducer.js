@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import {
   ADD_CUSTOMER_REQUESTED,
   ADD_CUSTOMER_SUCCESS,

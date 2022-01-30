@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
                         <Tabs value={value} onChange={handleChange}>{categoriesTabs}</Tabs>  
                     </Box>
                 </Box>
-                <ProductsList products={productList} loading={loading} />
+                <ProductsList loading={loading} products={productList}/>
             </Box>  
             </Box>
         </>

@@ -5,8 +5,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
-
-
 const HeaderDesktop = () => {
     const orderLength = 0;
     const favoritesLength = 0;
@@ -28,8 +26,13 @@ const HeaderDesktop = () => {
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'ALL PRODUCTS'}</Link>
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'ABOUT SEEDRA'}</Link>
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'CONTACTS'}</Link>
-          </Box>
+             </Box>
+
+
+          <Box display= "flex">
+          <SocialNetworks />
           <SearchAppBar />
+          </Box>
           <IconButton sx={{ mr: 4 }}>
           <Badge badgeContent={favoritesLength} color="primary">
             <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />

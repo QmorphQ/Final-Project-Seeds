@@ -22,6 +22,7 @@ const Home = ({loading, productList}) => (
       <MainPageCarousel />
         <OurProducts loading={loading} productList={productList} />
      </Box>
+
      <Box display={{ xs: "block", sm: "block", md: "none" }} >
         <FooterMobile />
      </Box>

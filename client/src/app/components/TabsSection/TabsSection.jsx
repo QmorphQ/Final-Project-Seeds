@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Tab from "../../../ui/components/Tab/Tab.jsx"; 
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx"; 
 import Icon from "../../../ui/components/Icon/Icon.jsx"; 
-import ProductsList from '../../../ui/components/ProductsList/ProductsList.jsx';
 import { downloadRequestStates } from '../../constants';
 
 
@@ -81,7 +80,6 @@ const categoriies = [
                         <Tabs value={value} onChange={handleChange}>{categoriesTabs}</Tabs>  
                     </Box>
                 </Box>
-                <ProductsList products={productList} loading={loading} />
             </Box>  
             </Box>
         </Box>

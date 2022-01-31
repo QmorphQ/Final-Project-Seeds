@@ -5,6 +5,7 @@ import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
 import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
 import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
 import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx";
+import TextComments from "../../ui/components/Comments/Comments.jsx";
 import MainPageCarousel from "../../ui/components/MainPageCarousel/MainPageCarousel.jsx"
 
 /* eslint-disable  */
@@ -21,6 +22,9 @@ const Home = ({loading, productList}) => {
     <MainPageCarousel />
      <TabsSection loading={loading} productList={productList} />
      <ProductsList products={productList} loading={loading} />
+        <Box>
+            <TextComments/>
+        </Box>
        
      <Box display={{ xs: "block", sm: "block", md: "none" }} >
         <FooterMobile />

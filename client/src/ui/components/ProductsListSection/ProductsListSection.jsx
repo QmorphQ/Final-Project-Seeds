@@ -9,8 +9,7 @@ const userData = {
   password: "justdrink",
 };
 
-const ProductsListSection = ({ data }, totalLength = 6) => {
-  const dispatch = useDispatch();
+const ProductsListSection = ({ data, loading }, totalLength = 6) => {
 
   const productsFlteredArr = data
   .map((value) => ({ value, sort: Math.random() }))
@@ -20,11 +19,10 @@ const ProductsListSection = ({ data }, totalLength = 6) => {
   
   return (
     <>
-      <button onClick={() => dispatch(loginCustomer(userData))}>LOGIN</button>
       <Container fixed="true" sx={{marginTop:"30px", marginBottom:"89px"}}>
         <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {productsFlteredArr.map((product, i) => (
-            <ProductCard key={product.id || i} product={product} />/* MVP-key of Product Card */
+            <ProductCard key={product.id || i} product={product} loading={loading} />/* MVP-key of Product Card */
           ))}
         </Grid>
       </Container>
@@ -33,7 +31,8 @@ const ProductsListSection = ({ data }, totalLength = 6) => {
 };
 
 ProductsListSection.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.array,
+  loading: PropTypes.string
 }
 
 export default ProductsListSection;

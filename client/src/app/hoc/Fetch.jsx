@@ -3,7 +3,8 @@ export default function Fetch({
   data = [],
   renderSuccess,
   loadingFallback = <p>Loading...</p>,
-  renderError = <p>Error</p>
+  renderError = error => (
+    <pre>{JSON.stringify(error, null, 2)}</pre>)
 }) {
   switch (loading) {
     case "idle":

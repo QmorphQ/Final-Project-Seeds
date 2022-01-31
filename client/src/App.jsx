@@ -21,7 +21,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    dispatch(fetchProducts("Products.json"));
+    dispatch(fetchProducts());
   }, []);
   if (downloadRequestState === "loading") {
    return <Preloader />

@@ -49,6 +49,8 @@ const createCustomTheme = (theme) => {
       h3: {
         ...theme.typography.h3,
         fontFamily: "'Lexend', sans-serif",
+        fontSize: "16px",
+        lineHeight: "26px"
       },
       h4: {
         ...theme.typography.h4,
@@ -89,6 +91,20 @@ const createCustomTheme = (theme) => {
       overline: {
         ...theme.typography.overline,
         fontFamily: "'Lexend', sans-serif",
+      },
+    },
+    mixins: {
+      ...theme.mixins,
+      wrapper: {
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: "1110px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+      },
+      "@media (max-width: 480px)": {
+        paddingLeft: "16px",
+        paddingRight: "16px",
       },
     },
   });

@@ -20,3 +20,18 @@ export const filterByCategory = (category) => ({
   payload: category,
 });
 
+export const UPLOAD_PRODUCT_RATING_REQUESTED = "UPLOAD_PRODUCT_RATING_REQUESTED";
+export const uploadProductRatingRequested = () => ({
+  type: UPLOAD_PRODUCT_RATING_REQUESTED,
+});
+
+export const UPLOAD_PRODUCT_RATING_SUCCESS = "UPLOAD_PRODUCT_RATING_SUCCESS";
+export const uploadProductRatingSuccess = (product) => ({
+  type: UPLOAD_PRODUCT_RATING_SUCCESS,
+  payload: product,
+});
+
+export const UPLOAD_PRODUCT_RATING_ERROR = "UPLOAD_PRODUCT_RATING_ERROR";
+export const uploadProductRatingError = () => ({
+  type: UPLOAD_PRODUCT_RATING_ERROR,
+});

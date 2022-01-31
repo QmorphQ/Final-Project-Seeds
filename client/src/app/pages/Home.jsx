@@ -1,35 +1,37 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/material";
-import TabsSection from "../components/TabsSection/TabsSection.jsx";
+import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
-import HeaderMobile from "../../ui/components/Header/HeaderMobile.jsx";
-import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
-import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
-import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
-import MainPageCarousel from "../../ui/components/MainPageCarousel/MainPageCarousel.jsx"
-import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx"
-
-
+import HeaderMobile from "../components/Header/HeaderMobile.jsx";
+import HeaderDesktop from "../components/Header/HeaderDesktop.jsx";
+import FooterDesktop from "../components/ Footer/FooterDesktop.jsx";
+import FooterMobile from "../components/ Footer/FooterMobile.jsx";
+import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
+import ProductsList from "../components/ProductsList/ProductsList.jsx";
 
 
 const Home = ({loading, productList}) => (
-    <>
+  <>
     <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        <HeaderMobile />
-      </Box>
-      <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <HeaderDesktop />
-     </Box>
+      <HeaderMobile />
+    </Box>
+    <Box display={{ xs: "none", sm: "none", md: "block" }}>
+      <HeaderDesktop />
+    </Box>
+
+    <Box component="main">
     <MainPageCarousel />
-     <TabsSection loading={loading} productList={productList} />
-     <ProductsList products={productList} loading={loading} />
-     <Box display={{ xs: "block", sm: "block", md: "none" }} >
-        <FooterMobile />
-     </Box>
-     <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <FooterDesktop  />
-     </Box>
-    </>
+    <OurProducts loading={loading} productList={productList} />
+    <ProductsList loading={loading} productList={productList} />
+    </Box>
+
+    <Box display={{ xs: "block", sm: "block", md: "none" }} >
+    <FooterMobile />
+    </Box>
+    <Box display={{ xs: "none", sm: "none", md: "block" }}>
+    <FooterDesktop  />
+    </Box>
+  </>
   )
 
 Home.propTypes = {

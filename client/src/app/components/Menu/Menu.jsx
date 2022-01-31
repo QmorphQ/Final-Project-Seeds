@@ -1,14 +1,15 @@
 import { Box, Divider, Paper, MenuList, MenuItem, ListItemText, Accordion, AccordionSummary, AccordionDetails, Typography, Link  } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
+import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 
 export default function Menu() {
 
   return (
-    
+
+
     <Box display={{ xs: "flex", sm: "block", md: "none" }} sx={{flexWrap: "wrap"}}>
-    <Paper  sx={{p: 2, width: "50%", maxWidth: "100%", position: "absolute", zIndex: "1", left: "45%", boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)"}}>
+    <Paper  sx={{p: 2, width: "50%", maxWidth: "100%", position: "absolute", zIndex: "3", left: "45%", boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)"}}>
       {/* <Box display={{ xs: "flex", sm: "block", md: "none" }} sx={{flexWrap: "wrap"}}> */}
       <SearchAppBar />
         <MenuList>

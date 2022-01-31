@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useSelector , useDispatch } from "react-redux";
+import { useTheme } from "@mui/styles";
 import {fetchProducts} from "./store/thunks/products.thunks";
+import fetchCategories from "./store/thunks/catalog.thunks";
 import {
   downloadRequestStateSelector,
   productsSelector,
@@ -13,11 +15,14 @@ import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 function App() {
   const downloadRequestState = useSelector(downloadRequestStateSelector);
   const productList = useSelector(productsSelector);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts("/Products.json"));
+    dispatch(fetchCategories())
+  }, [])
+
+  useEffect(() => {
+    dispatch(fetchProducts());
   }, []);
   if (downloadRequestState === "loading") {
    return <Preloader />

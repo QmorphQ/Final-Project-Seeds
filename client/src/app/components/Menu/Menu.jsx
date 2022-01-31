@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
-import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
+// import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 
 export default function Menu() {
   return (
@@ -145,14 +145,14 @@ export default function Menu() {
           </Accordion>
 
           <Divider />
-          <MenuItem>
+          {/* <MenuItem>
             <ListItemText>Our blog</ListItemText>
           </MenuItem>
           <MenuItem>
             <ListItemText>About Seedra</ListItemText>
           </MenuItem>
           <Divider />
-          <SocialNetworks />
+          <SocialNetworks /> */}
         </MenuList>
       </Paper>
     </Box>

@@ -1,21 +1,14 @@
 import { useState } from "react";
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Badge,
-} from "@mui/material";
+import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import useStyles from "./HeaderStyles.jsx";
 import Menu from "../Menu/Menu.jsx";
-import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
-import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
+// import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
+// import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
+import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
-import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
 
 const HeaderMobile = () => {
   const classes = useStyles();
@@ -30,17 +23,18 @@ const HeaderMobile = () => {
     <header className="header">
       <AppBar position="static" color="inherit" sx={{ boxShadow: "none" }}>
         <Toolbar>
-          <Typography
+          <Logo iconWidth={"100px"} iconHeight={"20px"} />
+          {/* <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, color: "#359740", fontWeight: "bold" }}
           >
             <PreloaderIcon iconWidth="100px" iconHeight="20px" />
-          </Typography>
-          <Box display="none">
+          </Typography> */}
+          {/* <Box display="none">
             <SocialNetworks />
             <SearchAppBar />
-          </Box>
+          </Box> */}
           <IconButton sx={{ mr: 4 }}>
             <Badge badgeContent={favoritesLength} color="primary">
               <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />

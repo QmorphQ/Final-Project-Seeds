@@ -5,6 +5,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CheckIcon from '@mui/icons-material/Check';
 import { useStyles } from "./productCardStyles";
 import { CardOnProductPageStyle } from "./CardOnProductPageStyle";
+import { CardInBasket } from "./CardInBasket";
 import Fetch from "../../../app/hoc/Fetch";
 import { Box } from "@mui/system";
 
@@ -21,11 +22,14 @@ const ProductCard = ({ product, loading }) => {
 }
 
 export const ProductCardRender = ({data}) => {
-  const {name, currentPrice, imageUrls, isProductPage, categories, quantity} = data;
+  const {name, currentPrice, imageUrls, isProductPage, categories, quantity, isBasket} = data;
   let classes = null;
   console.log(data);
+  
   if(isProductPage) {
     classes = CardOnProductPageStyle();
+  } else if(isBasket) {
+    classes = CardInBasket();
   } else {
     classes = useStyles();
   }
@@ -33,6 +37,25 @@ export const ProductCardRender = ({data}) => {
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency", currency: "USD", currencyDisplay: 'symbol'
   });
+
+  if(isBasket) {
+    return (
+      <Card>
+        <CardMedia
+          className={classes.productCardMedia}
+          component="img"
+          width="294px"
+          image={`${imageUrls}`}
+          alt={name}
+        />
+        <Typography 
+          className={classes.productCardName} 
+          variant="h3" 
+          color="text.primary"
+        >{name}</Typography>        
+      </Card>
+    )
+  }
 
   return (
     <Grid item xs={!isProductPage && 12} md={!isProductPage && 6} lg={!isProductPage && 4}>

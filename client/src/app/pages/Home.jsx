@@ -8,12 +8,9 @@ import FooterDesktop from "../components/ Footer/FooterDesktop.jsx";
 import FooterMobile from "../components/ Footer/FooterMobile.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
-import Product from "./Product.jsx";
-
 
 const Home = ({loading, productList}) => (
   <>
-    <Product loading={loading} productList={productList} />
     <Box display={{ xs: "block", sm: "block", md: "none" }}>
       <HeaderMobile />
     </Box>

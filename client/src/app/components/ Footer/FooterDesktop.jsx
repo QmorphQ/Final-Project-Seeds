@@ -1,10 +1,8 @@
-import { Box, Typography, Link, Divider  } from '@mui/material';
+import { Box, Typography, Link, Divider } from "@mui/material";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 import Logo from "../Header/headerIcons/headerIcon/Logo.jsx";
 
-
 export default function FooterDesktop() {
-
   return (
     <Box>
       <Box
@@ -34,33 +32,51 @@ export default function FooterDesktop() {
             {"ABOUT SEEDRA"}
           </Link>
         </Box>
-        <Box mb="25px" >
-          <Logo iconWidth={"130px"} iconHeight={"26px"}  />
+        <Box mb="25px">
+          <Logo iconWidth={"130px"} iconHeight={"26px"} />
         </Box>
-        <Box display="flex" sx={{flexGrow: 1, justifyContent: "space-between", alignItems: "center"}}>
-            <Link href="#" underline="none" sx={{mb: "24px", fontSize: 14, color: "#70737C"}}>{'Terms&Conditions'}</Link>
-             <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'Privacy Policy'}</Link>
-            </Box>
-             </Box>
-             <Divider />
-             <Box display="flex" sx={{pl:"5%", pr:"5%", justifyContent: "space-between", alignItems: "center"}} >
-            <Box>
-            <SocialNetworks />
-            </Box>
-            
-             <Typography
-            component="span"
+        <Box
+          display="flex"
+          sx={{
+            flexGrow: 1,
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Link
+            href="#"
+            underline="none"
+            sx={{ mb: "24px", fontSize: 14, color: "#70737C" }}
+          >
+            {"Terms&Conditions"}
+          </Link>
+          <Link
+            href="#"
+            underline="none"
             sx={{ fontSize: 14, color: "#70737C" }}
           >
-            All rights reserved
-             </Typography>
-             
-             </Box>
+            {"Privacy Policy"}
+          </Link>
+        </Box>
+      </Box>
+      <Divider />
+      <Box
+        display="flex"
+        sx={{
+          pl: "5%",
+          pr: "5%",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Box>
+          <SocialNetworks />
+        </Box>
+
+        <Typography component="span" sx={{ fontSize: 14, color: "#70737C" }}>
+          All rights reserved
+        </Typography>
+      </Box>
     </Box>
-     
-     
-   
   );
-};
-
-
+}

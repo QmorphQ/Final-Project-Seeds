@@ -52,7 +52,7 @@ const productsReducer = (state = initialState, action) => {
         return {
           ...state,
           uploadRatingRequestState: downloadRequestStates.SUCCESS,
-          productList: [...productList.filter(product => product.itemNo !== action.payload.data.itemNo), action.payload.data]
+          productList: [...state.productList.filter(product => product.itemNo !== action.payload.data.itemNo), action.payload.data]/* MVP - added state.product */
         };
   
       case UPLOAD_PRODUCT_RATING_ERROR:

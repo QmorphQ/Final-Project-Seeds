@@ -1,4 +1,4 @@
-import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import Link from "@mui/material/Link";
 // import { useSelector } from 'react-redux';
 import { Badge, IconButton, MenuItem } from "@material-ui/core";

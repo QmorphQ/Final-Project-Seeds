@@ -1,18 +1,16 @@
 import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/material';
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
 import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
 import SocialNetworks from '../SocialNetworks/SocialNetworks.jsx';
+import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 
 
 const HeaderDesktop = () => {
-    const orderLength = 0;
+    
     const favoritesLength = 0;
-    
-    
-    
+  
   return (
     <header className="header">
       <AppBar position="static" color="inherit" sx={{boxShadow: "none"}}>
@@ -42,12 +40,8 @@ const HeaderDesktop = () => {
             <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
            </Badge>
           </IconButton>
-          <IconButton sx={{ mr: 4 }}>
-            <Badge badgeContent={orderLength} color="primary">
-            <ShoppingCartOutlinedIcon sx={{ color: "#359740" }} />
-          </Badge>
-            </IconButton>
-            <IconButton
+          <HeaderIcons />
+          <IconButton
               size="large"
               edge="end"
               aria-label="account of current user"

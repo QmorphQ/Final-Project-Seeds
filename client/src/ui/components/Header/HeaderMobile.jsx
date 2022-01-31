@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Box, AppBar, Toolbar, Typography, IconButton, Badge } from '@mui/material';
 import MenuIcon from "@mui/icons-material/Menu";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from "../Menu/Menu.jsx";
 import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
+import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 
 const HeaderMobile = () => {
-    const orderLength = 0;
+    
     const favoritesLength = 0;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -40,12 +40,8 @@ const HeaderMobile = () => {
             <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
            </Badge>
           </IconButton>
-          <IconButton sx={{ mr: 4 }}>
-            <Badge badgeContent={orderLength} color="primary">
-            <ShoppingCartOutlinedIcon sx={{ color: "#359740" }} />
-          </Badge>
-            </IconButton>
-            <IconButton
+            <HeaderIcons />
+           <IconButton
               size="large"
               edge="end"
               aria-label="account of current user"

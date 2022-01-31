@@ -7,6 +7,7 @@ import {
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 
 
 function App() {
@@ -22,12 +23,15 @@ function App() {
    return <Preloader />
   } 
   return (
-    <div>
+    <>
+      <PageNotFound/>
+    {/* <div>
       <Home 
         loading={downloadRequestState} 
         productList={productList} 
       />
-    </div>
+    </div> */}
+    </>
   );
 }
 

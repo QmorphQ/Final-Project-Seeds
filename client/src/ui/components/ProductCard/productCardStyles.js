@@ -7,6 +7,7 @@ export const useStyles = makeStyles(() => ({
     border: "2px solid #EFEFEF",
     boxShadow: "none",
     minHeight: "512px",
+    maxWidth: "350px"
   },
   productCardHeader: {
     position: "absolute",

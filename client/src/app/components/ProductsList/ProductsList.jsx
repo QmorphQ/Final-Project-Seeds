@@ -1,20 +1,22 @@
 import PropTypes from "prop-types";
-import Fetch from "../../hoc/Fetch.jsx";
-import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection.jsx";
+import Fetch  from "../../hoc/Fetch.jsx";
+import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection";
 
-const ProductsList = ({ products, loading }) => 
+const ProductsList = ({loading, productList}) => {
+
+  return (
     <Fetch
       loading={loading}
-      data={products}
+      data={productList}
       renderSuccess={ProductsListSection}
       loadingFallback={<p>Loading...</p>}
       renderError={<p>Error</p>}
     />
-  
-
+  );
+}
 
 ProductsList.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.object),
+  productList: PropTypes.array,
   loading: PropTypes.string,
 };
 

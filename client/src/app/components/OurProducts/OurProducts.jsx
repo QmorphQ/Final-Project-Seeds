@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import Tab from "../../../ui/components/Tab/Tab.jsx"; 
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx"; 
 import Icon from "../../../ui/components/Icon/Icon.jsx"; 
-import ProductsList from '../ProductsList/ProductsList.jsx';
 import { downloadRequestStates } from '../../constants';
 import { mainCategoriesSelector } from "../../../store/selectors/selectors";
 
@@ -70,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
                         <Tabs value={value} onChange={handleChange}>{categoriesTabs}</Tabs>  
                     </Box>
                 </Box>
-                <ProductsList loading={loading} products={productList}/>
             </Box>  
             </Box>
         </>

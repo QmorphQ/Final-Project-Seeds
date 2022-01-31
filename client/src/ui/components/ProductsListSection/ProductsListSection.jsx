@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { loginCustomer } from "../../../store/thunks/customer.thunks.js";
+import { loginCustomer } from "../../../store/thunks/customer.thunks";
 import ProductCard from "../ProductCard/ProductCard.jsx";
 
 const userData = {

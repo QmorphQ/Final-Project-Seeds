@@ -171,7 +171,7 @@ function Item(props)
       alignSelf="center"
       flexDirection="row">
           <img
-          width={'220px'} height={'200px'} src={props.item.imageUrls}
+          width={'220px'} height={'200px'} src={props.item.imageUrl}
           />
       </Grid>
       <Grid item

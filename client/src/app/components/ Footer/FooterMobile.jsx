@@ -1,20 +1,14 @@
 import { Box, Typography, Link, Divider  } from '@mui/material';
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
-import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
-
+import Logo from "../Header/headerIcons/headerIcon/Logo.jsx";
 
 export default function FooterDesktop() {
 
   return (
     <Box>
-            <Typography
-            display="block"
-            variant="h5"
-            component="div"
-            sx={{mb: "36px", flexGrow: 1, color: "#359740", fontWeight: "bold", textAlign: "center" }}
-          >
-             <PreloaderIcon iconWidth="130px" iconHeight="26px" />
-             </Typography>
+      <Box sx={{mb: "36px", textAlign: "center" }} >
+        <Logo iconWidth={"130px"} iconHeight={"26px"}  />
+      </Box>  
              
              <Box display="flex" sx={{pl:"5%", pr:"5%", justifyContent: "space-between"}} >
 

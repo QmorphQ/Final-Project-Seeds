@@ -1,9 +1,9 @@
-import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Badge, Link } from '@mui/material';
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import useStyles from './HeaderStyles.jsx';
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
-import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
+import Logo from "./headerIcons/headerIcon/Logo.jsx"
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 
 
@@ -16,14 +16,15 @@ const HeaderDesktop = () => {
     <header className="header">
       <AppBar position="static" color="inherit" sx={{boxShadow: "none"}}>
         <Toolbar>
-          <Typography
+          <Logo iconWidth={"100px"} iconHeight={"20px"} />
+          {/* <Typography
           
             variant="h6"
             component="div"
             sx={{flexGrow: 1, color: "#359740", fontWeight: "bold" }}
           >
              <PreloaderIcon iconWidth="100px" iconHeight="20px" />
-          </Typography>
+          </Typography> */}
          
           <Box display="flex" sx={{flexGrow: 1, justifyContent: "space-between", alignItems: "center", pl: "64px", pr:"64px"}} >
              <Link href="#" underline="none" sx={{fontSize: 14, color: "#70737C"}}>{'ALL PRODUCTS'}</Link>

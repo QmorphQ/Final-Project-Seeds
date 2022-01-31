@@ -1,10 +1,11 @@
 import { Box, Divider, Paper, MenuList, MenuItem, ListItemText, Accordion, AccordionSummary, AccordionDetails, Typography, Link  } from "@mui/material"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
+import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 
 export default function Menu() {
 
+  
   return (
 
 
@@ -129,12 +130,6 @@ export default function Menu() {
           <ListItemText>About Seedra</ListItemText>
         </MenuItem>
         <Divider />
-        {/* <IconButton>
-          <InstagramIcon />
-        </IconButton>
-        <IconButton>
-          <FacebookOutlinedIcon />
-        </IconButton> */}
         <SocialNetworks />
       </MenuList>
       {/* </Box> */}

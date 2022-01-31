@@ -12,7 +12,6 @@ const fetchCategories =
     axios
       .get(uri)
       .then((categories) => {
-        console.log("thuuunk");
         dispatch(downloadAllCategoriesSuccess(categories));
         return categories;
       })
@@ -21,4 +20,4 @@ const fetchCategories =
       });
   };
 
-  export default fetchCategories;
+export default fetchCategories;

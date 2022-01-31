@@ -3,14 +3,17 @@ import { Box, AppBar, Toolbar, Typography, IconButton, Badge } from '@mui/materi
 import MenuIcon from "@mui/icons-material/Menu";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import useStyles from './HeaderStyles.jsx';
 import Menu from "../Menu/Menu.jsx";
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
+import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
-import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
+import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
+
 
 const HeaderMobile = () => {
     
+    const classes = useStyles();
     const favoritesLength = 0;
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -48,10 +51,9 @@ const HeaderMobile = () => {
               // aria-controls={menuId}
               aria-haspopup="true"
               // onClick={handleProfileMenuOpen}
-              color="primary"
               sx={{ mr: 2 }}
             >
-              <AccountCircle />
+              <AccountCircle className={classes.iconsStyle} />
             </IconButton>
             
             <Box display= "block">
@@ -61,9 +63,9 @@ const HeaderMobile = () => {
             color="inherit"
             aria-label="menu"
             onClick={clickButton}
-            sx={{ mr: 0, color: "#359740" }}
+            sx={{ mr: 0 }}
           >
-            <MenuIcon />
+            <MenuIcon className={classes.iconsStyle}  />
           </IconButton>
           </Box>
         </Toolbar>

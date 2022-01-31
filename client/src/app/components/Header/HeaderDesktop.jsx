@@ -1,14 +1,15 @@
 import { Box, AppBar, Toolbar, Typography, IconButton, Badge, Link } from '@mui/material';
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import SearchAppBar from "../SearchAppBar/SearchAppBar.jsx";
-import PreloaderIcon from "../Preloader/PreloaderIcon/PreloaderIcon.jsx";
-import SocialNetworks from '../SocialNetworks/SocialNetworks.jsx';
+import useStyles from './HeaderStyles.jsx';
+import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
+import PreloaderIcon from "../../../ui/components/Preloader/PreloaderIcon/PreloaderIcon.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 
 
 const HeaderDesktop = () => {
     
+    const classes = useStyles();
     const favoritesLength = 0;
   
   return (
@@ -32,7 +33,6 @@ const HeaderDesktop = () => {
 
 
           <Box display= "flex">
-          <SocialNetworks />
           <SearchAppBar />
           </Box>
           <IconButton sx={{ mr: 4 }}>
@@ -48,9 +48,9 @@ const HeaderDesktop = () => {
               // aria-controls={menuId}
               aria-haspopup="true"
               // onClick={handleProfileMenuOpen}
-              color="primary"
+              
             >
-              <AccountCircle />
+              <AccountCircle className={classes.iconsStyle} />
             </IconButton>
         </Toolbar>
       </AppBar>

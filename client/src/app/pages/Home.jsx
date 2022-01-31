@@ -1,22 +1,24 @@
 import PropTypes from "prop-types";
-import TabsSection from "../components/TabsSection/TabsSection.jsx";
+import { Box } from "@mui/material";
+import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
-import Header from "../../ui/components/Header/Header.jsx";
-import Footer from "../../ui/components/ Footer/Footer.jsx";
-import MainPageCarousel from "../../ui/components/MainPageCarousel/MainPageCarousel.jsx";
-import ProductsListSection from "../../ui/components/ProductsList/ProductsList.jsx";
-
-
+import Header from "../components/Header/Header.jsx";
+import Footer from "../components/ Footer/Footer.jsx";
+import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
+import ProductsList from "../components/ProductsList/ProductsList.jsx";
 
 
 const Home = ({loading, productList}) => (
-    <>
+  <>
     <Header />
+    <Box component="main">
     <MainPageCarousel />
-     <TabsSection loading={loading} productList={productList} />
-     <ProductsListSection products={productList} loading={loading} />
-     <Footer />
-    </>
+    <OurProducts loading={loading} productList={productList} />
+    <ProductsList loading={loading} productList={productList} />
+    </Box>
+    <Footer />
+  </>
+
   )
 
 Home.propTypes = {

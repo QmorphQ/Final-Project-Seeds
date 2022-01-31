@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import HeaderDesktop from "./HeaderDesktop.jsx.js";
-import HeaderMobile from "./HeaderMobile.jsx.js";
+import HeaderDesktop from "./HeaderDesktop.jsx";
+import HeaderMobile from "./HeaderMobile.jsx";
 
 export default function Header () {
     return (

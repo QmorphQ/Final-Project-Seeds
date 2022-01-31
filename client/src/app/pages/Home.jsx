@@ -9,8 +9,7 @@ import FooterMobile from "../components/ Footer/FooterMobile.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
 
-
-const Home = ({loading, productList}) => (
+const Home = ({ loading, productList }) => (
   <>
     <Box display={{ xs: "block", sm: "block", md: "none" }}>
       <HeaderMobile />
@@ -20,32 +19,33 @@ const Home = ({loading, productList}) => (
     </Box>
 
     <Box component="main">
-    <MainPageCarousel />
-    <OurProducts loading={loading} productList={productList} />
-    <ProductsList loading={loading} productList={productList} />
+      <MainPageCarousel />
+      <OurProducts loading={loading} productList={productList} />
+      <ProductsList loading={loading} productList={productList} />
     </Box>
 
-    <Box display={{ xs: "block", sm: "block", md: "none" }} >
-    <FooterMobile />
+    <Box display={{ xs: "block", sm: "block", md: "none" }}>
+      <FooterMobile />
     </Box>
     <Box display={{ xs: "none", sm: "none", md: "block" }}>
-    <FooterDesktop  />
+      <FooterDesktop />
     </Box>
   </>
-  )
+);
 
 Home.propTypes = {
   loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-  productList: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    currentPrice: PropTypes.number,
-    categories: PropTypes.string,
-    description: PropTypes.string,
-    imageUrls: PropTypes.arrayOf(PropTypes.string),
-    quantity: PropTypes.number,
-    popular: PropTypes.bool,
-  }))
-
-}
+  productList: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      currentPrice: PropTypes.number,
+      categories: PropTypes.string,
+      description: PropTypes.string,
+      imageUrls: PropTypes.arrayOf(PropTypes.string),
+      quantity: PropTypes.number,
+      popular: PropTypes.bool,
+    })
+  ),
+};
 
 export default Home;

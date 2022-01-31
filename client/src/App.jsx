@@ -27,9 +27,12 @@ function App() {
     return <Preloader />;
   }
   return (
-      <div>
-        <Home loading={downloadRequestState} productList={productList} />
-      </div>
+     <div>
+      <Home 
+        loading={downloadRequestState} 
+        productList={productList} 
+      />
+    </div>
   );
 }
 

@@ -25,4 +25,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # developing
-/changes.md
+/client/src/DevHelper
+/client/src/TestApp.jsx

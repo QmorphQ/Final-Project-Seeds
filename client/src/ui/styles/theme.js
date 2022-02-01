@@ -21,6 +21,10 @@ const createCustomTheme = (theme) => {
         main: "rgba(229, 92, 92, 1)",
         contrastText: "rgba(255, 255, 255, 1)",
       },
+      info: {
+        main: "rgba(79, 160, 131, 1)",
+        primary: "rgba(53, 151, 64, 0,08)"
+      },
       text: {
         primary: "rgba(31, 37, 51, 1)",
         secondary: "rgba(112, 115, 124, 1)",
@@ -33,6 +37,9 @@ const createCustomTheme = (theme) => {
         ...theme.palette.action,
         hover: "rgba(53, 151, 64, 0.4)",
         hoverOpacity: 0.4,
+        disabledBackground: "rgba(53, 151, 64, 0.08)",
+        disabled: "rgba(79, 160, 131, 1)",
+        active: "rgba(79, 160, 131, 1)",
       },
     },
     typography: {

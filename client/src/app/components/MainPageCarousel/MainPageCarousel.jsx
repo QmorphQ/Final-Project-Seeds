@@ -1,6 +1,7 @@
 import Carousel from "react-material-ui-carousel";
 import { useSelector } from "react-redux";
-import { Typography, Container, Icon, Grid, Box } from "@mui/material";
+import { Typography, Container, Icon, Grid, Box, CardMedia } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import PropTypes from "prop-types";
 import { styled } from "@material-ui/core/styles";
 import img from "./carouselImg/leaf.png";
@@ -11,6 +12,18 @@ import {
 } from "../../../store/selectors/selectors";
 import { downloadRequestStates } from "../../constants";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
+
+
+const useStyles = makeStyles({
+  multiLineEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    lineHeight: '54px',
+    letterSpacing: '-0.05em',
+    fontSize: '48px'
+  }
+});
+
 
 const ButtonLeft = styled("button")({
   width: "142px",
@@ -59,27 +72,24 @@ const MainPageCarousel = () => {
         }}
       >
         <Box
+        bottom={{ xs:"65%", sm: "40%"}}
           component="img"
           sx={{
             width: "320px",
-            borderTopLeftRadius: "4px",
-            borderTopRightRadius: "4px",
             position: "absolute",
-            bottom: "40%",
             right: "80%",
           }}
           alt="img"
           src={img}
         />
         <Box
+          display={{ sm: "none"}}
           component="img"
           sx={{
             width: "320px",
-            borderTopLeftRadius: "4px",
-            borderTopRightRadius: "4px",
             position: "absolute",
-            bottom: "10%",
-            left: "80%",
+            bottom: "5%",
+            left: "70%",
           }}
           alt="img"
           src={img}
@@ -88,8 +98,8 @@ const MainPageCarousel = () => {
           m={"auto"}
           navButtonsAlwaysVisible={false}
           interval="5000"
-          animation="slide"
-          duration="3000"
+          animation="fade"
+          duration="2000"
           autoPlay={true}
         >
           {slideList.map((item, i) => (
@@ -104,119 +114,118 @@ const MainPageCarousel = () => {
   );
 };
 
-function Item(props) {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid
-        container
-        m="0"
-        spacing={1}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
+function Item(props)
+{
+
+  const classes = useStyles();
+
+    return (
+  <Box sx={{ flexGrow: 1 }}>
+    <Grid 
+    container
+    m="0"
+    spacing={1}
+    direction="column"
+    justifyContent="center"
+    alignItems="center"
+    >   
+      <Grid item
+      ml={{ xs: "20px", sm: "76px"}}
+      pr='50%'     
+      xs={6} md={0}
+      order={{ xs: 0, sm: 1 }}
+      alignSelf={{ xs: "center", sm: "flex-start"}}
       >
-        <Grid
-          item
-          pr="50%"
-          xs={6}
-          md={0}
-          order={{ xs: 0, sm: 1 }}
-          alignSelf={{ xs: "center", sm: "flex-start" }}
-        >
           <Typography
-            pt="10px"
-            pl="50px"
-            color="#E55C5C"
-            fontSize="30px"
-            fontWeight="bold"
-            line-height="30"
+          pt='10px'
+          color='#E55C5C'
+          fontSize= '30px'
+          fontWeight= 'bold'
+          line-height= '30'
           >
-            <Icon
-              sx={{
-                pr: "14px",
-                overflow: "visible",
-              }}
-            >
-              <img src={Vector} />
-            </Icon>
+                <Icon
+                sx={{
+                pr: '14px',
+                overflow:'visible',
+              }}>
+                <img  src={Vector}/>
+                </Icon>
             ${props.item.currentPrice}
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          mt="15px"
-          mb="55px"
-          ml={{ xs: "20px", sm: "20px" }}
-          alignSelf="flex-start"
-          xs={6}
-          md={1}
-          flexDirection="row"
-        >
-          <Typography
-            width={{ xs: "90%", sm: "700px" }}
-            height={{ xs: "150px", sm: "50px" }}
-            sx={{ lineHeight: 1, fontStyle: "Lexend" }}
-            align="center"
-            fontSize="28px"
-            fontWeight="bold"
-            line-height="30"
-          >
-            {props.item.name}
-          </Typography>
-        </Grid>
-        <Grid
-          item
-          mt={{ xs: "20px" }}
-          xs={8}
-          md={2}
-          order={{ xs: 0, sm: 1 }}
-          position={{ xs: "static", sm: "absolute" }}
-          left={"72%"}
-          alignSelf="center"
-          flexDirection="row"
-        >
-          <img width={"220px"} height={"200px"} src={props.item.imageUrl} />
-        </Grid>
-        <Grid
-          item
-          ml={{ xs: "0", sm: "20px" }}
-          xs={6}
-          md={4}
-          alignSelf="flex-start"
-          flexDirection="row"
-        >
-          <Typography
-            pt="15px"
-            width={{ sm: "720px" }}
-            height={{ xs: "200px", sm: "200px" }}
-            overflow={{ xs: "scroll", sm: "visible", md: "visible" }}
-            pl="30px"
-            pr="40px"
-            align="left"
-            fontSize="15px"
-          >
+            </Typography>
+      </Grid>
+      <Grid item 
+      mt='12px'
+      ml={{ xs: "20px", sm: "76px"}}
+      alignSelf="flex-start"
+      xs={6} md={1}
+      flexDirection="column">
+            <Typography className={classes.multiLineEllipsis}
+            width={{xs: "90%", sm: "60%"}}
+            height={{ xs: "210px", sm: "108px"}}
+            fontSize={{ xs: "28px", sm: "48px"}}
+            textAlign={{ xs: "center", sm: "left"}}
+            fontWeight= '600'
+            >
+              {props.item.name}
+            </Typography>
+      </Grid>
+      <Grid item
+      mt={{ xs: '20px'}}
+      xs={8} md={2}
+      pr={{ xs: '10px', sm: '30px' }}
+      order={{ xs: 0, sm: 1 }}
+      position={{ xs: 'static', sm: 'absolute' }}
+      left={'72%'}
+      justifySelf={'center'}
+      alignSelf="center"
+      flexDirection="row">
+          <CardMedia
+          component="img"
+          width="294px"
+          pr="300px"
+          image={`${props.item.imageUrl}`}
+          alt={props.item.name}
+        />
+      </Grid>
+      <Grid item
+      xs={6} md={4}
+      alignSelf="flex-start"
+      flexDirection="row">
+          <Typography 
+          width={{ sm: "560px"}}
+          height={{ xs: "200px", sm: "76px"}}
+          overflow={{ xs: "scroll", sm: "hidden", md: "hidden" }}
+          pl={{ xs: "20px", sm: "76px"}}
+          pr= "40px"
+          align= 'left'
+          fontSize= '16px'
+          line-height= '28px'
+          letterSpacing= '-5%'          >
             {props.item.description}
           </Typography>
-        </Grid>
-        <Grid
-          item
-          mt={{ xs: "10px" }}
-          ml={{ xs: "20px", sm: "50px" }}
-          alignSelf="flex-start"
-          bottom={0}
-          order={{ xs: 0, sm: 1 }}
-          xs={6}
-          md={2}
-          justifyContent="space-evenly"
-          flexDirection="row"
-        >
-          <ButtonLeft>Add to cart</ButtonLeft>
-          <ButtonRight>Discover</ButtonRight>
-        </Grid>
       </Grid>
-    </Box>
-  );
+      <Grid item
+      mt={{ xs: "10px"}}
+      ml={{ xs: "20px", sm: "76px"}}
+      alignSelf="flex-start"
+      bottom={0}
+      order={{ xs: 0, sm: 1 }}
+      xs={6} md={2}
+      justifyContent="space-evenly"
+      flexDirection="row">
+            <ButtonLeft>
+               Add to cart
+          </ButtonLeft>
+            <ButtonRight
+            >
+               Discover
+          </ButtonRight>
+      </Grid>
+</Grid>
+</Box>
+    )
 }
+
 
 export default MainPageCarousel;
 

@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-export const CardInBasket = makeStyles(() => ({
+export const useBasketStyles = makeStyles(() => ({
   productCard: {
     boxShadow: "none"
   },

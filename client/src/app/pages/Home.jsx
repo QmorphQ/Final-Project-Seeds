@@ -6,6 +6,7 @@ import Header from "../components/Header/Header.jsx";
 import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
+import Product from "../components/Product/Product.jsx";
 
 const Home = ({ loading, productList }) => (
 

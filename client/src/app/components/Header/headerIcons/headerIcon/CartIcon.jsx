@@ -9,7 +9,7 @@ const CartIcon = () => {
   // const totalCartQuantity = useSelector((state) => state.cart.totalCartQuantity);
   const totalCartQuantity = 3;
   const RoutesName = {
-    cart: "/shopping-cart",
+    cart: "/cart",
   };
 
   return (

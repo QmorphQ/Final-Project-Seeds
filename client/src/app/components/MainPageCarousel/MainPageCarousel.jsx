@@ -45,6 +45,7 @@ const MainPageCarousel = () =>
   }, []);
    
   const slideList = useSelector(slidesSelector);
+  
 
 
     return (

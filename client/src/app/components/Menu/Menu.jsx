@@ -1,3 +1,5 @@
+import { useSelector, useDispatch} from "react-redux";
+import { useEffect } from "react";
 import {
   Box,
   Divider,
@@ -13,9 +15,79 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
-// import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
+import fetchCategories from "../../../store/thunks/catalog.thunks";
+import {
+  downloadRequestStateSelector,
+  allCategoriesSelector,
+  mainCategoriesSelector,
+} from "../../../store/selectors/selectors";
+import Subcategories from "./Subcategories.jsx";
 
-export default function Menu() {
+const Menu = () => {
+
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
+
+
+  const allCategories = useSelector(allCategoriesSelector);
+  const mainCategories = useSelector(mainCategoriesSelector);
+  const downloadRequestState = useSelector(downloadRequestStateSelector);
+
+const result = [
+  {
+      "parentId": "null",
+      "name": [
+          "all",
+          "bundles",
+          "herbs",
+          "vegetables",
+          "flowers"
+      ]
+  },
+  {
+      "parentId": "herbs",
+      "name": [
+          "herbs-mono",
+          "herbs-mix"
+      ]
+  },
+  {
+      "parentId": "vegetables",
+      "name": [
+          "vegetables-mono",
+          "vegetables-mix"
+      ]
+  },
+  {
+      "parentId": "flowers",
+      "name": [
+          "flowers-mono",
+          "flowers-mix"
+      ]
+  }
+];
+  
+  // const process = (arr) => {
+  //   const res = {};
+    
+  //   arr.forEach(({ parentId, name }) => {
+  //     res[parentId] ??= { parentId, sub: [] };
+  //     res[parentId].sum.push(name);
+      
+  //   });
+  //   return Object.values(res).map(({ parentId, sub }) => ({
+  //     parentId,
+  //     name: sub,
+  //   }));
+  // };
+  
+  // console.log(process(allCategories));
+
+
   return (
     <Box
       display={{ xs: "flex", sm: "block", md: "none" }}
@@ -143,18 +215,12 @@ export default function Menu() {
               </Typography>
             </AccordionDetails>
           </Accordion>
-
+          <Subcategories />
           <Divider />
-          {/* <MenuItem>
-            <ListItemText>Our blog</ListItemText>
-          </MenuItem>
-          <MenuItem>
-            <ListItemText>About Seedra</ListItemText>
-          </MenuItem>
-          <Divider />
-          <SocialNetworks /> */}
         </MenuList>
       </Paper>
     </Box>
   );
 }
+
+export default Menu;

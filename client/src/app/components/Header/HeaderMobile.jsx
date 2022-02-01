@@ -10,6 +10,7 @@ import Menu from "../Menu/Menu.jsx";
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 
+
 const HeaderMobile = () => {
   const classes = useStyles();
   const favoritesLength = 0;

@@ -10,7 +10,6 @@ import {
 import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
-// import AppLayout from "./app/components/AppLayout/AppLayout.jsx"; --MVP - add routes
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -43,26 +42,4 @@ function App() {
   );
 }
 
-/*
-
-Don't delete!!!. After creating Header & Footer with links as props will be connected. --MVP
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<Home />} />
-          <Route path="products" element={<AllProducts />} />
-          <Route path="description" element={<CurrentProduct />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="about" element={<AboutSeedra />} />
-          <Route path="contact" element={<Page404 />} />
-          <Route path="*" element={<Page404 />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
-*/
 export default App;

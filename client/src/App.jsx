@@ -4,15 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
 import {
-  downloadRequestStateSelector,
+  downloadProductsRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+import fetchSlides from "./store/thunks/slides.thunks";
 // import AppLayout from "./app/components/AppLayout/AppLayout.jsx"; --MVP - add routes
 
 function App() {
-  const downloadRequestState = useSelector(downloadRequestStateSelector);
+  const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const productList = useSelector(productsSelector);
   const dispatch = useDispatch();
 
@@ -21,11 +22,17 @@ function App() {
   }, []);
 
   useEffect(() => {
+    dispatch(fetchSlides());
+  }, []);
+
+  useEffect(() => {
     dispatch(fetchProducts());
   }, []);
+
   if (downloadRequestState === "loading") {
     return <Preloader />;
   }
+  
   return (
      <div>
       <Home 

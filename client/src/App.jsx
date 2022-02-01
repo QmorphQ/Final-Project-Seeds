@@ -15,7 +15,6 @@ function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const productList = useSelector(productsSelector);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Fetch  from "../../hoc/Fetch.jsx";
 import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection";
+import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 
 const ProductsList = ({loading, productList}) => {
 
@@ -10,7 +11,7 @@ const ProductsList = ({loading, productList}) => {
       data={productList}
       renderSuccess={ProductsListSection}
       loadingFallback={<p>Loading...</p>}
-      renderError={<p>Error</p>}
+      renderError={<ErrorHandler errorMessage="There is some problem with products downloading"/>}
     />
   );
 }

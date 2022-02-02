@@ -21,15 +21,23 @@ export const downloadProductsRequestStateSelector = (state) =>
   state.products.downloadRequestState;
 
 export const productsSelector = (state) => {
-  console.log(state.products.selectedCategories);
   if (state.products.selectedCategories === "all") {
     return state.products.productList;
   }
 
-  const filteredProducts = state.products.productList.filter(
-    (product) => product.categories === state.products.selectedCategories
-  );
+  if (state.products.selectedCategories === "bundles") {
+    const bundle = state.products.productList.filter(
+      (product) => product.categories.indexOf("mix") > -1
+    );
 
+    return bundle;
+  }
+
+  const filteredProducts = state.products.productList.filter(
+    (product) =>
+      product.categories.indexOf(state.products.selectedCategories) > -1
+  );
+  
   return filteredProducts;
 };
 

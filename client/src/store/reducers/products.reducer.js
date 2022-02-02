@@ -37,7 +37,6 @@ const productsReducer = (state = initialState, action) => {
       };
 
     case FILTER_BY_CATEGORY:
-      console.log(action.payload);
       return {
         ...state,
         selectedCategories: action.payload,

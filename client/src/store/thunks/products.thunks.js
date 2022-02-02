@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../../app/constants";
 import {
   downloadAllProductsRequested,
   downloadAllProductsSuccess,
@@ -10,7 +11,7 @@ import {
 } from "../actions/products.actions";
 
 const fetchProducts =
-  (uri = "http://localhost:8000/api/products") =>
+  (uri = `${API}products`) =>
   (dispatch) => {
     dispatch(downloadAllProductsRequested());
     axios
@@ -27,7 +28,7 @@ const fetchProducts =
 const rateProduct = (id, upddatedProduct) => (dispatch) => {
   dispatch(uploadProductRatingRequested());
   axios
-    .put(`http://localhost:5000/api/products/${id}`, upddatedProduct, {
+    .put(`${API}products/${id}`, upddatedProduct, {
       headers: { Authorization: localStorage.getItem("jwt") },
     })
     .then((product) => {

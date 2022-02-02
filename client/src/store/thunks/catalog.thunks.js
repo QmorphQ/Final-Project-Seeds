@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../../app/constants";
 import {
   downloadAllCategoriesRequested,
   downloadAllCategoriesSuccess,
@@ -6,7 +7,7 @@ import {
 } from "../actions/catalog.actions";
 
 const fetchCategories =
-  (uri = "http://localhost:8000/api/catalog") =>
+  (uri = `${API}catalog`) =>
   (dispatch) => {
     dispatch(downloadAllCategoriesRequested());
     axios

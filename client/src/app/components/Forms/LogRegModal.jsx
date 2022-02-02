@@ -1,14 +1,14 @@
-
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
-import { Box, Grid } from "@material-ui/core";
-import TextfieldWrapper from './LogRegTextfield.jsx';
+import { Grid, Container, Typography, Box } from "@material-ui/core";
+import Textfield from './Components/FormsUI/Textfield';
+import Button from './Components/FormsUI/Button';
 
 export default function LogReg() {
 
     const INITIAL_FORM_STATE = {
-        email: 'eded',
-        password: 'eded',
+        email: '',
+        password: '',
     };
     
     const FORM_VALIDATION = Yup.object().shape({
@@ -21,39 +21,53 @@ export default function LogReg() {
         .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
     })
 
-    console.log(INITIAL_FORM_STATE.email);
-    console.log(INITIAL_FORM_STATE.password);
 
     return (
-        <Box sx={{
-          width: 300,
-          height: 300,
-        }}>
-            <Formik
-                inititialValues={{ ...INITIAL_FORM_STATE }}
-                validationSchema={FORM_VALIDATION}
-                onSubmit={values => {
+            <Container>
+              <Box sx={{border: '1px solid #70737C', p:3, borderRadius: 10, width:300, margin:"0 auto"}}>
+                <Formik
+                  initialValues={{
+                    ...INITIAL_FORM_STATE
+                  }}
+                  validationSchema={FORM_VALIDATION}
+                  onSubmit={values => {
                     console.log(values);
-                }}>
-                <Form>
+                  }}
+                >
+                  <Form>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextfieldWrapper
-                                name='email'
-                                label='Email'
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextfieldWrapper
-                                name='password'
-                                label='Password'
-                                
-                            />
-                        </Grid>
+                      <Grid item xs={12}>
+                        <Typography color=''>
+                          Login
+                        </Typography>
+                      </Grid>
+    
+                      <Grid item xs={12}>
+                        <Textfield
+                          name="email"
+                          label="Email"
+                        />
+                      </Grid>  
+
+                      <Grid item xs={12}>
+                        <Textfield
+                          name="password"
+                          label="Password"
+                          type='password'
+                          />
+                      </Grid> 
+                                 
+                      <Grid item xs={12}>
+                        <Button>
+                          Submit Form
+                        </Button>
+                      </Grid>
                     </Grid>
-                </Form>
-            </Formik>
-        </Box>
-    )
+    
+                  </Form>
+                </Formik>
+              </Box>
+            </Container>
+      );
 }
 

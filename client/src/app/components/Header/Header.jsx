@@ -8,6 +8,7 @@ export default function Header() {
     <>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
         <HeaderMobile />
+        <LogReg/>
       </Box>
       <Box display={{ xs: "none", sm: "none", md: "block" }}>
         <HeaderDesktop />

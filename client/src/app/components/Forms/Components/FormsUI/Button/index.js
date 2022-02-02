@@ -10,10 +10,11 @@ const ButtonWrapper = ({
   const handleSubmit = () => {
     submitForm();
   }
+  
 
   const configButton = {
     variant: 'contained',
-    color: 'main',
+    color: 'primary',
     fullWidth: true,
     onClick: handleSubmit
   }

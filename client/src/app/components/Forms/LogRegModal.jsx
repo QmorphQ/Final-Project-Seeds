@@ -1,11 +1,13 @@
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
-import { Grid, Container, Typography, Box } from "@material-ui/core";
+import { Grid, Typography, Box, IconButton } from "@material-ui/core";
+import CloseIcon from '@mui/icons-material/Close';
+import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import Button from './Components/FormsUI/Button';
 
 export default function LogReg() {
-
+    const classes = useStyles();
     const INITIAL_FORM_STATE = {
         email: '',
         password: '',
@@ -23,8 +25,7 @@ export default function LogReg() {
 
 
     return (
-            <Container>
-              <Box sx={{border: '1px solid #70737C', p:3, borderRadius: 10, width:300, margin:"0 auto"}}>
+              <Box sx={{border: `1px solid green`, p:3, borderRadius: 10, width:300, margin:"0 auto"}}>
                 <Formik
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -37,8 +38,8 @@ export default function LogReg() {
                   <Form>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
-                        <Typography color=''>
-                          Login
+                        <Typography sx={{}} className={classes.iconsStyle}>
+                          Login <IconButton sx={{}}><CloseIcon className={classes.iconsStyle}/></IconButton>
                         </Typography>
                       </Grid>
     
@@ -59,7 +60,7 @@ export default function LogReg() {
                                  
                       <Grid item xs={12}>
                         <Button>
-                          Submit Form
+                          Login
                         </Button>
                       </Grid>
                     </Grid>
@@ -67,7 +68,6 @@ export default function LogReg() {
                   </Form>
                 </Formik>
               </Box>
-            </Container>
       );
 }
 

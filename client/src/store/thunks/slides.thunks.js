@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../../app/constants";
 import {
   downloadAllSlidesRequested,
   downloadAllSlidesSuccess,
@@ -6,7 +7,7 @@ import {
 } from "../actions/slides.actions";
 
 const fetchSlides =
-  (uri = "http://localhost:5000/api/slides") =>
+  (uri = `${API}slides`) =>
   (dispatch) => {
     dispatch(downloadAllSlidesRequested());
     axios

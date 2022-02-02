@@ -12,7 +12,7 @@ import {
   Typography,
   Link,
 } from "@mui/material";
-import Accord from "./Accord.jsx";
+// import Accord from "./Accord.jsx";
 
 const Subcategories = () => {
   //const name = ["herbs-mono", "herbs-mix"];

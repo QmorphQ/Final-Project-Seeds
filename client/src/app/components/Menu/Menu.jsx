@@ -17,210 +17,156 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import fetchCategories from "../../../store/thunks/catalog.thunks";
 import {
-  downloadRequestStateSelector,
+  // downloadRequestStateSelector,
   allCategoriesSelector,
   mainCategoriesSelector,
 } from "../../../store/selectors/selectors";
-import Subcategories from "./Subcategories.jsx";
+// import Subcategories from "./Subcategories.jsx";
 
 const Menu = () => {
 
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, []);
-
-
-  const allCategories = useSelector(allCategoriesSelector);
-  const mainCategories = useSelector(mainCategoriesSelector);
-  const downloadRequestState = useSelector(downloadRequestStateSelector);
-
-const result = [
-  {
-      "parentId": "null",
-      "name": [
-          "all",
-          "bundles",
-          "herbs",
-          "vegetables",
-          "flowers"
-      ]
-  },
-  {
-      "parentId": "herbs",
-      "name": [
-          "herbs-mono",
-          "herbs-mix"
-      ]
-  },
-  {
-      "parentId": "vegetables",
-      "name": [
-          "vegetables-mono",
-          "vegetables-mix"
-      ]
-  },
-  {
-      "parentId": "flowers",
-      "name": [
-          "flowers-mono",
-          "flowers-mix"
-      ]
-  }
+    const result = [
+        {
+            "parentId": "null",
+            "name": [
+                "all",
+                "bundles",
+                "herbs",
+                "vegetables",
+                "flowers"
+            ]
+        },
+        {
+            "parentId": "herbs",
+            "name": [
+                "herbs-mono",
+                "herbs-mix"
+            ]
+        },
+        {
+            "parentId": "vegetables",
+            "name": [
+                "vegetables-mono",
+                "vegetables-mix"
+            ]
+        },
+        {
+            "parentId": "flowers",
+            "name": [
+                "flowers-mono",
+                "flowers-mix"
+            ]
+        }
+      ];
+  
+      const subArr = [
+      {
+          "parentId": "herbs",
+          "name": [
+              "herbs-mono",
+              "herbs-mix"
+          ]
+      },
+      {
+          "parentId": "vegetables",
+          "name": [
+              "vegetables-mono",
+              "vegetables-mix"
+          ]
+      },
+      {
+          "parentId": "flowers",
+          "name": [
+              "flowers-mono",
+              "flowers-mix"
+          ]
+      }
 ];
   
-  // const process = (arr) => {
-  //   const res = {};
-    
-  //   arr.forEach(({ parentId, name }) => {
-  //     res[parentId] ??= { parentId, sub: [] };
-  //     res[parentId].sum.push(name);
-      
-  //   });
-  //   return Object.values(res).map(({ parentId, sub }) => ({
-  //     parentId,
-  //     name: sub,
-  //   }));
-  // };
+
+
+const arrCat = result.filter(e => e.parentId === "null");
+console.log(arrCat);
+const [{name}] = arrCat;
+console.log(name);
+
+
+
+
+      const filterBy = (a, b) => {
+        let typedArr = a.filter(function (a) {
+            console.log(a);
+            if ((!b.find((item) => item.parentId === a))) {
+                return a
+            }
+            
+          
+        });
+        return typedArr;
+      };
   
-  // console.log(process(allCategories));
+        console.log(subArr);
+        console.log(filterBy(name, subArr));
+        const parentArr = filterBy(name, subArr);
+    //     const productsList = filterBy(testArr, propArr);
+    //     console.log(productsList);
+
+const categoriesWithoutСhildren = parentArr.map((e, i) => (
+        <MenuItem key={i} >
+          <Link href={`/${e}`} underline="none" >{(e === "all")? ((e.charAt(0).toUpperCase() + e.slice(1)) + " vegetables") : (e.charAt(0).toUpperCase() + e.slice(1)) }</Link>
+        </MenuItem>
+));
+
+
+const cardsList = subArr.map((e) => (
+
+<Accordion key={e.parentId}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <MenuItem>
+              <ListItemText>{e.parentId.charAt(0).toUpperCase() + e.parentId.slice(1)}</ListItemText>
+            </MenuItem>
+          </AccordionSummary>
+          {e.name.map((item, i) => (
+        <AccordionDetails key={i}>
+        <Link href={`${e.parentId}/${item}`} underline="none">{item.charAt(0).toUpperCase() + item.slice(1)}</Link>
+            </AccordionDetails>
+      ))}
+          {/* <AccordionDetails>
+          <Link href="#" underline="none">{"2"}</Link>
+              
+           
+          </AccordionDetails> */}
+        </Accordion>
+        ));
+
 
 
   return (
-    <Box
-      display={{ xs: "flex", sm: "block", md: "none" }}
-      sx={{ flexWrap: "wrap" }}
-    >
-      <Paper
-        sx={{
-          p: 2,
-          width: "50%",
-          maxWidth: "100%",
-          position: "absolute",
-          zIndex: "3",
-          left: "45%",
-          boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        <SearchAppBar />
+
+
+    <Box display={{ xs: "flex", sm: "block", md: "flex" }} sx={{flexWrap: "wrap"}}>
+    {/* <Paper  sx={{p: 2, width: "50%", maxWidth: "100%", position: "absolute", zIndex: "3", left: "45%", boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)"}}> */}
+    <Paper display="flex"  sx={{p: 2, width: "50%", maxWidth: "100%", boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)"}}>
+      {/* <Box display={{ xs: "flex", sm: "block", md: "none" }} sx={{flexWrap: "wrap"}}> */}
+      <SearchAppBar />
+      
         <MenuList>
-          <MenuItem>
-            <ListItemText>All vegetables</ListItemText>
-          </MenuItem>
-          <Accordion sx={{ boxShadow: "none" }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <MenuItem>
-                <ListItemText>Bundles</ListItemText>
-              </MenuItem>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Link href="#" underline="none">
-                {"12 Herb Seeds"}
-              </Link>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion sx={{ boxShadow: "none" }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <MenuItem>
-                <ListItemText>Herbs</ListItemText>
-              </MenuItem>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion sx={{ boxShadow: "none" }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <MenuItem>
-                <ListItemText>Vegetables</ListItemText>
-              </MenuItem>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion sx={{ boxShadow: "none" }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <MenuItem>
-                <ListItemText>Fruits</ListItemText>
-              </MenuItem>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion sx={{ boxShadow: "none" }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <MenuItem>
-                <ListItemText>Supplies</ListItemText>
-              </MenuItem>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion sx={{ boxShadow: "none" }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <MenuItem>
-                <ListItemText>Flowers</ListItemText>
-              </MenuItem>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Subcategories />
-          <Divider />
-        </MenuList>
-      </Paper>
+        {categoriesWithoutСhildren}
+        {/* <MenuItem>
+          <ListItemText>All vegetables</ListItemText>
+        </MenuItem> */}
+         {cardsList}
+      </MenuList>
+      {/* </Box> */}
+    </Paper>
     </Box>
+
+      
   );
-}
+};
 
 export default Menu;

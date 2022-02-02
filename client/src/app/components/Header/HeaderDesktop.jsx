@@ -5,6 +5,7 @@ import useStyles from "./HeaderStyles.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
+import Menu from "../Menu/Menu.jsx";
 
 const HeaderDesktop = () => {
   const classes = useStyles();
@@ -26,7 +27,8 @@ const HeaderDesktop = () => {
               pr: "64px",
             }}
           >
-            <Link
+             <Menu />
+            {/* <Link
               href="#"
               underline="none"
               sx={{ fontSize: 14, color: "#70737C" }}
@@ -46,7 +48,7 @@ const HeaderDesktop = () => {
               sx={{ fontSize: 14, color: "#70737C" }}
             >
               {"CONTACTS"}
-            </Link>
+            </Link> */}
           </Box>
 
           <Box display="flex">

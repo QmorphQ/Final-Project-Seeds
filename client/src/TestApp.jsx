@@ -6,6 +6,7 @@ import ViewInArIcon from "@mui/icons-material/ViewInAr";
 import { fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+import Header from "./app/components/Header/Header.jsx"
 // =======================================================================================================
 // -------------------------------------------------------------------------------------------------------
 // ++++++
@@ -43,7 +44,8 @@ export default function TestApp() {
   return (
     <>
       <TestWarning />
-      <Preloader />
+      {/* <Preloader /> */}
+      <Header />
     </>
   );
 }

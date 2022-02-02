@@ -5,7 +5,7 @@ import {
   FILTER_BY_CATEGORY,
   UPLOAD_PRODUCT_RATING_REQUESTED,
   UPLOAD_PRODUCT_RATING_SUCCESS,
-  UPLOAD_PRODUCT_RATING_ERROR
+  UPLOAD_PRODUCT_RATING_ERROR,
 } from "../actions/products.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -37,29 +37,35 @@ const productsReducer = (state = initialState, action) => {
       };
 
     case FILTER_BY_CATEGORY:
+      console.log(action.payload);
       return {
         ...state,
         selectedCategories: action.payload,
       };
 
-      case UPLOAD_PRODUCT_RATING_REQUESTED:
-        return {
-          ...state,
-          uploadRatingRequestState: downloadRequestStates.LOADING,
-        };
-  
-      case UPLOAD_PRODUCT_RATING_SUCCESS:
-        return {
-          ...state,
-          uploadRatingRequestState: downloadRequestStates.SUCCESS,
-          productList: [...state.productList.filter(product => product.itemNo !== action.payload.data.itemNo), action.payload.data]/* MVP - added state.product */
-        };
-  
-      case UPLOAD_PRODUCT_RATING_ERROR:
-        return {
-          ...state,
-          uploadRatingRequestState: downloadRequestStates.ERROR,
-        };
+    case UPLOAD_PRODUCT_RATING_REQUESTED:
+      return {
+        ...state,
+        uploadRatingRequestState: downloadRequestStates.LOADING,
+      };
+
+    case UPLOAD_PRODUCT_RATING_SUCCESS:
+      return {
+        ...state,
+        uploadRatingRequestState: downloadRequestStates.SUCCESS,
+        productList: [
+          ...state.productList.filter(
+            (product) => product.itemNo !== action.payload.data.itemNo
+          ),
+          action.payload.data,
+        ] /* MVP - added state.product */,
+      };
+
+    case UPLOAD_PRODUCT_RATING_ERROR:
+      return {
+        ...state,
+        uploadRatingRequestState: downloadRequestStates.ERROR,
+      };
 
     default:
       return state;

@@ -3,6 +3,9 @@ import {
   DOWNLOAD_ALL_PRODUCTS_REQUESTED,
   DOWNLOAD_ALL_PRODUCTS_ERROR,
   FILTER_BY_CATEGORY,
+  ADD_PRODUCT_REQUESTED,
+  ADD_PRODUCT_SUCCESS,
+  ADD_PRODUCT_ERROR,
   UPLOAD_PRODUCT_RATING_REQUESTED,
   UPLOAD_PRODUCT_RATING_SUCCESS,
   UPLOAD_PRODUCT_RATING_ERROR
@@ -11,6 +14,7 @@ import { downloadRequestStates } from "../../app/constants";
 
 const initialState = {
   downloadRequestState: downloadRequestStates.IDLE,
+  addProductRequestState: downloadRequestStates.IDLE,
   productList: [],
   selectedCategories: "all",
 };
@@ -40,6 +44,25 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedCategories: action.payload,
+      };
+
+      case ADD_PRODUCT_REQUESTED:
+      return {
+        ...state,
+        addProductRequestState: downloadRequestStates.LOADING,
+      };
+
+      case ADD_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        addProductRequestState: downloadRequestStates.LOADING,
+        productList: [...state.productList, action.payload.data]
+      };
+
+      case ADD_PRODUCT_ERROR:
+      return {
+        ...state,
+        addProductRequestState: downloadRequestStates.ERROR,
       };
 
       case UPLOAD_PRODUCT_RATING_REQUESTED:

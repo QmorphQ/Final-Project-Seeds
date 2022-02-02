@@ -4,6 +4,9 @@ import {
   downloadAllProductsSuccess,
   downloadAllProductsError,
   filterByCategory,
+  addProductRequested,
+  addProductSuccess,
+  addProductError,
   uploadProductRatingRequested,
   uploadProductRatingError,
   uploadProductRatingSuccess,
@@ -24,24 +27,43 @@ const fetchProducts =
       });
   };
 
-  const rateProduct =
-  (id, upddatedProduct) =>
-  (dispatch) => {
-    dispatch(uploadProductRatingRequested());
-    axios
-      .put(`http://localhost:5000/api/products/${id}`, upddatedProduct, {headers: {"Authorization": localStorage.getItem("jwt")}})
-      .then((product) => {
-        dispatch(uploadProductRatingSuccess(product));
-        return product;
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(uploadProductRatingError());
-      });
-  };
+const addProduct = (product) => (dispatch) => {
+  dispatch(addProductRequested());
+  const token = localStorage.getItem("jwt");
+  console.log(token);
+  axios
+    .post("http://localhost:5000/api/products", product, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then((addedProduct) => {
+      dispatch(addProductSuccess(addedProduct));
+      return addedProduct;
+    })
+    .catch(() => {
+      dispatch(addProductError());
+    });
+};
+
+const rateProduct = (id, updatedProduct) => (dispatch) => {
+  dispatch(uploadProductRatingRequested());
+  axios
+    .put(`http://localhost:5000/api/products/${id}`, updatedProduct, {
+      headers: { Authorization: localStorage.getItem("jwt") },
+    })
+    .then((product) => {
+      dispatch(uploadProductRatingSuccess(product));
+      return product;
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(uploadProductRatingError());
+    });
+};
 
 const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
-export { filterProductsByCategory, fetchProducts, rateProduct };
+export { filterProductsByCategory, fetchProducts, addProduct, rateProduct };

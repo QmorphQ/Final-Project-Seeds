@@ -27,6 +27,7 @@ const loginCustomer = (userData) => (dispatch) => {
     .then((loginResult) => {
       localStorage.setItem("jwt", loginResult.data.token);
       dispatch(loginCustomerSuccess(loginResult));
+      console.log("loggeed innnnnn")
     })
     .catch(() => {
       dispatch(loginCustomerError());

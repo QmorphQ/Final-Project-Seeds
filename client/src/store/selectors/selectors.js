@@ -37,4 +37,6 @@ export const downloadSlidesRequestStateSelector = (state) =>
 
 export const slidesSelector = (state) => state.slides.slideList;
 
-export const customersSelector = (state) => state.customer;
+// export const customersSelector = (state) => state.customer;
+
+export const cartSelector = (state) => state.cart.cart;

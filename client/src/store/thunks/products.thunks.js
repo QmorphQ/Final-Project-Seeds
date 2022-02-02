@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../../app/constants";
 import {
   downloadAllProductsRequested,
   downloadAllProductsSuccess,
@@ -13,7 +14,7 @@ import {
 } from "../actions/products.actions";
 
 const fetchProducts =
-  (uri = "http://localhost:5000/api/products") =>
+  (uri = `${API}products`) =>
   (dispatch) => {
     dispatch(downloadAllProductsRequested());
     axios
@@ -32,7 +33,7 @@ const addProduct = (product) => (dispatch) => {
   const token = localStorage.getItem("jwt");
   console.log(token);
   axios
-    .post("http://localhost:5000/api/products", product, {
+    .post(`${API}products`, product, {
       headers: {
         Authorization: `${token}`,
       },
@@ -49,7 +50,7 @@ const addProduct = (product) => (dispatch) => {
 const rateProduct = (id, updatedProduct) => (dispatch) => {
   dispatch(uploadProductRatingRequested());
   axios
-    .put(`http://localhost:5000/api/products/${id}`, updatedProduct, {
+    .put(`${API}/products/${id}`, updatedProduct, {
       headers: { Authorization: localStorage.getItem("jwt") },
     })
     .then((product) => {

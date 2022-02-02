@@ -7,7 +7,12 @@ import { addProduct, fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import { loginCustomer } from "./store/thunks/customer.thunks";
-import { addCart, addProductToCart, fetchCart } from "./store/thunks/cart.thunks";
+import {
+  addCart,
+  addProductToCart,
+  fetchCart,
+} from "./store/thunks/cart.thunks";
+import { addProductToWishlist, addWishlist, fetchWishlist } from "./store/thunks/wishlist.thunks";
 // =======================================================================================================
 // -------------------------------------------------------------------------------------------------------
 // ++++++
@@ -35,7 +40,7 @@ function TestWarning() {
 // ------------------------------------------------- TEST APP ----------------------------------------
 export default function TestApp() {
   // Pressets:
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // ----------------------------
   useEffect(() => {
     dispatch(fetchCategories());
@@ -45,7 +50,7 @@ export default function TestApp() {
   // const newProduct = {
   //   "name": "teeeesssst from code",
   //   "currentPrice": 18.89,
-  //   "categories": "herbs-mix",  
+  //   "categories": "herbs-mix",
   //   "description": "SEEDRA 15 Herb Seeds Variety Pack contains 15 herbs - Basil, Thyme, Lavender, Sage, Parsley, Chives, Rosemary, Tarragon, Oregano, Fennel, Mint, Cilantro, Dill, Savory, Lemon Mint. Free Tools - professional instructions, pH tester, 15 plant markers",
   //   "imageUrls": [
   //     "https://res.cloudinary.com/danbeavers/image/upload/v1643483461/A1JINiGVodL._AC_SL1500__f5hgdy.jpg"
@@ -56,7 +61,7 @@ export default function TestApp() {
 
   // useEffect(() => {
   //   dispatch(addProduct(newProduct));
-    
+
   // }, []);
 
   // const login = {
@@ -66,7 +71,7 @@ export default function TestApp() {
 
   // useEffect(() => {
   //     dispatch(loginCustomer(login));
-      
+
   //   }, []);
 
   // const newCart = {
@@ -80,19 +85,34 @@ export default function TestApp() {
 
   // useEffect(() => {
   //   dispatch(addCart(newCart));
-    
+
   // }, []);
 
   // useEffect(() => {
   //   dispatch(fetchCart());
-    
+
+  // }, []);
+
+  // useEffect(() => {
+  //   dispatch(addProductToCart("61f6c0f0481e16304cbbbd62"));
+  // }, []);
+
+  // const newWishlist = {
+  //   products: ["5da463678cca382250dd7bc7", "5d73ad04fcad90130470f08b"]
+  // };
+
+  // useEffect(() => {
+  //   dispatch(addWishlist(newWishlist));
   // }, []);
 
   useEffect(() => {
-    dispatch(addProductToCart("61f6c0f0481e16304cbbbd62"));
-    
+    dispatch(addProductToWishlist("61f6c1df481e16304cbbbd77"));
   }, []);
-
+  
+  // useEffect(() => {
+  //   dispatch(fetchWishlist());
+  // }, []);
+  
 
   // ----------------------------
   return (

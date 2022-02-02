@@ -8,7 +8,7 @@ import {
   ADD_PRODUCT_ERROR,
   UPLOAD_PRODUCT_RATING_REQUESTED,
   UPLOAD_PRODUCT_RATING_SUCCESS,
-  UPLOAD_PRODUCT_RATING_ERROR
+  UPLOAD_PRODUCT_RATING_ERROR,
 } from "../actions/products.actions";
 import { downloadRequestStates } from "../../app/constants";
 

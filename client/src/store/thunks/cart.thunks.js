@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../../app/constants";
 import {
   downloadCartSuccess,
   downloadCartRequested,
@@ -12,7 +13,7 @@ import {
 } from "../actions/cart.actions";
 
 const fetchCart =
-  (uri = "http://localhost:5000/api/cart") =>
+  (uri = `${API}cart`) =>
   (dispatch) => {
     const token = localStorage.getItem("jwt");
     dispatch(downloadCartRequested());
@@ -24,7 +25,7 @@ const fetchCart =
           },
         })
         .then((cart) => {
-          dispatch(downloadCartSuccess(cart));
+          dispatch(downloadCartSuccess(cart.data));
           return cart;
         })
         .catch(() => {
@@ -32,7 +33,6 @@ const fetchCart =
         });
     } else {
       const cartFromLS = JSON.parse(localStorage.getItem("cart"));
-      console.log(cartFromLS);
       dispatch(downloadCartSuccess(cartFromLS));
     }
   };
@@ -42,13 +42,13 @@ const addCart = (cart) => (dispatch) => {
   const token = localStorage.getItem("jwt");
   if (token) {
     axios
-      .post("http://localhost:5000/api/cart", cart, {
+      .post(`${API}cart`, cart, {
         headers: {
           Authorization: `${token}`,
         },
       })
       .then((addedCart) => {
-        dispatch(addCartSuccess(addedCart));
+        dispatch(addCartSuccess(addedCart.data));
         return addedCart;
       })
       .catch(() => {
@@ -56,7 +56,6 @@ const addCart = (cart) => (dispatch) => {
       });
   } else {
     dispatch(addCartSuccess(cart));
-    console.log("added cart to LS");
     localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
@@ -64,28 +63,32 @@ const addCart = (cart) => (dispatch) => {
 const addProductToCart = (productId) => (dispatch) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
+
   if (token) {
     axios
-      .put(`http://localhost:5000/api/cart/${productId}`, {
+      .put(`${API}cart/${productId}`, false, {
         headers: {
           Authorization: `${token}`,
         },
       })
       .then((updatedCart) => {
-          console.log(updatedCart)
-        dispatch(addProductToCartSuccess(updatedCart));
+        dispatch(addProductToCartSuccess(updatedCart.data));
         return updatedCart;
       })
       .catch(() => {
         dispatch(addProductToCartError());
       });
   } else {
+    const newProduct = {
+      product: productId,
+      cartQuantity: 1,
+    };
     const oldCart = JSON.parse(localStorage.getItem("cart"));
-    const updatedCart = { ...oldCart, ...oldCart.products[productId] };
+    const updatedCart = [...oldCart];
+    updatedCart.push(newProduct);
     dispatch(addProductToCartSuccess(updatedCart));
     localStorage.removeItem("cart");
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    console.log(updatedCart);
   }
 };
 

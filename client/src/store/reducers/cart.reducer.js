@@ -5,12 +5,16 @@ import {
   ADD_CART_REQUESTED,
   ADD_CART_SUCCESS,
   ADD_CART_ERROR,
+  PRODUCT_TO_CART_REQUESTED,
+  PRODUCT_TO_CART_SUCCESS,
+  PRODUCT_TO_CART_ERROR,
 } from "../actions/cart.actions";
 import { downloadRequestStates } from "../../app/constants";
 
 const initialState = {
   downloadRequestState: downloadRequestStates.IDLE,
   addCartRequestState: downloadRequestStates.IDLE,
+  addProductToCartRequestState: downloadRequestStates.IDLE,
   cart: null,
 };
 
@@ -26,7 +30,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         downloadRequestState: downloadRequestStates.SUCCESS,
-        cart: action.payload.data,
+        cart: action.payload,
       };
 
     case DOWNLOAD_CART_ERROR:
@@ -45,13 +49,32 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         addCartRequestState: downloadRequestStates.LOADING,
-        cart: action.payload.data,
+        cart: action.payload,
       };
 
     case ADD_CART_ERROR:
       return {
         ...state,
         addCartRequestState: downloadRequestStates.ERROR,
+      };
+
+    case PRODUCT_TO_CART_REQUESTED:
+      return {
+        ...state,
+        addProductToCartRequestState: downloadRequestStates.LOADING,
+      };
+
+    case PRODUCT_TO_CART_SUCCESS:
+      return {
+        ...state,
+        addProductToCartRequestState: downloadRequestStates.LOADING,
+        cart: action.payload,
+      };
+
+    case PRODUCT_TO_CART_ERROR:
+      return {
+        ...state,
+        addProductToCartRequestState: downloadRequestStates.ERROR,
       };
 
     default:

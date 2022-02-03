@@ -1,12 +1,12 @@
 import { Box, AppBar, Toolbar, IconButton, Badge, Link } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { Button } from "@material-ui/core";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import LogReg from "../Forms/LogRegModal.jsx";
+import LogIn from "../Forms/LogRegModal.jsx";
 import useStyles from "./HeaderStyles.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
+import SignUp from "../Forms/RegLogModal.jsx";
 
 
 const HeaderDesktop = () => {
@@ -61,8 +61,8 @@ const HeaderDesktop = () => {
             </Badge>
           </IconButton>
           <HeaderIcons />
-          <Button color="primary" variant="outlined">Sign up</Button>
-          <LogReg/>
+          <LogIn/>
+          <SignUp/>
           {/* <IconButton
             size="large"
             edge="end"

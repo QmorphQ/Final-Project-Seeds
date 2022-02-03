@@ -3,6 +3,9 @@ import {
   DOWNLOAD_ALL_PRODUCTS_REQUESTED,
   DOWNLOAD_ALL_PRODUCTS_ERROR,
   FILTER_BY_CATEGORY,
+  ADD_PRODUCT_REQUESTED,
+  ADD_PRODUCT_SUCCESS,
+  ADD_PRODUCT_ERROR,
   UPLOAD_PRODUCT_RATING_REQUESTED,
   UPLOAD_PRODUCT_RATING_SUCCESS,
   UPLOAD_PRODUCT_RATING_ERROR,
@@ -11,6 +14,7 @@ import { downloadRequestStates } from "../../app/constants";
 
 const initialState = {
   downloadRequestState: downloadRequestStates.IDLE,
+  addProductRequestState: downloadRequestStates.IDLE,
   productList: [],
   selectedCategories: "all",
 };
@@ -42,29 +46,43 @@ const productsReducer = (state = initialState, action) => {
         selectedCategories: action.payload,
       };
 
-    case UPLOAD_PRODUCT_RATING_REQUESTED:
+      case ADD_PRODUCT_REQUESTED:
       return {
         ...state,
-        uploadRatingRequestState: downloadRequestStates.LOADING,
+        addProductRequestState: downloadRequestStates.LOADING,
       };
 
-    case UPLOAD_PRODUCT_RATING_SUCCESS:
+      case ADD_PRODUCT_SUCCESS:
       return {
         ...state,
-        uploadRatingRequestState: downloadRequestStates.SUCCESS,
-        productList: [
-          ...state.productList.filter(
-            (product) => product.itemNo !== action.payload.data.itemNo
-          ),
-          action.payload.data,
-        ] /* MVP - added state.product */,
+        addProductRequestState: downloadRequestStates.LOADING,
+        productList: [...state.productList, action.payload.data]
       };
 
-    case UPLOAD_PRODUCT_RATING_ERROR:
+      case ADD_PRODUCT_ERROR:
       return {
         ...state,
-        uploadRatingRequestState: downloadRequestStates.ERROR,
+        addProductRequestState: downloadRequestStates.ERROR,
       };
+
+      case UPLOAD_PRODUCT_RATING_REQUESTED:
+        return {
+          ...state,
+          uploadRatingRequestState: downloadRequestStates.LOADING,
+        };
+  
+      case UPLOAD_PRODUCT_RATING_SUCCESS:
+        return {
+          ...state,
+          uploadRatingRequestState: downloadRequestStates.SUCCESS,
+          productList: [...state.productList.filter(product => product.itemNo !== action.payload.data.itemNo), action.payload.data]/* MVP - added state.product */
+        };
+  
+      case UPLOAD_PRODUCT_RATING_ERROR:
+        return {
+          ...state,
+          uploadRatingRequestState: downloadRequestStates.ERROR,
+        };
 
     default:
       return state;

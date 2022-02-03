@@ -1,10 +1,13 @@
 import { Box, AppBar, Toolbar, IconButton, Badge, Link } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { Button } from "@material-ui/core";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import LogReg from "../Forms/LogRegModal.jsx";
 import useStyles from "./HeaderStyles.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
+
 
 const HeaderDesktop = () => {
   const classes = useStyles();
@@ -58,7 +61,9 @@ const HeaderDesktop = () => {
             </Badge>
           </IconButton>
           <HeaderIcons />
-          <IconButton
+          <Button color="primary" variant="outlined">Sign up</Button>
+          <LogReg/>
+          {/* <IconButton
             size="large"
             edge="end"
             aria-label="account of current user"
@@ -67,7 +72,7 @@ const HeaderDesktop = () => {
             // onClick={handleProfileMenuOpen}
           >
             <AccountCircle className={classes.iconsStyle} />
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
     </header>

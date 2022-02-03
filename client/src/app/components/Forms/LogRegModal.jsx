@@ -1,13 +1,39 @@
+import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
-import { Grid, Typography, Box, IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Typography, Box, IconButton,Button  } from "@material-ui/core";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
-import Button from './Components/FormsUI/Button';
+import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 
-export default function LogReg() {
+
+
+const style = makeStyles({
+  ItemBlock:{
+    position: "relative"
+  },
+  ItemRight: {
+    position: "absolute",
+    right: "-10px",
+    top: "-10px"
+  },
+  BlockCenter: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#FFF",
+    zIndex: 3,
+  }
+});
+
+
+export default function LogIn() {
     const classes = useStyles();
+    const styles = style();
     const INITIAL_FORM_STATE = {
         email: '',
         password: '',
@@ -15,59 +41,71 @@ export default function LogReg() {
     
     const FORM_VALIDATION = Yup.object().shape({
         email: Yup.string()
-        .email('Invalid email.')
-        .required('Required'),
+        .email('Invalid email.'),
         password: Yup.string()
-        .required('No password provided.') 
-        .min(8, 'Password is too short - should be 8 chars minimum.')
+        .min(8, 'Password is 8 chars minimum.')
         .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
     })
 
+    const [open, setOpen] = useState(false)
+
+    const handleClickOpen = () =>{
+      setOpen(true)
+    }
+
+    const handleClose = () =>{
+      setOpen(false)
+    }
 
     return (
-              <Box sx={{border: `1px solid green`, p:3, borderRadius: 10, width:300, margin:"0 auto"}}>
-                <Formik
-                  initialValues={{
-                    ...INITIAL_FORM_STATE
-                  }}
-                  validationSchema={FORM_VALIDATION}
-                  onSubmit={values => {
-                    console.log(values);
-                  }}
-                >
-                  <Form>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <Typography sx={{}} className={classes.iconsStyle}>
-                          Login <IconButton sx={{}}><CloseIcon className={classes.iconsStyle}/></IconButton>
-                        </Typography>
-                      </Grid>
-    
-                      <Grid item xs={12}>
-                        <Textfield
-                          name="email"
-                          label="Email"
-                        />
-                      </Grid>  
-
-                      <Grid item xs={12}>
-                        <Textfield
-                          name="password"
-                          label="Password"
-                          type='password'
-                          />
-                      </Grid> 
-                                 
-                      <Grid item xs={12}>
-                        <Button>
-                          Login
-                        </Button>
-                      </Grid>
+    <>        
+            <Button onClick={handleClickOpen}  color="primary" variant="contained">Log in</Button>
+              {(open === true) ? 
+            <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 10, width:300, margin:"0 auto"}}>
+              <Formik  
+                initialValues={{
+                  ...INITIAL_FORM_STATE
+                }}
+                validationSchema={FORM_VALIDATION}
+                onSubmit={values => {
+                  console.log(values)
+                  handleClose()
+                }}
+              >
+                <Form>
+                  <Grid container spacing={2}>
+                    <Grid className={styles.ItemBlock} item xs={12}>
+                      <Typography className={classes.iconsStyle}>
+                        Login <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
+                      </Typography>
                     </Grid>
-    
-                  </Form>
-                </Formik>
-              </Box>
-      );
+  
+                    <Grid item xs={12}>
+                      <Textfield
+                        name="email"
+                        label="Email"
+                      />
+                    </Grid>  
+
+                    <Grid item xs={12}>
+                      <Textfield
+                        name="password"
+                        label="Password"
+                        type='password'
+                        />
+                    </Grid> 
+                               
+                    <Grid item xs={12}>
+                      <ButtonWrapper onClick={handleClose}>
+                        Login
+                      </ButtonWrapper>
+                    </Grid>
+                  </Grid>
+                </Form>
+              </Formik>
+            </Box> : false}
+              
+        
+    </>);
 }
 

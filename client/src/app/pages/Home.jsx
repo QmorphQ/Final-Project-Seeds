@@ -1,34 +1,39 @@
+import PropTypes from "prop-types";
 import { Box } from "@mui/material";
-import TabsSection from "../../ui/components/TabsSection/TabsSection.jsx"
-import HeaderMobile from "../../ui/components/Header/HeaderMobile.jsx";
-import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
-import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
-import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
-import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx";
+import OurProducts from "../components/OurProducts/OurProducts.jsx";
+import { downloadRequestStates } from "../constants";
+import Header from "../components/Header/Header.jsx";
+import Footer from "../components/ Footer/Footer.jsx";
+import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
+import ProductsList from "../components/ProductsList/ProductsList.jsx";
+import Product from "../components/Product/Product.jsx";
 
-/* eslint-disable  */
-const Home = ({loading, productList}) => {
-  return (
-    <>
+const Home = ({ loading, productList }) => (
 
-      <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        <HeaderMobile />
-      </Box>
-      <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <HeaderDesktop />
-     </Box>
+  <>
+    <Header />
+    <Box component="main">
+      <MainPageCarousel />
+      <OurProducts loading={loading} productList={productList} />
+      <ProductsList loading={loading} productList={productList} />
+    </Box>
+    <Footer />
+  </>
+);
 
-     <TabsSection loading={loading} productList={productList} />
-     <ProductsList products={productList} loading={loading} />
-       
-     <Box display={{ xs: "block", sm: "block", md: "none" }} >
-        <FooterMobile />
-     </Box>
-     <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <FooterDesktop  />
-     </Box>
-    </>
-  )
-}
+Home.propTypes = {
+  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
+  productList: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      currentPrice: PropTypes.number,
+      categories: PropTypes.string,
+      description: PropTypes.string,
+      imageUrls: PropTypes.arrayOf(PropTypes.string),
+      quantity: PropTypes.number,
+      popular: PropTypes.bool,
+    })
+  ),
+};
 
 export default Home;

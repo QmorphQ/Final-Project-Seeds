@@ -1,24 +1,38 @@
 import { useEffect } from "react";
-import { useSelector , useDispatch } from "react-redux";
-import {fetchProducts} from "./store/thunks/products.thunks";
+import { useSelector, useDispatch } from "react-redux";
+/* import { BrowserRouter, Routes, Route } from "react-router-dom"; */
+import { fetchProducts } from "./store/thunks/products.thunks";
+import fetchCategories from "./store/thunks/catalog.thunks";
 import {
-  downloadRequestStateSelector,
+  downloadProductsRequestStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
+import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+import fetchSlides from "./store/thunks/slides.thunks";
 
 function App() {
-  const downloadRequestState = useSelector(downloadRequestStateSelector);
+  const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const productList = useSelector(productsSelector);
-
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(fetchProducts("/Products.json"));
+    dispatch(fetchCategories());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchSlides());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  if (downloadRequestState === "loading") {
+    return <Preloader />;
+  }
+  
   return (
-    <div>
+     <div>
       <Home 
         loading={downloadRequestState} 
         productList={productList} 
@@ -26,4 +40,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

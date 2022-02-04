@@ -3,7 +3,6 @@ node_modules
 package-lock.json
 /.pnp
 .pnp.js
-.env
 .vscode
 
 # testing
@@ -24,3 +23,8 @@ documentation
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# developing
+/changes.md
+/client/src/DevHelper
+/client/src/TestApp.jsx

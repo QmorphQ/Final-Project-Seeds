@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import {
   ADD_CUSTOMER_REQUESTED,
   ADD_CUSTOMER_SUCCESS,
@@ -7,11 +6,12 @@ import {
   LOGIN_CUSTOMER_SUCCESS,
   LOGIN_CUSTOMER_ERROR,
 } from "../actions/customer.actions";
+import { downloadRequestStates } from "../../app/constants";
 
 const initialState = {
-  addRequestState: "idle",
+  addRequestState: downloadRequestStates.IDLE,
   newCustomer: null,
-  loginRequestState: "idle",
+  loginRequestState: downloadRequestStates.IDLE,
   isLoggedIn: false,
 };
 
@@ -20,39 +20,39 @@ const customerReducer = (state = initialState, action) => {
     case ADD_CUSTOMER_REQUESTED:
       return {
         ...state,
-        addRequestState: "loading",
+        addRequestState: downloadRequestStates.LOADING,
       };
 
     case ADD_CUSTOMER_SUCCESS:
       return {
         ...state,
-        addRequestState: "success",
+        addRequestState: downloadRequestStates.SUCCESS,
         newCustomer: action.payload.data,
       };
 
     case ADD_CUSTOMER_ERROR:
       return {
         ...state,
-        addRequestState: "error",
+        addRequestState: downloadRequestStates.ERROR,
       };
 
     case LOGIN_CUSTOMER_REQUESTED:
       return {
         ...state,
-        loginRequestState: "loading",
+        loginRequestState: downloadRequestStates.LOADING,
       };
 
     case LOGIN_CUSTOMER_SUCCESS:
       return {
         ...state,
-        loginRequestState: "success",
+        loginRequestState: downloadRequestStates.SUCCESS,
         isLoggedIn: action.payload.data.success,
       };
 
     case LOGIN_CUSTOMER_ERROR:
       return {
         ...state,
-        loginRequestState: "error",
+        loginRequestState: downloadRequestStates.ERROR,
       };
 
     default:

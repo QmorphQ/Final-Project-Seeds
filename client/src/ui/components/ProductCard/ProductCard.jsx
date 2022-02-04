@@ -1,16 +1,15 @@
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box } from "@mui/material";
 import PropTypes from 'prop-types';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
+import { useState } from "react";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import RenderComponent from "../../../app/hoc/RenderComponent";
-import { Box } from "@mui/system";
-import { useState } from "react";
 
 const ProductCard = ({ product, loading }) => {
   return (

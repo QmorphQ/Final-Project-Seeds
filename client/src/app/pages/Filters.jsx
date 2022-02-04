@@ -56,7 +56,6 @@ const Filters = ({ loading }) => {
 
   useEffect(() => {
     const queryString = `${API}products/filter?${queryParams}`;
-    console.log(queryString);
     axios
       .get(queryString)
       .then((response) => {
@@ -67,7 +66,6 @@ const Filters = ({ loading }) => {
 
   useEffect(() => {
     const queryString = `${API}products/filter?${queryParams}`;
-    console.log(queryString);
     axios
       .get(queryString)
       .then((response) => {

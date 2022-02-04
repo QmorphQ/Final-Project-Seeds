@@ -12,7 +12,11 @@ import {
   addProductToCart,
   fetchCart,
 } from "./store/thunks/cart.thunks";
-import { addProductToWishlist, addWishlist, fetchWishlist } from "./store/thunks/wishlist.thunks";
+import {
+  addProductToWishlist,
+  addWishlist,
+  fetchWishlist,
+} from "./store/thunks/wishlist.thunks";
 // =======================================================================================================
 // -------------------------------------------------------------------------------------------------------
 // ++++++
@@ -21,6 +25,7 @@ import { addProductToWishlist, addWishlist, fetchWishlist } from "./store/thunks
 // Marker:
 import {
   downloadProductsRequestStateSelector,
+  loginStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
 import Filters from "./app/pages/Filters";
@@ -70,15 +75,17 @@ export default function TestApp() {
 
   // }, []);
 
-  // const login = {
-  //   "loginOrEmail": "danbeavers",
-  //   "password": "justbeavers"
-  // }
+  const login = {
+    loginOrEmail: "danbeavers",
+    password: "justbeavers",
+  };
 
-  // useEffect(() => {
-  //     dispatch(loginCustomer(login));
+  useEffect(() => {
+    dispatch(loginCustomer(login));
+  }, []);
 
-  //   }, []);
+  const loginState = useSelector(loginStateSelector);
+  console.log(loginState);
 
   // const newCart = {
   //   products: [
@@ -114,27 +121,28 @@ export default function TestApp() {
   // useEffect(() => {
   //   dispatch(addProductToWishlist("61f6c1df481e16304cbbbd77"));
   // }, []);
-  
+
   // useEffect(() => {
   //   dispatch(fetchWishlist());
   // }, []);
 
-  const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
+  const downloadRequestState = useSelector(
+    downloadProductsRequestStateSelector
+  );
   const productList = useSelector(productsSelector);
 
   if (downloadRequestState === "loading") {
     return <Preloader />;
   }
-  
 
   // ----------------------------
-   return (
-     <div>
-      <Filters 
-        loading={downloadRequestState} 
-        productList={productList} 
-      />
-    </div>
+  return (
+    <>
+      <div>
+        <TestWarning />
+        <Filters loading={downloadRequestState} productList={productList} />
+      </div>
+    </>
   );
 }
 // =======================================================================================================

@@ -10,10 +10,12 @@ import {
 } from "../actions/customer.actions";
 
 const addCustomer = (customer) => (dispatch) => {
+  console.log(customer);
   dispatch(addCustomerRequested());
   axios
     .post(`${API}customers`, customer)
     .then((savedCustomer) => {
+      console.log(customer);
       dispatch(addCustomerSuccess(savedCustomer));
     })
     .catch(() => {
@@ -22,13 +24,14 @@ const addCustomer = (customer) => (dispatch) => {
 };
 
 const loginCustomer = (userData) => (dispatch) => {
+  console.log(userData);
   dispatch(loginCustomerRequested());
   axios
     .post(`${API}customers/login`, userData)
     .then((loginResult) => {
+      console.log(userData);
       localStorage.setItem("jwt", loginResult.data.token);
       dispatch(loginCustomerSuccess(loginResult));
-      console.log("loggeed innnnnn")
     })
     .catch(() => {
       dispatch(loginCustomerError());

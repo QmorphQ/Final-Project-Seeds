@@ -24,6 +24,7 @@ const customerReducer = (state = initialState, action) => {
       };
 
     case ADD_CUSTOMER_SUCCESS:
+      console.log(action.payload.data);
       return {
         ...state,
         addRequestState: downloadRequestStates.SUCCESS,

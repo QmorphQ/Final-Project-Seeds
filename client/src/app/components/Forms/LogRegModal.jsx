@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Box, IconButton,Button  } from "@material-ui/core";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
-
+import { loginCustomer } from '../../../store/thunks/customer.thunks';
 
 
 const style = makeStyles({
@@ -43,13 +44,15 @@ const style = makeStyles({
 export default function LogIn() {
     const classes = useStyles();
     const styles = style();
+    const dispatch = useDispatch()
     const INITIAL_FORM_STATE = {
-        email: '',
+        loginOrEmail: '',
         password: '',
     };
+
     
     const FORM_VALIDATION = Yup.object().shape({
-        email: Yup.string()
+        loginOrEmail: Yup.string()
         .required('Required')
         .email('Invalid email.'),
         password: Yup.string()
@@ -68,6 +71,12 @@ export default function LogIn() {
       setOpen(false)
     }
 
+    const handleSubmit = values => {
+      dispatch(loginCustomer(values))
+      console.log(values)
+      handleClose()
+    }
+
     return (
     <>        
             <Button onClick={handleClickOpen}  color="primary" variant="contained">Log In</Button>
@@ -80,10 +89,7 @@ export default function LogIn() {
                     ...INITIAL_FORM_STATE
                   }}
                   validationSchema={FORM_VALIDATION}
-                  onSubmit={values => {
-                    console.log(values)
-                    handleClose()
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   <Form>
                     <Grid container spacing={2}>
@@ -95,7 +101,7 @@ export default function LogIn() {
     
                       <Grid item xs={12}>
                         <Textfield
-                          name="email"
+                          name="loginOrEmail"
                           label="Email"
                         />
                       </Grid>  

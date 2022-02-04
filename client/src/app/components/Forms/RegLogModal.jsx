@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Typography, Box, IconButton,Button  } from "@material-ui/core";
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,8 +9,7 @@ import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import CheckboxWrapper from './Components/FormsUI/Checkbox';
-
-
+import { addCustomer } from '../../../store/thunks/customer.thunks';
 
 const style = makeStyles({
   ItemBlock:{
@@ -47,9 +47,16 @@ export default function SignUp() {
     const classes = useStyles();
     const styles = style();
     const INITIAL_FORM_STATE = {
+        firstName: '',
+        lastName: '',
         email: '',
+        login: '',
         password: '',
+        termsOfService: '',
     };
+
+    const dispatch = useDispatch()
+
     
     const FORM_VALIDATION = Yup.object().shape({
         firstName: Yup.string()
@@ -61,7 +68,8 @@ export default function SignUp() {
         .email('Invalid email.'),
         login: Yup.string()
         .required('Required')
-        .min(3, 'Login is 3 chars minimum.'),   
+        .min(3, 'Login is 3 chars minimum.')
+        .max(10, '10 is max chars.'),   
         password: Yup.string()
         .required('Required')
         .min(8, 'Password is 8 chars minimum.')
@@ -82,6 +90,12 @@ export default function SignUp() {
     const handleClose = () =>{
       setOpen(false)
     }
+    
+    const handleSubmit = values => {
+      dispatch(addCustomer(values))
+      console.log(values)
+      handleClose()
+    }
 
     return (
     <>        
@@ -95,10 +109,7 @@ export default function SignUp() {
                     ...INITIAL_FORM_STATE
                   }}
                   validationSchema={FORM_VALIDATION}
-                  onSubmit={values => {
-                    console.log(values)
-                    handleClose()
-                  }}
+                  onSubmit={handleSubmit}
                 >
                   <Form>
                     <Grid container spacing={2}>

@@ -10,6 +10,8 @@ import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import RenderComponent from "../../../app/hoc/RenderComponent";
+import { useFiltersStyles } from "./useFiltersStyles";
+
 
 const ProductCard = ({ product, loading }) => {
   return (
@@ -20,11 +22,20 @@ const ProductCard = ({ product, loading }) => {
       loadingFallback={<p>Loading...</p>}
       renderError={<p>Error</p>}
     />
-  )
-}
+  );
+};
 
-export const ProductCardRender = ({data}) => {
-  const {name, currentPrice, imageUrls, isProductPage, categories, quantity, isBasket} = data;
+export const ProductCardRender = ({ data }) => {
+  const {
+    name,
+    currentPrice,
+    imageUrls,
+    isProductPage,
+    isFiltersPage,
+    categories,
+    quantity,
+    isBasket,
+  } = data;
 
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnBasket, toggleisOnBasket] = useState(false);
@@ -32,12 +43,15 @@ export const ProductCardRender = ({data}) => {
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
   const basketClasses = useBasketStyles();
+  const filtersClasses = useFiltersStyles();
 
   const localPrice = Intl.NumberFormat("en-US", {
-    style: "currency", currency: "USD", currencyDisplay: 'symbol'
+    style: "currency",
+    currency: "USD",
+    currencyDisplay: "symbol",
   });
 
-  if(isBasket) {
+  if (isBasket) {
     return (
       <Card>
         <CardMedia
@@ -47,24 +61,28 @@ export const ProductCardRender = ({data}) => {
           image={`${imageUrls}`}
           alt={name}
         />
-        <Typography 
-          className={basketClasses.productCardName} 
-          variant="h3" 
+        <Typography
+          className={basketClasses.productCardName}
+          variant="h3"
           color="text.primary"
-        >{name}</Typography>        
+        >
+          {name}
+        </Typography>
       </Card>
-    )
+    );
   }
 
-  if(isProductPage) {
+  if (isProductPage) {
     return (
       <Container>
         <Card className={productPageClasses.productCard}>
           <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            
-            <Grid item
-              className={productPageClasses.productCardMediaWrapper} 
-              xs={12} md={5} lg={5}
+            <Grid
+              item
+              className={productPageClasses.productCardMediaWrapper}
+              xs={12}
+              md={5}
+              lg={5}
             >
               <CardMedia
                 className={productPageClasses.productCardMedia}
@@ -77,64 +95,140 @@ export const ProductCardRender = ({data}) => {
 
             <Grid item xs={12} md={7} lg={7}>
               <CardContent className={productPageClasses.productCardContent}>
-                <Typography 
-                  className={productPageClasses.productCardName} 
-                  variant="h3" 
+                <Typography
+                  className={productPageClasses.productCardName}
+                  variant="h3"
                   color="text.primary"
-                >{name}</Typography>
+                >
+                  {name}
+                </Typography>
                 <Box>
-                  <Button 
-                    className={productPageClasses.productCardAvailable} 
-                    variant="contained" 
+                  <Button
+                    className={productPageClasses.productCardAvailable}
+                    variant="contained"
                     disabled
                   >
-                    <CheckIcon />{quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
+                    <CheckIcon />
+                    {quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
                   </Button>
-                  <Button 
-                    className={productPageClasses.productCardAvailable} 
-                    variant="outlined" 
+                  <Button
+                    className={productPageClasses.productCardAvailable}
+                    variant="outlined"
                     disabled
                   >
                     {categories.toUpperCase()}
-                  </Button> {/* HERE MUST BE AN ICON */}
+                  </Button>{" "}
+                  {/* HERE MUST BE AN ICON */}
                 </Box>
               </CardContent>
               <CardActions className={productPageClasses.productActionsBox}>
-              <Typography 
-                className={productPageClasses.productCardPrice} 
-                component="span" 
-                variant="h5" 
-                color="text.primary"
-              >
-                {localPrice.format(currentPrice)}
-              </Typography>
-              <Box>
-                <IconButton 
-                  className={productPageClasses.productCardButton} 
-                  color="primary" 
-                  aria-label="add to favourite"
-                  onClick={() => toggleIsFavourite(() => !isFavourite)}
+                <Typography
+                  className={productPageClasses.productCardPrice}
+                  component="span"
+                  variant="h5"
+                  color="text.primary"
                 >
-                  {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </IconButton>              
-              </Box>
+                  {localPrice.format(currentPrice)}
+                </Typography>
+                <Box>
+                  <IconButton
+                    className={productPageClasses.productCardButton}
+                    color="primary"
+                    aria-label="add to favourite"
+                    onClick={() => toggleIsFavourite(() => !isFavourite)}
+                  >
+                    {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </IconButton>
+                </Box>
               </CardActions>
             </Grid>
           </Grid>
         </Card>
       </Container>
-    )
+    );
+  }
+
+  if (isFiltersPage) {
+    return (
+      <Grid item xs={12} md={6} lg={4}>
+        <Card className={filtersClasses.productCard}>
+          <CardHeader
+            className={mainClasses.productCardHeader}
+            action={
+              <IconButton
+                className={mainClasses.productCardButton}
+                color="warning"
+                aria-label="add to favourite"
+                onClick={() => toggleIsFavourite(() => !isFavourite)}
+              >
+                {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+            }
+          />
+
+          <CardMedia
+            className={filtersClasses.productCardMedia}
+            component="img"
+            width="250px"
+            image={`${imageUrls}`}
+            alt={name}
+          />
+
+          <Rating
+            className={mainClasses.productCardRating}
+            name="half-rating"
+            defaultValue={2.5}
+            precision={0.5}
+            onChange={(e) => e}
+          />
+
+          <CardContent className={mainClasses.productCardContent}>
+            <Typography
+              className={mainClasses.productCardName}
+              variant="h3"
+              color="text.primary"
+            >
+              {name}
+            </Typography>
+            <Typography
+              className={mainClasses.productCardPrice}
+              component="span"
+              variant="h6"
+              color="text.primary"
+            >
+              {localPrice.format(currentPrice)}
+            </Typography>
+          </CardContent>
+
+          <CardActions className={mainClasses.productActionsBox}>
+            <IconButton
+              className={filtersClasses.productCardButtonBasket}
+              aria-label="add to basket"
+              color="primary"
+              variant="contained"
+              onClick={() => toggleisOnBasket(() => !isOnBasket)}
+            >
+              {isOnBasket ? (
+                <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
+              ) : (
+                <ShoppingCartOutlinedIcon />
+              )}
+            </IconButton>
+          </CardActions>
+        </Card>
+      </Grid>
+    );
   }
 
   return (
     <Grid item xs={12} md={6} lg={4}>
       <Card className={mainClasses.productCard}>
-        <CardHeader 
+        <CardHeader
           className={mainClasses.productCardHeader}
           action={
-            <IconButton 
-              className={mainClasses.productCardButton} 
-              color="warning" 
+            <IconButton
+              className={mainClasses.productCardButton}
+              color="warning"
               aria-label="add to favourite"
               onClick={() => toggleIsFavourite(() => !isFavourite)}
             >
@@ -151,24 +245,26 @@ export const ProductCardRender = ({data}) => {
           alt={name}
         />
 
-        <Rating 
+        <Rating
           className={mainClasses.productCardRating}
-          name="half-rating" defaultValue={2.5} precision={0.5}
-          onChange={e => e}
+          name="half-rating"
+          defaultValue={2.5}
+          precision={0.5}
+          onChange={(e) => e}
         />
 
         <CardContent className={mainClasses.productCardContent}>
-          <Typography 
-            className={mainClasses.productCardName} 
-            variant="h3" 
+          <Typography
+            className={mainClasses.productCardName}
+            variant="h3"
             color="text.primary"
           >
             {name}
           </Typography>
-          <Typography 
-            className={mainClasses.productCardPrice} 
-            component="span" 
-            variant="h5" 
+          <Typography
+            className={mainClasses.productCardPrice}
+            component="span"
+            variant="h5"
             color="text.primary"
           >
             {localPrice.format(currentPrice)}
@@ -178,28 +274,30 @@ export const ProductCardRender = ({data}) => {
         <CardActions className={mainClasses.productActionsBox}>
           <IconButton
             className={mainClasses.productCardButtonBasket}
-            aria-label="add to basket" 
-            color="primary" variant="contained"
+            aria-label="add to basket"
+            color="primary"
+            variant="contained"
             onClick={() => toggleisOnBasket(() => !isOnBasket)}
           >
-            {isOnBasket ? 
-              <CheckBoxIcon sx={{width:"48px", height:"48px"}} /> : 
+            {isOnBasket ? (
+              <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
+            ) : (
               <ShoppingCartOutlinedIcon />
-            }
-          </IconButton>              
+            )}
+          </IconButton>
         </CardActions>
       </Card>
     </Grid>
-  )
-}
+  );
+};
 
 ProductCard.defaultProps = {
   product: {
-    name: 'test name',
-    currentPrice: 'test price',
-    imageUrls: 'test imageUrls',
-    categories: [''],
-  }
+    name: "test name",
+    currentPrice: "test price",
+    imageUrls: "test imageUrls",
+    categories: [""],
+  },
 };
 
 ProductCard.propTypes = {

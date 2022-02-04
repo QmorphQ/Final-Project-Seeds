@@ -6,7 +6,8 @@ import Header from "../components/Header/Header.jsx";
 import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
-import Product from "../components/Product/Product.jsx";
+// import Product from "../components/Product/Product.jsx";
+import CustomerReviews from "../components/CustomerReviews/CustomerReviews.jsx";
 
 const Home = ({ loading, productList }) => (
 
@@ -16,6 +17,7 @@ const Home = ({ loading, productList }) => (
       <MainPageCarousel />
       <OurProducts loading={loading} productList={productList} />
       <ProductsList loading={loading} productList={productList} />
+      <CustomerReviews />
     </Box>
     <Footer />
   </>

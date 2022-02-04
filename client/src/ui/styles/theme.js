@@ -17,6 +17,10 @@ const createCustomTheme = (theme) => {
       warning: {
         main: "rgba(255, 207, 85, 1)",
       },
+      disable: {
+        main: "rgba(53, 151, 64, 0.08)",
+        contrastText: "rgba(79, 160, 131, 1)",
+      },
       error: {
         main: "rgba(229, 92, 92, 1)",
         contrastText: "rgba(255, 255, 255, 1)",

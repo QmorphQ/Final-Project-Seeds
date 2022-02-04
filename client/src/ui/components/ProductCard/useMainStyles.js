@@ -1,10 +1,10 @@
 import { makeStyles } from "@mui/styles";
 
-export const useMainStyles = makeStyles(() => ({
+export const useMainStyles = makeStyles((theme) => ({
   productCard: {
     borderRadius: "8px",
     position: "relative",
-    border: "2px solid #EFEFEF",
+    border: `2px solid ${theme.palette.grey["300"]}`,
     boxShadow: "none",
     minHeight: "512px",
     maxWidth: "350px"
@@ -14,7 +14,7 @@ export const useMainStyles = makeStyles(() => ({
     right: "0",
   },
   productCardButton: {
-    border: "1px solid #EFEFEF",
+    border: `1px solid ${theme.palette.grey["300"]}`,
   },
   productCardMedia: {
     width: "294px",
@@ -45,7 +45,7 @@ export const useMainStyles = makeStyles(() => ({
     borderRadius: "8px",
     width: "48px",
     height: "48px",
-    border: "1px solid #EFEFEF",
+    border: `1px solid ${theme.palette.grey["300"]}`,
     padding: "0px important"
   },
 }));

@@ -11,11 +11,12 @@ import Product from "../components/Product/Product.jsx";
 const Home = ({ loading, productList }) => (
 
   <>
+    <Product />
     <Header />
     <Box component="main">
       <MainPageCarousel />
       <OurProducts loading={loading} productList={productList} />
-      <ProductsList loading={loading} productList={productList} />
+      {/* <ProductsList loading={loading} productList={productList} /> */}
     </Box>
     <Footer />
   </>

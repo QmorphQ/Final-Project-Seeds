@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography } from "@mui/material";
+import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Container, FilledInput, Grid, IconButton, Input, Paper, Rating, Stack, TextField, Typography } from "@mui/material";
 import PropTypes from 'prop-types';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -9,8 +9,14 @@ import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import RenderComponent from "../../../app/hoc/RenderComponent";
-import { Box } from "@mui/system";
+import { Box, width } from "@mui/system";
 import { useState } from "react";
+import Icon from "../Icon/Icon.jsx";
+import { useSelector } from "react-redux";
+import { mainCategoriesSelector } from "../../../store/selectors/selectors";
+import CloseIcon from '@mui/icons-material/Close';
+import { AutoSizer, Column, Table } from 'react-virtualized';
+import PriceTable from "./PriceTable";
 
 const ProductCard = ({ product, loading }) => {
   return (
@@ -26,13 +32,18 @@ const ProductCard = ({ product, loading }) => {
 
 export const ProductCardRender = ({data}) => {
   const {name, currentPrice, imageUrls, isProductPage, categories, quantity, isBasket} = data;
-
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnBasket, toggleisOnBasket] = useState(false);
+  const [productAmount, setProductAmount] = useState(1);
 
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
   const basketClasses = useBasketStyles();
+
+  const mainCategory = 
+    useSelector(mainCategoriesSelector)
+      .find(category => categories
+      .includes(category.name));
 
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency", currency: "USD", currencyDisplay: 'symbol'
@@ -83,42 +94,89 @@ export const ProductCardRender = ({data}) => {
                   variant="h3" 
                   color="text.primary"
                 >{name}</Typography>
-                <Box>
-                  <Button 
-                    className={productPageClasses.productCardAvailable} 
-                    variant="contained" 
-                    disabled
-                  >
-                    <CheckIcon />{quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
-                  </Button>
-                  <Button 
-                    className={productPageClasses.productCardAvailable} 
+
+                <Stack direction="row" spacing={1}>
+                  <Chip 
+                    color="disable"
+                    label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"} 
+                    icon={
+                      quantity > 0 ? (
+                        <CheckIcon
+                          className={productPageClasses.buttonIcon}  
+                        />) : (
+                        <CloseIcon 
+                          className={productPageClasses.buttonIcon}
+                        />)
+                    } 
+                  />
+                  <Chip 
+                    color="primary"
+                    className={productPageClasses.productCardAvailable}
+                    label={categories.toUpperCase()}
+                    icon={
+                      <Icon 
+                        className={productPageClasses.buttonIcon}
+                        icon={Icon.icons[mainCategory.icon]} 
+                      />} 
                     variant="outlined" 
-                    disabled
-                  >
-                    {categories.toUpperCase()}
-                  </Button> {/* HERE MUST BE AN ICON */}
-                </Box>
+                  />
+                </Stack>
               </CardContent>
               <CardActions className={productPageClasses.productActionsBox}>
-              <Typography 
-                className={productPageClasses.productCardPrice} 
-                component="span" 
-                variant="h5" 
-                color="text.primary"
-              >
-                {localPrice.format(currentPrice)}
-              </Typography>
-              <Box>
-                <IconButton 
-                  className={productPageClasses.productCardButton} 
-                  color="primary" 
-                  aria-label="add to favourite"
-                  onClick={() => toggleIsFavourite(() => !isFavourite)}
-                >
-                  {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </IconButton>              
-              </Box>
+              
+                <PriceTable localPrice={localPrice} currentPrice={currentPrice} quantity={quantity}/>    
+
+
+                <Box>
+                  <Typography 
+                    className={productPageClasses.productCardPrice} 
+                    component="span" 
+                    variant="h5" 
+                    color="text.primary"
+                  >
+                    {localPrice.format(currentPrice)}
+                  </Typography>
+                  <ButtonGroup className={productPageClasses.amountInputGroup} color="primary" variant="outlined" aria-label="outlined primary button group">
+                    <Button 
+                      onClick={() => setProductAmount(+productAmount - 1)} 
+                      variant="text"
+                      disabled={productAmount <= 1}
+                    >
+                      {"-"}
+                    </Button>
+                    <FilledInput
+                      inputProps={{sx:{textAlign:"center"}}} 
+                      disableUnderline="true" 
+                      hiddenLabel="true" 
+                      defaultValue="1"
+                      value={productAmount}
+                      onChange={e => setProductAmount(+e.target.value)}
+                      id="product-amount" 
+                      className={productPageClasses.productAmountInput} 
+                    />
+                    <Button 
+                      onClick={() => setProductAmount(+productAmount + 1)} 
+                      variant="text"
+                      disabled={productAmount >= quantity}
+                    >
+                      {"+"}
+                    </Button>
+                  </ButtonGroup>
+                  <IconButton 
+                    className={productPageClasses.productCardButton} 
+                    color="primary" 
+                    aria-label="add to favourite"
+                    onClick={() => toggleIsFavourite(() => !isFavourite)}
+                  >
+                    {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  </IconButton>
+                  <Button 
+                    className={productPageClasses.productCardButtonBasket} 
+                    variant="contained"
+                  >
+                    Add to card
+                  </Button>              
+                </Box>
               </CardActions>
             </Grid>
           </Grid>

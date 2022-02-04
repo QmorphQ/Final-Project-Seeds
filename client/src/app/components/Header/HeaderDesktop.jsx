@@ -7,11 +7,15 @@ import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
+import { useSelector } from "react-redux";
+import { loginStateSelector } from "../../../store/selectors/selectors.js";
 
 
 const HeaderDesktop = () => {
   const classes = useStyles();
   const favoritesLength = 0;
+  const isLogin = useSelector(loginStateSelector)
+  console.log(isLogin);
 
   return (
     <header className="header">
@@ -61,8 +65,21 @@ const HeaderDesktop = () => {
             </Badge>
           </IconButton>
           <HeaderIcons />
-          <LogIn/>
-          <SignUp/>
+          {!isLogin ? 
+            <>
+              <LogIn/>
+              <SignUp/>
+            </> : <IconButton
+            size="large"
+            edge="end"
+            aria-label="account of current user"
+            // aria-controls={menuId}
+            aria-haspopup="true"
+            // onClick={handleProfileMenuOpen}
+          >
+            <AccountCircle className={classes.iconsStyle} />
+          </IconButton>}
+
           {/* <IconButton
             size="large"
             edge="end"

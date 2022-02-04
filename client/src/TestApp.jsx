@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@material-ui/core";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
 /* import { BrowserRouter, Routes, Route } from "react-router-dom"; */
@@ -19,6 +19,12 @@ import { addProductToWishlist, addWishlist, fetchWishlist } from "./store/thunks
 // +++
 // ================================
 // Marker:
+import {
+  downloadProductsRequestStateSelector,
+  productsSelector,
+} from "./store/selectors/selectors";
+import Filters from "./app/pages/Filters";
+
 function TestWarning() {
   return (
     <Box
@@ -105,21 +111,30 @@ export default function TestApp() {
   //   dispatch(addWishlist(newWishlist));
   // }, []);
 
-  useEffect(() => {
-    dispatch(addProductToWishlist("61f6c1df481e16304cbbbd77"));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(addProductToWishlist("61f6c1df481e16304cbbbd77"));
+  // }, []);
   
   // useEffect(() => {
   //   dispatch(fetchWishlist());
   // }, []);
+
+  const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
+  const productList = useSelector(productsSelector);
+
+  if (downloadRequestState === "loading") {
+    return <Preloader />;
+  }
   
 
   // ----------------------------
-  return (
-    <>
-      <TestWarning />
-      <Preloader />
-    </>
+   return (
+     <div>
+      <Filters 
+        loading={downloadRequestState} 
+        productList={productList} 
+      />
+    </div>
   );
 }
 // =======================================================================================================

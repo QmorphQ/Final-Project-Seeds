@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-export const CardOnProductPageStyle = makeStyles(() => ({
+export const useProductPageStyles = makeStyles(() => ({
   productCard: {
     boxShadow: "none"
   },

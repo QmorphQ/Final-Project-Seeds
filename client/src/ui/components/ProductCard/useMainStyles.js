@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-export const useStyles = makeStyles(() => ({
+export const useMainStyles = makeStyles(() => ({
   productCard: {
     borderRadius: "8px",
     position: "relative",
@@ -46,5 +46,6 @@ export const useStyles = makeStyles(() => ({
     width: "48px",
     height: "48px",
     border: "1px solid #EFEFEF",
+    padding: "0px important"
   },
 }));

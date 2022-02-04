@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Typography, Box } from "@mui/material";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Tab from "../../../ui/components/Tab/Tab.jsx";
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx";
 import Icon from "../../../ui/components/Icon/Icon.jsx";
@@ -12,6 +12,7 @@ import {
   mainCategoriesSelector,
 } from "../../../store/selectors/selectors";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
+import { filterProductsByCategory } from "../../../store/thunks/products.thunks";
 
 const useStyles = makeStyles((theme) => ({
   tab: {
@@ -46,7 +47,8 @@ const OurProducts = () => {
   const downloadRequestState = useSelector(
     downloadCategoriesRequestStateSelector
   );
-  if (downloadRequestState === downloadRequestStates.LOADING) return <div>Loading...</div>; // Here must be a loader
+  if (downloadRequestState === downloadRequestStates.LOADING)
+    return <div>Loading...</div>; // Here must be a loader
   if (downloadRequestState === downloadRequestStates.ERROR)
     return (
       <ErrorHandler
@@ -57,16 +59,23 @@ const OurProducts = () => {
     );
 
   const categories = useSelector(mainCategoriesSelector);
+  const dispatch = useDispatch();
 
   const [value, setValue] = React.useState(0);
+
+  const handleClick = (event) => {
+    dispatch(filterProductsByCategory(event.target.dataset.category));
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   const classes = useStyles();
 
   const categoriesTabs = categories.map((category) => (
     <Tab
+      data-category={category.name}
       className={classes.tab}
       label={category.name}
       id={category.id}
@@ -89,7 +98,7 @@ const OurProducts = () => {
               Our products.
             </Typography>
             <Box>
-              <Tabs value={value} onChange={handleChange}>
+              <Tabs value={value} onChange={handleChange} onClick={handleClick}>
                 {categoriesTabs}
               </Tabs>
             </Box>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../../app/constants";
 import {
   addCustomerRequested,
   addCustomerSuccess,
@@ -11,7 +12,7 @@ import {
 const addCustomer = (customer) => (dispatch) => {
   dispatch(addCustomerRequested());
   axios
-    .post("http://localhost:5000/api/customers", customer)
+    .post(`${API}customers`, customer)
     .then((savedCustomer) => {
       dispatch(addCustomerSuccess(savedCustomer));
     })
@@ -23,10 +24,11 @@ const addCustomer = (customer) => (dispatch) => {
 const loginCustomer = (userData) => (dispatch) => {
   dispatch(loginCustomerRequested());
   axios
-    .post("http://localhost:5000/api/customers/login", userData)
+    .post(`${API}customers/login`, userData)
     .then((loginResult) => {
       localStorage.setItem("jwt", loginResult.data.token);
       dispatch(loginCustomerSuccess(loginResult));
+      console.log("loggeed innnnnn")
     })
     .catch(() => {
       dispatch(loginCustomerError());

@@ -20,6 +20,22 @@ export const filterByCategory = (category) => ({
   payload: category,
 });
 
+export const ADD_PRODUCT_REQUESTED = "ADD_PRODUCT_REQUESTED";
+export const addProductRequested = () => ({
+  type: ADD_PRODUCT_REQUESTED,
+});
+
+export const  ADD_PRODUCT_SUCCESS = "ADD_PRODUCT_SUCCESS";
+export const addProductSuccess = (products) => ({
+  type: ADD_PRODUCT_SUCCESS,
+  payload: products,
+});
+
+export const ADD_PRODUCT_ERROR = "ADD_PRODUCT_ERROR";
+export const addProductError = () => ({
+  type: ADD_PRODUCT_ERROR,
+});
+
 export const UPLOAD_PRODUCT_RATING_REQUESTED = "UPLOAD_PRODUCT_RATING_REQUESTED";
 export const uploadProductRatingRequested = () => ({
   type: UPLOAD_PRODUCT_RATING_REQUESTED,

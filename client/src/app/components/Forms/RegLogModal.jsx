@@ -57,20 +57,19 @@ export default function SignUp() {
         lastName: Yup.string()
         .required('Required'),
         email: Yup.string()
-        .email('Invalid email.')
-        .required('Required'),
-        phone: Yup.number()
-        .integer()
-        .typeError('Please enter a valid phone number')
-        .required('Required'),
+        .required('Required')
+        .email('Invalid email.'),
+        login: Yup.string()
+        .required('Required')
+        .min(3, 'Login is 3 chars minimum.'),   
         password: Yup.string()
+        .required('Required')
         .min(8, 'Password is 8 chars minimum.')
         .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
         passwordConfirm : Yup.string()
-        .oneOf([Yup.ref('password')], 'Password must be the same!')
-        .required('Required'),
+        .required('Required')
+        .oneOf([Yup.ref('password')], 'Password must be the same!'),
         termsOfService: Yup.boolean()
-        .oneOf([true], 'The terms and conditions must be accepted.')
         .required('The terms and conditions must be accepted.'),
     })
 
@@ -128,13 +127,12 @@ export default function SignUp() {
                             label="Email"
                             />
                         </Grid>
-
                         <Grid item xs={12}>
                             <Textfield
-                            name="phone"
-                            label="Phone"
+                            name="login"
+                            label="Login"
                             />
-                        </Grid>
+                        </Grid> 
                         <Grid item xs={12}>
                             <Textfield
                             name="password"

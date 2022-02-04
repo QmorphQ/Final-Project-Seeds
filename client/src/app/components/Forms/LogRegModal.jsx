@@ -73,7 +73,7 @@ export default function LogIn() {
 
     const handleSubmit = values => {
       dispatch(loginCustomer(values))
-      console.log(values)
+      // console.log(values)
       handleClose()
     }
 

@@ -15,7 +15,6 @@ const HeaderDesktop = () => {
   const classes = useStyles();
   const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector)
-  console.log(isLogin);
 
   return (
     <header className="header">

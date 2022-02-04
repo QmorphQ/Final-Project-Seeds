@@ -55,7 +55,7 @@ export default function SignUp() {
         termsOfService: '',
     };
 
-    
+
     const dispatch = useDispatch()
 
     
@@ -94,7 +94,7 @@ export default function SignUp() {
     
     const handleSubmit = values => {
       dispatch(addCustomer(values))
-      console.log(values)
+      // console.log(values)
       handleClose()
     }
 

@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        <HeaderMobile />
+        {/* <HeaderMobile /> */}
       </Box>
       <Box display={{ xs: "none", sm: "none", md: "block" }}>
         <HeaderDesktop />

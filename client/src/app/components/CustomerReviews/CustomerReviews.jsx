@@ -1,12 +1,35 @@
-// import React from 'react';
 import { Box, Paper, Typography, Divider, Rating, LinearProgress } from '@mui/material';
+import PropTypes from "prop-types";
 import Star from "../../../ui/components/Icon/icons/Star.jsx";
-import { useStyles } from "./styles"
-// import PropTypes from "prop-types";
+import { useStyles } from "./styles";
 
+/**
+ * scores - object with numbers
+ */
 
-const CustomerReviews = () => {
+const CustomerReviews = (props) => {
     const classes = useStyles();
+    const {total, scores} = props;
+
+    const scoresTotal = Object.entries(scores).reduce((sum, currentValue) => {
+        const [key, value] = currentValue;
+        return sum + Number(key) * Number(value);
+    }, 0);
+
+    const average = scoresTotal / total;
+
+    const ratings = Object.entries(scores).map(item => {
+        const [key, value] = item;
+        const progressInPercents = Number(value) * 100 / Number(total);
+        return (
+            <Box key={key} className={classes.ratingWrapper}>
+            <Typography className={classes.ratingNumber} variant="subtitle1" component="subtitle1">{key}</Typography>
+            <Star />
+            <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={progressInPercents} />
+            <Typography className={classes.votesQuantity} variant="subtitle1" component="subtitle1">{value}</Typography>
+        </Box>
+        )
+    })
     
     return (
     <>
@@ -38,7 +61,7 @@ const CustomerReviews = () => {
                     variant="h2"
                     component="h2"
                     >
-                    4,1
+                    {average}
                     </Typography>
                     <Box className={classes.reviewsQuantityContainer}>
                         <Typography
@@ -46,52 +69,18 @@ const CustomerReviews = () => {
                         variant="subtitle1"
                         component="subtitle1"
                         >
-                            124 reviews
+                            {total} reviews
                         </Typography>
                         <Rating 
                             className={classes.customerRating}
-                            name="half-rating" readOnly defaultValue={4.5}  precision={0.5}
+                            name="half-rating" readOnly defaultValue={average}  precision={0.5}
                             onChange={e => e}
                         />
                     </Box>
                 </Box>
                 <Divider variant="middle"/>
                 <Box className={classes.ratingNumbersContainer}>
-
-                <Box className={classes.ratingWrapper}>
-                    <Typography className={classes.ratingNumber} variant="subtitle1" component="subtitle1">5</Typography>
-                    <Star />
-                    <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={65} />
-                    <Typography className={classes.votesQuantity} variant="subtitle1" component="subtitle1">81</Typography>
-                </Box>
-
-                <Box className={classes.ratingWrapper}>
-                    <Typography className={classes.ratingNumber} variant="subtitle1" component="subtitle1">4</Typography>
-                    <Star/>
-                    <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={36} />
-                    <Typography className={classes.votesQuantity} variant="subtitle1" component="subtitle1">45</Typography>
-                </Box>
-
-                <Box className={classes.ratingWrapper}>
-                    <Typography className={classes.ratingNumber} variant="subtitle1" component="subtitle1">3</Typography>
-                    <Star/>
-                    <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={26} />
-                    <Typography className={classes.votesQuantity} variant="subtitle1" component="subtitle1">32</Typography>
-                </Box>
-
-                <Box className={classes.ratingWrapper}>
-                    <Typography className={classes.ratingNumber} variant="subtitle1" component="subtitle1">2</Typography>
-                    <Star/>
-                    <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={1} />
-                    <Typography className={classes.votesQuantity} variant="subtitle1" component="subtitle1">1 </Typography>
-                </Box>
-
-                <Box className={classes.ratingWrapper}>
-                    <Typography className={classes.ratingNumber} variant="subtitle1" component="subtitle1">1 </Typography>
-                    <Star/>
-                    <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={1} />
-                    <Typography className={classes.votesQuantity} variant="subtitle1" component="subtitle1">1</Typography>
-                </Box>
+                    {ratings}
                 </Box>
 
             </Paper>
@@ -99,6 +88,17 @@ const CustomerReviews = () => {
     </Box>
     </>
     )
+}
+
+CustomerReviews.propTypes = {
+    total: PropTypes.number.isRequired,
+    scores: PropTypes.shape({
+        5: PropTypes.number,
+        4: PropTypes.number,
+        3: PropTypes.number,
+        2: PropTypes.number,
+        1: PropTypes.number
+    }).isRequired
 }
   
 

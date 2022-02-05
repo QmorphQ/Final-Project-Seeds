@@ -1,16 +1,20 @@
 import axios from "axios";
+import { API } from "../../app/constants";
 import {
   downloadAllProductsRequested,
   downloadAllProductsSuccess,
   downloadAllProductsError,
   filterByCategory,
+  addProductRequested,
+  addProductSuccess,
+  addProductError,
   uploadProductRatingRequested,
   uploadProductRatingError,
   uploadProductRatingSuccess,
 } from "../actions/products.actions";
 
 const fetchProducts =
-  (uri = "http://localhost:5000/api/products") =>
+  (uri = `${API}products`) =>
   (dispatch) => {
     dispatch(downloadAllProductsRequested());
     axios
@@ -24,24 +28,43 @@ const fetchProducts =
       });
   };
 
-  const rateProduct =
-  (id, upddatedProduct) =>
-  (dispatch) => {
-    dispatch(uploadProductRatingRequested());
-    axios
-      .put(`http://localhost:5000/api/products/${id}`, upddatedProduct, {headers: {"Authorization": localStorage.getItem("jwt")}})
-      .then((product) => {
-        dispatch(uploadProductRatingSuccess(product));
-        return product;
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(uploadProductRatingError());
-      });
-  };
+const addProduct = (product) => (dispatch) => {
+  dispatch(addProductRequested());
+  const token = localStorage.getItem("jwt");
+  console.log(token);
+  axios
+    .post(`${API}products`, product, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then((addedProduct) => {
+      dispatch(addProductSuccess(addedProduct));
+      return addedProduct;
+    })
+    .catch(() => {
+      dispatch(addProductError());
+    });
+};
+
+const rateProduct = (id, updatedProduct) => (dispatch) => {
+  dispatch(uploadProductRatingRequested());
+  axios
+    .put(`${API}/products/${id}`, updatedProduct, {
+      headers: { Authorization: localStorage.getItem("jwt") },
+    })
+    .then((product) => {
+      dispatch(uploadProductRatingSuccess(product));
+      return product;
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch(uploadProductRatingError());
+    });
+};
 
 const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
-export { filterProductsByCategory, fetchProducts, rateProduct };
+export { filterProductsByCategory, fetchProducts, addProduct, rateProduct };

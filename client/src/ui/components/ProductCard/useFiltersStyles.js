@@ -1,12 +1,12 @@
 import { makeStyles } from "@mui/styles";
 
-export const useStyles = makeStyles(() => ({
+export const useFiltersStyles = makeStyles(() => ({
   productCard: {
     borderRadius: "8px",
     position: "relative",
     border: "2px solid #EFEFEF",
     boxShadow: "none",
-    minHeight: "512px",
+    minHeight: "400px",
     maxWidth: "350px"
   },
   productCardHeader: {
@@ -17,7 +17,7 @@ export const useStyles = makeStyles(() => ({
     border: "1px solid #EFEFEF",
   },
   productCardMedia: {
-    width: "294px",
+    width: "230px",
     margin: "28px auto",
     borderRadius: "12px",
   },
@@ -46,5 +46,6 @@ export const useStyles = makeStyles(() => ({
     width: "48px",
     height: "48px",
     border: "1px solid #EFEFEF",
+    padding: "0px important"
   },
 }));

@@ -25,5 +25,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # developing
+<<<<<<< HEAD
 /client/src/DevHelper
 /client/src/TestApp.jsx
+=======
+/changes.md
+/client/src/DevHelper
+/client/src/TestApp.jsx
+>>>>>>> 578099eff7361415d764299ac7959ee34abc1d33

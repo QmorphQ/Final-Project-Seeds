@@ -7,6 +7,7 @@ import Spinner from '../Spinner/Spinner.jsx';
 // =========================================================
 import searchDB from "./SearchComponent/SearchLogic/searchDB";
 import searchObserver from './SearchComponent/SearchLogic/searchObserver';
+import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
 // =========================================================
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,13 +67,12 @@ const [ready, setReady] = useState(false);
 // ++++++
 // Input controller:
 const inputHandler = (event) => {
-  setInputText(event.target.value);
-};
+  setInputText(searchNormalize(event.target.value));
+}
 // ++++++
 // +++
-const searchContainerHandler = (event) => {
-  event.stopPropagation();
-  if (event.target !== document.getElementById('search-container') && activeSaerchContainer){
+const searchContainerHandler = () => {
+ 
    setActiveSearchContainer(false);
    setTrigger(false);
    setIDsArr([]);
@@ -80,7 +80,7 @@ const searchContainerHandler = (event) => {
    setLoading(false);
    setReady(false);
    setInputText('');
-  }
+ 
 }
 // ++++++
 // Get products from server by itemNo:
@@ -148,7 +148,6 @@ return (
         inputProps={{ "aria-label": "search" }}
         value={inputText}
         onChange={inputHandler}
-        
       />{loading ? <Spinner left={'70%'} top={'22%'}/> : false}
       {<SearchResultContainer active={activeSaerchContainer} products={fetchedProducts} oneCard={fetchedProducts.length === 1}/>}
     </Search>

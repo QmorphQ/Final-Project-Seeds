@@ -13,52 +13,81 @@ const useStyles = makeStyles((theme) => ({
   searchContainer: {
     width: 600,
     [theme.breakpoints.down("xs")]: {
-      width: 200,
+      width: "fit-content",
     },
   },
   searchOption: {
     height: 50,
     [theme.breakpoints.down("xs")]: {
-      width: 100,
-      height: 30,
+      width: "200px",
+      height: 20,
     },
   },
-
+  searchImage: {
+    height: 70,
+    width: 70,
+    [theme.breakpoints.down("xs")]: {
+      width: 40,
+      height: 40,
+    },
+  },
+  searchName: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "9px",
+      lineHeight: "9px",
+    },
+  },
+  searchPrice: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "12px",
+      lineHeight: "12px",
+    },
+  },
 }));
 
 const pressets = {
   styles: {
     optionCard: {
-      padding: "20px",
+      padding: "10px",
       display: "flex",
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
-      backgroundColor: 'rgba(0, 0, 0, 0.01)',
-      boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)',
-      height: '50px',
+      backgroundColor: "rgba(0, 0, 0, 0.01)",
+      boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
+      height: "60px",
     },
   },
 };
 function RenderUnit({ imgUrl, name, price }) {
   const classes = useStyles();
   return (
-    <Link data-link='search' href='#'>
-    <Card className={classes.searchOption} sx={pressets.styles.optionCard}>
-      <CardMedia
-        component="img"
-        sx={{ width: 70, height: 70 }}
-        image={imgUrl}
-      />
-      <CardContent>
-        <Typography gutterBottom variant="caption" component="div">
-         Name: {name.match(/^.+?(?=seeds)/i)}
-        </Typography>
-        <Typography variant="body1" color="text.primary">
-          Price: {price} $
-        </Typography>
-      </CardContent>
-    </Card>
+    <Link data-link="search" href="#">
+      <Card className={classes.searchOption} sx={pressets.styles.optionCard}>
+        <CardMedia
+          className={classes.searchImage}
+          component="img"
+          sx={{ width: 70, height: 70 }}
+          image={imgUrl}
+        />
+        <CardContent>
+          <Typography
+            className={classes.searchName}
+            gutterBottom
+            variant="caption"
+            component="div"
+          >
+            Name: {name.match(/^.+?(?=seeds)/i)}
+          </Typography>
+          <Typography
+            className={classes.searchPrice}
+            variant="body1"
+            color="text.primary"
+          >
+            Price: {price} $
+          </Typography>
+        </CardContent>
+      </Card>
     </Link>
   );
 }
@@ -77,42 +106,45 @@ RenderUnit.propTypes = {
   style: PropTypes.object,
 };
 
-export default function SearchResultContainer({ products = 0, active, oneCard}) {
+export default function SearchResultContainer({
+  products = 0,
+  active,
+  oneCard,
+}) {
   const classes = useStyles();
   const [productsToRender, setProductsToRender] = useState([]);
   useEffect(() => {
-    setProductsToRender(products)
-  }, [products])
+    setProductsToRender(products);
+  }, [products]);
   return (
-    
     <Container
-    className={classes.searchContainer}
-    id='search-container'
-    sx={{
-      boxShadow: '2px 2px 2px 1px rgba(0, 0, 0, 0.2)',
-      position: "absolute",
-      zIndex: "99999",
-      backgroundColor: "white",
-      right: "0",
-      top: "120%",
-      borderRadius: "20px",
-      width: ((activeContainer, oneCardFromProps) => {
-        if (activeContainer){
-          return oneCardFromProps ? '300px' : '70vw';
-        } return '0';
-      })(active, oneCard),
-      maxHeight: active ?'400px' : '0',
-      scrollbarWidth: "0.3",
-      transition: "all 0.5s",
-      opacity: active ? '1' : '0',
-      overflow: active ? 'auto' : 'hidden',
-    }}
+      className={classes.searchContainer}
+      id="search-container"
+      sx={{
+        boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
+        position: "absolute",
+        zIndex: "99999",
+        backgroundColor: "white",
+        right: "0",
+        top: "150%",
+        borderRadius: "5px",
+        width: ((activeContainer, oneCardFromProps) => {
+          if (activeContainer) {
+            return oneCardFromProps ? "300px" : "70vw";
+          }
+          return "0";
+        })(active, oneCard),
+        maxHeight: active ? "400px" : "0",
+        scrollbarWidth: "0.3",
+        transition: "all 0.5s",
+        opacity: active ? "1" : "0",
+        overflow: active ? "auto" : "hidden",
+      }}
     >
-    
      
-        <Grid spacing={1} container >
+        <Grid spacing={1} container>
           {productsToRender.map((prod, i) => (
-            <Grid xs={oneCard ? 12 : 6 } item key={prod.itemNo + i}>
+            <Grid sm={oneCard ? 12 : 6} item key={prod.itemNo + i}>
               <RenderUnit
                 imgUrl={prod.imageUrls[0]}
                 name={prod.name}
@@ -121,9 +153,8 @@ export default function SearchResultContainer({ products = 0, active, oneCard}) 
             </Grid>
           ))}
         </Grid>
-
+      
     </Container>
-   
   );
 }
 

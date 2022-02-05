@@ -7,21 +7,22 @@ const cyrillicCommonChars = /[йцукенгшщзфывапролджячмит
 
 export default function searchNormalize(str) {
     const normalizeUnits = [
-        (str) => str.toLowerCase(),
-        (str) => str.trim(),
-        (str) => {
-            let arrFromStr = str.split('');
-            if (cyrillicCommonChars.test(str)) {
-                for (let i = 0; i < arrFromStr.length; i++){
+        (strA) => strA.toLowerCase(),
+        // (strB) => strB.trim(),
+        (strC) => {
+            const arrFromStr = strC.split('');
+            if (cyrillicCommonChars.test(strC)) {
+                for (let i = 0; i < arrFromStr.length; i += 1){
                     if (cyrillicCommonChars.test(arrFromStr[i])){
-                        arrFromStr[i] = (AlphsTabsPairs.find((pair) => pair[0] === arrFromStr[i]))[1];
-                    } else continue
-                } 
+                        arrFromStr[i] = [...([...AlphsTabsPairs].find((pair) => pair[0] === arrFromStr[i]))[1]];
+                    } 
 
             }
-            return arrFromStr.join('');
-        },
+            
+        }
+        return arrFromStr.join('');
+    }
     ];
-    const normalizeStr = (str, normalizeStack) => normalizeStack.reduce((acc, func) => func(acc), str);
+    const normalizeStr = (strE, normalizeStack) => normalizeStack.reduce((acc, func) => func(acc), strE);
     return normalizeStr(str, normalizeUnits)
 }

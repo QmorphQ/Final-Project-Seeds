@@ -1,4 +1,5 @@
 import { Box, AppBar, Toolbar, IconButton, Badge, Link } from "@mui/material";
+import { Link as RouterLink } from 'react-router-dom'; // MVP
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useSelector } from "react-redux";
@@ -9,7 +10,7 @@ import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors";
-
+// ==================================================================
 
 const HeaderDesktop = () => {
   const classes = useStyles();
@@ -33,21 +34,24 @@ const HeaderDesktop = () => {
             }}
           >
             <Link
-              href="#"
+            component={RouterLink}
+            to="products"
               underline="none"
               sx={{ fontSize: 14, color: "#70737C" }}
             >
               {"ALL PRODUCTS"}
             </Link>
             <Link
-              href="#"
+            component={RouterLink}
+            to="about"
               underline="none"
               sx={{ fontSize: 14, color: "#70737C" }}
             >
               {"ABOUT SEEDRA"}
             </Link>
             <Link
-              href="#"
+              component={RouterLink}
+              to="contacts"
               underline="none"
               sx={{ fontSize: 14, color: "#70737C" }}
             >

@@ -5,6 +5,9 @@ import {
   downloadAllProductsSuccess,
   downloadAllProductsError,
   filterByCategory,
+  addProductRequested,
+  addProductSuccess,
+  addProductError,
   uploadProductRatingRequested,
   uploadProductRatingError,
   uploadProductRatingSuccess,
@@ -25,10 +28,29 @@ const fetchProducts =
       });
   };
 
-const rateProduct = (id, upddatedProduct) => (dispatch) => {
+const addProduct = (product) => (dispatch) => {
+  dispatch(addProductRequested());
+  const token = localStorage.getItem("jwt");
+  console.log(token);
+  axios
+    .post(`${API}products`, product, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then((addedProduct) => {
+      dispatch(addProductSuccess(addedProduct));
+      return addedProduct;
+    })
+    .catch(() => {
+      dispatch(addProductError());
+    });
+};
+
+const rateProduct = (id, updatedProduct) => (dispatch) => {
   dispatch(uploadProductRatingRequested());
   axios
-    .put(`${API}products/${id}`, upddatedProduct, {
+    .put(`${API}/products/${id}`, updatedProduct, {
       headers: { Authorization: localStorage.getItem("jwt") },
     })
     .then((product) => {
@@ -45,4 +67,4 @@ const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
-export { filterProductsByCategory, fetchProducts, rateProduct };
+export { filterProductsByCategory, fetchProducts, addProduct, rateProduct };

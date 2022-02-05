@@ -1,4 +1,4 @@
-export default function Fetch({
+export default function RenderComponent({
   loading,
   data = [],
   renderSuccess,

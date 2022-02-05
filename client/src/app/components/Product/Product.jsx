@@ -1,12 +1,13 @@
-import Fetch from "../../hoc/Fetch.jsx";
+import RenderComponent from "../../hoc/RenderComponent.jsx";
 import {ProductCardRender} from "../../../ui/components/ProductCard/ProductCard.jsx"
 import { useFetch } from "../../hoc/useFetch.jsx";
+import { API } from "../../constants/index.js";
 
 const Product = () => {
-  const [loading, data, error] = useFetch("./CurrentProduct.json");
+  const [loading, data, error] = useFetch(API + `products/822862`);
 
   return (
-    <Fetch
+    <RenderComponent
       loading={loading}
       data={{...data, isProductPage: true}}
       renderSuccess={ProductCardRender}

@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-export const CardInBasket = makeStyles(() => ({
+export const useBasketStyles = makeStyles(() => ({
   productCard: {
     boxShadow: "none"
   },
@@ -15,8 +15,5 @@ export const CardInBasket = makeStyles(() => ({
   },
   productCardPrice: {
     fontWeight: "bold",
-  },
-  productCardButtonBasket: {
-
   },
 }));

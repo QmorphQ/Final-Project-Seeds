@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Box, IconButton,Button  } from "@material-ui/core";
+import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
@@ -100,7 +100,7 @@ export default function SignUp() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen}  color="outlined" variant="contained">Sign up</Button>  
+            <Button onClick={handleClickOpen} variant="contained">Sign up</Button>  
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>

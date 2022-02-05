@@ -16,7 +16,4 @@ export const useBasketStyles = makeStyles(() => ({
   productCardPrice: {
     fontWeight: "bold",
   },
-  productCardButtonBasket: {
-
-  },
 }));

@@ -8,6 +8,7 @@ import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.js
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
 import ProductPage from "./ProductPage.jsx";
 
+
 const Home = ({ loading, productList }) => (
 
   <>

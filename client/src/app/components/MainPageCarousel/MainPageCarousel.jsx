@@ -51,11 +51,12 @@ const ButtonRight = styled("button")({
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
+  
 
   return (
     <Container
       sx={{
-        p: "0",
+        p: "0", zIndex: -1,
       }}
     >
       <Box

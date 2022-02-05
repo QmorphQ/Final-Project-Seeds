@@ -81,7 +81,9 @@ const Header = () => {
                 aria-haspopup="true"
                 // onClick={handleProfileMenuOpen}
               >
-                <AccountCircle className={classes.iconsStyle} />
+                <AccountCircle 
+                  // className={classes.iconsStyle} 
+                />
               </IconButton>
             )}
           </Box>

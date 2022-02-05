@@ -119,7 +119,7 @@ const MenuDesktop = () => {
 
   // const parentArr = filterBy(name, subArr);
 
-  const categoriesWithoutСhildren = parentArr.map((e) => (
+  const categoriesWithoutСhildren = parentArr.map((e, i) => (
     <>
       <Box
         key={(Math.random() + 1).toString(36).substring(7)}

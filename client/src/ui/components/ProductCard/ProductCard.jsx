@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Container, Grid, IconButton, Rating, Stack, Typography } from "@mui/material";
+import { Button, Box, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Container, FilledInput, Grid, IconButton, Rating, Stack, Typography } from "@mui/material";
 import PropTypes from 'prop-types';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -10,12 +10,10 @@ import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import RenderComponent from "../../../app/hoc/RenderComponent";
-import { Box, width } from "@mui/system";
 import Icon from "../Icon/Icon.jsx";
 import { useSelector } from "react-redux";
 import { mainCategoriesSelector } from "../../../store/selectors/selectors";
 import CloseIcon from '@mui/icons-material/Close';
-import PriceTable from "./PriceTable";
 import { useFiltersStyles } from "./useFiltersStyles";
 
 const ProductCard = ({ product, loading }) => {
@@ -192,18 +190,52 @@ export const ProductCardRender = ({ data }) => {
                 </Stack>
               </CardContent>
               <CardActions className={productPageClasses.productActionsBox}>
-                <Box className={productPageClasses.customScrollbar} sx={{width:"100%", scrollbarWidth:"3px"}}>   
-                  <PriceTable 
-                    currentPrice={currentPrice} 
-                    discountPrice={discountPrice}
-                    localPrice={localPrice}
-                    quantity={quantity}
-                    productAmount={productAmount}
-                    setProductAmount={setProductAmount}
-                    setTotalPrice={setTotalPrice}
-                    discontStart={discontStart}
-                  />    
-                </Box>
+                <Box className={productPageClasses.customScrollbar} sx={{width:"100%"}}> 
+                  <Typography 
+                    component="div"  
+                    color="text.primary"
+                  >
+                    Size {" "} 
+                    <Typography component="span" sx={{fontSize:"16px"}}>
+                      {+productAmount} PACK
+                    </Typography>
+                  </Typography>  
+                  <ButtonGroup 
+                    className={productPageClasses.amountInputGroup} 
+                    color="primary" 
+                    variant="outlined" 
+                    aria-label="outlined primary button group"
+                  >
+                    <Button 
+                      onClick={() => {
+                        setProductAmount(+productAmount - 1);
+                      }} 
+                      variant="text"
+                      disabled={productAmount <= 1}
+                    >
+                      {"-"}
+                    </Button>
+                    <FilledInput
+                      inputProps={{sx:{textAlign:"center"}}} 
+                      disableUnderline="true" 
+                      hiddenLabel="true" 
+                      defaultValue="1"
+                      value={productAmount}
+                      onChange={e => setProductAmount(+e.target.value)}
+                      id="product-amount" 
+                      className={productPageClasses.productAmountInput} 
+                    />
+                    <Button 
+                      onClick={() => {
+                        setProductAmount(+productAmount + 1);
+                      }} 
+                      variant="text"
+                      disabled={productAmount >= quantity}
+                    >
+                      {"+"}
+                    </Button>
+                  </ButtonGroup>
+                </Box>  
                 <Box className={productPageClasses.productCardActionBtns}>
                   <Box>
                     {productAmount > discontStart &&
@@ -435,3 +467,7 @@ ProductCard.propTypes = {
 };
 
 export default ProductCard;
+
+ProductCardRender.propTypes = {
+  data: PropTypes.object,
+};

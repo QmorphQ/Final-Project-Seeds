@@ -19,8 +19,6 @@ const Home = ({ loading, productList }) => (
       <ProductsList loading={loading} productList={productList} />
     </Box>
     <Footer />
-
-    <ProductPage />
   </>
 );
 

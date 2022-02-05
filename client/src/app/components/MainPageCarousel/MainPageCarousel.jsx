@@ -56,7 +56,7 @@ const MainPageCarousel = () => {
   return (
     <Container
       sx={{
-        p: "0", zIndex: 0,
+        p: "0", zIndex: -1,
       }}
     >
       <Box

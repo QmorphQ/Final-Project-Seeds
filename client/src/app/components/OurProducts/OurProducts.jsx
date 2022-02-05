@@ -92,8 +92,8 @@ const OurProducts = () => {
           <Box className={classes.navigation}>
             <Typography
               className={classes.ourProductHeading}
-              variant="h3"
-              component="h3"
+              variant="h2"
+              component="h2"
             >
               Our products.
             </Typography>

@@ -135,6 +135,7 @@ const MenuDesktop = () => {
             href={`/${e}`}
             underline="none"
             sx={{
+              mr: "3vw",
               color: "#70737C",
               fontWeight: "500",
               display: "flex",
@@ -152,7 +153,7 @@ const MenuDesktop = () => {
     <>
       <Box
         key={(Math.random() + 1).toString(36).substring(7)}
-        sx={{ boxShadow: "none", my: "0px" }}
+        sx={{ boxShadow: "none", mr: "3vw", }}
       >
         <Box
           key={(Math.random() + 1).toString(36).substring(7)}
@@ -244,7 +245,7 @@ const MenuDesktop = () => {
           justifyContent: "flex-start",
           justifyItems: "flex-start",
           width: "100%",
-          pl: "calc((100vw - 837px)/2)",
+          pl: "calc((100vw - 1000px)/2)",
         }}
       >
         <MenuList

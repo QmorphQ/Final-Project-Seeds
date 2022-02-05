@@ -48,7 +48,7 @@ const CartIcon = () => {
       {
         <MenuItem className={classes.headerMenuItem}>
           <IconButton>
-            <Badge badgeContent={totalCartQuantity} color="primary">
+            <Badge badgeContent={totalCartQuantity} color="primary" sx={{ mr: "25px"}}>
               <ShoppingCartOutlinedIcon className={classes.iconsStyle} />
             </Badge>
           </IconButton>

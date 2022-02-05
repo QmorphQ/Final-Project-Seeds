@@ -56,6 +56,8 @@ const createCustomTheme = (theme) => {
       h2: {
         ...theme.typography.h2,
         fontFamily: "'Lexend', sans-serif",
+        fontSize: "36px",
+        fontWeight: "bold"
       },
       h3: {
         ...theme.typography.h3,

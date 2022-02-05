@@ -9,11 +9,16 @@ export const useProductPageStyles = makeStyles((theme) => ({
   },
   productActionsBox: {
     display: "flex",
+    flexDirection:"column",
     justifyContent: "space-between",
     width: "100%"
   },
   productCardMediaWrapper: {
     maxWidth: "445px",
+    maxHeight:"auto",
+  },
+  productCardMediaSmall: {
+    maxWidth: "67px",
     maxHeight:"auto",
   },
   productCardMedia: {
@@ -34,8 +39,14 @@ export const useProductPageStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.grey["300"]}`,
 
   },
+  productCardOldPrice: {
+    fontSize:"16px",
+    textDecoration:"line-through",
+    color: theme.palette.text.secondary
+  },
   productCardPrice: {
     fontWeight: "bold",
+    fontSize:"28px",
   },
   productCardButtonBasket: {
   },
@@ -57,4 +68,28 @@ export const useProductPageStyles = makeStyles((theme) => ({
   productCardButtonBasket: {
     textTransform: "capitalize"
   },
+  customScrollbar: {
+    width:"100%",
+    "& .MuiPaper-root": {
+      border: "none !important",
+    }
+  },
+  productCardActionBtns: {
+    display:"flex",
+    width:"100%",
+    justifyContent:"space-between",
+    marginTop:"31px",
+    alignItems:"center",
+    minHeight:"67px"
+  },
+  productCardMediaSmallWrapper: {
+    display:"flex",
+    justifyContent:"space-between",
+    marginTop:"22px"
+  },
+  productCardAboutHeader: {
+    width: "100%",
+    textAlign:"left",
+    marginBottom:"56px"
+  }
 }));

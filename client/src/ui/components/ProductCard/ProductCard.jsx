@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Container, FilledInput, Grid, IconButton, Input, Paper, Rating, Stack, TextField, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Container, Grid, IconButton, Rating, Stack, Typography } from "@mui/material";
 import PropTypes from 'prop-types';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -10,12 +10,11 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import RenderComponent from "../../../app/hoc/RenderComponent";
 import { Box, width } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "../Icon/Icon.jsx";
 import { useSelector } from "react-redux";
 import { mainCategoriesSelector } from "../../../store/selectors/selectors";
 import CloseIcon from '@mui/icons-material/Close';
-import { AutoSizer, Column, Table } from 'react-virtualized';
 import PriceTable from "./PriceTable";
 
 const ProductCard = ({ product, loading }) => {
@@ -31,10 +30,17 @@ const ProductCard = ({ product, loading }) => {
 }
 
 export const ProductCardRender = ({data}) => {
-  const {name, currentPrice, imageUrls, isProductPage, categories, quantity, isBasket} = data;
+  const {name, currentPrice, imageUrls, isProductPage, categories, quantity, isBasket, discountPrice} = data;
+  console.log(data);
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnBasket, toggleisOnBasket] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(currentPrice);
+  const [discontStart] = useState(10);
+
+  useEffect(() => {
+    productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice)
+  },[productAmount])
 
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
@@ -70,7 +76,7 @@ export const ProductCardRender = ({data}) => {
 
   if(isProductPage) {
     return (
-      <Container>
+      <Container sx={{marginTop:"50px"}}>
         <Card className={productPageClasses.productCard}>
           <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
             
@@ -85,6 +91,51 @@ export const ProductCardRender = ({data}) => {
                 image={`${imageUrls}`}
                 alt={name}
               />
+
+              <Box className={productPageClasses.productCardMediaSmallWrapper}>
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-2.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-3.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-4.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-5.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-6.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-7.png`}
+                  alt={name}
+                />
+              </Box>
             </Grid>
 
             <Grid item xs={12} md={7} lg={7}>
@@ -112,7 +163,7 @@ export const ProductCardRender = ({data}) => {
                   <Chip 
                     color="primary"
                     className={productPageClasses.productCardAvailable}
-                    label={categories.toUpperCase()}
+                    label={mainCategory.name.toUpperCase()}
                     icon={
                       <Icon 
                         className={productPageClasses.buttonIcon}
@@ -123,63 +174,87 @@ export const ProductCardRender = ({data}) => {
                 </Stack>
               </CardContent>
               <CardActions className={productPageClasses.productActionsBox}>
-              
-                <PriceTable localPrice={localPrice} currentPrice={currentPrice} quantity={quantity}/>    
-
-
-                <Box>
-                  <Typography 
-                    className={productPageClasses.productCardPrice} 
-                    component="span" 
-                    variant="h5" 
-                    color="text.primary"
-                  >
-                    {localPrice.format(currentPrice)}
-                  </Typography>
-                  <ButtonGroup className={productPageClasses.amountInputGroup} color="primary" variant="outlined" aria-label="outlined primary button group">
-                    <Button 
-                      onClick={() => setProductAmount(+productAmount - 1)} 
-                      variant="text"
-                      disabled={productAmount <= 1}
+                <Box className={productPageClasses.customScrollbar} sx={{width:"100%", scrollbarWidth:"3px"}}>   
+                  <PriceTable 
+                    currentPrice={currentPrice} 
+                    discountPrice={discountPrice}
+                    localPrice={localPrice}
+                    quantity={quantity}
+                    productAmount={productAmount}
+                    setProductAmount={setProductAmount}
+                    setTotalPrice={setTotalPrice}
+                    discontStart={discontStart}
+                  />    
+                </Box>
+                <Box className={productPageClasses.productCardActionBtns}>
+                  <Box>
+                    {productAmount > discontStart &&
+                      <Typography 
+                        className={productPageClasses.productCardOldPrice} 
+                        component="div" 
+                        variant="h5" 
+                        color="text.primary"
+                      >
+                        {localPrice.format(productAmount * +currentPrice)}
+                      </Typography>
+                    }
+                    <Typography 
+                      className={productPageClasses.productCardPrice} 
+                      component="div" 
+                      variant="h5" 
+                      color="text.primary"
+                      >
+                      {localPrice.format(totalPrice)}
+                    </Typography>
+                  </Box>
+                    
+                  <Box className={productPageClasses.productCardButtons}>
+                    <IconButton 
+                      className={productPageClasses.productCardButton} 
+                      color="primary" 
+                      aria-label="add to favourite"
+                      onClick={() => toggleIsFavourite(() => !isFavourite)}
                     >
-                      {"-"}
-                    </Button>
-                    <FilledInput
-                      inputProps={{sx:{textAlign:"center"}}} 
-                      disableUnderline="true" 
-                      hiddenLabel="true" 
-                      defaultValue="1"
-                      value={productAmount}
-                      onChange={e => setProductAmount(+e.target.value)}
-                      id="product-amount" 
-                      className={productPageClasses.productAmountInput} 
-                    />
+                      {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                    </IconButton>
                     <Button 
-                      onClick={() => setProductAmount(+productAmount + 1)} 
-                      variant="text"
-                      disabled={productAmount >= quantity}
+                      className={productPageClasses.productCardButtonBasket} 
+                      variant="contained"
                     >
-                      {"+"}
-                    </Button>
-                  </ButtonGroup>
-                  <IconButton 
-                    className={productPageClasses.productCardButton} 
-                    color="primary" 
-                    aria-label="add to favourite"
-                    onClick={() => toggleIsFavourite(() => !isFavourite)}
-                  >
-                    {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                  </IconButton>
-                  <Button 
-                    className={productPageClasses.productCardButtonBasket} 
-                    variant="contained"
-                  >
-                    Add to card
-                  </Button>              
+                      Add to card
+                    </Button>              
+                  </Box>
                 </Box>
               </CardActions>
             </Grid>
           </Grid>
+          <CardContent className={productPageClasses.productCardContent}>
+            <Typography className={productPageClasses.productCardAboutHeader}
+              component="h2" 
+              variant="h2" 
+              color="text.primary"
+            >
+              Product information.
+            </Typography>
+            <Grid container>
+              <Grid item xs={12} md={7} lg={7}>
+                <Typography className={productPageClasses.productCardAboutHeader}
+                  component="p" 
+                  variant="body1" 
+                  color="text.primary"
+                > 
+                  EEDRA Cilantro Seeds - contains 300 seeds in 1 Pack and professional instructions created by PhD Helga George
+                  Be sure of our quality - the freshest batches of this season. Non-GMO, Heirloom - our seeds were tested and have the best germination ratings. Your easy growing experience is our guarantee
+                  Cilantro common culinary uses: salsa, guacamole, pesto, salads, chutney, baked breads, pad thai, pico de gallo, rice, grilled shrimp skewers, falafel, and more
+                  Proudly sourced in the USA - our garden seeds are grown, harvested, and packaged in the USA. We support local farmers and are happy to produce this American-made product
+                  SEEDRA customer service - please contact us directly through Amazon with any questions or concerns about our products. We care about each customer and do our best to provide you with 100% satisfaction
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={5} lg={5}>
+
+              </Grid>
+            </Grid>
+          </CardContent>
         </Card>
       </Container>
     )

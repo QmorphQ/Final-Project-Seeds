@@ -7,18 +7,20 @@ import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
 import Product from "../components/Product/Product.jsx";
+import ProductPage from "./ProductPage.jsx";
 
 const Home = ({ loading, productList }) => (
 
   <>
-    <Product />
     <Header />
     <Box component="main">
       <MainPageCarousel />
       <OurProducts loading={loading} productList={productList} />
-      {/* <ProductsList loading={loading} productList={productList} /> */}
+      <ProductsList loading={loading} productList={productList} />
     </Box>
     <Footer />
+
+    <ProductPage />
   </>
 );
 

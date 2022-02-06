@@ -10,6 +10,12 @@ import {
   addProductToCartRequested,
   addProductToCartSuccess,
   addProductToCartError,
+  decreaseQuantityRequested,
+  decreaseQuantitySuccess,
+  decreaseQuantityError,
+  deleteProductFromCartRequest,
+  deleteProductFromCartSuccess,
+  deleteProductFromCartError,
 } from "../actions/cart.actions";
 
 const fetchCart =
@@ -92,4 +98,49 @@ const addProductToCart = (productId) => (dispatch) => {
   }
 };
 
-export { fetchCart, addCart, addProductToCart };
+const decreaseProductQuantity = (productId) => (dispatch) => {
+  dispatch(decreaseQuantityRequested());
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    axios
+      .delete(`${API}cart/${productId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((updatedCart) => {
+        dispatch(decreaseQuantitySuccess(updatedCart.data));
+        return updatedCart;
+      })
+      .catch(() => {
+        dispatch(decreaseQuantityError());
+      });
+  }
+};
+
+const deleteProductFromCart = (productId) => (dispatch) => {
+  dispatch(deleteProductFromCartRequest());
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    axios
+      .delete(`${API}cart/${productId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((updatedCart) => {
+        dispatch(deleteProductFromCartSuccess(updatedCart.data));
+        return updatedCart;
+      })
+      .catch(() => {
+        dispatch(deleteProductFromCartError());
+      });
+  }
+};
+export {
+  fetchCart,
+  addCart,
+  addProductToCart,
+  decreaseProductQuantity,
+  deleteProductFromCart,
+};

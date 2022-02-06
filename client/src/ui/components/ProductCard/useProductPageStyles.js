@@ -69,10 +69,10 @@ export const useProductPageStyles = makeStyles((theme) => ({
     textTransform: "capitalize"
   },
   customScrollbar: {
+    display:"flex",
     width:"100%",
-    "& .MuiPaper-root": {
-      border: "none !important",
-    }
+    justifyContent:"space-between",
+    alignItems:"center"
   },
   productCardActionBtns: {
     display:"flex",

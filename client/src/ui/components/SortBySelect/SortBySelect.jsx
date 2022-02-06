@@ -1,7 +1,7 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import PropTypes from 'prop-types';
+import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 
-const SortBySelect = ({ selectedValue, handleChange }) => {
-  return (
+const SortBySelect = ({ selectedValue, handleChange }) =>  (
     <FormControl>
       <InputLabel>Sort by</InputLabel>
       <Select value={selectedValue} onChange={handleChange}>
@@ -10,6 +10,11 @@ const SortBySelect = ({ selectedValue, handleChange }) => {
       </Select>
     </FormControl>
   );
-};
+
+
+SortBySelect.propTypes = {
+  selectedValue: PropTypes.number,
+  handleChange: PropTypes.func,
+}
 
 export default SortBySelect;

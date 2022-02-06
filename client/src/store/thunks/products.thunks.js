@@ -32,11 +32,12 @@ const fetchProducts =
   };
 
 const fetchFilteredProducts = (queryParams) => (dispatch) => {
+  console.log("fiiiilter")
   dispatch(downloadFilteredProductsRequested());
   axios
     .get(`${API}products/filter?${queryParams}`)
     .then((filteredProducts) => {
-      dispatch(downloadFilteredProductsSuccess(filteredProducts));
+      dispatch(downloadFilteredProductsSuccess(filteredProducts.data.products));
       return filteredProducts;
     })
     .catch(() => {
@@ -83,4 +84,10 @@ const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
-export { filterProductsByCategory, fetchProducts, fetchFilteredProducts, addProduct, rateProduct };
+export {
+  filterProductsByCategory,
+  fetchProducts,
+  fetchFilteredProducts,
+  addProduct,
+  rateProduct,
+};

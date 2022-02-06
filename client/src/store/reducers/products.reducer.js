@@ -55,7 +55,7 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         downloadFilteredRequestState: downloadRequestStates.SUCCESS,
-        filteredProducts: action.payload.data,
+        filteredProducts: action.payload,
       };
 
     case DOWNLOAD_FILTERED_PRODUCTS_ERROR:

@@ -37,13 +37,18 @@ export const productsSelector = (state) => {
     return bundle;
   }
 
-  const filteredProducts = state.products.productList.filter(
+  const selectedProducts = state.products.productList.filter(
     (product) =>
       product.categories.indexOf(state.products.selectedCategories) > -1
   );
   
-  return filteredProducts;
+  return selectedProducts;
 };
+
+export const downloadFilteredProductsRequestStateSelector = (state) =>
+  state.products.downloadFilteredRequestState;
+
+export const filteredProductsSelector = (state) => state.products.filteredProducts;
 
 
 // ========================= Slides =============================

@@ -16,7 +16,7 @@ const ErrorHandler = ({ errorMessage }) => {
     toast.error(errorMes, {
       theme: "colored",
       position: toast.POSITION.TOP_CENTER,
-      autoClose: 1000,
+      autoClose: 5000,
     });
   }
 

@@ -1,5 +1,4 @@
-
-import { Box, Button, ButtonGroup, FilledInput, FormControlLabel, Paper, Radio, TableCell } from "@mui/material";
+/*import { Box, Button, ButtonGroup, FilledInput, FormControlLabel, Paper, Radio, TableCell } from "@mui/material";
 import React from "react";
 import { AutoSizer, Column, Table } from 'react-virtualized';
 import { useTableStyles } from "./useTableStyles";
@@ -165,4 +164,5 @@ const PriceTable = ({quantity, currentPrice, discountPrice, productAmount, setPr
   )
 }
 
-export default PriceTable;
+export default PriceTable; 
+*/

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";

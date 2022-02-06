@@ -1,23 +1,54 @@
+import { useSelector, useDispatch} from "react-redux";
+import { useEffect } from "react";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import Link from "@mui/material/Link";
 // import { useSelector } from 'react-redux';
 import { Badge, IconButton, MenuItem } from "@mui/material";
 import useStyles from "../../HeaderStyles.jsx";
+import {fetchCart} from "../../../../../store/thunks/cart.thunks";
+import {
+  cartSelector
+} from "../../../../../store/selectors/selectors";
 
 const CartIcon = () => {
   const classes = useStyles();
+  
+  const cart = useSelector(cartSelector);
+  
+  
+  
   // const totalCartQuantity = useSelector((state) => state.cart.totalCartQuantity);
-  const totalCartQuantity = 3;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCart());
+    
+     
+    
+  }, []);
+
+
+//  const testCart = [
+//     "4",
+//     "1"
+// ]
+  
+  // const {lengthCart} = cart;
+  // console.log(lengthCart);
+  
+  
+  const totalCartQuantity = cart?.length;
+  
   const RoutesName = {
-    cart: "/shopping-cart",
+    cart: "/cart",
   };
 
   return (
     <Link href={RoutesName.cart} underline="none">
       {
         <MenuItem className={classes.headerMenuItem}>
-          <IconButton sx={{ mr: 4 }}>
-            <Badge badgeContent={totalCartQuantity.toString()} color="primary">
+          <IconButton>
+            <Badge badgeContent={totalCartQuantity} color="primary" sx={{ mr: "25px"}}>
               <ShoppingCartOutlinedIcon className={classes.iconsStyle} />
             </Badge>
           </IconButton>

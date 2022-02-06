@@ -8,6 +8,9 @@ import {
   addProductRequested,
   addProductSuccess,
   addProductError,
+  downloadFilteredProductsRequested,
+  downloadFilteredProductsSuccess,
+  downloadFilteredProductsError,
   uploadProductRatingRequested,
   uploadProductRatingError,
   uploadProductRatingSuccess,
@@ -27,6 +30,20 @@ const fetchProducts =
         dispatch(downloadAllProductsError());
       });
   };
+
+const fetchFilteredProducts = (queryParams) => (dispatch) => {
+  console.log("fiiiilter")
+  dispatch(downloadFilteredProductsRequested());
+  axios
+    .get(`${API}products/filter?${queryParams}`)
+    .then((filteredProducts) => {
+      dispatch(downloadFilteredProductsSuccess(filteredProducts.data.products));
+      return filteredProducts;
+    })
+    .catch(() => {
+      dispatch(downloadFilteredProductsError());
+    });
+};
 
 const addProduct = (product) => (dispatch) => {
   dispatch(addProductRequested());
@@ -67,4 +84,10 @@ const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
-export { filterProductsByCategory, fetchProducts, addProduct, rateProduct };
+export {
+  filterProductsByCategory,
+  fetchProducts,
+  fetchFilteredProducts,
+  addProduct,
+  rateProduct,
+};

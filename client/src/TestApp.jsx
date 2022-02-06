@@ -28,7 +28,7 @@ import {
   loginStateSelector,
   productsSelector,
 } from "./store/selectors/selectors";
-import Filters from "./app/pages/Filters";
+import Filters from "./app/pages/Filters/Filters";
 
 function TestWarning() {
   return (
@@ -84,9 +84,8 @@ export default function TestApp() {
     dispatch(loginCustomer(login));
   }, []);
 
-  const loginState = useSelector(loginStateSelector);
-  console.log(loginState);
-
+  // const loginState = useSelector(loginStateSelector);
+  
   // const newCart = {
   //   products: [
   //     {
@@ -126,21 +125,16 @@ export default function TestApp() {
   //   dispatch(fetchWishlist());
   // }, []);
 
-  const downloadRequestState = useSelector(
-    downloadProductsRequestStateSelector
-  );
-  const productList = useSelector(productsSelector);
+  
+ 
 
-  if (downloadRequestState === "loading") {
-    return <Preloader />;
-  }
-
+  
   // ----------------------------
   return (
     <>
       <div>
         <TestWarning />
-        <Filters loading={downloadRequestState} productList={productList} />
+        <Filters />
       </div>
     </>
   );

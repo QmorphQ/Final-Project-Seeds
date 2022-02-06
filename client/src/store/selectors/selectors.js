@@ -4,6 +4,8 @@
  * @returns {String} - one of downloadRequestStates
  */
 
+
+// ================== Categories ===================
 export const downloadCategoriesRequestStateSelector = (state) =>
   state.catalog.downloadRequestState;
 
@@ -17,8 +19,10 @@ export const mainCategoriesSelector = (state) => {
   return mainCategories;
 };
 
+
+// =================== Products ===================
 export const downloadProductsRequestStateSelector = (state) =>
-  state.products.downloadRequestState;
+  state.products.downloadAllRequestState;
 
 export const productsSelector = (state) => {
   if (state.products.selectedCategories === "all") {
@@ -33,25 +37,37 @@ export const productsSelector = (state) => {
     return bundle;
   }
 
-  const filteredProducts = state.products.productList.filter(
+  const selectedProducts = state.products.productList.filter(
     (product) =>
       product.categories.indexOf(state.products.selectedCategories) > -1
   );
   
-  return filteredProducts;
+  return selectedProducts;
 };
 
+export const downloadFilteredProductsRequestStateSelector = (state) =>
+  state.products.downloadFilteredRequestState;
+
+export const filteredProductsSelector = (state) => state.products.filteredProducts;
+
+
+// ========================= Slides =============================
 export const downloadSlidesRequestStateSelector = (state) =>
   state.slides.downloadRequestState;
 
 export const slidesSelector = (state) => state.slides.slideList;
 
+
+// ======================= Customers/Login ==============================
 export const customersSelector = (state) => state.customer.newCustomer;
 
 export const loginStateSelector = (state) => state.customer.isLoggedIn;
 
+
+// ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
 
+// ======================== Wishlist =======================
 export const wishlistSelector = (state) => state.wishlist.wishlist;
 
 

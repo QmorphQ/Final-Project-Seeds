@@ -8,6 +8,7 @@ import Spinner from '../Spinner/Spinner.jsx';
 import searchDB from "./SearchComponent/SearchLogic/searchDB";
 import searchObserver from './SearchComponent/SearchLogic/searchObserver';
 import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
+
 // =========================================================
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -84,7 +85,7 @@ const searchContainerHandler = () => {
 }
 // ++++++
 // Get products from server by itemNo:
-const getSearchProducts = (arrOfProductsItemNo = []) => {
+const getSearchProducts = async (arrOfProductsItemNo = []) => {
   arrOfProductsItemNo.map(async (itemNo) => {
 await fetch(`http://localhost:8000/api/products/${itemNo}`).
  then((r) => r.json()).

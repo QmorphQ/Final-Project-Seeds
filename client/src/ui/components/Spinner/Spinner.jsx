@@ -1,5 +1,5 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import PropTypes from 'prop-types';
 
 export default function Spinner({ size, thickness }) {

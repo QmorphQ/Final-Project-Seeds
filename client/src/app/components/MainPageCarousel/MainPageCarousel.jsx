@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Typography, Container, Icon, Grid, Box, CardMedia } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import PropTypes from "prop-types";
-import { styled } from "@material-ui/core/styles";
+import { styled } from "@mui/styles";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
 import {
@@ -51,11 +51,12 @@ const ButtonRight = styled("button")({
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
+  
 
   return (
     <Container
       sx={{
-        p: "0",
+        p: "0", zIndex: -1,
       }}
     >
       <Box

@@ -14,6 +14,22 @@ export const downloadAllProductsError = () => ({
   type: DOWNLOAD_ALL_PRODUCTS_ERROR,
 });
 
+export const DOWNLOAD_FILTERED_PRODUCTS_REQUESTED = "DOWNLOAD_FILTERED_PRODUCTS_REQUESTED";
+export const downloadFilteredProductsRequested = () => ({
+  type: DOWNLOAD_FILTERED_PRODUCTS_REQUESTED,
+});
+
+export const  DOWNLOAD_FILTERED_PRODUCTS_SUCCESS = "DOWNLOAD_FILTERED_PRODUCTS_SUCCESS";
+export const downloadFilteredProductsSuccess = (products) => ({
+  type: DOWNLOAD_FILTERED_PRODUCTS_SUCCESS,
+  payload: products,
+});
+
+export const DOWNLOAD_FILTERED_PRODUCTS_ERROR = "DOWNLOAD_FILTERED_PRODUCTS_ERROR";
+export const downloadFilteredProductsError = () => ({
+  type: DOWNLOAD_FILTERED_PRODUCTS_ERROR,
+});
+
 export const FILTER_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
 export const filterByCategory = (category) => ({
   type: FILTER_BY_CATEGORY,

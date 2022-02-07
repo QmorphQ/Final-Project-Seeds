@@ -122,7 +122,7 @@ function TextComments() {
     return (
         <div className={classes.root}>
             <div>
-                <Box mx="auto" pb={20} pt={10} textAlign="center">
+                <Box mx="auto" pb={15} pt={7} textAlign="center">
                     <Typography variant="h2" as="div">What out clients say</Typography>
                 </Box>
             </div>

@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState , useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -13,31 +14,9 @@ import SignUp from "../Forms/RegLogModal.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors.js";
 // import { downloadRequestStates } from "../../constants";
-// import {
-//   downloadCategoriesRequestStateSelector,
-//   mainCategoriesSelector,
-//   allCategoriesSelector
-// } from "../../../store/selectors/selectors";
-// import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-// import fetchCategories from "../../../store/thunks/catalog.thunks";
 
-const Header = () => {
-  // const downloadRequestState = useSelector(
-  //   downloadCategoriesRequestStateSelector
-  // );
-  // if (downloadRequestState === downloadRequestStates.LOADING)
-  //   return <div>Loading...</div>; // Here must be a loader
-  // if (downloadRequestState === downloadRequestStates.ERROR)
-  //   return (
-  //     <ErrorHandler
-  //       errorMessage={
-  //         "There is some problem with downloading product categories"
-  //       }
-  //     />
-  //   );
 
-  //   const categories = useSelector(mainCategoriesSelector);
-  //   const allCategories = useSelector(allCategoriesSelector);
+const Header = ({loading, allCategories, categories}) => {
 
   const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector);
@@ -48,13 +27,44 @@ const Header = () => {
     setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen);
   };
 
+  const categoriesList = categories.map(({ name }) => ( name
+  ));
+  const process = (arr) => {
+    const res = {};
+
+    arr.forEach(({ parentId, name }) => {
+      res[parentId] ??= { parentId, sub: [] };
+      res[parentId].sub.push(name);
+    });
+    return Object.values(res).map(({ parentId, sub }) => ({
+      parentId,
+      name: sub,
+    }));
+  };
+
+  const result = process(allCategories);
+
+  const parentsListWithChildren = result.filter((e) => e.parentId !== "null");
+
+  const filterBy = (a, b) => {
+    const typedArr = a.filter((e) => {
+      return !b.find((item) => item.parentId === e) && e;
+    });
+    return typedArr;
+  };
+
+  const parentsListWithoutChildren = filterBy(categoriesList, parentsListWithChildren);
+
+
+  
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="inherit" sx={{  boxShadow: "none" }}>
         <Toolbar sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <Logo iconWidth={"100px"} iconHeight={"20px"} />
           <Box display={{ xs: "none", sm: "none", md: "block" }}>
-            <MenuDesktop />
+            <MenuDesktop parentsListWithoutChildren={parentsListWithoutChildren} parentsListWithChildren={parentsListWithChildren } />
           </Box>
          <Box sx={{ display: "flex", alignItems: "center"}}>
          <Box display={{ xs: "none", sm: "none", md: "block" }}>
@@ -67,6 +77,7 @@ const Header = () => {
               </Badge>
             </IconButton>
             <HeaderIcons />
+            <Box display={{ xs: "none", sm: "none", md:"flex" }}>
             {!isLogin ? (
               <>
                 <LogIn />
@@ -86,6 +97,8 @@ const Header = () => {
                 />
               </IconButton>
             )}
+            </Box>
+           
           </Box>
           <Box display={{ xs: "block", sm: "block", md: "none" }}>
             <IconButton
@@ -108,10 +121,16 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        {isMenuOpen && <MenuMobile />}
+        {isMenuOpen && <MenuMobile parentsListWithoutChildren={parentsListWithoutChildren} parentsListWithChildren={parentsListWithChildren } />}
       </Box>
     </Box>
   );
 };
+
+Header.propTypes = {
+  allCategories: PropTypes.array,
+  loading: PropTypes.string,
+};
+
 
 export default Header;

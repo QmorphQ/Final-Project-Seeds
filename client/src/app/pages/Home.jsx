@@ -9,10 +9,12 @@ import ProductsList from "../components/ProductsList/ProductsList.jsx";
 import ProductPage from "./ProductPage.jsx";
 
 
-const Home = ({ loading, productList }) => (
+const Home = ({ loading, productList, allCategories, categories  }) => (
 
+  
+  
   <>
-    <Header />
+    <Header loading={loading} allCategories={allCategories} categories={categories} />
     <Box component="main">
       <MainPageCarousel />
       <OurProducts loading={loading} productList={productList} />

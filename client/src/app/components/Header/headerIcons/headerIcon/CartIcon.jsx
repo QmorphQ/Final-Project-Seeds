@@ -27,7 +27,7 @@ const CartIcon = () => {
     
   }, []);
 
-
+console.log(cart);
 //  const testCart = [
 //     "4",
 //     "1"

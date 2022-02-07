@@ -31,6 +31,8 @@
     "styled": "^1.0.0",
     "styled-components": "^5.3.3",
     "web-vitals": "^2.1.4",
+    "react-swipeable-views": "^0.14.0",
+    "react-swipeable-views-utils": "^0.14.0",
     "yup": "^0.32.8"
   },
   "scripts": {

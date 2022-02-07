@@ -23,10 +23,14 @@ const MenuDesktop = () => {
   const [dropDownOpen, setDropDownOpen] = useState(null);
 
   const showDropdown = (e) => {
-    let dropDown;
-    e.target.id === dropDownOpen ? dropDown = null : dropDown = e.target.id;
+    // -----------------------------------------------------------------------------
+    // let dropDown;
+    // e.target.id === dropDownOpen ? dropDown = null : dropDown = e.target.id;
     
-    return setDropDownOpen(dropDown);
+    // return setDropDownOpen(dropDown);
+    const { id } = e.target;
+    return setDropDownOpen((prevState) => id !== prevState && id || null)
+    // ------------------------------------------------------------------------------ MVP change
   };
 
   const result = [
@@ -79,14 +83,11 @@ const MenuDesktop = () => {
   // const subArr = result.filter((e) => e.parentId !== "null");
   const arrCat = result.filter((e) => e.parentId === "null");
   const [{ name }] = arrCat;
-
-  const filterBy = ((a, b) => {
-    const typedArr = a.filter((e) => {
-      return !b.find((item) => item.parentId === e) && e;
-    });
-    return typedArr;
-  });
-
+// -----------------------------------------------------------------------------------------
+  const filterBy = (a, b) => a.filter((e) => !b.find((item) => item.parentId === e) && e);
+// ----------------------------------------------------------------------------------------- MVP change
+   
+ 
   const parentArr = filterBy(name, subArr);
 
   // const process = (arr) => {
@@ -119,7 +120,7 @@ const MenuDesktop = () => {
 
   // const parentArr = filterBy(name, subArr);
 
-  const categoriesWithoutСhildren = parentArr.map((e, i) => (
+  const categoriesWithoutСhildren = parentArr.map((e) => (
     <>
       <Box
         key={(Math.random() + 1).toString(36).substring(7)}
@@ -221,7 +222,9 @@ const MenuDesktop = () => {
                             }}
                           >
                             {`${item.charAt(0).toUpperCase()}${item.slice(1)}`}
+                            
                           </Link>
+                          
                         </MenuItem>
                       </Paper>
                     </Box>

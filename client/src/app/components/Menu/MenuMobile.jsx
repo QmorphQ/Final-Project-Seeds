@@ -75,14 +75,9 @@ const MenuMobile = () => {
   // const subArr = result.filter((e) => e.parentId !== "null");
   const arrCat = result.filter((e) => e.parentId === "null");
   const [{ name }] = arrCat;
-
-  const filterBy = (a, b) => {
-    const typedArr = a.filter((e) => {
-      return !b.find((item) => item.parentId === e) && e;
-    });
-    return typedArr;
-  };
-
+// ---------------------------------------------------------------------------------------
+const filterBy = (a, b) => a.filter((e) => !b.find((item) => item.parentId === e) && e);
+// --------------------------------------------------------------------------------------- MVP change
   const parentArr = filterBy(name, subArr);
 
   const categoriesWithoutСhildren = parentArr.map((e) => (

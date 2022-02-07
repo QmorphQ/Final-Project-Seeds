@@ -11,7 +11,7 @@ import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
-import Filters from "./app/pages/Filters.jsx";
+import Filters from "./app/pages/Filters/Filters.jsx";
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 
 function App() {

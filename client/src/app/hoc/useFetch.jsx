@@ -10,7 +10,7 @@ export function useFetch(uri) {
     if (!uri) return;
     setLoading("loading")
     fetch(uri)
-      .then(data => data.json())
+      .then(fetchedData => fetchedData.json())
       .then(setData)
       .then(() => {
         setLoading("success")

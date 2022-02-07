@@ -11,7 +11,7 @@ import MenuDesktop from "../Menu/MenuDesktop.jsx";
 import LogIn from "../Forms/LogRegModal.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
-import { loginStateSelector } from "../../../store/selectors/selectors.js";
+import { loginStateSelector } from "../../../store/selectors/selectors";
 // import { downloadRequestStates } from "../../constants";
 // import {
 //   downloadCategoriesRequestStateSelector,

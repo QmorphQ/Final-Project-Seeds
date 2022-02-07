@@ -70,7 +70,7 @@ const Header = () => {
             {!isLogin ? (
               <>
                 <LogIn />
-                <SignUp />
+                <SignUp /> 
               </>
             ) : (
               <IconButton

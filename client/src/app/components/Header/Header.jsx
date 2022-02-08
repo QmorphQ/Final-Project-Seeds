@@ -46,12 +46,7 @@ const Header = ({ allCategories, categories}) => {
 
   const parentsListWithChildren = result.filter((e) => e.parentId !== "null");
 
-  const filterBy = (a, b) => {
-    const typedArr = a.filter((e) => {
-      return !b.find((item) => item.parentId === e) && e;
-    });
-    return typedArr;
-  };
+  const filterBy = (a, b) => a.filter((e) => !b.find((item) => item.parentId === e) && e);
 
   const parentsListWithoutChildren = filterBy(categoriesList, parentsListWithChildren);
 

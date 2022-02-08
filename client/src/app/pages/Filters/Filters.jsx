@@ -170,6 +170,9 @@ const Filters = () => {
   };
 
   const toggleOriginCheckBox = () => {
+    if (isOpenOriginCheckBox === classes.isClosed){
+      return setIsOpenOriginCheckBox(classes.isOpen)
+    }
     isOpenOriginCheckBox === classes.isClosed
       ? setIsOpenOriginCheckBox(classes.isOpen)
       : setIsOpenOriginCheckBox(classes.isClosed);

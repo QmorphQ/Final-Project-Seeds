@@ -6,11 +6,15 @@ import {
   Stack,
   Typography,
   InputLabel,
+  FormControlLabel,
+  FormGroup,
 } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import { useDispatch, useSelector } from "react-redux";
 import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
+import MoreIcon from "@mui/icons-material/MoreVert";
+import Checkbox from "@mui/material/Checkbox";
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/ Footer/Footer.jsx";
 import { downloadRequestStates } from "../../constants";
@@ -24,7 +28,6 @@ import Preloader from "../../../ui/components/Preloader/Prelodaer.jsx";
 import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
 import useFiltersStyles from "./useFiltersStyles";
 
-
 const Filters = () => {
   const classes = useFiltersStyles();
 
@@ -33,40 +36,49 @@ const Filters = () => {
 
   const dispatch = useDispatch();
 
-  const defaultUSP = new URLSearchParams({
-    perPage: 6,
+  const defaultParams = {
+    perPage: 3,
     startPage: 1,
     sort: "-currentPrice",
-  });
+  };
 
   const [selectedValue, setSelectedValue] = useState("most");
-  const [queryParams, setQueryParams] = useState(defaultUSP);
+
+  const [params, setParams] = useState(defaultParams);
+  const [queryParams, setQueryParams] = useState(new URLSearchParams(params));
   const [inputFromValue, setInputFromValue] = useState(0);
   const [inputToValue, setInputToValue] = useState(30);
   const [sliderValue, setSliderValue] = useState([0, 30]);
+  const [isOpenOriginCheckBox, setIsOpenOriginCheckBox] = useState(
+    classes.isClosed
+  );
+  const [originCheckBoxState, setOriginCheckBoxState] = useState([]);
 
-   
   useEffect(() => {
     dispatch(fetchFilteredProducts(queryParams));
   }, []);
 
   useEffect(() => {
-    console.log('dispatch')
+    setQueryParams(new URLSearchParams(params));
+  }, [params]);
+
+  useEffect(() => {
     dispatch(fetchFilteredProducts(queryParams));
   }, [queryParams]);
+
+  useEffect(() => {
+    if (originCheckBoxState.length > 0) {
+      setParams({ ...params, origin: originCheckBoxState });
+    }
+  }, [originCheckBoxState]);
 
   const handleSelectChange = (event) => {
     setSelectedValue(event.target.value);
 
     if (event.target.value === "less") {
-      const usp = new URLSearchParams({
-        perPage: 6,
-        startPage: 1,
-        sort: "currentPrice",
-      });
-      setQueryParams(usp);
+      setParams({ ...params, sort: "currentPrice" });
     } else {
-      setQueryParams(defaultUSP);
+      setParams({ ...params, sort: "-currentPrice" });
     }
   };
 
@@ -75,44 +87,36 @@ const Filters = () => {
       setSliderValue([0, sliderValue[1]]);
       setInputFromValue(event.target.value);
 
-      const usp = new URLSearchParams({
-        minPrice: 0,
-        maxPrice: sliderValue[1],
-      });
-      setQueryParams(usp);
+      setParams({ ...params, minPrice: 0, maxPrice: sliderValue[1] });
     } else {
       if (+event.target.value > 30) {
         setSliderValue([30, 30]);
         setInputFromValue(30);
         setInputToValue(30);
 
-        const usp = new URLSearchParams({
-          minPrice: 30,
-          maxPrice: 30,
-        });
-        setQueryParams(usp);
+        setParams({ ...params, minPrice: 30, maxPrice: 30 });
       } else if (+event.target.value > sliderValue[1]) {
         setSliderValue([sliderValue[1], sliderValue[1]]);
         setInputFromValue(sliderValue[1]);
 
-        const usp = new URLSearchParams({
+        setParams({
+          ...params,
           minPrice: sliderValue[1],
           maxPrice: sliderValue[1],
         });
-        setQueryParams(usp);
       } else {
         setSliderValue([+event.target.value, sliderValue[1]]);
         setInputFromValue(event.target.value);
 
-        const usp = new URLSearchParams({
+        setParams({
+          ...params,
           minPrice: +event.target.value,
-          maxPrice:  sliderValue[1],
+          maxPrice: sliderValue[1],
         });
-        setQueryParams(usp);
       }
       return null;
     }
-    return null
+    return null;
   };
 
   const handleInputToChange = (event) => {
@@ -120,49 +124,37 @@ const Filters = () => {
       setSliderValue([sliderValue[1], 0]);
       setInputToValue(event.target.value);
 
-      const usp = new URLSearchParams({
-        minPrice: sliderValue[1],
-        maxPrice:  0,
-      });
-      setQueryParams(usp);
+      setParams({ ...params, minPrice: sliderValue[1], maxPrice: 0 });
     } else {
       if (+event.target.value < 0) {
         setSliderValue([0, 0]);
         setInputFromValue(0);
         setInputToValue(0);
 
-        const usp = new URLSearchParams({
-          minPrice: 0,
-          maxPrice:  0,
-        });
-        setQueryParams(usp);
+        setParams({ ...params, minPrice: 0, maxPrice: 0 });
       } else if (+event.target.value > 30) {
         setSliderValue([sliderValue[1], 30]);
         setInputToValue(30);
 
-        const usp = new URLSearchParams({
-          minPrice: sliderValue[1],
-          maxPrice:  30,
-        });
-        setQueryParams(usp);
+        setParams({ ...params, minPrice: sliderValue[1], maxPrice: 30 });
       } else if (+event.target.value < sliderValue[0]) {
         setSliderValue([sliderValue[0], sliderValue[0]]);
         setInputToValue(event.target.value);
 
-        const usp = new URLSearchParams({
+        setParams({
+          ...params,
           minPrice: sliderValue[0],
-          maxPrice:  sliderValue[0]
+          maxPrice: sliderValue[0],
         });
-        setQueryParams(usp);
       } else {
         setSliderValue([sliderValue[1], +event.target.value]);
         setInputToValue(event.target.value);
 
-        const usp = new URLSearchParams({
+        setParams({
+          ...params,
           minPrice: sliderValue[1],
-          maxPrice:  +event.target.value
+          maxPrice: +event.target.value,
         });
-        setQueryParams(usp);
       }
       return null;
     }
@@ -174,11 +166,17 @@ const Filters = () => {
     setInputToValue(newValue[1]);
     setSliderValue(newValue);
 
-    const usp = new URLSearchParams({
-      minPrice: newValue[0],
-      maxPrice:  newValue[1]
-    });
-    setQueryParams(usp);
+    setParams({ ...params, minPrice: newValue[0], maxPrice: newValue[1] });
+  };
+
+  const toggleOriginCheckBox = () => {
+    isOpenOriginCheckBox === classes.isClosed
+      ? setIsOpenOriginCheckBox(classes.isOpen)
+      : setIsOpenOriginCheckBox(classes.isClosed);
+  };
+
+  const handleOriginChange = (event) => {
+    setOriginCheckBoxState([...originCheckBoxState, event.target.name]);
   };
 
   if (loading === downloadRequestStates.LOADING) {
@@ -246,6 +244,61 @@ const Filters = () => {
                     onChangeCommitted={handleSliderChange}
                   />
                 </FormControl>
+              </Container>
+              <Container className={classes.filterContainer}>
+                <Container className={classes.originFilterContainer}>
+                  <Typography variant="h6">Country of origin</Typography>
+                  <MoreIcon
+                    className={classes.moreIcon}
+                    onClick={toggleOriginCheckBox}
+                  ></MoreIcon>
+                </Container>
+                <Container className={isOpenOriginCheckBox}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleOriginChange}
+                          name="american"
+                        />
+                      }
+                      label="American"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleOriginChange}
+                          name="english"
+                        />
+                      }
+                      label="English"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox onChange={handleOriginChange} name="french" />
+                      }
+                      label="French"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleOriginChange}
+                          name="italian"
+                        />
+                      }
+                      label="Italian"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleOriginChange}
+                          name="mexican"
+                        />
+                      }
+                      label="Mexican"
+                    />
+                  </FormGroup>
+                </Container>
               </Container>
             </Stack>
 

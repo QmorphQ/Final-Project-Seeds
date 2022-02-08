@@ -7,18 +7,23 @@ import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
 
-const Home = ({ loading, productList, allCategories, categories  }) => (
-
-  
-  
+const Home = ({ loading, productList, allCategories, categories }) => (
   <>
-    <Header loading={loading} allCategories={allCategories} categories={categories} />
+    <Box component="header">
+      <Header
+        loading={loading}
+        allCategories={allCategories}
+        categories={categories}
+      />
+    </Box>
     <Box component="main">
       <MainPageCarousel />
       <OurProducts loading={loading} productList={productList} />
       <ProductsList loading={loading} productList={productList} />
     </Box>
-    <Footer />
+    <Box component="footer">
+      <Footer />
+    </Box>
   </>
 );
 
@@ -35,6 +40,8 @@ Home.propTypes = {
       popular: PropTypes.bool,
     })
   ),
+  allCategories: PropTypes.array,
+  categories: PropTypes.array,
 };
 
 export default Home;

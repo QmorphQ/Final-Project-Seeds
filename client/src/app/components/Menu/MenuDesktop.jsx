@@ -1,63 +1,36 @@
-// import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Paper, MenuList, MenuItem, Link } from "@mui/material";
+import {
+  Box,
+  Paper,
+  MenuList,
+  MenuItem,
+  Link,
+} from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import MenuItemNoChildrenDesktop from "./MenuItemNoChildrenDesktop.jsx";
 
-const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) => {
+const MenuDesktop = ({
+  parentsListWithoutChildren,
+  parentsListWithChildren,
+}) => {
   const [dropDownOpen, setDropDownOpen] = useState(null);
+  
 
   const showDropdown = (e) => {
-    // let dropDown;
-    // e.target.id === dropDownOpen ? (dropDown = null) : (dropDown = e.target.id);
-
-    // return setDropDownOpen(dropDown);
+    
     const { id } = e.target;
-    return setDropDownOpen((prevState) => id !== prevState && id || null)
+    return setDropDownOpen((prevState) => (id !== prevState && id) || null);
   };
 
-  const categoriesWithoutСhildren = parentsListWithoutChildren.map((e, i) => (
-    <>
-      <Box
-        key={(Math.random() + 1).toString(36).substring(7)}
-        display="flex"
-        sx={{ alignItems: "flex-start" }}
-      >
-        <MenuItem
-          key={(Math.random() + 1).toString(36).substring(7)}
-          sx={{ pt: 0 }}
-        >
-          <Link
-            key={(Math.random() + 1).toString(36).substring(7)}
-            href={`/${e}`}
-            underline="none"
-            sx={{
-              
-              color: "#70737C",
-              fontWeight: "500",
-              display: "flex",
-              fontSize: "14px",
-            }}
-          >
-            {e.toUpperCase()}
-          </Link>
-        </MenuItem>
-      </Box>
-    </>
-  ));
-
+  
   const cardsList = parentsListWithChildren.map((e, index) => (
-    <Box
-      key={`${e.parentId}${index}`}
-      sx={{ boxShadow: "none", mr: "3vw" }}
-    >
+    <Box key={`${e.parentId}${index}`} sx={{ boxShadow: "none", mr: "0" }}>
       <Box
-    
         id={e.parentId}
         sx={{ boxShadow: "none", my: "0px", position: "relative" }}
       >
         <MenuItem
-          
           fontWeight="700"
           sx={{
             color: "#70737C",
@@ -67,7 +40,6 @@ const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) =>
           }}
         >
           <Link
-            
             href={`/${e.parentId}`}
             underline="none"
             sx={{ color: "#70737C", fontWeight: "500" }}
@@ -76,19 +48,12 @@ const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) =>
           </Link>
           <MoreIcon id={e.parentId} onClick={showDropdown} />
         </MenuItem>
-        <Box
-          
-          sx={{ position: "absolute", zIndex: 3 }}
-        >
+        <Box sx={{ position: "absolute", zIndex: 3 }}>
           {e.name.map((item, i) => (
             <div key={`${item}/${i}`}>
               {dropDownOpen === e.parentId && (
-                <Box
-                  
-                  sx={{ position: "relative" }}
-                >
+                <Box sx={{ position: "relative" }}>
                   <Paper
-                    
                     sx={{
                       border: "none",
                       borderRadius: 0,
@@ -96,7 +61,6 @@ const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) =>
                     }}
                   >
                     <MenuItem
-                      
                       sx={{
                         position: "relative",
                         color: "#70737C",
@@ -106,7 +70,6 @@ const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) =>
                       }}
                     >
                       <Link
-                        
                         href={`${e.parentId}/${item}`}
                         underline="none"
                         sx={{
@@ -148,7 +111,12 @@ const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) =>
         }}
       >
         <>
-          {categoriesWithoutСhildren}
+          <Box display="flex" sx={{ alignItems: "center" }}>
+            <MenuItemNoChildrenDesktop
+              parentsListWithoutChildren={parentsListWithoutChildren}
+            />
+          </Box>
+
           {cardsList}
         </>
       </MenuList>
@@ -159,6 +127,8 @@ const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) =>
 MenuDesktop.propTypes = {
   allCategories: PropTypes.array,
   loading: PropTypes.string,
+  parentsListWithoutChildren: PropTypes.array,
+  parentsListWithChildren: PropTypes.array,
 };
 
 export default MenuDesktop;

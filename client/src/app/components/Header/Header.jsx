@@ -1,5 +1,5 @@
-import { useState , useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,7 +16,7 @@ import { loginStateSelector } from "../../../store/selectors/selectors";
 // import { downloadRequestStates } from "../../constants";
 
 
-const Header = ({loading, allCategories, categories}) => {
+const Header = ({ allCategories, categories}) => {
 
   const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector);
@@ -70,12 +70,12 @@ const Header = ({loading, allCategories, categories}) => {
          <Box display={{ xs: "none", sm: "none", md: "block" }}>
             <SearchAppBar sx={{ width: 500 }} />
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "flex" } }}>
-            <IconButton>
+          <Box sx={{ display: { xs: "flex", md: "flex" }, justifyContent: "flex-start" }}>
+          {isLogin && <IconButton>
               <Badge badgeContent={favoritesLength} color="primary">
                 <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
               </Badge>
-            </IconButton>
+            </IconButton>}
             <HeaderIcons />
             <Box display={{ xs: "none", sm: "none", md:"flex" }}>
             {!isLogin ? (
@@ -129,7 +129,7 @@ const Header = ({loading, allCategories, categories}) => {
 
 Header.propTypes = {
   allCategories: PropTypes.array,
-  loading: PropTypes.string,
+  categories: PropTypes.array,
 };
 
 

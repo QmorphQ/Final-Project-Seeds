@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
-import { Box, Paper, MenuList } from "@mui/material";
-import { loginStateSelector } from "../../../store/selectors/selectors.js";
+import PropTypes from "prop-types";
+import { Box, Paper, MenuList, IconButton  } from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import { loginStateSelector } from "../../../store/selectors/selectors";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import LogIn from "../Forms/LogRegModal.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
@@ -44,7 +46,10 @@ const MenuMobile = ({
               parentsListWithChildren={parentsListWithChildren}
             />
           </MenuList>
-            {!isLogin ? (
+          <Box display="flex"
+          sx={{justifyContent: "space-around" }}
+          >
+          {!isLogin ? (
               <>
                 <LogIn />
                 <SignUp />
@@ -63,10 +68,17 @@ const MenuMobile = ({
                 />
               </IconButton>
             )}
+          </Box>
+            
         </Paper>
       </Box>
     </>
   );
 };
 
+
+MenuMobile.propTypes = {
+  parentsListWithoutChildren: PropTypes.array,
+  parentsListWithChildren: PropTypes.array,
+};
 export default MenuMobile;

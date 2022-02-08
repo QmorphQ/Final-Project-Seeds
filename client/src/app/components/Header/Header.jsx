@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import { Link as RoutLink } from 'react-router-dom';
 import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -57,7 +58,7 @@ const Header = ({ allCategories, categories}) => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="inherit" sx={{  boxShadow: "none" }}>
         <Toolbar sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-          <Logo iconWidth={"100px"} iconHeight={"20px"} />
+          <RoutLink to={'/'}><Logo iconWidth={"100px"} iconHeight={"20px"} /></RoutLink>
           <Box display={{ xs: "none", sm: "none", md: "block" }}>
             <MenuDesktop parentsListWithoutChildren={parentsListWithoutChildren} parentsListWithChildren={parentsListWithChildren } />
           </Box>

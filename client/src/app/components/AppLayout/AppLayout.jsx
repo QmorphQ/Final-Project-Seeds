@@ -1,19 +1,15 @@
 import { Outlet } from "react-router-dom";
-// import { Header } from
-// import { Fotter } from
+import { Box } from "@mui/material";
+import Header from '../Header/Header.jsx';
+import Footer from '../ Footer/Footer.jsx';
+import classes from './AppLayoutStyle.jsx';
 
-/* 
-/ const Links = [
-.......
-]
- */
-
-export default function AppLayout() {
+export default function AppLayout({ menuCategories, allMenuCategories }) {
   return (
-    <>
-      {/* <Header links={Links} /> */}
-      {/* <Footer links={Links} /> */}
+    <Box sx={classes.AppLayout}>
+      <Header categories={menuCategories} allCategories={allMenuCategories} />
       <Outlet />
-    </>
+      <Footer />
+    </Box>
   );
 }

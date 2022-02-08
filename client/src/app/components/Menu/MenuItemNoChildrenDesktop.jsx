@@ -1,18 +1,17 @@
-import PropTypes from "prop-types";
+import { Link as RouterLink } from 'react-router-dom';
 import { MenuItem, Link } from "@mui/material";
 
-export default function MenuItemNoChildrenDesktop({
-  parentsListWithoutChildren,
-}) {
+export default function MenuItemNoChildrenDesktop() {
   return (
     <>
-      {parentsListWithoutChildren.map((e, index) => (
+      {[['products', 'all'], ['preview', 'bundles']].map((e, index) => (
         <div key={index}>
           <MenuItem
             sx={{ pt: 0 }}
           >
             <Link
-              href={`/${e}`}
+            component={RouterLink}
+            to={`${e[0]}`}
               underline="none"
               sx={{
                 color: "#70737C",
@@ -21,7 +20,7 @@ export default function MenuItemNoChildrenDesktop({
                 fontSize: "14px",
               }}
             >
-              {e.toUpperCase()}
+              {e[1].toUpperCase()}
             </Link>
           </MenuItem>
         </div>
@@ -30,6 +29,4 @@ export default function MenuItemNoChildrenDesktop({
   );
 }
 
-MenuItemNoChildrenDesktop.propTypes = {
-  parentsListWithoutChildren: PropTypes.array,
-};
+

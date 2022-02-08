@@ -2,29 +2,15 @@ import PropTypes from "prop-types";
 import { Box } from "@mui/material";
 import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
-import Header from "../components/Header/Header.jsx";
-import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
 
-const Home = ({ loading, productList, allCategories, categories }) => (
-  <>
-    <Box component="header">
-      <Header
-        loading={loading}
-        allCategories={allCategories}
-        categories={categories}
-      />
-    </Box>
+const Home = ({ loading, productList }) => (
     <Box component="main">
       <MainPageCarousel />
       <OurProducts loading={loading} productList={productList} />
       <ProductsList loading={loading} productList={productList} />
     </Box>
-    <Box component="footer">
-      <Footer />
-    </Box>
-  </>
 );
 
 Home.propTypes = {
@@ -40,8 +26,6 @@ Home.propTypes = {
       popular: PropTypes.bool,
     })
   ),
-  allCategories: PropTypes.array,
-  categories: PropTypes.array,
 };
 
 export default Home;

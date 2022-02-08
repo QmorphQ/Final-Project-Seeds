@@ -5,7 +5,11 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 
 const ProductsListFilters = ({ loading, productList }) => {
   
-  const data = {products: productList, isFiltersPage: true}
+  const updatedProducts = productList.map((product) => {
+    const updatedData = { ...product, isFiltersPage: true };
+    return updatedData;
+  });
+  const data = {products: updatedProducts, isFiltersPage: true}
     
 
   return (

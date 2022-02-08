@@ -17,14 +17,12 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import Checkbox from "@mui/material/Checkbox";
 import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/ Footer/Footer.jsx";
-import { downloadRequestStates } from "../../constants";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
 import SortBySelect from "../../../ui/components/SortBySelect/SortBySelect.jsx";
 import {
   downloadFilteredProductsRequestStateSelector,
   filteredProductsSelector,
 } from "../../../store/selectors/selectors";
-import Preloader from "../../../ui/components/Preloader/Prelodaer.jsx";
 import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
 import useFiltersStyles from "./useFiltersStyles";
 
@@ -33,7 +31,7 @@ const Filters = () => {
 
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
-
+  
   const dispatch = useDispatch();
 
   const defaultParams = {
@@ -53,6 +51,10 @@ const Filters = () => {
     classes.isClosed
   );
   const [originCheckBoxState, setOriginCheckBoxState] = useState([]);
+  const [isOpenMaturationCheckBox, setIsOpenMaturationCheckBox] = useState(
+    classes.isClosed
+  );
+  const [maturationCheckBoxState, setMaturationCheckBoxState] = useState([]);
 
   useEffect(() => {
     dispatch(fetchFilteredProducts(queryParams));
@@ -71,6 +73,16 @@ const Filters = () => {
       setParams({ ...params, origin: originCheckBoxState });
     }
   }, [originCheckBoxState]);
+
+  useEffect(() => {
+    if (maturationCheckBoxState.length > 0) {
+      setParams({ ...params, maturation: maturationCheckBoxState });
+    } else {
+      const newParams = params;
+      delete newParams["maturation"];
+      setParams(newParams);
+    }
+  }, [maturationCheckBoxState]);
 
   const handleSelectChange = (event) => {
     setSelectedValue(event.target.value);
@@ -175,11 +187,38 @@ const Filters = () => {
       : setIsOpenOriginCheckBox(classes.isClosed);
   };
 
-  const handleOriginChange = (event) => {
-    setOriginCheckBoxState([...originCheckBoxState, event.target.name]);
+  const toggleMaturationCheckBox = () => {
+    isOpenMaturationCheckBox === classes.isClosed
+      ? setIsOpenMaturationCheckBox(classes.isOpen)
+      : setIsOpenMaturationCheckBox(classes.isClosed);
   };
 
-  
+  const handleOriginChange = (event) => {
+    if (event.target.checked) {
+      setOriginCheckBoxState([...originCheckBoxState, event.target.name]);
+    } else {
+      const newOriginCheckBoxState = originCheckBoxState.filter(
+        (option) => option !== event.target.name
+      );
+      setOriginCheckBoxState(newOriginCheckBoxState);
+    }
+  };
+
+  const handleMaturationChange = (event) => {
+    if (event.target.checked) {
+      setMaturationCheckBoxState([
+        ...maturationCheckBoxState,
+        event.target.name,
+      ]);
+    } else {
+      const newMaturationCheckBoxState = maturationCheckBoxState.filter(
+        (option) => option !== event.target.name
+      );
+      console.log(newMaturationCheckBoxState);
+      setMaturationCheckBoxState(newMaturationCheckBoxState);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -203,10 +242,14 @@ const Filters = () => {
                 />
               </Container>
               <Container className={classes.filterContainer}>
-                <Typography variant="h6">Categories</Typography>
+                <Typography variant="h6" className={classes.filterTitle}>
+                  Categories
+                </Typography>
               </Container>
               <Container className={classes.filterContainer}>
-                <Typography variant="h6">Price</Typography>
+                <Typography variant="h6" className={classes.filterTitle}>
+                  Price
+                </Typography>
                 <FormControl>
                   <Container className={classes.priceInputsContainer}>
                     <Container className={classes.priceInputContainer}>
@@ -244,7 +287,9 @@ const Filters = () => {
               </Container>
               <Container className={classes.filterContainer}>
                 <Container className={classes.originFilterContainer}>
-                  <Typography variant="h6">Country of origin</Typography>
+                  <Typography variant="h6" className={classes.filterTitle}>
+                    Country of origin
+                  </Typography>
                   <MoreIcon
                     className={classes.moreIcon}
                     onClick={toggleOriginCheckBox}
@@ -293,6 +338,39 @@ const Filters = () => {
                         />
                       }
                       label="Mexican"
+                    />
+                  </FormGroup>
+                </Container>
+              </Container>
+              <Container className={classes.filterContainer}>
+                <Container className={classes.originFilterContainer}>
+                  <Typography variant="h6" className={classes.filterTitle}>
+                    Term of maturation
+                  </Typography>
+                  <MoreIcon
+                    className={classes.moreIcon}
+                    onClick={toggleMaturationCheckBox}
+                  ></MoreIcon>
+                </Container>
+                <Container className={isOpenMaturationCheckBox}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleMaturationChange}
+                          name="early"
+                        />
+                      }
+                      label="Early"
+                    />
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleMaturationChange}
+                          name="late"
+                        />
+                      }
+                      label="Late"
                     />
                   </FormGroup>
                 </Container>

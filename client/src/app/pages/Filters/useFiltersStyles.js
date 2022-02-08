@@ -3,15 +3,13 @@ import { makeStyles } from "@mui/styles";
 const drawerWidth = 350;
 
 const useFiltersStyles = makeStyles({
-  
   page: {
     background: "#f9f9f9",
     width: "100%",
   },
- 
+
   drawer: {
     width: drawerWidth,
-    height: "2000px",
   },
 
   drawerPaper: {
@@ -19,7 +17,7 @@ const useFiltersStyles = makeStyles({
     maxHeight: "100%",
     position: "relative !important",
     marginTop: "30px",
-    borderRight: "none",
+    borderRight: "none !important",
   },
 
   drawerStack: {
@@ -41,11 +39,15 @@ const useFiltersStyles = makeStyles({
     paddingBottom: "25px",
   },
 
+  filterTitle: {
+    paddingBottom: "10px",
+  },
+
   originFilterContainer: {
     display: "flex",
     justifyContent: "space-between",
     position: "relative",
-    marginBottom: "15px"
+    marginBottom: "15px",
   },
 
   filterName: {
@@ -56,7 +58,7 @@ const useFiltersStyles = makeStyles({
   },
 
   priceInputsContainer: {
-    display: "flex",
+    display: "flex !important",
     marginBottom: "20px",
   },
 
@@ -88,16 +90,16 @@ const useFiltersStyles = makeStyles({
     cursor: "pointer",
     position: "absolute",
     top: "5px",
-    right: "10px"
+    right: "10px",
   },
 
   isClosed: {
-    display: "none"
-  }, 
+    display: "none !important",
+  },
 
   isOpen: {
-    display: "block"
-  }
+    display: "block !important",
+  },
 });
 
 export default useFiltersStyles;

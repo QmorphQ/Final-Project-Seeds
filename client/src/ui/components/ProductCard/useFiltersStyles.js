@@ -7,7 +7,7 @@ export const useFiltersStyles = makeStyles(() => ({
     border: "2px solid #EFEFEF",
     boxShadow: "none",
     minHeight: "400px",
-    maxWidth: "350px"
+    maxWidth: "350px",
   },
   productCardHeader: {
     position: "absolute",
@@ -39,13 +39,13 @@ export const useFiltersStyles = makeStyles(() => ({
     fontWeight: "bold",
   },
   productCardButtonBasket: {
-    position: "absolute",
+    position: "absolute !important",
     bottom: "28px",
-    right: "28px",
+    right: "50px",
     borderRadius: "8px",
     width: "48px",
     height: "48px",
     border: "1px solid #EFEFEF",
-    padding: "0px important"
+    padding: "0px important",
   },
 }));

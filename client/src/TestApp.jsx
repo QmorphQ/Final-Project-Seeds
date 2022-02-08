@@ -5,7 +5,7 @@ import ViewInArIcon from "@mui/icons-material/ViewInAr";
 /* import { BrowserRouter, Routes, Route } from "react-router-dom"; */
 import { addProduct, fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
-import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+import Preloader from "./ui/components/Preloader/Preloader.jsx";
 import { loginCustomer } from "./store/thunks/customer.thunks";
 import {
   addCart,

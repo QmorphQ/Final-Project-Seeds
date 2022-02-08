@@ -8,7 +8,7 @@ import {
   productsSelector,
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+import Preloader from "./ui/components/Preloader/Preloader.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 
 function App() {

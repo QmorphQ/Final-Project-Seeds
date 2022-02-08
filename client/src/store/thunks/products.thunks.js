@@ -32,7 +32,6 @@ const fetchProducts =
   };
 
 const fetchFilteredProducts = (queryParams) => (dispatch) => {
-  console.log("fiiiilter")
   dispatch(downloadFilteredProductsRequested());
   axios
     .get(`${API}products/filter?${queryParams}`)

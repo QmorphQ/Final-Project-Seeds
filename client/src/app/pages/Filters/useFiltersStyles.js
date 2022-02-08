@@ -1,6 +1,5 @@
 import { makeStyles } from "@mui/styles";
 
-
 const drawerWidth = 350;
 
 const useFiltersStyles = makeStyles({
@@ -13,7 +12,7 @@ const useFiltersStyles = makeStyles({
   },
   drawer: {
     width: drawerWidth,
-    height: "100%",
+    height: "1000px",
   },
 
   drawerPaper: {
@@ -38,6 +37,13 @@ const useFiltersStyles = makeStyles({
     borderBottomColor: "#EFEFEF",
     borderBottomStyle: "solid",
     paddingBottom: "25px",
+  },
+
+  originFilterContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    position: "relative",
+    marginBottom: "15px"
   },
 
   filterName: {
@@ -75,7 +81,21 @@ const useFiltersStyles = makeStyles({
   priceSlider: {
     width: "300px",
   },
-});
 
+  moreIcon: {
+    cursor: "pointer",
+    position: "absolute",
+    top: "5px",
+    right: "10px"
+  },
+
+  isClosed: {
+    display: "none"
+  }, 
+
+  isOpen: {
+    display: "block"
+  }
+});
 
 export default useFiltersStyles;

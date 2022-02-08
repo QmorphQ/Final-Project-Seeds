@@ -10,7 +10,7 @@ export default function MenuItemNoChildrenMobile({
         <div key={index}>
           <MenuItem>
             <Link
-              href={`/${item}`}
+              href={`products/${item}`}
               underline="none"
               sx={{ pl: "16px", color: "#1F2533", fontWeight: "400" }}
             >

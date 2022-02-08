@@ -1,32 +1,20 @@
-import { Button, Box, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Container, FilledInput, Grid, IconButton, Rating, Stack, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack } from "@mui/material";
 import PropTypes from 'prop-types';
+import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
-import { useEffect, useState } from "react";
+import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
-import RenderComponent from "../../../app/hoc/RenderComponent";
-import Icon from "../Icon/Icon.jsx";
-import { useSelector } from "react-redux";
-import { mainCategoriesSelector } from "../../../store/selectors/selectors";
-import CloseIcon from '@mui/icons-material/Close';
 import { useFiltersStyles } from "./useFiltersStyles";
-
-const ProductCard = ({ product, loading }) => {
-  return (
-    <RenderComponent
-      loading={loading}
-      data={product}
-      renderSuccess={ProductCardRender}
-      loadingFallback={<p>Loading...</p>}
-      renderError={<p>Error</p>}
-    />
-  );
-};
+import Icon from "../Icon/Icon.jsx";
+import { mainCategoriesSelector } from "../../../store/selectors/selectors";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -48,8 +36,9 @@ export const ProductCardRender = ({ data }) => {
   const [discontStart] = useState(10);
 
   useEffect(() => {
-    productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice)
-  },[productAmount])
+    // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
+    setTotalPrice(prevProductAmount => prevProductAmount <= discontStart ? productAmount * currentPrice : productAmount * discountPrice);
+  },[productAmount, discontStart])
 
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
@@ -453,6 +442,17 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
+const ProductCard = ({ product, loading }) => 
+  (
+    <RenderComponent
+      loading={loading}
+      data={product}
+      renderSuccess={ProductCardRender}
+      loadingFallback={<p>Loading...</p>}
+      renderError={<p>Error</p>}
+    />
+  );
+
 ProductCard.defaultProps = {
   product: {
     name: "test name",
@@ -464,7 +464,11 @@ ProductCard.defaultProps = {
 
 ProductCard.propTypes = {
   product: PropTypes.object,
+  loading: PropTypes.bool,
 };
+ProductCardRender.propTypes = {
+  data: PropTypes.object,
+}
 
 export default ProductCard;
 

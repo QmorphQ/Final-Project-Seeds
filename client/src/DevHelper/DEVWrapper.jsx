@@ -39,9 +39,9 @@ export default function DEVWrapper({
     "background-color: red; color: yellow; font-weight: bold;";
   // ++++++
   const keyPressHandler = (event) => {
-    if (event.code === "KeyZ") {
+    if (event.code === "KeyZ" && event.shiftKey) {
       setAppMode((prevMode) => (prevMode === "dev" ? "test" : "dev"));
-    } else if (event.code === "KeyE") {
+    } else if (event.code === "KeyE" && event.shiftKey) {
       setActiveController((mode) => !mode);
     }
   };

@@ -8,10 +8,12 @@ const MenuDesktop = ({ parentsListWithoutChildren, parentsListWithChildren }) =>
   const [dropDownOpen, setDropDownOpen] = useState(null);
 
   const showDropdown = (e) => {
-    let dropDown;
-    e.target.id === dropDownOpen ? (dropDown = null) : (dropDown = e.target.id);
+    // let dropDown;
+    // e.target.id === dropDownOpen ? (dropDown = null) : (dropDown = e.target.id);
 
-    return setDropDownOpen(dropDown);
+    // return setDropDownOpen(dropDown);
+    const { id } = e.target;
+    return setDropDownOpen((prevState) => id !== prevState && id || null)
   };
 
   const categoriesWithoutСhildren = parentsListWithoutChildren.map((e, i) => (

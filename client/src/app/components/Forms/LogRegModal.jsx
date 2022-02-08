@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { makeStyles } from "@mui/styles";
-import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
+import { Grid, Typography, Box, IconButton, Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
@@ -18,7 +18,7 @@ const style = makeStyles({
   ItemRight: {
     position: "absolute",
     right: "-10px",
-    top: "-10px"
+    top: "5px"
   },
   BlockCenter: {
     position: 'fixed',
@@ -79,11 +79,11 @@ export default function LogIn() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen}  color="primary" variant="contained">Log In</Button>
+            <Button onClick={handleClickOpen} sx={{mr:1, mt:1, height:40, width:100, fontSize:14}}  color="primary" variant="text">Log In</Button>
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 10, width:300, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, width:300, margin:"0 auto"}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -94,9 +94,10 @@ export default function LogIn() {
                   <Form>
                     <Grid container spacing={2}>
                       <Grid className={styles.ItemBlock} item xs={12}>
-                        <Typography className={classes.iconsStyle}>
-                          Login <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
+                        <Typography color="primary" sx={{pb:1}}>
+                          Login
                         </Typography>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
                       </Grid>
     
                       <Grid item xs={12}>

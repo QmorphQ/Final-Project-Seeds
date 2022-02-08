@@ -48,8 +48,6 @@ export const useProductPageStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     fontSize:"28px",
   },
-  productCardButtonBasket: {
-  },
   productAmountInput: {
     alignSelf:"center",
     width:"48px",

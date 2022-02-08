@@ -18,7 +18,7 @@ const style = makeStyles({
   ItemRight: {
     position: "absolute",
     right: "-10px",
-    top: "-10px"
+    top: "5px"
   },
   BlockCenter: {
     position: 'fixed',
@@ -100,11 +100,11 @@ export default function SignUp() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen} variant="contained">Sign up</Button>  
+            <Button sx={{mr:1, mt:1, height:40, width:100, fontSize:14}} onClick={handleClickOpen} variant="outlined">Sign up</Button>  
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 10, width:400, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 3, width:400, margin:"0 auto"}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -115,9 +115,10 @@ export default function SignUp() {
                   <Form>
                     <Grid container spacing={2}>
                       <Grid className={styles.ItemBlock} item xs={12}>
-                        <Typography className={classes.iconsStyle}>
-                         Sign up <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
+                        <Typography color="primary" sx={{pb:1}}>
+                         Sign up 
                         </Typography>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
                       </Grid>
                         <Grid item xs={6}>
                             <Textfield

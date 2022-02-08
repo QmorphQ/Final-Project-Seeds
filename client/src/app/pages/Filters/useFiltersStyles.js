@@ -3,27 +3,29 @@ import { makeStyles } from "@mui/styles";
 const drawerWidth = 350;
 
 const useFiltersStyles = makeStyles({
+  
   page: {
     background: "#f9f9f9",
     width: "100%",
   },
-  root: {
-    display: "flex",
-  },
+ 
   drawer: {
     width: drawerWidth,
-    height: "1000px",
+    height: "2000px",
   },
 
   drawerPaper: {
     width: drawerWidth,
-    position: "relative",
+    maxHeight: "100%",
+    position: "relative !important",
     marginTop: "30px",
     borderRight: "none",
   },
 
   drawerStack: {
     maxWidth: "100%",
+    maxHeight: "100%",
+    position: "relative !important",
   },
 
   title: {

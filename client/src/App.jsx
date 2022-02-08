@@ -8,7 +8,6 @@ import {
   productsSelector,
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
@@ -30,10 +29,7 @@ function App() {
     dispatch(fetchProducts());
   }, []);
 
-  if (downloadRequestState === "loading") {
-    return <Preloader />;
-  }
-  
+    
   return (
     <BrowserRouter>
     <Routes>

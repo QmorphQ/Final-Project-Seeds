@@ -37,7 +37,7 @@ const Filters = () => {
   const dispatch = useDispatch();
 
   const defaultParams = {
-    perPage: 3,
+    perPage: 9,
     startPage: 1,
     sort: "-currentPrice",
   };
@@ -179,10 +179,7 @@ const Filters = () => {
     setOriginCheckBoxState([...originCheckBoxState, event.target.name]);
   };
 
-  if (loading === downloadRequestStates.LOADING) {
-    return <Preloader />;
-  }
-
+  
   return (
     <>
       <Header />

@@ -5,10 +5,8 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 
 const ProductsListFilters = ({ loading, productList }) => {
   
-  const data = productList.map((product) => {
-    const updatedData = { ...product, isFiltersPage: true };
-    return updatedData;
-  });
+  const data = {products: productList, isFiltersPage: true}
+    
 
   return (
     <RenderComponent

@@ -248,8 +248,9 @@ const Filters = () => {
                 <Typography variant="h6" className={classes.filterTitle}>
                   Price
                 </Typography>
-                <FormControl>
-                  <Container className={classes.priceInputsContainer}>
+
+                <Container className={classes.priceInputsContainer}>
+                  <FormControl>
                     <Container className={classes.priceInputContainer}>
                       <InputLabel className={classes.priceInputLabel}>
                         From
@@ -258,9 +259,10 @@ const Filters = () => {
                         className={classes.priceInput}
                         value={inputFromValue}
                         onChange={handleInputFromChange}
-                        defaultValue={0}
                       />
                     </Container>
+                  </FormControl>
+                  <FormControl>
                     <Container className={classes.priceInputContainer}>
                       <InputLabel className={classes.priceInputLabel}>
                         To
@@ -271,17 +273,17 @@ const Filters = () => {
                         onChange={handleInputToChange}
                       />
                     </Container>
-                  </Container>
+                  </FormControl>
+                </Container>
 
-                  <Slider
-                    className={classes.priceSlider}
-                    min={0}
-                    max={30}
-                    aria-label="Price"
-                    value={sliderValue}
-                    onChangeCommitted={handleSliderChange}
-                  />
-                </FormControl>
+                <Slider
+                  className={classes.priceSlider}
+                  min={0}
+                  max={30}
+                  getAriaLabel={() => "Price"}
+                  value={sliderValue}
+                  onChangeCommitted={handleSliderChange}
+                />
               </Container>
               <Container className={classes.filterContainer}>
                 <Container className={classes.originFilterContainer}>

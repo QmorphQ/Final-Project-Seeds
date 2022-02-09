@@ -72,7 +72,7 @@ const useFiltersStyles = makeStyles({
   priceInputLabel: {
     position: "absolute",
     top: "5px",
-    left: "-5px",
+    left: "25px",
   },
 
   priceInput: {

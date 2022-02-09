@@ -6,7 +6,7 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 const ProductsList = ({loading, productList}) => (
     <RenderComponent
       loading={loading}
-      data={productList}
+      data={{products: productList}}
       renderSuccess={ProductsListSection}
       loadingFallback={<p>Loading...</p>}
       renderError={<ErrorHandler errorMessage="There is some problem with products downloading"/>}

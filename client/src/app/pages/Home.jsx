@@ -45,6 +45,8 @@ Home.propTypes = {
       popular: PropTypes.bool,
     })
   ),
+  allCategories: PropTypes.array,
+  categories: PropTypes.array,
 };
 
 export default Home;

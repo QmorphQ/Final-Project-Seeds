@@ -27,7 +27,7 @@ const CartIcon = () => {
     
   }, []);
 
-
+console.log(cart);
 //  const testCart = [
 //     "4",
 //     "1"
@@ -48,7 +48,7 @@ const CartIcon = () => {
       {
         <MenuItem className={classes.headerMenuItem}>
           <IconButton>
-            <Badge badgeContent={totalCartQuantity} color="primary" sx={{ mr: "25px"}}>
+            <Badge badgeContent={totalCartQuantity} color="primary" sx={{ mr: "0px"}}>
               <ShoppingCartOutlinedIcon className={classes.iconsStyle} />
             </Badge>
           </IconButton>

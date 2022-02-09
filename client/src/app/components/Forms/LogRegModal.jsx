@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton, Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,6 +9,9 @@ import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
+import { loginRequestSelector } from '../../../store/selectors/selectors';
+import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
+import { downloadRequestStates } from '../../constants/index';
 
 
 const style = makeStyles({
@@ -42,6 +45,7 @@ const style = makeStyles({
 
 
 export default function LogIn() {
+    const requestState = useSelector(loginRequestSelector);
     const classes = useStyles();
     const styles = style();
     const dispatch = useDispatch()
@@ -49,8 +53,7 @@ export default function LogIn() {
         loginOrEmail: '',
         password: '',
     };
-
-    
+  
     const FORM_VALIDATION = Yup.object().shape({
         loginOrEmail: Yup.string()
         .required('Required')
@@ -124,8 +127,8 @@ export default function LogIn() {
                   </Form>
                 </Formik>
             </Box></> : false}
-              
-        
+            {requestState === downloadRequestStates.ERROR && (
+        <ErrorHandler errorMessage={"Incorrect email or password."} />)}      
     </>);
 }
 

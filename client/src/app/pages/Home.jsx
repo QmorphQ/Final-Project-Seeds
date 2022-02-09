@@ -6,28 +6,25 @@ import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
-
 import { downloadProductsRequestStateSelector } from "../../store/selectors/selectors";
-import Header from "../components/Header/Header.jsx";
-import Footer from "../components/ Footer/Footer.jsx";
+
 
 const Home = ({ loading, productList }) => {
+  const downloadRequestState = useSelector(
+    downloadProductsRequestStateSelector
+  );
 
-  const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
-  
   if (downloadRequestState === "loading") {
     return <Preloader />;
   }
 
   return (
     <>
-      <Header />
       <Box component="main">
         <MainPageCarousel />
         <OurProducts loading={loading} productList={productList} />
         <ProductsList loading={loading} productList={productList} />
       </Box>
-      <Footer />
     </>
   );
 };

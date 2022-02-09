@@ -38,8 +38,6 @@ function App() {
     dispatch(fetchProducts());
   }, []);
 
-  
-  
   return (
 
     <BrowserRouter>

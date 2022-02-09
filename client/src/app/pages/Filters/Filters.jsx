@@ -15,7 +15,6 @@ import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Checkbox from "@mui/material/Checkbox";
-import Header from "../../components/Header/Header.jsx";
 import Footer from "../../components/ Footer/Footer.jsx";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
 import SortBySelect from "../../../ui/components/SortBySelect/SortBySelect.jsx";
@@ -31,7 +30,7 @@ const Filters = () => {
 
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
-  
+
   const dispatch = useDispatch();
 
   const defaultParams = {
@@ -221,7 +220,6 @@ const Filters = () => {
 
   return (
     <>
-      <Header />
       <Grid container>
         <Grid item xs={0} md={4}>
           <Drawer

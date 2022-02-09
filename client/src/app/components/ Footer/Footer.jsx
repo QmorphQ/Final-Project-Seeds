@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import FooterDesktop from "./FooterDesktop.jsx";
 import FooterMobile from "./FooterMobile.jsx";
+import Modal from "./Modal.jsx"
 
 export default function Footer() {
   return (
@@ -10,6 +11,7 @@ export default function Footer() {
       </Box>
       <Box display={{ xs: "none", sm: "none", md: "block" }}>
         <FooterDesktop />
+        <Modal />
       </Box>
     </>
   );

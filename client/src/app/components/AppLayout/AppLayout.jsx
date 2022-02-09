@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import Header from '../Header/Header.jsx';
@@ -12,4 +13,9 @@ export default function AppLayout({ menuCategories, allMenuCategories }) {
       <Footer />
     </Box>
   );
+}
+
+AppLayout.PropTypes = {
+  menuCategories: PropTypes.array,
+  allMenuCategories: PropTypes.array
 }

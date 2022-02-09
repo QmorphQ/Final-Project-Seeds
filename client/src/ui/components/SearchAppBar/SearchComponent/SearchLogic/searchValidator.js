@@ -84,8 +84,9 @@ const keyWords = {
   ],
 };
 
-export default function searchValidator(str) {
+export default function searchValidator() {
     const validCases = {
         concreteKeyWords: (str) => str.test(keyWords.cocrette.join(" "))
-    }
-}
+    };
+    return validCases
+};

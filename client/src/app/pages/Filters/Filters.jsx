@@ -78,7 +78,7 @@ const Filters = () => {
       setParams({ ...params, maturation: maturationCheckBoxState });
     } else {
       const newParams = params;
-      delete newParams["maturation"];
+      delete newParams.maturation;
       setParams(newParams);
     }
   }, [maturationCheckBoxState]);

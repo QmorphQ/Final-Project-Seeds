@@ -17,6 +17,7 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 // import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
+import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 // =======================================================================
 
@@ -46,6 +47,7 @@ function App() {
         <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
         <Route path="/products" element={<Filters />} />
         <Route path="/preview" element={<ProductPage />} />
+        <Route path="/cart" element={<TestCartPage />}/>
         <Route path="*" element={<PageNotFound />} />
         </Route>
     </Routes>

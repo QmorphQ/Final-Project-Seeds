@@ -1,3 +1,4 @@
+import { Link as RouterLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, AppBar, Toolbar, IconButton, Badge, Link } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -64,7 +65,7 @@ const HeaderDesktop = () => {
               <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
             </Badge>
           </IconButton>
-          <HeaderIcons />
+          <RouterLink to={'/cart'}><HeaderIcons /></RouterLink>
           {!isLogin ? 
             <>
               <LogIn/>

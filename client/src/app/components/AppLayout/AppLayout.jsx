@@ -15,7 +15,7 @@ export default function AppLayout({ menuCategories, allMenuCategories }) {
   );
 }
 
-AppLayout.PropTypes = {
+AppLayout.propTypes = {
   menuCategories: PropTypes.array,
   allMenuCategories: PropTypes.array
 }

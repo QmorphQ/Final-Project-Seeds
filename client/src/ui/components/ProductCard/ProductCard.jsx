@@ -197,7 +197,7 @@ export const ProductCardRender = ({ data }) => {
                   >
                     <Button 
                       onClick={() => {
-                        setProductAmount(+productAmount - 1);
+                        setProductAmount(prevProductAmount => +prevProductAmount - 1)
                       }} 
                       variant="text"
                       disabled={productAmount <= 1}
@@ -206,9 +206,8 @@ export const ProductCardRender = ({ data }) => {
                     </Button>
                     <FilledInput
                       inputProps={{sx:{textAlign:"center"}}} 
-                      disableUnderline="true" 
-                      hiddenLabel="true" 
-                      defaultValue="1"
+                      disableUnderline={true} 
+                      hiddenLabel={true} 
                       value={productAmount}
                       onChange={e => setProductAmount(+e.target.value)}
                       id="product-amount" 
@@ -456,7 +455,6 @@ const ProductCard = ({ product, loading }) =>
 ProductCard.defaultProps = {
   product: {
     name: "test name",
-    currentPrice: "test price",
     imageUrls: "test imageUrls",
     categories: [""],
   },

@@ -113,15 +113,12 @@ const MenuDesktop = ({
           pt: "14px",
         }}
       >
-        <>
           <Box display="flex" sx={{ alignItems: "center" }}>
             <MenuItemNoChildrenDesktop
               parentsListWithoutChildren={parentsListWithoutChildren}
             />
           </Box>
-
           {cardsList}
-        </>
       </MenuList>
     </Box>
   );

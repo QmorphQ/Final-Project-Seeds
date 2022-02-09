@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import { useDispatch, useSelector } from "react-redux";
-import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
 import Input from "@mui/material/Input";
 // import { downloadRequestStates } from "../../constants";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
@@ -206,7 +206,7 @@ const Filters = () => {
               </Container>
               <Container className={classes.filterContainer}>
                 <Typography variant="h6">Price</Typography>
-                <FormControl>
+                <FormGroup>
                   <Container className={classes.priceInputsContainer}>
                     <Container className={classes.priceInputContainer}>
                       <InputLabel className={classes.priceInputLabel}>
@@ -216,7 +216,7 @@ const Filters = () => {
                         className={classes.priceInput}
                         value={inputFromValue}
                         onChange={handleInputFromChange}
-                        defaultValue={0}
+
                       />
                     </Container>
                     <Container className={classes.priceInputContainer}>
@@ -235,11 +235,11 @@ const Filters = () => {
                     className={classes.priceSlider}
                     min={0}
                     max={30}
-                    aria-label="Price"
+                    getAriaLabel={() => "Price"}
                     value={sliderValue}
                     onChangeCommitted={handleSliderChange}
                   />
-                </FormControl>
+                </FormGroup>
               </Container>
             </Stack>
 

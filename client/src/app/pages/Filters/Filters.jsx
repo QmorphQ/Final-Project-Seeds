@@ -9,18 +9,21 @@ import {
   FormControlLabel,
   FormGroup,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import Slider from "@mui/material/Slider";
 import { useDispatch, useSelector } from "react-redux";
 import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Checkbox from "@mui/material/Checkbox";
-import Footer from "../../components/ Footer/Footer.jsx";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
 import SortBySelect from "../../../ui/components/SortBySelect/SortBySelect.jsx";
 import {
+  allCategoriesSelector,
   downloadFilteredProductsRequestStateSelector,
   filteredProductsSelector,
+  mainCategoriesSelector,
 } from "../../../store/selectors/selectors";
 import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
 import useFiltersStyles from "./useFiltersStyles";
@@ -30,6 +33,8 @@ const Filters = () => {
 
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
+  const allCategories = useSelector(allCategoriesSelector);
+  const categories = useSelector(mainCategoriesSelector);
 
   const dispatch = useDispatch();
 
@@ -43,13 +48,22 @@ const Filters = () => {
 
   const [params, setParams] = useState(defaultParams);
   const [queryParams, setQueryParams] = useState(new URLSearchParams(params));
+
+  const [isOpenCategoriesFilter, setIsOpenCategoriesFilter] = useState(
+    classes.isClosed
+  );
+  const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const [inputFromValue, setInputFromValue] = useState(0);
   const [inputToValue, setInputToValue] = useState(30);
   const [sliderValue, setSliderValue] = useState([0, 30]);
+
   const [isOpenOriginCheckBox, setIsOpenOriginCheckBox] = useState(
     classes.isClosed
   );
   const [originCheckBoxState, setOriginCheckBoxState] = useState([]);
+
   const [isOpenMaturationCheckBox, setIsOpenMaturationCheckBox] = useState(
     classes.isClosed
   );
@@ -68,6 +82,16 @@ const Filters = () => {
   }, [queryParams]);
 
   useEffect(() => {
+    if (selectedCategory !== null) {
+      setParams({ ...params, categories: selectedCategory });
+    } else {
+      const newParams = params;
+      delete newParams.categories;
+      setParams(newParams);
+    }
+  }, [selectedCategory]);
+
+  useEffect(() => {
     if (originCheckBoxState.length > 0) {
       setParams({ ...params, origin: originCheckBoxState });
     }
@@ -78,10 +102,13 @@ const Filters = () => {
       setParams({ ...params, maturation: maturationCheckBoxState });
     } else {
       const newParams = params;
-      delete newParams["maturation"];
+      delete newParams.maturation;
       setParams(newParams);
     }
   }, [maturationCheckBoxState]);
+
+  
+  // ========== Sort by price =================================
 
   const handleSelectChange = (event) => {
     setSelectedValue(event.target.value);
@@ -92,6 +119,60 @@ const Filters = () => {
       setParams({ ...params, sort: "-currentPrice" });
     }
   };
+
+
+  // ========= Filter by categories control ======================
+
+  const categoriesList = categories.map(({ name }) => name);
+  const process = (arr) => {
+    const res = {};
+
+    arr.forEach(({ parentId, name }) => {
+      res[parentId] ??= { parentId, sub: [] };
+      res[parentId].sub.push(name);
+    });
+    return Object.values(res).map(({ parentId, sub }) => ({
+      parentId,
+      name: sub,
+    }));
+  };
+
+  const result = process(allCategories);
+
+  const parentsListWithChildren = result.filter((e) => e.parentId !== "null");
+
+  const filterBy = (a, b) =>
+    a.filter((e) => !b.find((item) => item.parentId === e) && e);
+
+  const parentsListWithoutChildren = filterBy(
+    categoriesList,
+    parentsListWithChildren
+  );
+
+  const toggleCategoriesFilter = () => {
+    if (isOpenCategoriesFilter === classes.isClosed) {
+      setIsOpenCategoriesFilter(classes.isOpen);
+    } else {
+      setIsOpenCategoriesFilter(classes.isClosed);
+    }
+  };
+
+  const showCategoriesDropdown = (e) => {
+    const { id } = e.target;
+    return setCategoriesDropdownOpen(
+      (prevState) => (id !== prevState && id) || null
+    );
+  };
+
+  const handleCategoryFilter = (category) => {
+    if (category === "all") {
+      setSelectedCategory(null);
+    } else {
+      setSelectedCategory(category);
+    }
+  };
+
+  // ========= Filter by price control ===========================
 
   const handleInputFromChange = (event) => {
     if (event.target.value === undefined) {
@@ -180,16 +261,14 @@ const Filters = () => {
     setParams({ ...params, minPrice: newValue[0], maxPrice: newValue[1] });
   };
 
-  const toggleOriginCheckBox = () => {
-    isOpenOriginCheckBox === classes.isClosed
-      ? setIsOpenOriginCheckBox(classes.isOpen)
-      : setIsOpenOriginCheckBox(classes.isClosed);
-  };
+  // ============= Filter by origin control ==========================
 
-  const toggleMaturationCheckBox = () => {
-    isOpenMaturationCheckBox === classes.isClosed
-      ? setIsOpenMaturationCheckBox(classes.isOpen)
-      : setIsOpenMaturationCheckBox(classes.isClosed);
+  const toggleOriginCheckBox = () => {
+    if (isOpenOriginCheckBox === classes.isClosed) {
+      setIsOpenOriginCheckBox(classes.isOpen);
+    } else {
+      setIsOpenOriginCheckBox(classes.isClosed);
+    }
   };
 
   const handleOriginChange = (event) => {
@@ -203,6 +282,16 @@ const Filters = () => {
     }
   };
 
+  // =========== Filter by maturation term control =======================
+
+  const toggleMaturationCheckBox = () => {
+    if (isOpenMaturationCheckBox === classes.isClosed) {
+      setIsOpenMaturationCheckBox(classes.isOpen);
+    } else {
+      setIsOpenMaturationCheckBox(classes.isClosed);
+    }
+  };
+
   const handleMaturationChange = (event) => {
     if (event.target.checked) {
       setMaturationCheckBoxState([
@@ -213,10 +302,10 @@ const Filters = () => {
       const newMaturationCheckBoxState = maturationCheckBoxState.filter(
         (option) => option !== event.target.name
       );
-      console.log(newMaturationCheckBoxState);
       setMaturationCheckBoxState(newMaturationCheckBoxState);
     }
   };
+
 
   return (
     <>
@@ -233,19 +322,105 @@ const Filters = () => {
                 FILTERS
               </Typography>
               <Container className={classes.filterContainer}>
-                <Typography variant="h6">Sort by</Typography>
+                <Typography variant="h5">Sort by</Typography>
                 <SortBySelect
                   selectedValue={selectedValue}
                   handleChange={handleSelectChange}
                 />
               </Container>
               <Container className={classes.filterContainer}>
-                <Typography variant="h6" className={classes.filterTitle}>
-                  Categories
-                </Typography>
+                <Container>
+                  <Typography variant="h5" className={classes.filterTitle}>
+                    Seeds categories
+                  </Typography>
+                  <MoreIcon
+                    className={classes.moreIcon}
+                    onClick={toggleCategoriesFilter}
+                  ></MoreIcon>
+                </Container>
+
+                <Stack className={isOpenCategoriesFilter}>
+                  {parentsListWithoutChildren.map((category) => (
+                    <Container key={category}>
+                      <Container className={classes.categoriesContainer}>
+                        <Typography
+                          className={classes.superCategoryTitle}
+                          variant="h6"
+                          onClick={() => {
+                            handleCategoryFilter(category);
+                          }}
+                        >
+                          {category.charAt(0).toUpperCase() + category.slice(1)}
+                        </Typography>
+                      </Container>
+                    </Container>
+                  ))}
+                  {parentsListWithChildren.map((categoryWithSubs) => (
+                    <Container key={categoryWithSubs.parentId}>
+                      <Container className={classes.categoriesContainer}>
+                        <Typography
+                          className={classes.superCategoryTitle}
+                          variant="h6"
+                          id={categoryWithSubs.parentId}
+                          onClick={showCategoriesDropdown}
+                        >
+                          {categoryWithSubs.parentId.charAt(0).toUpperCase() +
+                            categoryWithSubs.parentId.slice(1)}
+                        </Typography>
+                        {categoriesDropdownOpen !==
+                        categoryWithSubs.parentId ? (
+                          <ExpandMoreIcon
+                            id={categoryWithSubs.parentId}
+                            className={classes.expandIcon}
+                            onClick={showCategoriesDropdown}
+                          />
+                        ) : (
+                          <ExpandLessIcon
+                            className={classes.expandIcon}
+                            onClick={showCategoriesDropdown}
+                          />
+                        )}
+                      </Container>
+                      {categoriesDropdownOpen === categoryWithSubs.parentId && (
+                        <Container>
+                          <Stack>
+                            <Typography
+                              className={classes.subCategoriesTitle}
+                              variant="p"
+                              onClick={() => {
+                                handleCategoryFilter(categoryWithSubs.name[0]);
+                              }}
+                            >
+                              {categoryWithSubs.name[0]
+                                .charAt(0)
+                                .toUpperCase() +
+                                categoryWithSubs.name[0].slice(1)}
+                            </Typography>
+                            <Typography
+                              className={classes.subCategoriesTitle}
+                              variant="p"
+                              onClick={() => {
+                                handleCategoryFilter(categoryWithSubs.name[1]);
+                              }}
+                            >
+                              {categoryWithSubs.name[1]
+                                .charAt(0)
+                                .toUpperCase() +
+                                categoryWithSubs.name[1].slice(1)}
+                            </Typography>
+                          </Stack>
+                        </Container>
+                      )}
+                    </Container>
+                  ))}
+                </Stack>
               </Container>
               <Container className={classes.filterContainer}>
-                <Typography variant="h6" className={classes.filterTitle}>
+                <Typography
+                  variant="h5"
+                  className={classes.filterTitle}
+                  sx={{ paddingLeft: "25px", marginBottom: "10px" }}
+                >
                   Price
                 </Typography>
 
@@ -287,7 +462,7 @@ const Filters = () => {
               </Container>
               <Container className={classes.filterContainer}>
                 <Container className={classes.originFilterContainer}>
-                  <Typography variant="h6" className={classes.filterTitle}>
+                  <Typography variant="h5" className={classes.filterTitle}>
                     Country of origin
                   </Typography>
                   <MoreIcon
@@ -344,7 +519,7 @@ const Filters = () => {
               </Container>
               <Container className={classes.filterContainer}>
                 <Container className={classes.originFilterContainer}>
-                  <Typography variant="h6" className={classes.filterTitle}>
+                  <Typography variant="h5" className={classes.filterTitle}>
                     Term of maturation
                   </Typography>
                   <MoreIcon
@@ -387,7 +562,6 @@ const Filters = () => {
           />
         </Grid>
       </Grid>
-      <Footer />
     </>
   );
 };

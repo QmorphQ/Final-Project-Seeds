@@ -37,10 +37,36 @@ const useFiltersStyles = makeStyles({
     borderBottomColor: "#EFEFEF",
     borderBottomStyle: "solid",
     paddingBottom: "25px",
+    position: "relative",
   },
 
   filterTitle: {
     paddingBottom: "10px",
+  },
+
+  categoriesContainer: {
+    display: "flex",
+    position: "relative",
+  },
+
+  superCategoryTitle: {
+    fontWeight: "300",
+    cursor: "pointer"
+  },
+
+  subCategoriesTitle: {
+    fontWeight: "700",
+    margin: "10px",
+    paddingLeft: "20px",
+    cursor: "pointer",
+    fontSize: "20px"
+  },
+
+  expandIcon: {
+    position: "absolute",
+    top: "5px",
+    right: "10px",
+    cursor: "pointer"
   },
 
   originFilterContainer: {
@@ -80,7 +106,7 @@ const useFiltersStyles = makeStyles({
     border: "1px",
     borderColor: "#EFEFEF",
     borderStyle: "solid",
-    paddingLeft: '30px'
+    paddingLeft: "30px",
   },
 
   priceSlider: {

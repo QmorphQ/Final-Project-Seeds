@@ -18,7 +18,7 @@ const SortBySelect = ({ selectedValue, handleChange }) => (
 );
 
 SortBySelect.propTypes = {
-  selectedValue: PropTypes.isRequired,
+  selectedValue: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
 };
 

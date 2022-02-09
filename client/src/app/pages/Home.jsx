@@ -4,12 +4,12 @@ import { Box } from "@mui/material";
 import Preloader from "../../ui/components/Preloader/Prelodaer.jsx";
 import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
-import Header from "../components/Header/Header.jsx";
-import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
 
 import { downloadProductsRequestStateSelector } from "../../store/selectors/selectors";
+import Header from "../components/Header/Header.jsx";
+import Footer from "../components/ Footer/Footer.jsx";
 
 const Home = ({ loading, productList }) => {
 
@@ -45,8 +45,6 @@ Home.propTypes = {
       popular: PropTypes.bool,
     })
   ),
-  allCategories: PropTypes.array,
-  categories: PropTypes.array,
 };
 
 export default Home;

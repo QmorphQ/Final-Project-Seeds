@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import Box from '@mui/material/Box';
 import {
   Divider,
   MenuItem,
@@ -13,7 +14,7 @@ export default function MenuItemWithChildrenMobile({
   parentsListWithChildren,
 }) {
   return (
-    <>
+    <Box>
       {parentsListWithChildren.map((item, index) => (
         <div key={index}>
           <Accordion sx={{ boxShadow: "none", my: "0px" }}>
@@ -56,7 +57,7 @@ export default function MenuItemWithChildrenMobile({
           <Divider />
         </div>
       ))}
-    </>
+   </Box>
   );
 }
 

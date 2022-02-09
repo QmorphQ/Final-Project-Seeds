@@ -23,10 +23,10 @@ const CustomerReviews = (props) => {
         const progressInPercents = Number(value) * 100 / Number(total);
         return (
             <Box key={key} className={classes.ratingWrapper}>
-            <Typography className={classes.ratingNumber} variant="subtitle1" component="subtitle1">{key}</Typography>
+            <Typography className={classes.ratingNumber} variant="subtitle1">{key}</Typography>
             <Star />
             <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={progressInPercents} />
-            <Typography className={classes.votesQuantity} variant="subtitle1" component="subtitle1">{value}</Typography>
+            <Typography className={classes.votesQuantity} variant="subtitle1">{value}</Typography>
         </Box>
         )
     })
@@ -67,7 +67,6 @@ const CustomerReviews = (props) => {
                         <Typography
                         className={classes.reviewsQuantity}
                         variant="subtitle1"
-                        component="subtitle1"
                         >
                             {total} reviews
                         </Typography>

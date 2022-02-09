@@ -67,8 +67,8 @@ const useFiltersStyles = makeStyles({
 
   priceInputLabel: {
     position: "absolute",
-    top: "10px",
-    left: "10px",
+    top: "5px",
+    left: "-5px",
   },
 
   priceInput: {
@@ -76,6 +76,7 @@ const useFiltersStyles = makeStyles({
     border: "1px",
     borderColor: "#EFEFEF",
     borderStyle: "solid",
+    paddingLeft: '30px'
   },
 
   priceSlider: {

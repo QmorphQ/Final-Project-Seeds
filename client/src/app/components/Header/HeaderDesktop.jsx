@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Box, AppBar, Toolbar, IconButton, Badge, Link } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -7,8 +8,7 @@ import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
-import { useSelector } from "react-redux";
-import { loginStateSelector } from "../../../store/selectors/selectors.js";
+import { loginStateSelector } from "../../../store/selectors/selectors";
 
 
 const HeaderDesktop = () => {

@@ -140,14 +140,14 @@ useEffect(() => {
 // ---------------------------------------------------------------------------------
 return (
   <>
-    <Search sx={{ border: "solid rgba(0, 0, 0, 0.2) 1px", borderRadius: 20}}>
+    <Search component='input' sx={{ border: "solid rgba(0, 0, 0, 0.2) 1px", borderRadius: 20}}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ "aria-label": "search" }}
+      required
         value={inputText}
+        placeholder='search'
         onChange={inputHandler}
       />{loading ? <Spinner left={'70%'} top={'22%'}/> : false}
       {<SearchResultContainer active={activeSaerchContainer} products={fetchedProducts} oneCard={fetchedProducts.length === 1}/>}

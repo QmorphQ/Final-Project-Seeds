@@ -10,11 +10,15 @@ import {
   mainCategoriesSelector
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
+// =======================================================================
+// Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
+// import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import Filters from "./app/pages/Filters/Filters.jsx";
+import ProductPage from './app/pages/ProductPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
+// =======================================================================
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -34,20 +38,16 @@ function App() {
     dispatch(fetchProducts());
   }, []);
 
-  if (downloadRequestState === "loading") {
-    return <Preloader />;
-  }
-
-  console.log(productList);
-  
   return (
 
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={<AppLayout />} />
-    <Route index element={<Home loading={downloadRequestState} productList={productList} allCategories={allCategories} categories={categories}  />} />
-    <Route path="products" element={<Filters />} />
-    <Route path="*" element={<PageNotFound />} />
+       <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
+        <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
+        <Route path="/products" element={<Filters />} />
+        <Route path="/preview" element={<ProductPage />} />
+        <Route path="*" element={<PageNotFound />} />
+        </Route>
     </Routes>
     </BrowserRouter>
 
@@ -56,20 +56,4 @@ function App() {
 
 export default App;
 
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path="/" element={<AppLayout />}>
-//           <Route index element={<Home />} />
-//           <Route path="products" element={<AllProducts />} />
-//           <Route path="description" element={<CurrentProduct />} />
-//           <Route path="cart" element={<Cart />} />
-//           <Route path="about" element={<AboutSeedra />} />
-//           <Route path="contact" element={<Page404 />} />
-//           <Route path="*" element={<Page404 />} />
-//         </Route>
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
+

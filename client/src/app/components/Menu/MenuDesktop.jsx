@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Paper,
@@ -40,6 +41,8 @@ const MenuDesktop = ({
           }}
         >
           <Link
+          component={RouterLink}
+          to={'/cart'}
             href={`/${e.parentId}`}
             underline="none"
             sx={{ color: "#70737C", fontWeight: "500" }}
@@ -110,15 +113,12 @@ const MenuDesktop = ({
           pt: "14px",
         }}
       >
-        <>
           <Box display="flex" sx={{ alignItems: "center" }}>
             <MenuItemNoChildrenDesktop
               parentsListWithoutChildren={parentsListWithoutChildren}
             />
           </Box>
-
           {cardsList}
-        </>
       </MenuList>
     </Box>
   );

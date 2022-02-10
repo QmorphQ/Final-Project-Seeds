@@ -17,6 +17,7 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 // import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
+import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 // =======================================================================
@@ -48,6 +49,7 @@ function App() {
         <Route path="/products" element={<Filters />} />
         <Route path="/preview" element={<ProductPage />} />
         <Route path="/login" element={<LogIn/>} />
+        <Route path="/cart" element={<TestCartPage />}/>
         <Route path="*" element={<PageNotFound />} />
        </Route>
     </Routes>

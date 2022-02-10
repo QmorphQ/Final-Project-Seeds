@@ -178,14 +178,12 @@ const Filters = () => {
     if (event.target.value === undefined) {
       setSliderValue([0, sliderValue[1]]);
       setInputFromValue(event.target.value);
-
       setParams({ ...params, minPrice: 0, maxPrice: sliderValue[1] });
     } else {
       if (+event.target.value > 30) {
         setSliderValue([30, 30]);
         setInputFromValue(30);
         setInputToValue(30);
-
         setParams({ ...params, minPrice: 30, maxPrice: 30 });
       } else if (+event.target.value > sliderValue[1]) {
         setSliderValue([sliderValue[1], sliderValue[1]]);

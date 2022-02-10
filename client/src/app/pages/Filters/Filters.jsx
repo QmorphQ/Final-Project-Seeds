@@ -15,7 +15,6 @@ import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Checkbox from "@mui/material/Checkbox";
-import Footer from "../../components/ Footer/Footer.jsx";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
 import SortBySelect from "../../../ui/components/SortBySelect/SortBySelect.jsx";
 import {
@@ -387,7 +386,6 @@ const Filters = () => {
           />
         </Grid>
       </Grid>
-      <Footer />
     </>
   );
 };

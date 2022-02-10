@@ -64,7 +64,6 @@ const MenuMobile = ({
                 // onClick={handleProfileMenuOpen}
               >
                 <AccountCircle 
-                  // className={classes.iconsStyle} 
                 />
               </IconButton>
             )}

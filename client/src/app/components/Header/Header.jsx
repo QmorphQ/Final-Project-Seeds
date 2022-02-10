@@ -1,20 +1,34 @@
+// Import:
+// =======================================================================================
+// ------------------------------------------------------------------------------------
+// Libraries Components:
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Link as RoutLink } from 'react-router-dom';
+// ------------------------------------------------------------------------------------
+// MUI Components:
 import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+// ------------------------------------------------------------------------------------
+// React Components:
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 import MenuMobile from "../Menu/MenuMobile.jsx";
 import MenuDesktop from "../Menu/MenuDesktop.jsx";
-import LogIn from "../Forms/LogRegModal.jsx";
-import SignUp from "../Forms/RegLogModal.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors";
-// import { downloadRequestStates } from "../../constants";
+// ++++++++++++++++
+// Auth Component:
+import LogIn from "../Forms/LogRegModal.jsx";
+import SignUp from "../Forms/RegLogModal.jsx";
+// ++++++++++++++++
+// ------------------------------------------------------------------------------------
+// Styles:
+import classes from './HeaderStyles.jsx';
+// =======================================================================================
 
 
 const Header = ({ allCategories, categories}) => {
@@ -53,16 +67,16 @@ const Header = ({ allCategories, categories}) => {
 
 
   
-  
+  // =============================================== Render ==============================================
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={classes.Header}>
       <AppBar position="static" color="inherit" sx={{  boxShadow: "none" }}>
         <Toolbar sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
           <RoutLink to={'/'}><Logo iconWidth={"100px"} iconHeight={"20px"} /></RoutLink>
-          <Box display={{ xs: "none", sm: "none", md: "block" }}>
+          <Box display={{ xs: "none", sm: "none", md: "block" }} sx={{border: '1px solid red'}}>
             <MenuDesktop parentsListWithoutChildren={parentsListWithoutChildren} parentsListWithChildren={parentsListWithChildren } />
           </Box>
-         <Box sx={{ display: "flex", alignItems: "center"}}>
+         <Box sx={{ display: "flex", alignItems: "center", border: '1px solid red'}}>
          <Box display={{ xs: "none", sm: "none", md: "block" }}>
             <SearchAppBar sx={{ width: 500 }} />
           </Box>
@@ -89,7 +103,6 @@ const Header = ({ allCategories, categories}) => {
                 // onClick={handleProfileMenuOpen}
               >
                 <AccountCircle 
-                  // className={classes.iconsStyle} 
                 />
               </IconButton>
             )}

@@ -47,6 +47,10 @@ const OurProducts = () => {
   const downloadRequestState = useSelector(
     downloadCategoriesRequestStateSelector
   );
+  const [value, setValue] = React.useState(0);
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const categories = useSelector(mainCategoriesSelector);
   if (downloadRequestState === downloadRequestStates.LOADING)
     return <div>Loading...</div>; // Here must be a loader
   if (downloadRequestState === downloadRequestStates.ERROR)
@@ -58,10 +62,10 @@ const OurProducts = () => {
       />
     );
 
-  const categories = useSelector(mainCategoriesSelector);
-  const dispatch = useDispatch();
+  
+ 
 
-  const [value, setValue] = React.useState(0);
+  
 
   const handleClick = (event) => {
     dispatch(filterProductsByCategory(event.target.dataset.category));
@@ -71,7 +75,7 @@ const OurProducts = () => {
     setValue(newValue);
   };
 
-  const classes = useStyles();
+  
 
   const categoriesTabs = categories.map((category) => (
     <Tab

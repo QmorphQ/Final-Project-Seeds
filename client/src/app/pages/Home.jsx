@@ -1,23 +1,32 @@
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
+import Preloader from "../../ui/components/Preloader/Prelodaer.jsx";
 import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
-import Header from "../components/Header/Header.jsx";
-import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
-import ProductPage from "./ProductPage.jsx";
+import { downloadProductsRequestStateSelector } from "../../store/selectors/selectors";
 
+const Home = ({ loading, productList }) => {
+  const downloadRequestState = useSelector(
+    downloadProductsRequestStateSelector
+  );
 
-const Home = ({ loading, productList }) => (
-  <>
-    <Box component="main">
-      <MainPageCarousel />
-      <OurProducts loading={loading} productList={productList} />
-      <ProductsList loading={loading} productList={productList} />
-    </Box>
-  </>
-);
+  if (downloadRequestState === "loading") {
+    return <Preloader />;
+  }
+
+  return (
+    <>
+      <Box component="main">
+        <MainPageCarousel />
+        <OurProducts loading={loading} productList={productList} />
+        <ProductsList loading={loading} productList={productList} />
+      </Box>
+    </>
+  );
+};
 
 Home.propTypes = {
   loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,

@@ -8,19 +8,31 @@ import ProductCard from "../ProductCard/ProductCard.jsx";
 // };
 
 const ProductsListSection = ({ data, loading }, totalLength = 6) => {
+  let productsFlteredArr = data.products
+    // .map((value) => ({ value, sort: Math.random() }))
+    // .sort((a, b) => a.sort - b.sort)
+    // .map(({ value }) => value);
 
-  const productsFlteredArr = data
-  .map((value) => ({ value, sort: Math.random() }))
-  .sort((a, b) => a.sort - b.sort)
-  .map(({ value }) => value)
-  .filter((product, index) => index < totalLength);
-  
+  if (!data.isFiltersPage) {
+    productsFlteredArr = productsFlteredArr.filter(
+      (product, index) => index < totalLength
+    );
+  }
+
   return (
     <>
-      <Container fixed={true} sx={{marginTop:"30px", marginBottom:"89px"}}>
-        <Grid container rowSpacing={{ xs: 1, sm: 2, md: 3 }} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Container fixed={true} sx={{ marginTop: "30px", marginBottom: "89px" }}>
+        <Grid
+          container
+          rowSpacing={{ xs: 1, sm: 2, md: 3 }}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           {productsFlteredArr.map((product, i) => (
-            <ProductCard key={product.id || i} product={product} loading={loading} />/* MVP-key of Product Card */
+            <ProductCard
+              key={product.id || i}
+              product={product}
+              loading={loading}
+            /> /* MVP-key of Product Card */
           ))}
         </Grid>
       </Container>
@@ -30,7 +42,7 @@ const ProductsListSection = ({ data, loading }, totalLength = 6) => {
 
 ProductsListSection.propTypes = {
   data: PropTypes.array,
-  loading: PropTypes.string
-}
+  loading: PropTypes.string,
+};
 
 export default ProductsListSection;

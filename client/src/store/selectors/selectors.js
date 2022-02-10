@@ -63,6 +63,10 @@ export const customersSelector = (state) => state.customer.newCustomer;
 
 export const loginStateSelector = (state) => state.customer.isLoggedIn;
 
+export const loginRequestSelector = (state) => state.customer.loginRequestState;
+
+export const customersRequestSelector = (state) => state.customer.addRequestState;
+
 
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;

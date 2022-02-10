@@ -38,6 +38,9 @@ const fetchCart =
           dispatch(downloadCartError());
         });
     } else {
+      if(!localStorage.getItem("cart")) {
+        localStorage.setItem("cart", JSON.stringify([]));
+      }
       const cartFromLS = JSON.parse(localStorage.getItem("cart"));
       dispatch(downloadCartSuccess(cartFromLS));
     }
@@ -66,7 +69,7 @@ const addCart = (cart) => (dispatch) => {
   }
 };
 
-const addProductToCart = (productId) => (dispatch) => {
+const addProductToCart = (productId, amount) => (dispatch) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
@@ -81,13 +84,14 @@ const addProductToCart = (productId) => (dispatch) => {
         dispatch(addProductToCartSuccess(updatedCart.data));
         return updatedCart;
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         dispatch(addProductToCartError());
       });
   } else {
     const newProduct = {
       product: productId,
-      cartQuantity: 1,
+      cartQuantity: amount,
     };
     const oldCart = JSON.parse(localStorage.getItem("cart"));
     const updatedCart = [...oldCart];

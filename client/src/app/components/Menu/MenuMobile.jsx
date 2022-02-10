@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { Box, Paper, MenuList, IconButton  } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import { Box, Paper, MenuList } from "@mui/material";
 import { loginStateSelector } from "../../../store/selectors/selectors";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import LogIn from "../Forms/LogRegModal.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
 import MenuItemNoChildrenMobile from "./MenuItemNoChildrenMobile.jsx";
 import MenuItemWithChildrenMobile from "./MenuItemWithChildrenMobile.jsx";
+import ProfileMenu from "../Header/ProfileMenu.jsx";
 
 
 const MenuMobile = ({
@@ -55,18 +55,7 @@ const MenuMobile = ({
                 <SignUp />
               </>
             ) : (
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                // aria-controls={menuId}
-                aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
-              >
-                <AccountCircle 
-                  // className={classes.iconsStyle} 
-                />
-              </IconButton>
+              <ProfileMenu/>
             )}
           </Box>
             

@@ -10,15 +10,12 @@ import ProductPage from "./ProductPage.jsx";
 
 
 const Home = ({ loading, productList }) => (
-
   <>
-    <Header />
     <Box component="main">
       <MainPageCarousel />
       <OurProducts loading={loading} productList={productList} />
       <ProductsList loading={loading} productList={productList} />
     </Box>
-    <Footer />
   </>
 );
 

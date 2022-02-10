@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack, Link } from "@mui/material";
 import PropTypes from 'prop-types';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -27,6 +28,7 @@ export const ProductCardRender = ({ data }) => {
     quantity,
     isBasket,
     discountPrice,
+    itemNo,
   } = data;
 
   const [isFavourite, toggleIsFavourite] = useState(false);
@@ -38,6 +40,8 @@ export const ProductCardRender = ({ data }) => {
   useEffect(() => {
     productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice)
   },[productAmount])
+
+  const navigate = useNavigate();
 
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
@@ -408,8 +412,9 @@ export const ProductCardRender = ({ data }) => {
             className={mainClasses.productCardName}
             variant="h3"
             color="text.primary"
+            onClick={() => navigate(`${itemNo}`)}
           >
-            {name}
+            <Link color="text.primary" underline="hover" variant="h3">{name}</Link>
           </Typography>
           <Typography
             className={mainClasses.productCardPrice}

@@ -3,8 +3,8 @@ import {ProductCardRender} from "../../../ui/components/ProductCard/ProductCard.
 import { useFetch } from "../../hoc/useFetch.jsx";
 import { API } from "../../constants/index.js";
 
-const Product = () => {
-  const [loading, data, error] = useFetch(API + `products/822862`);
+const Product = ({id}) => {
+  const [loading, data, error] = useFetch(API + `products/${id}`);
 
   return (
     <RenderComponent

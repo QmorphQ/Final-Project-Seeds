@@ -64,6 +64,7 @@ const Filters = () => {
         startPage: 1,
         sort: "currentPrice",
       });
+      console.log(usp);
       setQueryParams(usp);
     } else {
       setQueryParams(defaultUSP);
@@ -79,6 +80,7 @@ const Filters = () => {
         minPrice: 0,
         maxPrice: sliderValue[1],
       });
+      console.log(usp);
       setQueryParams(usp);
     } else {
       if (+event.target.value > 30) {
@@ -90,6 +92,7 @@ const Filters = () => {
           minPrice: 30,
           maxPrice: 30,
         });
+        console.log(usp);
         setQueryParams(usp);
       } else if (+event.target.value > sliderValue[1]) {
         setSliderValue([sliderValue[1], sliderValue[1]]);
@@ -99,6 +102,7 @@ const Filters = () => {
           minPrice: sliderValue[1],
           maxPrice: sliderValue[1],
         });
+        console.log(usp);
         setQueryParams(usp);
       } else {
         setSliderValue([+event.target.value, sliderValue[1]]);
@@ -108,6 +112,7 @@ const Filters = () => {
           minPrice: +event.target.value,
           maxPrice:  sliderValue[1],
         });
+        console.log(usp);
         setQueryParams(usp);
       }
       return null;
@@ -187,7 +192,6 @@ const Filters = () => {
 
   return (
     <>
-      <Header />
       <Grid container>
         <Grid item xs={0} md={4}>
           <Drawer
@@ -245,6 +249,14 @@ const Filters = () => {
                     value={sliderValue}
                     onChangeCommitted={handleSliderChange}
                   />
+                  <Slider
+                    className={classes.priceSlider}
+                    min={0}
+                    max={30}
+                    aria-label="Price"
+                    value={sliderValue}
+                    onChangeCommitted={handleSliderChange}
+                  />
                 </FormControl>
               </Container>
             </Stack>
@@ -259,7 +271,6 @@ const Filters = () => {
           />
         </Grid>
       </Grid>
-      <Footer />
     </>
   );
 };

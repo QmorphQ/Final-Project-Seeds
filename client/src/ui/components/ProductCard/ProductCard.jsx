@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack } from "@mui/material";
 import PropTypes from 'prop-types';
+import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -12,9 +14,7 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
-import { useSelector } from "react-redux";
 import { mainCategoriesSelector } from "../../../store/selectors/selectors";
-import CloseIcon from '@mui/icons-material/Close';
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -36,8 +36,9 @@ export const ProductCardRender = ({ data }) => {
   const [discontStart] = useState(10);
 
   useEffect(() => {
-    productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice)
-  },[productAmount])
+    // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
+    setTotalPrice(prevProductAmount => prevProductAmount <= discontStart ? productAmount * currentPrice : productAmount * discountPrice);
+  },[productAmount, discontStart])
 
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
@@ -196,7 +197,7 @@ export const ProductCardRender = ({ data }) => {
                   >
                     <Button 
                       onClick={() => {
-                        setProductAmount(+productAmount - 1);
+                        setProductAmount(prevProductAmount => +prevProductAmount - 1)
                       }} 
                       variant="text"
                       disabled={productAmount <= 1}
@@ -205,9 +206,8 @@ export const ProductCardRender = ({ data }) => {
                     </Button>
                     <FilledInput
                       inputProps={{sx:{textAlign:"center"}}} 
-                      disableUnderline="true" 
-                      hiddenLabel="true" 
-                      defaultValue="1"
+                      disableUnderline={true} 
+                      hiddenLabel={true} 
                       value={productAmount}
                       onChange={e => setProductAmount(+e.target.value)}
                       id="product-amount" 
@@ -455,7 +455,6 @@ const ProductCard = ({ product, loading }) =>
 ProductCard.defaultProps = {
   product: {
     name: "test name",
-    currentPrice: "test price",
     imageUrls: "test imageUrls",
     categories: [""],
   },

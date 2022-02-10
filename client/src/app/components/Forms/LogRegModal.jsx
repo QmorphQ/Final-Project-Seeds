@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@mui/styles";
-import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
+import { Grid, Typography, Box, IconButton, Button } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
+import { loginRequestSelector } from '../../../store/selectors/selectors';
+import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
+import { downloadRequestStates } from '../../constants/index';
 
 
 const style = makeStyles({
@@ -18,7 +21,7 @@ const style = makeStyles({
   ItemRight: {
     position: "absolute",
     right: "-10px",
-    top: "-10px"
+    top: "5px"
   },
   BlockCenter: {
     position: 'fixed',
@@ -42,6 +45,7 @@ const style = makeStyles({
 
 
 export default function LogIn() {
+    const requestState = useSelector(loginRequestSelector);
     const classes = useStyles();
     const styles = style();
     const dispatch = useDispatch()
@@ -49,8 +53,7 @@ export default function LogIn() {
         loginOrEmail: '',
         password: '',
     };
-
-    
+  
     const FORM_VALIDATION = Yup.object().shape({
         loginOrEmail: Yup.string()
         .required('Required')
@@ -79,11 +82,11 @@ export default function LogIn() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen}  color="primary" variant="contained">Log In</Button>
+            <Button onClick={handleClickOpen} sx={{mr:1, mt:1, height:40, width:100, fontSize:14}}  color="primary" variant="text">Log In</Button>
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 10, width:300, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, width:300, margin:"0 auto"}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -94,9 +97,10 @@ export default function LogIn() {
                   <Form>
                     <Grid container spacing={2}>
                       <Grid className={styles.ItemBlock} item xs={12}>
-                        <Typography className={classes.iconsStyle}>
-                          Login <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
+                        <Typography color="primary" sx={{pb:1}}>
+                          Login
                         </Typography>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
                       </Grid>
     
                       <Grid item xs={12}>
@@ -123,8 +127,8 @@ export default function LogIn() {
                   </Form>
                 </Formik>
             </Box></> : false}
-              
-        
+            {requestState === downloadRequestStates.ERROR && (
+        <ErrorHandler errorMessage={"Incorrect email or password."} />)}      
     </>);
 }
 

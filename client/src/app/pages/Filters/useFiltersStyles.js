@@ -1,6 +1,5 @@
 import { makeStyles } from "@mui/styles";
 
-
 const drawerWidth = 350;
 
 const useFiltersStyles = makeStyles({
@@ -8,23 +7,23 @@ const useFiltersStyles = makeStyles({
     background: "#f9f9f9",
     width: "100%",
   },
-  root: {
-    display: "flex",
-  },
+
   drawer: {
     width: drawerWidth,
-    height: "100%",
   },
 
   drawerPaper: {
     width: drawerWidth,
-    position: "relative",
+    maxHeight: "100%",
+    position: "relative !important",
     marginTop: "30px",
-    borderRight: "none",
+    borderRight: "none !important",
   },
 
   drawerStack: {
     maxWidth: "100%",
+    maxHeight: "100%",
+    position: "relative !important",
   },
 
   title: {
@@ -38,6 +37,43 @@ const useFiltersStyles = makeStyles({
     borderBottomColor: "#EFEFEF",
     borderBottomStyle: "solid",
     paddingBottom: "25px",
+    position: "relative",
+  },
+
+  filterTitle: {
+    paddingBottom: "10px",
+  },
+
+  categoriesContainer: {
+    display: "flex",
+    position: "relative",
+  },
+
+  superCategoryTitle: {
+    fontWeight: "300",
+    cursor: "pointer"
+  },
+
+  subCategoriesTitle: {
+    fontWeight: "700",
+    margin: "10px",
+    paddingLeft: "20px",
+    cursor: "pointer",
+    fontSize: "20px"
+  },
+
+  expandIcon: {
+    position: "absolute",
+    top: "5px",
+    right: "10px",
+    cursor: "pointer"
+  },
+
+  originFilterContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    position: "relative",
+    marginBottom: "15px",
   },
 
   filterName: {
@@ -48,7 +84,7 @@ const useFiltersStyles = makeStyles({
   },
 
   priceInputsContainer: {
-    display: "flex",
+    display: "flex !important",
     marginBottom: "20px",
   },
 
@@ -61,8 +97,8 @@ const useFiltersStyles = makeStyles({
 
   priceInputLabel: {
     position: "absolute",
-    top: "10px",
-    left: "10px",
+    top: "5px",
+    left: "25px",
   },
 
   priceInput: {
@@ -70,12 +106,27 @@ const useFiltersStyles = makeStyles({
     border: "1px",
     borderColor: "#EFEFEF",
     borderStyle: "solid",
+    paddingLeft: "30px",
   },
 
   priceSlider: {
     width: "300px",
   },
-});
 
+  moreIcon: {
+    cursor: "pointer",
+    position: "absolute",
+    top: "5px",
+    right: "10px",
+  },
+
+  isClosed: {
+    display: "none !important",
+  },
+
+  isOpen: {
+    display: "block !important",
+  },
+});
 
 export default useFiltersStyles;

@@ -2,7 +2,6 @@ import { useSelector, useDispatch} from "react-redux";
 import { useEffect } from "react";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import Link from "@mui/material/Link";
-// import { useSelector } from 'react-redux';
 import { Badge, IconButton, MenuItem } from "@mui/material";
 import useStyles from "../../HeaderStyles.jsx";
 import {fetchCart} from "../../../../../store/thunks/cart.thunks";
@@ -48,7 +47,7 @@ const CartIcon = () => {
       {
         <MenuItem className={classes.headerMenuItem}>
           <IconButton>
-            <Badge badgeContent={totalCartQuantity} color="primary" sx={{ mr: "25px"}}>
+            <Badge badgeContent={totalCartQuantity} color="primary" sx={{ mr: "0px"}}>
               <ShoppingCartOutlinedIcon className={classes.iconsStyle} />
             </Badge>
           </IconButton>

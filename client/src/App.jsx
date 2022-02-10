@@ -10,6 +10,7 @@ import {
 import Home from "./app/pages/Home.jsx";
 import Preloader from "./ui/components/Preloader/Preloader.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
+import Cart from "./app/pages/Cart.jsx";
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -37,6 +38,7 @@ function App() {
         loading={downloadRequestState} 
         productList={productList} 
       />
+      <Cart />
     </div>
   );
 }

@@ -6,18 +6,17 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import CloseIcon from '@mui/icons-material/Close';
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
-import RenderComponent from "../../../app/hoc/RenderComponent";
+import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import Icon from "../Icon/Icon.jsx";
-import { useSelector } from "react-redux";
 import { mainCategoriesSelector } from "../../../store/selectors/selectors";
-import CloseIcon from '@mui/icons-material/Close';
 import { useFiltersStyles } from "./useFiltersStyles";
 
-const ProductCard = ({ product, loading }) => {
-  return (
+const ProductCard = ({ product, loading }) => (
     <RenderComponent
       loading={loading}
       data={product}
@@ -26,7 +25,6 @@ const ProductCard = ({ product, loading }) => {
       renderError={<p>Error</p>}
     />
   );
-};
 
 export const ProductCardRender = ({ data }) => {
   const {

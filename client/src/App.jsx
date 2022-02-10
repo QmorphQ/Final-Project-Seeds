@@ -18,6 +18,7 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
+import LogIn from "./app/components/Forms/LogRegModal.jsx";
 // =======================================================================
 
 function App() {
@@ -46,8 +47,9 @@ function App() {
         <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
         <Route path="/products" element={<Filters />} />
         <Route path="/preview" element={<ProductPage />} />
+        <Route path="/login" element={<LogIn/>} />
         <Route path="*" element={<PageNotFound />} />
-        </Route>
+       </Route>
     </Routes>
     </BrowserRouter>
 

@@ -96,11 +96,7 @@ const Header = ({ allCategories, categories}) => {
             >
               <MenuIcon />
             </IconButton>
-          </Box>
-
-
-
-           
+          </Box>          
          </Box>
           
         </Toolbar>

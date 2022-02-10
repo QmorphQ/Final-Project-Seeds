@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/material";
 import OurProducts from "../components/OurProducts/OurProducts.jsx";
-import { downloadRequestStates } from "../constants";
+import { downloadRequestStates } from "../constants/index";
 import Header from "../components/Header/Header.jsx";
 import Footer from "../components/ Footer/Footer.jsx";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";

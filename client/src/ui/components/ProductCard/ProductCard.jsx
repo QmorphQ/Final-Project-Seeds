@@ -15,6 +15,7 @@ import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import Icon from "../Icon/Icon.jsx";
 import { mainCategoriesSelector } from "../../../store/selectors/selectors";
 import { useFiltersStyles } from "./useFiltersStyles";
+import { addProductToCart } from "../../../store/thunks/cart.thunks";
 
 const ProductCard = ({ product, loading }) => (
     <RenderComponent
@@ -437,7 +438,11 @@ export const ProductCardRender = ({ data }) => {
             aria-label="add to basket"
             color="primary"
             variant="contained"
-            onClick={() => toggleisOnBasket(() => !isOnBasket)}
+            onClick={() => {
+              addProductToCart(itemNo)
+              toggleisOnBasket(() => !isOnBasket)
+              }
+            }
           >
             {isOnBasket ? (
               <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />

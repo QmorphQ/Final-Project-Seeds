@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack } from "@mui/material";
 import PropTypes from 'prop-types';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,11 +14,7 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
-import { cartSelector, mainCategoriesSelector } from "../../../store/selectors/selectors";
-import { Link, useNavigate } from "react-router-dom";
-import { addProductToCart } from "../../../store/thunks/cart.thunks.js";
-import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
-
+import { mainCategoriesSelector } from "../../../store/selectors/selectors";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -31,25 +27,18 @@ export const ProductCardRender = ({ data }) => {
     quantity,
     isBasket,
     discountPrice,
-    itemNo,
   } = data;
 
   const [isFavourite, toggleIsFavourite] = useState(false);
-  const [isOnModal, toggleIsOnModal] = useState(false);
+  const [isOnBasket, toggleisOnBasket] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
   const [discontStart] = useState(10);
-
-  const dispatch = useDispatch();
-  const cart = useSelector(cartSelector);
-  console.log(cart);
 
   useEffect(() => {
     // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
     setTotalPrice(prevProductAmount => prevProductAmount <= discontStart ? productAmount * currentPrice : productAmount * discountPrice);
   },[productAmount, discontStart])
-
-  const navigate = useNavigate();
 
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
@@ -367,11 +356,9 @@ export const ProductCardRender = ({ data }) => {
               aria-label="add to basket"
               color="primary"
               variant="contained"
-              onClick={() => {
-                dispatch(addProductToCart(itemNo));
-              }}
+              onClick={() => toggleisOnBasket(() => !isOnBasket)}
             >
-              {isOnModal ? (
+              {isOnBasket ? (
                 <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
               ) : (
                 <ShoppingCartOutlinedIcon />
@@ -421,9 +408,8 @@ export const ProductCardRender = ({ data }) => {
             className={mainClasses.productCardName}
             variant="h3"
             color="text.primary"
-            onClick={() => navigate(`${itemNo}`)}
           >
-            <Link to={`/preview/${itemNo}`} color="text.primary" underline="hover" variant="h3">{name}</Link>
+            {name}
           </Typography>
           <Typography
             className={mainClasses.productCardPrice}
@@ -441,12 +427,13 @@ export const ProductCardRender = ({ data }) => {
             aria-label="add to basket"
             color="primary"
             variant="contained"
-            onClick={() => {
-              toggleIsOnModal(true);
-            }}
+            onClick={() => toggleisOnBasket(() => !isOnBasket)}
           >
-            <ShoppingCartOutlinedIcon />
-            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} />
+            {isOnBasket ? (
+              <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
+            ) : (
+              <ShoppingCartOutlinedIcon />
+            )}
           </IconButton>
         </CardActions>
       </Card>

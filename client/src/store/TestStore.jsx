@@ -8,7 +8,6 @@ import {
 import { loginCustomer } from "./thunks/customer.thunks";
 
 import {
-  downloadRequestStateSelector,
   productsSelector,
   customersSelector,
   slidesSelector,
@@ -21,7 +20,7 @@ import fetchCategories from "./thunks/catalog.thunks";
 function TestStore() {
   const allCategories = useSelector(allCategoriesSelector);
   const mainCategories = useSelector(mainCategoriesSelector);
-  const downloadRequestState = useSelector(downloadRequestStateSelector);
+  const downloadRequestState = useSelector('');
   const productList = useSelector(productsSelector);
   const slideList = useSelector(slidesSelector);
   const customerInfo = useSelector(customersSelector);

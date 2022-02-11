@@ -1,9 +1,8 @@
 import Carousel from "react-material-ui-carousel";
 import { useSelector } from "react-redux";
 import { Typography, Container, Icon, Grid, Box, CardMedia } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { makeStyles, styled } from "@mui/styles";
 import PropTypes from "prop-types";
-import { styled } from "@mui/styles";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
 import {

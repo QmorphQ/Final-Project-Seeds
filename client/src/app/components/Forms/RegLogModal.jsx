@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,6 +10,9 @@ import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import CheckboxWrapper from './Components/FormsUI/Checkbox';
 import { addCustomer } from '../../../store/thunks/customer.thunks';
+import { downloadRequestStates } from '../../constants/index';
+import { customersRequestSelector } from '../../../store/selectors/selectors';
+import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
 
 const style = makeStyles({
   ItemBlock:{
@@ -18,7 +21,7 @@ const style = makeStyles({
   ItemRight: {
     position: "absolute",
     right: "-10px",
-    top: "-10px"
+    top: "5px"
   },
   BlockCenter: {
     position: 'fixed',
@@ -44,6 +47,7 @@ const style = makeStyles({
 
 
 export default function SignUp() {
+    const requestState = useSelector(customersRequestSelector);
     const classes = useStyles();
     const styles = style();
     const INITIAL_FORM_STATE = {
@@ -54,7 +58,6 @@ export default function SignUp() {
         password: '',
         termsOfService: '',
     };
-
 
     const dispatch = useDispatch()
 
@@ -100,11 +103,11 @@ export default function SignUp() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen} variant="contained">Sign up</Button>  
+            <Button sx={{mr:1, mt:1, height:40, width:100, fontSize:14}} onClick={handleClickOpen} variant="outlined">Sign up</Button>  
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 10, width:400, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 3, width:400, margin:"0 auto"}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -115,9 +118,10 @@ export default function SignUp() {
                   <Form>
                     <Grid container spacing={2}>
                       <Grid className={styles.ItemBlock} item xs={12}>
-                        <Typography className={classes.iconsStyle}>
-                         Sign up <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
+                        <Typography color="primary" sx={{pb:1}}>
+                         Sign up 
                         </Typography>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
                       </Grid>
                         <Grid item xs={6}>
                             <Textfield
@@ -176,8 +180,8 @@ export default function SignUp() {
                   </Form>
                 </Formik>
             </Box></> : false}
-              
-        
+            {requestState === downloadRequestStates.ERROR && (
+        <ErrorHandler errorMessage={"User with this email or login are already exists"} />)}                     
     </>);
 }
 

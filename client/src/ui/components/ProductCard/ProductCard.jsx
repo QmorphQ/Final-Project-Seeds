@@ -56,6 +56,9 @@ export const ProductCardRender = ({ data }) => {
     currencyDisplay: "symbol",
   });
 
+
+  
+
   if (isBasket) {
     return (
       <Card>

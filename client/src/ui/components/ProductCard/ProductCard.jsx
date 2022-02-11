@@ -474,9 +474,21 @@ ProductCard.defaultProps = {
 };
 
 ProductCard.propTypes = {
-  product: PropTypes.object,
+  product: PropTypes.shape({
+  name: PropTypes.string,
+  currentPrice: PropTypes.number,
+  imageUrls: PropTypes.string,
+  isProductPage: PropTypes.bool,
+  isFiltersPage: PropTypes.bool,
+  categories: PropTypes.arrayOf(PropTypes.string),
+  quantity: PropTypes.number,
+  isBasket: PropTypes.bool,
+  discountPrice: PropTypes.number,
+  itemNo: PropTypes.number,
+  }),
   loading: PropTypes.bool,
 };
+
 ProductCardRender.propTypes = {
   data: PropTypes.object,
 }

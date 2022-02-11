@@ -59,6 +59,6 @@ export default function MenuItemWithChildrenMobile() {
   );
 }
 
-MenuItemWithChildrenMobile.propTypes = {
-  parentsListWithChildren: PropTypes.array,
-};
+// MenuItemWithChildrenMobile.propTypes = {
+//   parentsListWithChildren: PropTypes.array,
+// };

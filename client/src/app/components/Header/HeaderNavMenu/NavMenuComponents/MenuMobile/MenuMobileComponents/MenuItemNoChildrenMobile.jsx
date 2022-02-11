@@ -4,7 +4,8 @@ import { Divider, MenuItem, Link } from "@mui/material";
 export default function MenuItemNoChildrenMobile() {
   return (
     <>
-      {[['products', 'all'], ['preview', 'bundles']].map((item, index) => (
+      {["all",
+, "bundles"].map((item, index) => (
         <div key={index}>
           <MenuItem>
             <Link
@@ -24,6 +25,6 @@ export default function MenuItemNoChildrenMobile() {
   );
 }
 
-MenuItemNoChildrenMobile.propTypes = {
-  parentsListWithoutChildren: PropTypes.array,
-};
+// MenuItemNoChildrenMobile.propTypes = {
+//   parentsListWithoutChildren: PropTypes.array,
+// };

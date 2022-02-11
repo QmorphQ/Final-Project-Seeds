@@ -71,11 +71,11 @@ export default function TestApp() {
     dispatch(fetchProducts());
   }, []);
   useEffect(() => {
-    console.log(Icon);
+   
   }, []);
   return (
     <Box sx={{width: '98.5vw', height: '98.3vh', margin: 'auto', border: '1px black solid'}}>
-      <Icon icon={} />
+      {<Icon viewBox={'37 -1 24 24'} sx={{width: '98px', viewPort: '30px', border: '1px solid black', margin: '0', fontSize: '20,65px'}} icon={Icon.icons.Logo} />}
       <TestWarning />
       <BrowserRouter>
         <Routes>

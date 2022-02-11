@@ -1,34 +1,34 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Paper,
-  MenuList,
   MenuItem,
   Link,
 } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import MenuItemNoChildrenDesktop from "./MenuItemNoChildrenDesktop.jsx";
 
-const MenuDesktop = ({
-  parentsListWithoutChildren,
-}) => {
-  const [dropDownOpen, setDropDownOpen] = useState(null);
-  
 
-  const showDropdown = (e) => {
-    
-    const { id } = e.target;
-    return setDropDownOpen((prevState) => (id !== prevState && id) || null);
-  };
 
-  
-  const cardsList = [{parentId:'bundles', name: ['herbs-mono', 'herbs-mix']}, {parentId:'vegetables',name: ['vegetables-mono', 'vegetables-mix']}, {parentId:'flowers', name: ['flowers-mono', 'flowers-mix']}].map((e, index) => (
+export default function MenuItemWithChildrenDesctop({ arrOfOptions = [
+    { parentId: "bundles", name: ["herbs-mono", "herbs-mix"] },
+    { parentId: "vegetables", name: ["vegetables-mono", "vegetables-mix"] },
+    { parentId: "flowers", name: ["flowers-mono", "flowers-mix"] },
+  ] }) {
+
+    const [dropDownOpen, setDropDownOpen] = useState(null);
+    const showDropdown = (e) => {
+      const { id } = e.target;
+      return setDropDownOpen((prevState) => (id !== prevState && id) || null);
+    };
+  return  (
+
+    arrOfOptions.map((e, index) => (
     <Box key={`${e.parentId}${index}`} sx={{ boxShadow: "none", mr: "0" }}>
       <Box
         id={e.parentId}
-        sx={{ boxShadow: "none", my: "0px", position: "relative" }}
+        sx={{ boxShadow: "none", my: "0px", position: "relative"}}
       >
         <MenuItem
           fontWeight="700"
@@ -40,8 +40,8 @@ const MenuDesktop = ({
           }}
         >
           <Link
-          component={RouterLink}
-          to={'/cart'}
+            component={RouterLink}
+            to={"/cart"}
             href={`/${e.parentId}`}
             underline="none"
             sx={{ color: "#70737C", fontWeight: "500" }}
@@ -50,9 +50,10 @@ const MenuDesktop = ({
           </Link>
           <MoreIcon id={e.parentId} onClick={showDropdown} />
         </MenuItem>
+
         <Box sx={{ position: "absolute", zIndex: 3 }}>
           {e.name.map((item, i) => (
-            <div key={`${item}/${i}`}>
+            <Box key={`${item}/${i}`}>
               {dropDownOpen === e.parentId && (
                 <Box sx={{ position: "relative" }}>
                   <Paper
@@ -69,6 +70,7 @@ const MenuDesktop = ({
                         fontWeight: "300",
                         fontFamily: "Lexend",
                         fontSize: "14px",
+                        border: '1px solid red'
                       }}
                     >
                       <Link
@@ -86,48 +88,26 @@ const MenuDesktop = ({
                   </Paper>
                 </Box>
               )}
-            </div>
+            </Box>
           ))}
         </Box>
       </Box>
     </Box>
-  ));
-
-  return (
-    <Box
-      display="flex"
-      sx={{
-        flexGrow: 1,
-        alignItems: "baseline",
-        justifyContent: "flex-start",
-        justifyItems: "flex-start",
-        width: "100%",
-        pl: "calc((100vw - 1300px)/2)",
-      }}
-    >
-      <MenuList
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          pt: "14px",
-        }}
-      >
-          <Box display="flex" sx={{ alignItems: "center" }}>
-            <MenuItemNoChildrenDesktop
-              parentsListWithoutChildren={parentsListWithoutChildren}
-            />
-          </Box>
-          {cardsList}
-      </MenuList>
-    </Box>
-  );
+  ))
+)}
+// ==========================================================
+MenuItemWithChildrenDesctop.default ={
+  arrOfOptions: [
+    { parentId: "option1", name: ["subOption1-1", "subOption1-2"] },
+    { parentId: "option2", name: ["subOption2-1", "subOption2-2"] },
+    { parentId: "option3", name: ["subOption3-1", "subOption3-2"] },
+  ],
+  
 };
 
-MenuDesktop.propTypes = {
-  allCategories: PropTypes.array,
-  loading: PropTypes.string,
-  parentsListWithoutChildren: PropTypes.array,
-  parentsListWithChildren: PropTypes.array,
+MenuItemWithChildrenDesctop.propTypes = {
+    arrOfOptions: PropTypes.arrayOf(PropTypes.shape({
+      parentId: PropTypes.string,
+      name: PropTypes.arrayOf(PropTypes.string),
+    }))
 };
-
-export default MenuDesktop;

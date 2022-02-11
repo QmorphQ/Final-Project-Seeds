@@ -5,9 +5,7 @@ import { fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
 import {
   downloadProductsRequestStateSelector,
-  productsSelector,
-  allCategoriesSelector,
-  mainCategoriesSelector
+  productsSelector
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
@@ -23,8 +21,6 @@ import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
-  const categories = useSelector(mainCategoriesSelector);
-  const allCategories = useSelector(allCategoriesSelector);
   const productList = useSelector(productsSelector);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -42,7 +38,7 @@ function App() {
 
     <BrowserRouter>
     <Routes>
-       <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
+       <Route path="/" element={<AppLayout />} >
         <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
         <Route path="/products" element={<Filters />} />
         <Route path="/preview" element={<ProductPage />} />

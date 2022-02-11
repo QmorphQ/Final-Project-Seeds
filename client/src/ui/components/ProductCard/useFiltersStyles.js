@@ -48,8 +48,4 @@ export const useFiltersStyles = makeStyles(() => ({
     border: "1px solid #EFEFEF",
     padding: "0px important",
   },
-  productCardButtons: {
-    display:"flex",
-    flexDirection:"row"
-  }
 }));

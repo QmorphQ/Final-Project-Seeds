@@ -168,9 +168,9 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
 }
 
 AddToCartModal.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
   discontStart: PropTypes.number.isRequired,
-  localPrice: PropTypes.number.isRequired,
+  localPrice: PropTypes.object.isRequired,
   totalPrice: PropTypes.number.isRequired,
   setTotalPrice: PropTypes.func.isRequired,
   isOnModal: PropTypes.bool.isRequired,

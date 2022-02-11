@@ -28,8 +28,8 @@ const Header = ({ allCategories, categories}) => {
     setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen);
   };
 
-  const categoriesList = categories.map(({ name }) => ( name
-  ));
+  const categoriesList = Array.isArray(categories) ? categories.map(({ name }) => ( name
+  )) : [];
   const process = (arr) => {
     const res = {};
 
@@ -43,7 +43,7 @@ const Header = ({ allCategories, categories}) => {
     }));
   };
 
-  const result = process(allCategories);
+  const result = Array.isArray(allCategories) ? process(allCategories) : [];
 
   const parentsListWithChildren = result.filter((e) => e.parentId !== "null");
 

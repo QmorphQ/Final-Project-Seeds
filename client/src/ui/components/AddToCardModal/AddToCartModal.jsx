@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Modal, Box, Typography, Card, Grid, CardMedia, CardContent, Stack, Chip, CardActions, ButtonGroup, Button, FilledInput } from "@mui/material";
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
-import {CheckIcon, CloseIcon} from '@mui/icons-material';
 import { useModalStyles } from "./useModalStyles";
 import { addProductToCart } from "../../../store/thunks/cart.thunks";
 
@@ -173,7 +174,7 @@ AddToCartModal.propTypes = {
   totalPrice: PropTypes.number.isRequired,
   setTotalPrice: PropTypes.func.isRequired,
   isOnModal: PropTypes.bool.isRequired,
-  toggleIsOnModal: PropTypes.func.isRequired
+  toggleIsOnModal: PropTypes.func.isRequired,
   }
 
 export default AddToCartModal;

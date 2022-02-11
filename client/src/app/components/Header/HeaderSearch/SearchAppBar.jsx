@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
+// import SearchIcon from "@mui/icons-material/Search";
 import SearchResultContainer from "./SearchComponent/SearchResultsContainer.jsx";
 import Spinner from '../../../../ui/components/Spinner/Spinner.jsx';
+import SearchBtn from './SearchBtns/SearchBtn.jsx';
 // =========================================================
 import searchDB from "./SearchComponent/SearchLogic/searchDB";
 import searchObserver from './SearchComponent/SearchLogic/searchObserver';
@@ -25,15 +26,16 @@ const Search = styled("div")(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+// const SearchIconWrapper = styled("div")(({ theme }) => ({
+//   padding: theme.spacing(0, 2),
+//   height: "100%",
+//   position: "absolute",
+//   pointerEvents: "none",
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+//   color: theme.palette.success
+// }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
@@ -141,9 +143,8 @@ useEffect(() => {
 return (
   <>
     <Search component='input' sx={{ border: "solid rgba(0, 0, 0, 0.2) 1px", borderRadius: 20}}>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
+      
+      <SearchBtn />
       <StyledInputBase
       required
         value={inputText}

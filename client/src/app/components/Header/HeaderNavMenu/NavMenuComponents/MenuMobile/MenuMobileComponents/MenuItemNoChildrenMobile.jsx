@@ -1,21 +1,22 @@
 import PropTypes from "prop-types";
+import { Link as RouterLink } from 'react-router-dom';
 import { Divider, MenuItem, Link } from "@mui/material";
 
-export default function MenuItemNoChildrenMobile() {
+export default function MenuItemNoChildrenMobile({ arrOfOptions }) {
+// =========================== Render ===============================
   return (
     <>
-      {["all",
-, "bundles"].map((item, index) => (
+      {arrOfOptions.map((item, index) => (
         <div key={index}>
           <MenuItem>
             <Link
-              href={`/${item}`}
+            component={RouterLink}
+            to={`products/${item[0]}`}
               underline="none"
               sx={{ pl: "16px", color: "#1F2533", fontWeight: "400" }}
             >
-              {item === "all"
-                ? `${item.charAt(0).toUpperCase()}${item.slice(1)}vegetables`
-                : `${item.charAt(0).toUpperCase()}${item.slice(1)}`}
+              {`${item[1].charAt(0).toUpperCase()}${item[1].slice(1)}`
+               }
             </Link>
           </MenuItem>
           <Divider />
@@ -25,6 +26,7 @@ export default function MenuItemNoChildrenMobile() {
   );
 }
 
-// MenuItemNoChildrenMobile.propTypes = {
-//   parentsListWithoutChildren: PropTypes.array,
-// };
+// =========================================================
+MenuItemNoChildrenMobile.propTypes = {
+  arrOfOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
+};

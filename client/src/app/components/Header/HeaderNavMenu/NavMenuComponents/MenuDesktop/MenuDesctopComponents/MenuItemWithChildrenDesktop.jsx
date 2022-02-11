@@ -21,6 +21,10 @@ export default function MenuItemWithChildrenDesctop({ arrOfOptions }) {
       const { id } = e.target;
       return setDropDownOpen((prevState) => (id !== prevState && id) || null);
     };
+  // useEffect(() => {
+  //   console.log(`MenuItemWithChildrenDesctop: `, arrOfOptions)
+  // },[arrOfOptions]);
+// =================================== Render =======================
   return  (
 
     arrOfOptions.map((e, index) => (
@@ -40,8 +44,7 @@ export default function MenuItemWithChildrenDesctop({ arrOfOptions }) {
         >
           <Link
             component={RouterLink}
-            to={"/cart"}
-            href={`/${e.parentId}`}
+            to={`products/${e.parentId}`}
             underline="none"
             sx={{ color: "#70737C", fontWeight: "500" }}
           >
@@ -73,7 +76,8 @@ export default function MenuItemWithChildrenDesctop({ arrOfOptions }) {
                       }}
                     >
                       <Link
-                        href={`${e.parentId}/${item}`}
+                        component={RouterLink}
+                        to={`products/${e.parentId}/${item}`}
                         underline="none"
                         sx={{
                           color: "#70737C",
@@ -95,7 +99,7 @@ export default function MenuItemWithChildrenDesctop({ arrOfOptions }) {
   ))
 )}
 // ================================================================
-MenuItemWithChildrenDesctop.default ={
+MenuItemWithChildrenDesctop.defaultProps ={
   arrOfOptions: [
     { parentId: "option1", name: ["subOption1-1", "subOption1-2"] },
     { parentId: "option2", name: ["subOption2-1", "subOption2-2"] },

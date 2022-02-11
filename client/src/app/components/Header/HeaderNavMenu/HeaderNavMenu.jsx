@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 // import MenuItemNoChildrenDesktop from "./NavMenuComponents/MenuItemNoChildrenDesktop.jsx";
 // import MenuItemWithChildrenDesctop from "./NavMenuComponents/MenuItemWithChildrenDesctop.jsx";
 import MenuDesktop from './NavMenuComponents/MenuDesktop/MenuDesktop.jsx';
-import MenuMobile from './NavMenuComponents/MenuMobile.jsx';
+import MenuMobile from './NavMenuComponents/MenuMobile/MenuMobile.jsx';
 // import classes from "./HeaderNavMenuStyles.jsx";
 
 export default function HeaderNavMenu({
@@ -14,12 +14,12 @@ export default function HeaderNavMenu({
 }) {
   // ------------------------------- RENDER -----------------------------
   switch(resolution) {
-  case 'desctop': 
+  case 'desktop': 
    return (
-    <MenuDesktop />
+    <MenuDesktop pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}/>
   );
   case 'mobile':
-      return(<MenuMobile  login={login}/>)
+      return(<MenuMobile pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}  login={login}/>)
   ;
    default:
       return (<h1>TEST</h1>)
@@ -27,17 +27,8 @@ export default function HeaderNavMenu({
 }
 
 // ====================================================================================
-HeaderNavMenu.default = {
-  parentsListWithChildren: [
-    { parentId: "bundles", name: ["herbs-mono", "herbs-mix"] },
-    { parentId: "vegetables", name: ["vegetables-mono", "vegetables-mix"] },
-    { parentId: "flowers", name: ["flowers-mono", "flowers-mix"] },
-  ],
-  parentsListWithoutChildren: [
-    ["products", "all"],
-    ["preview", "bundles"],
-  ],
-  resolution: "desctop",
+HeaderNavMenu.defaultProps = {
+  resolution: "desktop",
 };
 
 HeaderNavMenu.propTypes = {

@@ -18,7 +18,7 @@ import { productsSelector } from "../store/selectors/selectors";
 export default function DEVWrapper({
   TestComponent,
   DevComponent,
-  setOfHandlers,
+  setOfHandlers
 }) {
   // -------------------------------------------------------------------
   const [appMode, setAppMode] = useState("dev");

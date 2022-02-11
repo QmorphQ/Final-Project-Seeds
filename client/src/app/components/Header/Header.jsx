@@ -2,6 +2,7 @@
 // =======================================================================================
 // ------------------------------------------------------------------------------------
 // Libraries Components:
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 // import PropTypes from "prop-types";
@@ -25,15 +26,15 @@ import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
 // ++++++++++++++++
 // Auth Component:
-import LogIn from "../Forms/LogRegModal.jsx";
-import SignUp from "../Forms/RegLogModal.jsx";
+// import LogIn from "../Forms/LogRegModal.jsx";
+// import SignUp from "../Forms/RegLogModal.jsx";
 // ++++++++++++++++
 // ------------------------------------------------------------------------------------
 // Styles:
 import classes from "./HeaderStyles.jsx";
 // =======================================================================================
 
-const Header = () => {
+const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
   const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -55,14 +56,13 @@ const Header = () => {
             alignItems: "center",
           }}
         >
-          <LogoBtn />
+          {logoPath ? <LogoBtn linkPath={logoPath}  /> : <LogoBtn />}
           <Box
             display={{ xs: "none", sm: "none", md: "block" }}
             sx={{ border: "1px solid green" }}
           >
             {/* <MenuDesktop /> */}
-            <HeaderNavMenu resolution={'desctop'} parentsListWithoutChildren={[["products", "all"],
-    ["preview", "bundles"]]} />
+            <HeaderNavMenu resolution={'desktop'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
           </Box>
           <Box
             sx={{
@@ -72,7 +72,7 @@ const Header = () => {
             }}
           >
             <Box display={{ xs: "none", sm: "none", md: "block" }}>
-              <SearchAppBar sx={{ width: 500 }} />
+              <SearchAppBar />
             </Box>
             <Box
               sx={{
@@ -91,8 +91,8 @@ const Header = () => {
               <Box display={{ xs: "none", sm: "none", md: "flex" }}>
                 {!isLogin ? (
                   <>
-                    <LogIn />
-                    <SignUp />
+                   {/* <LogIn />
+                    <SignUp /> */}
                   </>
                 ) : (
                   <IconButton
@@ -124,26 +124,27 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        {isMenuOpen && <HeaderNavMenu resolution={'mobile'} />}
+        {isMenuOpen && <HeaderNavMenu  resolution={'mobile'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>}
       </Box>
     </Box>
   );
 };
 
 // =====================================================================
-// Header.default = {
-//   allCategories: [{parentId:'bundles', name: ['herbs-mono', 'herbs-mix']}, {parentId:'vegetables',name: ['vegetables-mono', 'vegetables-mix']}, {parentId:'flowers', name: ['flowers-mono', 'flowers-mix']}],
-//   categories: [['products', 'all'], ['preview', 'bundles']],
-// }
+Header.defaultProps = {
+  arrWithChildrenBlock: [{parentId:'herbs', name: ['herbs-mono', 'herbs-mix']}, {parentId:'vegetables',name: ['vegetables-mono', 'vegetables-mix']}, {parentId:'flowers', name: ['flowers-mono', 'flowers-mix']}],
+  arrNoChildrenBlock: [['products', 'all'], ['products/bundles', 'bundles']],
+}
 
-// Header.propTypes = {
-//   allCategories: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       parentID: PropTypes.string,
-//       name: PropTypes.string,
-//     })
-//   ),
-//   categories: PropTypes.array,
-// };
+Header.propTypes = {
+  arrWithChildrenBlock: PropTypes.arrayOf(
+    PropTypes.shape({
+      parentID: PropTypes.string,
+      name: PropTypes.array,
+    })
+  ),
+  arrNoChildrenBlock: PropTypes.array,
+  logoPath: PropTypes.string,
+};
 
 export default Header;

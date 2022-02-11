@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { Box, Paper, MenuList, IconButton } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 // React Components:
-import SearchAppBar from "../../HeaderSearch/SearchAppBar.jsx";
-import LogIn from "../../../Forms/LogRegModal.jsx";
-import SignUp from "../../../Forms/RegLogModal.jsx";
+import SearchAppBar from "../../../HeaderSearch/SearchAppBar.jsx";
+// import LogIn from "../../../Forms/LogRegModal.jsx";
+// import SignUp from "../../../Forms/RegLogModal.jsx";
 import MenuItemNoChildrenMobile from "./MenuMobileComponents/MenuItemNoChildrenMobile.jsx";
 import MenuItemWithChildrenMobile from "./MenuMobileComponents/MenuItemWithChildrenMobile.jsx";
 
 export default function MenuMobile ({
-  parentsListWithoutChildren,
-  parentsListWithChildren,
+  pressetsNoChildren,
+  pressetsWithChildren,
   isLogin,
 }) {
   return (
@@ -34,19 +34,19 @@ export default function MenuMobile ({
         >
           <SearchAppBar />
           <MenuList>
-            <MenuItemNoChildrenMobile
+            <MenuItemNoChildrenMobile arrOfOptions={ pressetsNoChildren }
              
             />
             {/* {cardsList} */}
             <MenuItemWithChildrenMobile
-             
+              arrOfOptions={pressetsWithChildren}
             />
           </MenuList>
           <Box display="flex" sx={{ justifyContent: "space-around" }}>
             {!isLogin ? (
               <>
-                <LogIn />
-                <SignUp />
+                <div>AUTH</div>{/* <LogIn />
+                <SignUp /> */}
               </>
             ) : (
               <IconButton
@@ -68,8 +68,8 @@ export default function MenuMobile ({
 };
 
 MenuMobile.propTypes = {
-  parentsListWithoutChildren: PropTypes.array,
-  parentsListWithChildren: PropTypes.array,
+  pressetsNoChildren: PropTypes.array,
+  pressetsWithChildren: PropTypes.array,
   isLogin: PropTypes.bool,
 };
 

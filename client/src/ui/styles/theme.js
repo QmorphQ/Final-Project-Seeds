@@ -88,6 +88,7 @@ const createCustomTheme = (theme) => {
       body1: {
         ...theme.typography.body1,
         fontFamily: "'Lexend', sans-serif",
+        fontSize: "16px"
       },
       body2: {
         ...theme.typography.body2,

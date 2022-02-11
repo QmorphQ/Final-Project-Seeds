@@ -13,10 +13,9 @@ import Home from "./app/pages/Home.jsx";
 import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 import { fetchCart } from "./store/thunks/cart.thunks";
-import Preloader from "./ui/components/Preloader/Preloader.jsx";
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
-import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+// import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";

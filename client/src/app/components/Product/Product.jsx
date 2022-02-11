@@ -4,7 +4,7 @@ import { useFetch } from "../../hoc/useFetch.jsx";
 import { API } from "../../constants/index";
 
 
-const Product = ({id}) => {
+const Product = (id) => {
   const [loading, data, error] = useFetch(`${API}products/${id}`);
 
   return (

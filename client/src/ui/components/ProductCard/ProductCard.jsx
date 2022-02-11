@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
+import { Link, useNavigate } from "react-router-dom";
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
@@ -15,8 +16,7 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 import { cartSelector, mainCategoriesSelector } from "../../../store/selectors/selectors";
-import { Link, useNavigate } from "react-router-dom";
-import { addProductToCart } from "../../../store/thunks/cart.thunks.js";
+import { addProductToCart } from "../../../store/thunks/cart.thunks";
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 
 
@@ -446,7 +446,7 @@ export const ProductCardRender = ({ data }) => {
             }}
           >
             <ShoppingCartOutlinedIcon />
-            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} />
+            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} />
           </IconButton>
         </CardActions>
       </Card>

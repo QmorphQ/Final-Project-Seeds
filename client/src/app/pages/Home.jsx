@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import Preloader from "../../ui/components/Preloader/Prelodaer.jsx";
+import Preloader from "../../ui/components/Preloader/Preloader.jsx";
 import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { downloadRequestStates } from "../constants";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";

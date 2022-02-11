@@ -17,7 +17,7 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
     <Box>
       {arrOfOptions.map((item, index) => (
         <div key={index}>
-          <Accordion sx={{ boxShadow: "none", my: "0px" }}>
+          <Accordion sx={{ boxShadow: "none", my: "0px", border: '1px red solid' }}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -37,7 +37,7 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
               </MenuItem>
             </AccordionSummary>
             {item.name.map((subItem, i) => (
-              <div key={`${subItem}${i}`}>
+              <Box key={`${subItem}${i}`} sx={{pl: '50px'}}>
                 <AccordionDetails>
                   <Link
                     component={RouterLink}
@@ -53,7 +53,7 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
                     {subItem.charAt(0).toUpperCase() + subItem.slice(1)}
                   </Link>
                 </AccordionDetails>
-              </div>
+              </Box>
             ))}
           </Accordion>
           <Divider />

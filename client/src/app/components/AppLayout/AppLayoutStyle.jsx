@@ -7,7 +7,7 @@ const classes = {
         width: '90%',
         height: '100%',
         border: '1px red solid',
-        margin: 'auto'
+        margin: 'auto',
     },
     AppBox: {
         display: 'flex',

@@ -24,7 +24,7 @@ export default function MenuMobile ({
             width: "50%",
             maxWidth: "100%",
             position: "absolute",
-            zIndex: "3",
+            zIndex: "99999",
             left: "45%",
             boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)",
           }}

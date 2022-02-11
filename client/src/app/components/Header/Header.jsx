@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 // import { Link as RoutLink } from 'react-router-dom';
 // ------------------------------------------------------------------------------------
 // MUI Components:
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -38,13 +39,14 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
   const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const handleMobileMenuOpen = () => {
-    setIsMenuOpen((prevIsMenuOpen) => !prevIsMenuOpen);
-  };
+  const handleMobileMenuOpen = (e) => (console.log(e.target) ,setIsMenuOpen(true));
+     
+  const handleClickAway = () => setIsMenuOpen(false);
+    
   // Component did mount:
   useEffect(() => {
-    console.log('isLogin: ' ,isLogin);
-  }, [isLogin])
+    console.log('isLogin: ' ,isLogin)
+  }, [isLogin]);
   // =============================================== Render ==============================================
   return (
     <Box sx={classes.Header}>
@@ -108,8 +110,9 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                 )}
               </Box>
             </Box>
-            <Box display={{ xs: "block", sm: "block", md: "none" }}>
+            <Box id='menuBtn' display={{ xs: "block", sm: "block", md: "none" }}>
               <IconButton
+               id='menuBtn'
                 size="large"
                 edge="start"
                 color="primary"
@@ -124,8 +127,10 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
         </Toolbar>
       </AppBar>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        {isMenuOpen && <HeaderNavMenu  resolution={'mobile'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>}
+        {isMenuOpen &&<ClickAwayListener onClickAway={handleClickAway}><Box>  <HeaderNavMenu  resolution={'mobile'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/></Box></ClickAwayListener>}
+       
       </Box>
+      
     </Box>
   );
 };

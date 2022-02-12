@@ -18,8 +18,7 @@ export const useProductPageStyles = makeStyles((theme) => ({
     maxHeight:"auto",
   },
   productCardMediaSmall: {
-    maxWidth: "67px",
-    maxHeight:"auto",
+    borderRadius: "12px",
   },
   productCardMedia: {
     borderRadius: "12px",
@@ -37,7 +36,11 @@ export const useProductPageStyles = makeStyles((theme) => ({
       color: `${theme.palette.text.primary}`,
     },
     border: `1px solid ${theme.palette.grey["300"]}`,
-
+  },
+  productTableInfo: {
+    boxShadow: "none",
+    border: `1px solid ${theme.palette.grey["300"]}`,
+    borderRadius: "12px",
   },
   productCardOldPrice: {
     fontSize:"16px",
@@ -56,6 +59,7 @@ export const useProductPageStyles = makeStyles((theme) => ({
     fontSize: "16px",
   },
   amountInputGroup: {
+    margin:"16px",
     height: "44px",
     border: "1px solid rgba(239, 239, 239, 1)",
     borderRadius: "11px",
@@ -64,6 +68,7 @@ export const useProductPageStyles = makeStyles((theme) => ({
     marginRight:"12px"
   },
   productCardButtonBasket: {
+    margin:"16px",
     textTransform: "capitalize"
   },
   customScrollbar: {

@@ -13,6 +13,8 @@ const CartIcon = () => {
   const classes = useStyles();
   
   const cart = useSelector(cartSelector);
+  const cartStorage =  JSON.parse(localStorage.getItem("persist:root"));
+  console.log(cartStorage.cart);
   
   
   
@@ -26,6 +28,9 @@ const CartIcon = () => {
     
   }, []);
 
+  
+  
+
 
   console.log(cart);
 //  const testCart = [
@@ -38,6 +43,7 @@ const CartIcon = () => {
   
   
   const totalCartQuantity = cart?.length;
+  console.log(totalCartQuantity);
   
   const RoutesName = {
     cart: "/cart",

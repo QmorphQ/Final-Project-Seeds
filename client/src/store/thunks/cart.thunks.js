@@ -38,12 +38,19 @@ const fetchCart =
           dispatch(downloadCartError());
         });
     } else {
-      if(!localStorage.getItem("cart")) {
-        localStorage.setItem("cart", JSON.stringify([]));
-      }
-      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
-      dispatch(downloadCartSuccess(cartFromLS));
+      // if(!localStorage.getItem("cart")) {
+      //   localStorage.setItem("cart", JSON.stringify([]));
+      // }
+      // const cartFromLS = JSON.parse(localStorage.getItem("cart"));
+      // dispatch(downloadCartSuccess(cartFromLS));
+      const oldCart = JSON.parse(localStorage.getItem("persist:root"));
+    const igorTest = JSON.parse(oldCart.cart);
+   console.log(igorTest.cart);
+   const cartFromLS = igorTest.cart;
+   dispatch(downloadCartSuccess(cartFromLS));
     }
+
+
   };
 
 const addCart = (cart) => (dispatch) => {
@@ -65,7 +72,7 @@ const addCart = (cart) => (dispatch) => {
       });
   } else {
     dispatch(addCartSuccess(cart));
-    localStorage.setItem("cart", JSON.stringify(cart));
+    // localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
 
@@ -81,6 +88,8 @@ const addProductToCart = (productId, amount) => (dispatch) => {
         },
       })
       .then((updatedCart) => {
+
+
         dispatch(addProductToCartSuccess(updatedCart.data));
         return updatedCart;
       })
@@ -93,12 +102,18 @@ const addProductToCart = (productId, amount) => (dispatch) => {
       product: productId,
       cartQuantity: amount,
     };
-    const oldCart = JSON.parse(localStorage.getItem("cart"));
-    const updatedCart = [...oldCart];
+    const oldCart = JSON.parse(localStorage.getItem("persist:root"));
+    const igorTest = JSON.parse(oldCart.cart);
+   console.log(igorTest.cart);
+    
+    
+
+
+    const updatedCart = [...igorTest.cart];
     updatedCart.push(newProduct);
     dispatch(addProductToCartSuccess(updatedCart));
-    localStorage.removeItem("cart");
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    // localStorage.removeItem("cart");
+    // localStorage.setItem("cart", JSON.stringify(updatedCart));
   }
 };
 

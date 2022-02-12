@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { fetchCart, addCart } from "../../../store/thunks/cart.thunks";
+import { fetchCart } from "../../../store/thunks/cart.thunks";
 import {
     cartSelector
   } from "../../../store/selectors/selectors";
-  import {addProductToCart} from "../../../store/thunks/cart.thunks";
+  // import {addProductToCart} from "../../../store/thunks/cart.thunks";
 
 
 const Cart = () => {
@@ -26,16 +26,17 @@ const dispatch = useDispatch();
 
 useEffect(() => {
     dispatch(fetchCart());
-    dispatch(addCart())
-    
+    console.log(cart);
+   
   }, []);
 
     console.log(cart);
     
-    const onClick = () => {
-      console.log("click");
+    
 
-    }
+   
+
+
 
 
 
@@ -45,7 +46,7 @@ useEffect(() => {
         <DeleteIcon />
       </IconButton>
       <IconButton color="primary" aria-label="add to shopping cart">
-        <AddShoppingCartIcon onClick={onClick} />
+        <AddShoppingCartIcon />
       </IconButton>
     </>
     

@@ -54,7 +54,6 @@ function App() {
           <Route path="/products" element={<Filters />} />
           <Route path="/:id" element={<ProductPage />} />
           <Route path="/login" element={<LogIn/>} />
-          <Route path="/cart" element={<TestCartPage />}/>
           <Route path="*" element={<PageNotFound />} />
         </Route>
     </Routes>

@@ -9,9 +9,9 @@ import ProductCard from "../ProductCard/ProductCard.jsx";
 
 const ProductsListSection = ({ data, loading }, totalLength = 6) => {
   let productsFlteredArr = data.products
-    // .map((value) => ({ value, sort: Math.random() }))
-    // .sort((a, b) => a.sort - b.sort)
-    // .map(({ value }) => value);
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
 
   if (!data.isFiltersPage) {
     productsFlteredArr = productsFlteredArr.filter(

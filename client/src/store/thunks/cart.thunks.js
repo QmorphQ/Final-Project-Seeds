@@ -38,6 +38,7 @@ const fetchCart =
           dispatch(downloadCartError());
         });
     } else {
+
       // if(!localStorage.getItem("cart")) {
       //   localStorage.setItem("cart", JSON.stringify([]));
       // }
@@ -48,6 +49,10 @@ const fetchCart =
    console.log(igorTest.cart);
    const cartFromLS = igorTest.cart;
    dispatch(downloadCartSuccess(cartFromLS));
+
+      // const cartFromLS = JSON.parse(localStorage.getItem("cart"));
+      // dispatch(downloadCartSuccess(cartFromLS));
+
     }
 
 
@@ -76,7 +81,7 @@ const addCart = (cart) => (dispatch) => {
   }
 };
 
-const addProductToCart = (productId, amount) => (dispatch) => {
+const addProductToCart = (productId) => (dispatch) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
@@ -93,14 +98,13 @@ const addProductToCart = (productId, amount) => (dispatch) => {
         dispatch(addProductToCartSuccess(updatedCart.data));
         return updatedCart;
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         dispatch(addProductToCartError());
       });
   } else {
     const newProduct = {
       product: productId,
-      cartQuantity: amount,
+      cartQuantity: 1,
     };
     const oldCart = JSON.parse(localStorage.getItem("persist:root"));
     const igorTest = JSON.parse(oldCart.cart);

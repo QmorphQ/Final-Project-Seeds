@@ -1,6 +1,6 @@
 import Product from "../components/Product/Product.jsx";
 import CustomerReviews from "../components/CustomerReviews/CustomerReviews.jsx";
-import { useParams } from "react-router-dom";
+
 
 const scores = {
   5: 50,
@@ -10,14 +10,11 @@ const scores = {
   1: 10
 }
 
-const ProductPage = () => {
-  const { id } = useParams();
-  return (
+const ProductPage = () => (
     <>
-      <Product id={id} />
+      <Product />
       <CustomerReviews total={120} scores={scores} />
     </>
   )
-}
 
 export default ProductPage;

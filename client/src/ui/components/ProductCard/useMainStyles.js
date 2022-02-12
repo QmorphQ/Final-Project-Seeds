@@ -32,7 +32,6 @@ export const useMainStyles = makeStyles((theme) => ({
     margin: "0px",
     height: "50px",
     overflow: "hidden",
-    cursor: "pointer",
   },
   productCardPrice: {
     margin: "0px",

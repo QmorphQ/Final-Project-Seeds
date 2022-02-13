@@ -12,7 +12,6 @@ import {
 import Home from "./app/pages/Home.jsx";
 import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
-import { fetchCart } from "./store/thunks/cart.thunks";
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 // import Preloader from "./ui/components/Preloader/Prelodaer.jsx";

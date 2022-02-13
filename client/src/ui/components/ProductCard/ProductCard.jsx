@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack, TableContainer, Paper, Table, TableBody, TableRow, TableCell, ListItem, List, Link } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack, TableContainer, Paper, Table, TableBody, TableRow, TableCell, ListItem, List } from "@mui/material";
+
 import PropTypes from 'prop-types';
 import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -42,9 +43,7 @@ export const ProductCardRender = ({ data }) => {
   const [discontStart] = useState(10);
 
   const dispatch = useDispatch();
-
-  const cart = useSelector(cartSelector);
-  const media = imgURLs.filter(item => item.itemNo === itemNo);
+  const media = imageUrls.filter(item => item.itemNo === itemNo);
 
 
   useEffect(() => {
@@ -64,15 +63,8 @@ export const ProductCardRender = ({ data }) => {
 
 
   const currentCategory = allCategories.find(category => categories === category.name)
-  if (!currentCategory) {
-    console.log(categories, name, itemNo);
-  }
-
   const mainCategory = mainCategories.find(category => currentCategory.parentId === category.id)
 
-
-  console.log(mainCategory);
-  console.log();
   
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",

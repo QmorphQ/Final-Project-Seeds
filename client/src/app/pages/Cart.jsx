@@ -21,7 +21,7 @@ const Cart = ({ loading }) => {
     const cartProduct = products.find(product => product.itemNo === cartItem.id)
     
     if(!cartProduct) return null
-    
+
     totalPrice += Number(cartItem.cartQuantity) * Number(cartProduct.currentPrice); 
 
     console.log("cartItem:", cartItem);

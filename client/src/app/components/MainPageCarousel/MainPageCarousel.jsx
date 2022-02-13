@@ -88,7 +88,7 @@ const MainPageCarousel = () => {
           sx={{
             width: "320px",
             position: "absolute",
-            bottom: "5%",
+            bottom: "10%",
             left: "70%",
           }}
           alt="img"
@@ -173,6 +173,7 @@ function Item(props)
       mt={{ xs: '20px'}}
       xs={8} md={2}
       pr={{ xs: '10px', sm: '30px' }}
+      // pr= '30px'
       order={{ xs: 0, sm: 1 }}
       position={{ xs: 'static', sm: 'absolute' }}
       left={'72%'}
@@ -236,3 +237,5 @@ Item.propTypes = {
   descr: PropTypes.string,
   item: PropTypes.object,
 };
+
+

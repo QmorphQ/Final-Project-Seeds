@@ -80,8 +80,7 @@ const addProductToCart = (productId) => (dispatch, getState) => {
         dispatch(addProductToCartSuccess(updatedCart.data));
         return updatedCart;
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         dispatch(addProductToCartError());
       });
   } else {

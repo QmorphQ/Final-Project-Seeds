@@ -18,8 +18,11 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 // import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
+// import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
+import Checkout from "./app/pages/Checkout.jsx"
+// =======================================================================
 
 
 function App() {
@@ -40,10 +43,6 @@ function App() {
     dispatch(fetchProducts());
   }, []);
 
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, [])
-
   return (
     <BrowserRouter>
     <Routes>
@@ -54,6 +53,7 @@ function App() {
           <Route path="/login" element={<LogIn/>} />
           <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
           <Route path="*" element={<PageNotFound />} />
+          <Route path="*" element={<Checkout />} />
         </Route>
     </Routes>
     </BrowserRouter>

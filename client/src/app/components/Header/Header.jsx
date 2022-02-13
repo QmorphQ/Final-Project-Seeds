@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link as RoutLink } from 'react-router-dom';
 import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
@@ -13,7 +14,6 @@ import LogIn from "../Forms/LogRegModal.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors";
-import ProfileMenu from "./ProfileMenu.jsx";
 // import { downloadRequestStates } from "../../constants";
 
 
@@ -80,7 +80,18 @@ const Header = ({ allCategories, categories}) => {
                 <SignUp /> 
               </>
             ) : (
-              <ProfileMenu/>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                // aria-controls={menuId}
+                aria-haspopup="true"
+                // onClick={handleProfileMenuOpen}
+              >
+                <AccountCircle 
+                  // className={classes.iconsStyle} 
+                />
+              </IconButton>
             )}
             </Box>
            
@@ -96,7 +107,11 @@ const Header = ({ allCategories, categories}) => {
             >
               <MenuIcon />
             </IconButton>
-          </Box>          
+          </Box>
+
+
+
+           
          </Box>
           
         </Toolbar>

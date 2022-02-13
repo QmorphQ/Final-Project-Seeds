@@ -8,6 +8,7 @@ import ProductCard from "../ProductCard/ProductCard.jsx";
 // };
 
 const ProductsListSection = ({ data, loading }, totalLength = 6) => {
+  console.log( data.products);
   let productsFlteredArr = data.products
     // .map((value) => ({ value, sort: Math.random() }))
     // .sort((a, b) => a.sort - b.sort)

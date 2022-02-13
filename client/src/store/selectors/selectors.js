@@ -5,10 +5,20 @@
  */
 
 // ================== Categories ===================
+
 export const downloadCategoriesRequestStateSelector = (state) =>
   state.catalog.downloadRequestState;
 
+/**
+ * @param {Object} state
+ * @returns {Array<Object>}
+ */
 export const allCategoriesSelector = (state) => state.catalog.categoriesList;
+
+/**
+ * @param {Object} state
+ * @returns {Array<Object>}
+ */
 
 export const mainCategoriesSelector = (state) => {
   const mainCategories = state.catalog.categoriesList.filter(

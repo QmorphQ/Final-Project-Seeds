@@ -1,8 +1,10 @@
 import {Box} from "@mui/material" 
 import { useSelector } from "react-redux"; 
-import ProductCard from "../../ui/components/ProductCard/ProductCard.jsx" 
+import PropTypes from 'prop-types';
+import ProductCard from "../../ui/components/ProductCard/ProductCard.jsx";
+import { downloadRequestStates } from "../constants/index";
  
-const Cart = () => { 
+const Cart = ({ loading }) => { 
     let totalPrice = 0;
     const products = useSelector(state => state.products.productList); 
     const cart = useSelector(state => state.cart.cart) 
@@ -19,34 +21,46 @@ const Cart = () => {
     const cartProduct = products.find(product => product.itemNo === cartItem.id)
     
     if(!cartProduct) return null
+    
+    totalPrice += Number(cartItem.cartQuantity) * Number(cartProduct.currentPrice); 
 
-    totalPrice += cartItem.quantity * cartProduct.price; 
+    console.log("cartItem:", cartItem);
+    console.log("cartProduct", cartProduct)
      
     return <Box component="li" key={cartItem.id}>
         <ProductCard 
-        name={cartProduct.name}
-        currentPrice={cartProduct.currentPrice}
-        imageUrls={cartProduct.imageUrls}
-        isProductPage={false}
-        isFiltersPage={false}
-        categories={cartProduct.categories}
-        quantity={cartProduct.quantity}
-        isBasket={true}
-        discountPrice={cartProduct.discountPrice}
-        itemNo={cartProduct.itemNo}
+        product={{
+            name: cartProduct.name,
+            currentPrice: cartProduct.currentPrice,
+            imageUrls:cartProduct.imageUrls,
+            isProductPage: false,
+            isFiltersPage: false,
+            categories: cartProduct.categories,
+            quantity: cartProduct.quantity,
+            isBasket: true,
+            discountPrice: cartProduct.discountPrice,
+            itemNo: cartProduct.itemNo,
+        }}
+        loading={ loading }
         />
     </Box>
     })
-console.log(totalPrice);
 
     return (
         <Box component="main"> 
          <ul> 
              {cartList}  
          </ul>   
+        <Box>
+            {totalPrice}
+        </Box> 
         </Box> 
     )
        
+}
+
+Cart.propTypes = {
+    loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
 }
 
 export default Cart;

@@ -52,7 +52,7 @@ function App() {
           <Route path="/products" element={<Filters />} />
           <Route path="/:id" element={<ProductPage />} />
           <Route path="/login" element={<LogIn/>} />
-          <Route path="/cart" element={<Cart />}/>
+          <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
           <Route path="*" element={<PageNotFound />} />
         </Route>
     </Routes>

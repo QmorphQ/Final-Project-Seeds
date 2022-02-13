@@ -40,12 +40,6 @@ const fetchCart =
     } else {
       const { cart } = getState();
       dispatch(downloadCartSuccess(cart.cart));
-
-      if (!localStorage.getItem("cart")) {
-        localStorage.setItem("cart", JSON.stringify([]));
-      }
-      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
-      dispatch(downloadCartSuccess(cartFromLS));
     }
   };
 

@@ -15,9 +15,10 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
-import { cartSelector, mainCategoriesSelector } from "../../../store/selectors/selectors";
+import { allCategoriesSelector, mainCategoriesSelector } from "../../../store/selectors/selectors";
 import { addProductToCart } from "../../../store/thunks/cart.thunks";
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
+import { downloadRequestStates } from "../../../app/constants/index"
 
 
 export const ProductCardRender = ({ data }) => {
@@ -41,8 +42,7 @@ export const ProductCardRender = ({ data }) => {
   const [discontStart] = useState(10);
 
   const dispatch = useDispatch();
-  const cart = useSelector(cartSelector);
-  console.log(cart);
+  // const cart = useSelector(cartSelector);
 
   useEffect(() => {
     // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
@@ -56,10 +56,17 @@ export const ProductCardRender = ({ data }) => {
   const basketClasses = useBasketStyles();
   const filtersClasses = useFiltersStyles();
 
-  const mainCategory = 
-    useSelector(mainCategoriesSelector)
-      .find(category => categories
-      .includes(category.name));
+  const allCategories = useSelector(allCategoriesSelector);
+  const mainCategories = useSelector(mainCategoriesSelector)
+
+
+  const currentCategory = allCategories.find(category => categories === category.name)
+  if (!currentCategory) {
+    console.log(categories, name, itemNo);
+  }
+
+  const mainCategory = mainCategories.find(category => currentCategory.parentId === category.id)
+
 
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -454,6 +461,7 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
+
 const ProductCard = ({ product, loading }) => 
   (
     <RenderComponent
@@ -465,28 +473,21 @@ const ProductCard = ({ product, loading }) =>
     />
   );
 
-ProductCard.defaultProps = {
-  product: {
-    name: "test name",
-    imageUrls: "test imageUrls",
-    categories: [""],
-  },
-};
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
-  name: PropTypes.string,
-  currentPrice: PropTypes.number,
-  imageUrls: PropTypes.string,
-  isProductPage: PropTypes.bool,
-  isFiltersPage: PropTypes.bool,
-  categories: PropTypes.arrayOf(PropTypes.string),
-  quantity: PropTypes.number,
-  isBasket: PropTypes.bool,
-  discountPrice: PropTypes.number,
-  itemNo: PropTypes.number,
+    name: PropTypes.string,
+    currentPrice: PropTypes.number,
+    imageUrls: PropTypes.string,
+    isProductPage: PropTypes.bool,
+    isFiltersPage: PropTypes.bool,
+    categories: PropTypes.string,
+    quantity: PropTypes.number,
+    isBasket: PropTypes.bool,
+    discountPrice: PropTypes.number,
+    itemNo: PropTypes.number,
   }),
-  loading: PropTypes.bool,
+  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
 };
 
 ProductCardRender.propTypes = {

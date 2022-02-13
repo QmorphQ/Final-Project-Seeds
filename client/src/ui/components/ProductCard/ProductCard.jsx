@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack, TableContainer, Paper, Table, TableBody, TableRow, TableCell, ListItem, List } from "@mui/material";
-
+import Carousel from "react-material-ui-carousel";
 import PropTypes from 'prop-types';
 import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -15,7 +15,7 @@ import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
-import Icon from "../Icon/Icon.jsx";
+import { Icon } from "../Icon/Icon.jsx";
 import { allCategoriesSelector, mainCategoriesSelector } from "../../../store/selectors/selectors";
 import { addProductToCart } from "../../../store/thunks/cart.thunks";
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";

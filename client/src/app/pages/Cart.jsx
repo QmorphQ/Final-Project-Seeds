@@ -32,7 +32,7 @@ const Cart = ({ loading }) => {
         product={{
             name: cartProduct.name,
             currentPrice: cartProduct.currentPrice,
-            imageUrls:cartProduct.imageUrls,
+            imageUrls: cartProduct.imageUrls,
             isProductPage: false,
             isFiltersPage: false,
             categories: cartProduct.categories,

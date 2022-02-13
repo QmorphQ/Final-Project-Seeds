@@ -96,7 +96,7 @@ TabsSection.propTypes = {
           currentPrice: PropTypes.number,
           categories: PropTypes.string,
           description: PropTypes.string,
-          imageUrls: PropTypes.arrayOf(PropTypes.string),
+          imageUrls: PropTypes.string,
           quantity: PropTypes.number,
           popular: PropTypes.bool,
         }))

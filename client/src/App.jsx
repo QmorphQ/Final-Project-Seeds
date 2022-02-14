@@ -46,6 +46,7 @@ function App() {
     <BrowserRouter>
     <Routes>
        <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
+
           <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
           <Route path="/products" element={<Filters />} />
           <Route path="/:id" element={<ProductPage />} />
@@ -54,6 +55,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
           <Route path="*" element={<Checkout />} />
         </Route>
+
     </Routes>
     </BrowserRouter>
 

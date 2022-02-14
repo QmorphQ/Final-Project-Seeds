@@ -10,14 +10,11 @@ const scores = {
   1: 10
 }
 
-const ProductPage = () => {
-  const { id } = useParams();
-  return (
+const ProductPage = () => (
     <>
-      <Product id={id} />
+      <Product />
       <CustomerReviews total={120} scores={scores} />
     </>
   )
-}
 
 export default ProductPage;

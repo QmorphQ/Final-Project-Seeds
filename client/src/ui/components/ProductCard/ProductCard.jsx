@@ -33,11 +33,10 @@ export const ProductCardRender = ({ data }) => {
     quantity,
     isBasket,
     discountPrice,
-    itemNo,
   } = data;
 
   const [isFavourite, toggleIsFavourite] = useState(false);
-  const [isOnModal, toggleIsOnModal] = useState(false);
+  const [isOnBasket, toggleisOnBasket] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
   const [discontStart] = useState(10);
@@ -45,13 +44,10 @@ export const ProductCardRender = ({ data }) => {
   const dispatch = useDispatch();
   const media = imageUrls.filter(item => item.itemNo === itemNo);
 
-
   useEffect(() => {
     // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
     setTotalPrice(prevProductAmount => prevProductAmount <= discontStart ? productAmount * currentPrice : productAmount * discountPrice);
   },[productAmount, discontStart])
-
-  const navigate = useNavigate();
 
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
@@ -65,7 +61,6 @@ export const ProductCardRender = ({ data }) => {
   const currentCategory = allCategories.find(category => categories === category.name)
   const mainCategory = mainCategories.find(category => currentCategory.parentId === category.id)
 
-  
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -105,52 +100,58 @@ export const ProductCardRender = ({ data }) => {
               md={5}
               lg={5}
             >
-              <Carousel
-                m={"auto"}
-                navButtonsAlwaysVisible={false}
-                navButtonsWrapperProps={{
-                  style: {
-                    maxHeight: "421px"
-                  }
-                }}
-                interval="5000"
-                animation="slide"
-                duration="500"
-                autoPlay={false}
-                indicatorContainerProps={{
-                  style: {
-                    marginTop:"22px",
-                  }
-              }}
-                IndicatorIcon={media[0].url.map(url => (
-                  <CardMedia sx={{width:"67px"}}
-                    className={productPageClasses.productCardMediaSmall}
-                    component="img"
-                    width="67px"
-                    image={`${url}`}
-                    alt={name}
-                  />
-                ))
-                }
-                indicatorIconButtonProps={{
-                  style: {
-                    margin:"8px",
-                    maxWidth: "67px",
-                    maxHeight:"auto",
-                  }
-                }}
-              >
-                {media[0].url.map((item, i) => (
-                  <CardMedia
-                    className={productPageClasses.productCardMedia}
-                    component="img"
-                    width="294px"
-                    pr="300px"
-                    image={`${item}`}
-                    alt={name}
-                  />
-                ))}
-              </Carousel>
+              <CardMedia
+                className={productPageClasses.productCardMedia}
+                component="img"
+                width="294px"
+                image={`${imageUrls}`}
+                alt={name}
+              />
+
+              <Box className={productPageClasses.productCardMediaSmallWrapper}>
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-2.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-3.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-4.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-5.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-6.png`}
+                  alt={name}
+                />
+                <CardMedia
+                  className={productPageClasses.productCardMediaSmall}
+                  component="img"
+                  width="67px"
+                  image={`/img/image-7.png`}
+                  alt={name}
+                />
+              </Box>
             </Grid>
 
             <Grid item xs={12} md={7} lg={7}>
@@ -161,7 +162,7 @@ export const ProductCardRender = ({ data }) => {
                   color="text.primary"
                 >{name}</Typography>
 
-                <Stack sx={{marginBottom: "15px"}} direction="row" spacing={1}>
+                <Stack direction="row" spacing={1}>
                   <Chip 
                     color="disable"
                     label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"} 
@@ -178,7 +179,7 @@ export const ProductCardRender = ({ data }) => {
                   <Chip 
                     color="primary"
                     className={productPageClasses.productCardAvailable}
-                    label={mainCategory.name.toUpperCase()}  
+                    label={mainCategory.name.toUpperCase()}
                     icon={
                       <Icon 
                         className={productPageClasses.buttonIcon}
@@ -187,33 +188,6 @@ export const ProductCardRender = ({ data }) => {
                     variant="outlined" 
                   />
                 </Stack>
-                <TableContainer
-                  className={productPageClasses.productTableInfo}
-                  component={Paper}
-                >
-                  <Table>
-                    <TableBody>
-                      <TableRow
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell component="th" scope="row">Package Dimensions</TableCell>
-                        <TableCell align="right">{media[0].packageDimensions}</TableCell>
-                      </TableRow>
-                      <TableRow
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell component="th" scope="row">Item Weight</TableCell>
-                        <TableCell align="right">{media[0].itemWeight}</TableCell>
-                      </TableRow>
-                      <TableRow
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell component="th" scope="row">ASIN</TableCell>
-                        <TableCell align="right">{media[0].ASIN}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
               </CardContent>
               <CardActions className={productPageClasses.productActionsBox}>
                 <Box className={productPageClasses.customScrollbar} sx={{width:"100%"}}> 
@@ -311,12 +285,24 @@ export const ProductCardRender = ({ data }) => {
             >
               Product information.
             </Typography>
-            <List className={productPageClasses.productCardAboutHeader}
-              variant="body1" 
-              color="text.primary"
-            > 
-              {media[0].itemAbout.map((item, i) => <ListItem key={i}><Typography>{item}</Typography></ListItem>)}
-            </List>
+            <Grid container>
+              <Grid item xs={12} md={7} lg={7}>
+                <Typography className={productPageClasses.productCardAboutHeader}
+                  component="p" 
+                  variant="body1" 
+                  color="text.primary"
+                > 
+                  EEDRA Cilantro Seeds - contains 300 seeds in 1 Pack and professional instructions created by PhD Helga George
+                  Be sure of our quality - the freshest batches of this season. Non-GMO, Heirloom - our seeds were tested and have the best germination ratings. Your easy growing experience is our guarantee
+                  Cilantro common culinary uses: salsa, guacamole, pesto, salads, chutney, baked breads, pad thai, pico de gallo, rice, grilled shrimp skewers, falafel, and more
+                  Proudly sourced in the USA - our garden seeds are grown, harvested, and packaged in the USA. We support local farmers and are happy to produce this American-made product
+                  SEEDRA customer service - please contact us directly through Amazon with any questions or concerns about our products. We care about each customer and do our best to provide you with 100% satisfaction
+                </Typography>
+              </Grid>
+              <Grid item xs={12} md={5} lg={5}>
+
+              </Grid>
+            </Grid>
           </CardContent>
         </Card>
       </Container>
@@ -381,11 +367,9 @@ export const ProductCardRender = ({ data }) => {
               aria-label="add to basket"
               color="primary"
               variant="contained"
-              onClick={() => {
-                dispatch(addProductToCart(itemNo));
-              }}
+              onClick={() => toggleisOnBasket(() => !isOnBasket)}
             >
-              {isOnModal ? (
+              {isOnBasket ? (
                 <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
               ) : (
                 <ShoppingCartOutlinedIcon />
@@ -431,18 +415,13 @@ export const ProductCardRender = ({ data }) => {
         />
 
         <CardContent className={mainClasses.productCardContent}>
-          <Link to={`/${itemNo}`} style={{ color: 'inherit', textDecoration: 'inherit'}} color="text.primary" underline="hover" variant="h3">
-            <Typography
-              className={mainClasses.productCardName}
-              component={Link}
-              to={`/${itemNo}`}
-              variant="h3"
-              color="text.primary"
-              onClick={() => navigate(`${itemNo}`)}
-            >
+          <Typography
+            className={mainClasses.productCardName}
+            variant="h3"
+            color="text.primary"
+          >
             {name}
-            </Typography>
-          </Link>
+          </Typography>
           <Typography
             className={mainClasses.productCardPrice}
             component="span"
@@ -459,12 +438,15 @@ export const ProductCardRender = ({ data }) => {
             aria-label="add to basket"
             color="primary"
             variant="contained"
-            onClick={() => {
-              toggleIsOnModal(true);
-            }}
+            onClick={() => toggleisOnBasket(() => !isOnBasket)}
           >
-            <ShoppingCartOutlinedIcon />
-            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} />
+
+            {isOnBasket ? (
+              <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
+            ) : (
+              <ShoppingCartOutlinedIcon />
+            )}
+
           </IconButton>
         </CardActions>
       </Card>

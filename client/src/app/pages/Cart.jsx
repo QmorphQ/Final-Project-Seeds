@@ -1,13 +1,34 @@
-import {Box} from "@mui/material" 
+import {Box} from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux"; 
 import PropTypes from 'prop-types';
 import ProductCard from "../../ui/components/ProductCard/ProductCard.jsx";
 import { downloadRequestStates } from "../constants/index";
+
+const useStyles = makeStyles((theme) => ({
+    cartItem: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start"
+    },
+    cartContainer: {
+        display: "flex",
+        flexDirection: "row"
+    },
+    cartList: {
+        display: "flex",
+        flexDirection: "column"
+    },
+    totalPrice: {
+        color: theme.palette.primary.main
+    }
+}))
  
 const Cart = ({ loading }) => { 
     let totalPrice = 0;
     const products = useSelector(state => state.products.productList); 
     const cart = useSelector(state => state.cart.cart) 
+    const classes = useStyles();
  
     if(!products.length) { 
         return <p>Loading</p> 
@@ -24,10 +45,8 @@ const Cart = ({ loading }) => {
 
     totalPrice += Number(cartItem.cartQuantity) * Number(cartProduct.currentPrice); 
 
-    console.log("cartItem:", cartItem);
-    console.log("cartProduct", cartProduct)
      
-    return <Box component="li" key={cartItem.id}>
+    return <Box component="li" className={classes.cartItem} key={cartItem.id}>
         <ProductCard 
         product={{
             name: cartProduct.name,
@@ -47,13 +66,13 @@ const Cart = ({ loading }) => {
     })
 
     return (
-        <Box component="main"> 
-         <ul> 
-             {cartList}  
-         </ul>   
-        <Box>
-            {totalPrice}
-        </Box> 
+        <Box component="main" className={classes.cartContainer}> 
+            <ul className={classes.cartList}> 
+                {cartList}  
+            </ul>   
+            <Box className={classes.totalPrice}>
+                {totalPrice}
+            </Box> 
         </Box> 
     )
        

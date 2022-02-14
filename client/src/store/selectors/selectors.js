@@ -13,6 +13,7 @@ export const downloadCategoriesRequestStateSelector = (state) =>
  * @param {Object} state
  * @returns {Array<Object>}
  */
+
 export const allCategoriesSelector = (state) => state.catalog.categoriesList;
 
 /**

@@ -4,7 +4,7 @@ import { Typography, Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import Tab from "../../../ui/components/Tab/Tab.jsx"; 
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx"; 
-import Icon from "../../../ui/components/Icon/Icon.jsx"; 
+import { Icon } from "../../../ui/components/Icon/Icon.jsx"; 
 import ProductsList from '../ProductsList/ProductsList.jsx';
 import { downloadRequestStates } from '../../constants';
 

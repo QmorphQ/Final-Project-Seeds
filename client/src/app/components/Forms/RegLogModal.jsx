@@ -101,6 +101,9 @@ export default function SignUp() {
       handleClose()
     }
 
+    // console.log(localStorage.getItem("jwt"));
+    
+
     return (
     <>        
             <Button sx={{mr:1, mt:1, height:40, width:100, fontSize:14}} onClick={handleClickOpen} variant="outlined">Sign up</Button>  

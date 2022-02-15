@@ -74,7 +74,7 @@ const Header = ({ allCategories, categories}) => {
             </IconButton>}
             <HeaderIcons />
             <Box display={{ xs: "none", sm: "none", md:"flex" }}>
-            {!isLogin ? (
+            {!localStorage.getItem('jwt') ? (
               <>
                 <LogIn />
                 <SignUp /> 

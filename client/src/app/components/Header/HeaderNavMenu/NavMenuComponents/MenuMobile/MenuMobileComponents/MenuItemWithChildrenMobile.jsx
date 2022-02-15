@@ -5,26 +5,55 @@ import {
   Divider,
   MenuItem,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
   Link,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { styled } from '@mui/material/styles';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
 
 export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
+ // ==========================
+ const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<ArrowForwardIosSharpIcon className='iconArrow' sx={{ fontSize: '0.9rem',color: "#70737C"  }} />}
+    {...props}
+  />
+))(({ theme }) => ({
+  flexDirection: 'row-reverse',
+  '.option-with-options': {
+    color: '#70737C',
+  },
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    transform: 'rotate(90deg)',
+  },
+  '.Mui-expanded': {
+    ".iconArrow":{
+      color: '#359740',
+    },
+    '.option-with-options': {
+      color: '#359740',
+    }
+  },
+  '& .MuiAccordionSummary-content': {
+    marginLeft: theme.spacing(0),
+  },
+}));
+ // =========================
   // ============================= Render ============================
   return (
     <Box>
       {arrOfOptions.map((item, index) => (
-        <div key={index}>
-          <Accordion sx={{ boxShadow: "none", my: "0px", border: '1px red solid' }}>
+        <div key={ index }>
+          <Accordion sx={{ boxShadow: "none", my: "0px", color: "#1F2533" }}>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              sx={{'fontSize': '2em'}}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <MenuItem sx={{ color: "#1F2533", fontWeight: "700" }}>
+              <MenuItem disableRipple sx={{ fontWeight: "700",'&:hover': {backgroundColor: 'white'} }}>
                 <Link
+                  className='option-with-options'
                   component={RouterLink}
                   to={`products/${item.parentId}`}
                   underline="none"
@@ -37,12 +66,12 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
               </MenuItem>
             </AccordionSummary>
             {item.name.map((subItem, i) => (
-              <Box key={`${subItem}${i}`} sx={{pl: '50px'}}>
+              <Box key={`${subItem}${i}`} sx={{pl: '80px'}}>
                 <AccordionDetails>
                   <Link
                     component={RouterLink}
                     to={`products/${item.parentId}/${subItem}`}
-                    key={(Math.random() + 1).toString(36).substring(7)}
+                    key={subItem}
                     underline="none"
                     sx={{
                       color: "#70737C",

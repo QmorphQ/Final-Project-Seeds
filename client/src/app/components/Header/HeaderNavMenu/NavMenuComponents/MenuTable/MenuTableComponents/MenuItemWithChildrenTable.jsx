@@ -8,68 +8,98 @@ import {
   Paper,
   MenuItem,
   Link,
+  Button,
+  Menu,
 } from "@mui/material";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // ========================================================================
 
-
-
-export default function MenuItemWithChildrenDesctop({ arrOfOptions }) {
-
+export default function MenuItemWithChildrenTable({ arrOfOptions }) {
     const [dropDownOpen, setDropDownOpen] = useState(null);
+    //
+    // Open option function:
     const showDropdown = (e) => {
       const { id } = e.target;
       return setDropDownOpen((prevState) => (id !== prevState && id) || null);
     };
-    const handleClickAway = () => {
-      setDropDownOpen(null);
+    const [anchorEl, setAnchorEl] =useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
     };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    const handleClickAway = () => setDropDownOpen(null);
 // =================================== Render =======================
-  return  (
-    arrOfOptions.map((e, index) => (
+return(
+  <Box>
+  <Button
+        disableRipple
+        id="basic-button"
+        sx={{color: !anchorEl ? 'rgba(0, 0, 0, 0.6)' : '#359740', paddingBottom: '13px', textTransforn: 'uppercase','&:hover': {backgroundColor: 'white'}}}
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        Categories
+        { !anchorEl ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+      </Button>
+      <ClickAwayListener onClickAway={handleClickAway}>
+       <Menu   id="basic-menu"
+       sx={{ left: '6px' }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}>
+        { arrOfOptions.map((e, index) => (
     <Box key={`${e.parentId}${index}`} sx={{ boxShadow: "none", mr: "0" }}>
       <Box
         id={e.parentId}
-        sx={{ boxShadow: "none", my: "0px", position: "relative"}}
+        sx={{ boxShadow: "none", my: "0px", position: "relative", scrollbarWidth: 'none'}}
       >
         <MenuItem
-        disableRipple
+          disableRipple
           fontWeight="700"
-          sx={{
-            color: "#70737C",
-            fontSize: "14px",
+          sx={{ fontSize: "14px",
             pt: 0,
-            position: "relative", 
-            '&:hover': {backgroundColor: 'white'}
+            position: "relative",
+            display: "flex",
+            justifyContent: 'space-between'
+            ,'&:hover': {backgroundColor: 'white'}
           }}
         >
           <Link
             component={RouterLink}
             to={`products/${e.parentId}`}
             underline="none"
-            sx={{ color: dropDownOpen === e.parentId ? '#359740' : "#70737C", fontWeight: "500" }}
+            sx={{ color: dropDownOpen !== e.parentId ? "#70737C" : "#359740", fontWeight: "500" }}
           >
             {e.parentId.toUpperCase()}
           </Link>
-          { dropDownOpen === e.parentId ? <ExpandLessIcon sx={{color: '#359740'}}  id={e.parentId} onClick={showDropdown} /> : <ExpandMoreIcon id={e.parentId} onClick={showDropdown} />}
+         { dropDownOpen !== e.parentId ? <ExpandMoreIcon id={e.parentId} onClick={showDropdown} /> : <ExpandLessIcon sx={{color: '#359740'}} id={e.parentId} onClick={showDropdown} /> }
         </MenuItem>
-        <Box sx={{ position: "absolute", zIndex: 3, border: '0.5px solid rgba(0, 0, 0, 0.06)' }}>
+
+        <Box sx={{ position: "absolute", zIndex: 3 }}>
           {e.name.map((item, i) => (
-            <Box key={`${item}/${i}`}>
+            <Box key={`${item}/${i}`} sx={{ bordersRadius: '15px', width: '140px' }}>
               {dropDownOpen === e.parentId && (
-                <ClickAwayListener onClickAway={handleClickAway} >
                 <Box sx={{ position: "relative" }}>
                   <Paper
                     sx={{
                       border: "none",
                       borderRadius: 0,
                       boxShadow: "none",
+                     '&:hover': {backgroundColor: 'white'}
                     }}
                   >
                     <MenuItem
-                    disableRipple
+                      disableRipple
                       sx={{
                         borderRadius: '4px',
                         position: "relative",
@@ -77,7 +107,8 @@ export default function MenuItemWithChildrenDesctop({ arrOfOptions }) {
                         fontWeight: "300",
                         fontFamily: "Lexend",
                         fontSize: "14px",
-                        display: 'flex',
+                        paddingRight: '8px',
+                        display: "flex",
                         justifyContent: 'flex-end',
                         '&:hover': {backgroundColor: 'white'}
                       }}
@@ -97,18 +128,22 @@ export default function MenuItemWithChildrenDesctop({ arrOfOptions }) {
                     </MenuItem>
                   </Paper>
                 </Box>
-                </ClickAwayListener>
               )}
             </Box>
           ))}
         </Box>
-       
       </Box>
     </Box>
-  ))
-)}
+  ))}
+  </Menu>
+  </ClickAwayListener>
+    </Box>
+)
+  
+}
+
 // ================================================================
-MenuItemWithChildrenDesctop.defaultProps ={
+MenuItemWithChildrenTable.defaultProps ={
   arrOfOptions: [
     { parentId: "option1", name: ["subOption1-1", "subOption1-2"] },
     { parentId: "option2", name: ["subOption2-1", "subOption2-2"] },
@@ -117,7 +152,7 @@ MenuItemWithChildrenDesctop.defaultProps ={
   
 };
 
-MenuItemWithChildrenDesctop.propTypes = {
+MenuItemWithChildrenTable.propTypes = {
     arrOfOptions: PropTypes.arrayOf(PropTypes.shape({
       parentId: PropTypes.string,
       name: PropTypes.arrayOf(PropTypes.string),

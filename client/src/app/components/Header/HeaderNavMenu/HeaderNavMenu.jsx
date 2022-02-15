@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 // import MenuItemNoChildrenDesktop from "./NavMenuComponents/MenuItemNoChildrenDesktop.jsx";
 // import MenuItemWithChildrenDesctop from "./NavMenuComponents/MenuItemWithChildrenDesctop.jsx";
 import MenuDesktop from './NavMenuComponents/MenuDesktop/MenuDesktop.jsx';
+import MenuTable from './NavMenuComponents/MenuTable/MenuTable.jsx';
 import MenuMobile from './NavMenuComponents/MenuMobile/MenuMobile.jsx';
 // import classes from "./HeaderNavMenuStyles.jsx";
 
@@ -19,8 +20,9 @@ export default function HeaderNavMenu({
     <MenuDesktop pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}/>
   );
   case 'mobile':
-      return(<MenuMobile pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}  login={login}/>)
-  ;
+      return(<MenuMobile pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}  login={login}/>);
+  case 'table':
+    return (<MenuTable pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}></MenuTable>)
    default:
       return (<h1>TEST</h1>)
    }

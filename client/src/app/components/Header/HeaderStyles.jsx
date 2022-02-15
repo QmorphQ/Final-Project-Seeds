@@ -6,7 +6,7 @@ const classes = {
     pl: "0",
   },
   Header: {
-    border: '1px solid green',
+    
   }
 }
 

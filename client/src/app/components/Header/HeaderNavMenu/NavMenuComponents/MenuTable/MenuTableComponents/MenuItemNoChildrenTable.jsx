@@ -1,15 +1,19 @@
 import { Link as RouterLink } from 'react-router-dom';
+import { useEffect } from 'react';
 import PropTypes from "prop-types";
 import { MenuItem, Link } from "@mui/material";
 
-export default function MenuItemNoChildrenDesktop({ arrOfOptions }) {
+export default function MenuItemNoChildrenTable({ arrOfOptions }) {
+  useEffect(() => {
+    console.log('MenuItemNoChildrenDesktop:', `link for ${arrOfOptions[0][1]}: `, arrOfOptions[0][0],`;link for ${arrOfOptions[1][1]}: `, arrOfOptions[1][0])
+  }, [arrOfOptions])
   return (
     <>
-      {[["products", "all"],
-    ["preview", "bundles"]].map((e, index) => (
+      {arrOfOptions.map((e, index) => (
         <div key={index}>
           <MenuItem
-            sx={{ pt: 0 }}
+          disableRipple
+            sx={{ pt: 0 ,'&:hover': {backgroundColor: 'white'}}}
           >
             <Link
             component={RouterLink}
@@ -32,6 +36,9 @@ export default function MenuItemNoChildrenDesktop({ arrOfOptions }) {
 }
 
 // ==========================================================
-MenuItemNoChildrenDesktop.propTypes = {
-  arrOfOptions: PropTypes.array,
+MenuItemNoChildrenTable.defaultProps ={
+  arrOfOptions: [['option1-1', 'option1-2', 'option2-1', 'option2-2']],
+};
+MenuItemNoChildrenTable.propTypes = {
+  arrOfOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
 };

@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------------------
 // Libraries Components:
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 // import PropTypes from "prop-types";
 // import { Link as RoutLink } from 'react-router-dom';
@@ -39,14 +39,11 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
   const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const handleMobileMenuOpen = (e) => (console.log(e.target) ,setIsMenuOpen(true));
+  const handleMobileMenuOpen = () => {
+    setIsMenuOpen(prevVal => !prevVal)
+  };
      
   const handleClickAway = () => setIsMenuOpen(false);
-    
-  // Component did mount:
-  useEffect(() => {
-    console.log('isLogin: ' ,isLogin)
-  }, [isLogin]);
   // =============================================== Render ==============================================
   return (
     <Box sx={classes.Header}>
@@ -60,17 +57,21 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
         >
           {logoPath ? <LogoBtn linkPath={logoPath}  /> : <LogoBtn />}
           <Box
-            display={{ xs: "none", sm: "none", md: "block" }}
-            sx={{ border: "1px solid green" }}
+            display={{ xs: "none", sm: "none", md: "none", lg: 'block' }}
           >
             {/* <MenuDesktop /> */}
             <HeaderNavMenu resolution={'desktop'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
           </Box>
           <Box
+            display={{ xs: "none", sm: "none", md: "flex", lg: 'none' }}
+          >
+            {/* <MenuTable /> */}
+            <HeaderNavMenu resolution={'table'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
+          </Box>
+          <Box /* Search AppBar Block */
             sx={{
               display: "flex",
               alignItems: "center",
-              border: "1px solid red",
             }}
           >
             <Box display={{ xs: "none", sm: "none", md: "block" }}>
@@ -98,6 +99,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                   </>
                 ) : (
                   <IconButton
+                    id='menuBtn'
                     size="large"
                     edge="end"
                     aria-label="account of current user"
@@ -105,12 +107,12 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                     aria-haspopup="true"
                     // onClick={handleProfileMenuOpen}
                   >
-                    <AccountCircle />
+                    <AccountCircle  />
                   </IconButton>
                 )}
               </Box>
             </Box>
-            <Box id='menuBtn' display={{ xs: "block", sm: "block", md: "none" }}>
+             <Box  display={{ xs: "block", sm: "block", md: "none" }}>
               <IconButton
                id='menuBtn'
                 size="large"
@@ -120,10 +122,10 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                 onClick={handleMobileMenuOpen}
                 sx={{ mr: 0 }}
               >
-                <MenuIcon />
+                <MenuIcon sx={{color: isMenuOpen ? '#359740' : '#70737C'}} />
               </IconButton>
             </Box>
-          </Box>
+          </Box> 
         </Toolbar>
       </AppBar>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>

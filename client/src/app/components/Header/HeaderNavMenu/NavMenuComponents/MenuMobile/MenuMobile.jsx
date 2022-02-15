@@ -34,7 +34,7 @@ export default function MenuMobile({
   return (
     <Box
       display={{ xs: "flex", sm: "block", md: "flex" }}
-      sx={{ flexWrap: "wrap", border: "1px red black", position: "relative" }}
+      sx={{ flexWrap: "wrap", position: "relative" }}
     >
       <Paper
         className={classes.DropDownMenu}
@@ -45,7 +45,6 @@ export default function MenuMobile({
           top: "0",
           right: "0",
           boxShadow: "2px 2px 8px rgba(0, 0, 0, 0.2)",
-          border: "1px red solid",
         }}
       >
         <SearchAppBar />

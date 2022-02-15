@@ -12,7 +12,8 @@ export default function MenuItemNoChildrenDesktop({ arrOfOptions }) {
       {arrOfOptions.map((e, index) => (
         <div key={index}>
           <MenuItem
-            sx={{ pt: 0 }}
+          disableRipple
+            sx={{ pt: 0 ,'&:hover': {backgroundColor: 'white'}}}
           >
             <Link
             component={RouterLink}

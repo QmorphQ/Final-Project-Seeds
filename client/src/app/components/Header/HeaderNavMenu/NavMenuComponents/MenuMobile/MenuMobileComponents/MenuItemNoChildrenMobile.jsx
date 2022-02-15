@@ -10,12 +10,12 @@ export default function MenuItemNoChildrenMobile({ arrOfOptions }) {
       {arrOfOptions.map((item, index) => (
         <div key={index}>
          
-          <MenuItem>
+          <MenuItem disableRipple sx={{'&:hover': {backgroundColor: 'white' }}}>
             <Link 
             component={RouterLink}
             to={`products/${item[0]}`}
               underline="none"
-              sx={{ pl: "16px", color: "#1F2533", fontWeight: "400" }}
+              sx={{ pl: "16px", fontWeight: "400", color: '#70737C' }}
             >
               {`${item[1].charAt(0).toUpperCase()}${item[1].slice(1)}`
                }

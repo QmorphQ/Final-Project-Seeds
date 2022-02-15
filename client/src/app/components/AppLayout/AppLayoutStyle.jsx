@@ -6,7 +6,6 @@ const classes = {
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
         width: '90%',
         height: '100%',
-        border: '1px red solid',
         margin: 'auto',
     },
     AppBox: {

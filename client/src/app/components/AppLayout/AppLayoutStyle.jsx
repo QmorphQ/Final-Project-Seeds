@@ -3,7 +3,6 @@ const classes = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
         width: '90%',
         height: '100%',
         margin: 'auto',

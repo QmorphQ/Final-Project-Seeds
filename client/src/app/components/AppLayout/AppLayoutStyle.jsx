@@ -1,11 +1,11 @@
 const classes = {
-    AppContainer: {
+    AppLayout: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: 'teal',
-
+        alignItems: 'stretch',
+        width: '90%',
+        height: '100%',
+        margin: 'auto',
     },
     AppBox: {
         display: 'flex',

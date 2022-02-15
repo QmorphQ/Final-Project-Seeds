@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import CheckboxWrapper from './Components/FormsUI/Checkbox';
@@ -48,7 +47,6 @@ const style = makeStyles({
 
 export default function SignUp() {
     const requestState = useSelector(customersRequestSelector);
-    const classes = useStyles();
     const styles = style();
     const INITIAL_FORM_STATE = {
         firstName: '',
@@ -124,7 +122,7 @@ export default function SignUp() {
                         <Typography color="primary" sx={{pb:1}}>
                          Sign up 
                         </Typography>
-                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon sx={{color: "#359740", pl: "0"}}/></IconButton>
                       </Grid>
                         <Grid item xs={6}>
                             <Textfield

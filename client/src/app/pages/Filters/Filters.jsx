@@ -53,7 +53,7 @@ const Filters = () => {
     classes.isClosed
   );
   const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const [inputFromValue, setInputFromValue] = useState(0);
   const [inputToValue, setInputToValue] = useState(30);
@@ -74,11 +74,11 @@ const Filters = () => {
   }, []);
 
   useEffect(() => {
-       setQueryParams(new URLSearchParams(params));
+    setQueryParams(new URLSearchParams(params));
   }, [params]);
 
   useEffect(() => {
-       dispatch(fetchFilteredProducts(queryParams));
+    dispatch(fetchFilteredProducts(queryParams));
   }, [queryParams]);
 
   useEffect(() => {
@@ -149,6 +149,16 @@ const Filters = () => {
 
   const parentsListWithChildren = result.filter((e) => e.parentId !== "null");
 
+  const subCategories = [];
+  parentsListWithChildren.forEach((parentCategory) => {
+    subCategories.push(parentCategory.name[0]);
+    subCategories.push(parentCategory.name[1]);
+  });
+
+  const mixCategories = subCategories.filter(
+    (subCategory) => subCategory.indexOf("mix") > -1
+  );
+
   const filterBy = (a, b) =>
     a.filter((e) => !b.find((item) => item.parentId === e) && e);
 
@@ -174,7 +184,9 @@ const Filters = () => {
 
   const handleCategoryFilter = (category) => {
     if (category === "all") {
-      setSelectedCategory(null);
+      setSelectedCategory(subCategories);
+    } else if (category === "bundles") {
+      setSelectedCategory(mixCategories);
     } else {
       setSelectedCategory(category);
     }

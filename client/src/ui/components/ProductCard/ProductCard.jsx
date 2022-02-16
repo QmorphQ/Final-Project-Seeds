@@ -14,12 +14,13 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
-import { cartSelector, mainCategoriesSelector } from "../../../store/selectors/selectors";
+import { cartSelector, mainCategoriesSelector, wishlistSelector } from "../../../store/selectors/selectors";
 import { useNavigate } from "react-router-dom";
-import { addProductToCart } from "../../../store/thunks/cart.thunks.js";
+import { addProductToCart, fetchCart } from "../../../store/thunks/cart.thunks.js";
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import Carousel from 'react-material-ui-carousel';
 import { imgURLs } from "./ProductMedia";
+import { addProductToWishlist, deleteProductFromWishlist, fetchWishlist } from "../../../store/thunks/wishlist.thunks.js";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -33,6 +34,7 @@ export const ProductCardRender = ({ data }) => {
     isBasket,
     discountPrice,
     itemNo,
+    _id
   } = data;
 
   const [isFavourite, toggleIsFavourite] = useState(false);
@@ -42,9 +44,27 @@ export const ProductCardRender = ({ data }) => {
   const [discontStart] = useState(10);
 
   const dispatch = useDispatch();
+  const wishlist = useSelector(wishlistSelector);
+
+  useEffect(() => {
+    dispatch(fetchWishlist());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, []);
+
+  useEffect(() => {
+    if(wishlist) {
+      toggleIsFavourite(!!wishlist.products.find(item => item._id === _id));
+    }
+  }, [wishlist]);
+
   const cart = useSelector(cartSelector);
   
   const media = imgURLs.filter(item => +item.itemNo === +itemNo);
+  // console.log(JSON.stringify(data));
+  // console.log(JSON.stringify(imgURLs));
 
   useEffect(() => {
     // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
@@ -62,9 +82,6 @@ export const ProductCardRender = ({ data }) => {
     useSelector(mainCategoriesSelector)
       .find(category => categories
       .includes(category.name));
-
-  console.log(mainCategory);
-  console.log();
   
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -122,8 +139,8 @@ export const ProductCardRender = ({ data }) => {
                     marginTop:"22px",
                   }
               }}
-                IndicatorIcon={media[0].url.map(url => (
-                  <CardMedia sx={{width:"67px"}}
+                IndicatorIcon={media[0].url.map((url, i) => (
+                  <CardMedia key={i} sx={{width:"67px"}}
                     className={productPageClasses.productCardMediaSmall}
                     component="img"
                     width="67px"
@@ -142,6 +159,7 @@ export const ProductCardRender = ({ data }) => {
               >
                 {media[0].url.map((item, i) => (
                   <CardMedia
+                    key={i}
                     className={productPageClasses.productCardMedia}
                     component="img"
                     width="294px"
@@ -288,13 +306,14 @@ export const ProductCardRender = ({ data }) => {
                       className={productPageClasses.productCardButton} 
                       color="primary" 
                       aria-label="add to favourite"
-                      onClick={() => toggleIsFavourite(() => !isFavourite)}
+                      onClick={isFavourite ? (() => dispatch(deleteProductFromWishlist(_id))) : (() => dispatch(addProductToWishlist(_id)))}
                     >
                       {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
                     <Button 
                       className={productPageClasses.productCardButtonBasket} 
                       variant="contained"
+                      onClick={() => dispatch(addProductToCart(_id, productAmount))}
                     >
                       Add to card
                     </Button>              
@@ -334,7 +353,7 @@ export const ProductCardRender = ({ data }) => {
                 className={mainClasses.productCardButton}
                 color="warning"
                 aria-label="add to favourite"
-                onClick={() => toggleIsFavourite(() => !isFavourite)}
+                onClick={isFavourite ? (() => dispatch(deleteProductFromWishlist(_id))) : (() => dispatch(addProductToWishlist(_id)))}
               >
                 {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </IconButton>
@@ -358,13 +377,17 @@ export const ProductCardRender = ({ data }) => {
           />
 
           <CardContent className={mainClasses.productCardContent}>
-            <Typography
-              className={mainClasses.productCardName}
-              variant="h3"
-              color="text.primary"
-            >
+            <Link to={`/${itemNo}`} style={{ color: 'inherit', textDecoration: 'inherit', height: "50px", display: "block", overflow: "hidden" }} color="text.primary" underline="hover" variant="h3">
+              <Typography
+                className={mainClasses.productCardName}
+                to={`/${itemNo}`}
+                variant="h3"
+                color="text.primary"
+                onClick={() => navigate(`${itemNo}`)}
+              >
               {name}
-            </Typography>
+              </Typography>
+            </Link>
             <Typography
               className={mainClasses.productCardPrice}
               component="span"
@@ -382,14 +405,11 @@ export const ProductCardRender = ({ data }) => {
               color="primary"
               variant="contained"
               onClick={() => {
-                dispatch(addProductToCart(itemNo));
+                toggleIsOnModal(true);
               }}
             >
-              {isOnModal ? (
-                <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
-              ) : (
-                <ShoppingCartOutlinedIcon />
-              )}
+              <ShoppingCartOutlinedIcon />
+              <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} cart={cart} _id={_id} />
             </IconButton>
           </CardActions>
         </Card>
@@ -404,12 +424,13 @@ export const ProductCardRender = ({ data }) => {
           className={mainClasses.productCardHeader}
           action={
             <IconButton
+              onClick={isFavourite ? (() => dispatch(deleteProductFromWishlist(_id))): (() => dispatch(addProductToWishlist(_id)))}
               className={mainClasses.productCardButton}
               color="warning"
               aria-label="add to favourite"
-              onClick={() => toggleIsFavourite(() => !isFavourite)}
             >
-              {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              {isFavourite ? 
+              <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
           }
         />
@@ -431,14 +452,12 @@ export const ProductCardRender = ({ data }) => {
         />
 
         <CardContent className={mainClasses.productCardContent}>
-          <Link to={`/${itemNo}`} style={{ color: 'inherit', textDecoration: 'inherit', height: "50px", display: "block", overflow: "hidden" }} color="text.primary" underline="hover" variant="h3">
+          <Link style={{ color: 'inherit', textDecoration: 'inherit', height: "50px", display: "block", overflow: "hidden" }} color="text.primary" underline="hover" variant="h3">
             <Typography
               className={mainClasses.productCardName}
-              component={Link}
-              to={`/${itemNo}`}
               variant="h3"
               color="text.primary"
-              onClick={() => navigate(`${itemNo}`)}
+              onClick={() => navigate(`/products/${itemNo}`)}
             >
             {name}
             </Typography>
@@ -464,7 +483,7 @@ export const ProductCardRender = ({ data }) => {
             }}
           >
             <ShoppingCartOutlinedIcon />
-            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} />
+            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} cart={cart} _id={_id} />
           </IconButton>
         </CardActions>
       </Card>

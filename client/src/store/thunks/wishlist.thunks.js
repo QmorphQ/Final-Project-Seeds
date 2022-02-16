@@ -60,7 +60,7 @@ const addWishlist = (wishlist) => (dispatch) => {
 
 const addProductToWishlist = (productId) => (dispatch) => {
   dispatch(addProductToWishlistRequested());
-  const token = localStorage.getItem("jdffd");
+  const token = localStorage.getItem("jwt");
 
   if (token) {
     axios
@@ -81,4 +81,27 @@ const addProductToWishlist = (productId) => (dispatch) => {
   }
 };
 
-export { fetchWishlist, addWishlist, addProductToWishlist };
+const deleteProductFromWishlist = (productId) => (dispatch) => {
+  dispatch(addProductToWishlistRequested());
+  const token = localStorage.getItem("jwt");
+
+  if (token) {
+    axios
+      .delete(`${API}wishlist/${productId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((updatedWishlist) => {
+        dispatch(addProductToWishlistSuccess(updatedWishlist.data));
+        return updatedWishlist;
+      })
+      .catch(() => {
+        dispatch(addProductToWishlistError());
+      });
+  } else {
+    console.log("GET AUTHORIZED!");
+  }
+};
+
+export { fetchWishlist, addWishlist, deleteProductFromWishlist, addProductToWishlist };

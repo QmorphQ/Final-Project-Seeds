@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 const Product = () => {
   const { id } = useParams();
   const [loading, data, error] = useFetch(`${API}products/${id}`);
-  console.log(data);
 
   return (
     <RenderComponent

@@ -5,7 +5,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useModalStyles } from "./useModalStyles";
 import { addProductToCart } from "../../../store/thunks/cart.thunks";
 
-const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal}) => {
+const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal, _id}) => {
   const {
     name,
     currentPrice,
@@ -149,7 +149,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(addProductToCart(itemNo, productAmount));
+                        dispatch(addProductToCart(_id, productAmount));
                       }}
                     >
                       Add to card

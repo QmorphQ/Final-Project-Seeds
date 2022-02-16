@@ -19,15 +19,15 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 // import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 // import MenuMobile from "../Menu/MenuMobile.jsx";
 // import MenuDesktop from "../Menu/MenuDesktop.jsx";
-import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
+import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors";
 import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
 // ++++++++++++++++
 // Auth Component:
-// import LogIn from "../Forms/LogRegModal.jsx";
-// import SignUp from "../Forms/RegLogModal.jsx";
+import LogIn from "../Forms/LogRegModal.jsx";
+import SignUp from "../Forms/RegLogModal.jsx";
 // ++++++++++++++++
 // ------------------------------------------------------------------------------------
 // Styles:
@@ -73,13 +73,13 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
               alignItems: "center",
             }}
           >
-            <Box display={{ xs: "none", sm: "none", md: "block" }}>
+            <Box display={{ xs: "none", sm: "none", md: "block", border: '1px solid red' }}>
               <SearchAppBar />
             </Box>
             <Box
               sx={{
                 display: { xs: "flex", md: "flex" },
-                justifyContent: "flex-start",
+                justifyContent: "flex-start", border: '1px solid red'
               }}
             >
               {isLogin && (
@@ -90,12 +90,12 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                 </IconButton>
               )}
               <CartBtn />
-              <Box display={{ xs: "none", sm: "none", md: "flex" }}>
+              <Box display={{ xs: "none", sm: "none", md: "flex" }} sx={{border: '1px solid red'}}>
                 {!isLogin ? (
-                  <>
-                   {/* <LogIn />
-                    <SignUp /> */}
-                  </>
+                  <Box sx={{border: '1px solid red', width: 'fit-content', display: "flex", flexDirection: 'column'}}>
+                   <LogIn />
+                    <SignUp />
+                  </Box>
                 ) : (
                   <IconButton
                     id='menuBtn'
@@ -106,7 +106,6 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                     aria-haspopup="true"
                     // onClick={handleProfileMenuOpen}
                   >
-                    <AccountCircle  />
                   </IconButton>
                 )}
               </Box>

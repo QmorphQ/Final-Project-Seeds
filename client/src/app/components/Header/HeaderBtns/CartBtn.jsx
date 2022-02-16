@@ -8,7 +8,7 @@ const styles = {
   CartBtn: {
     display: 'flex',
     alignItems: 'center',
-    width: '50px',
+    width: 'fit-content',
   },
   Icon: {
     color: "#359740",

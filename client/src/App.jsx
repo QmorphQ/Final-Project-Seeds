@@ -18,7 +18,7 @@ import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
-import Checkout from "./app/pages/Checkout.jsx"
+// import Checkout from "./app/pages/Checkout.jsx"
 // =======================================================================
 
 function App() {

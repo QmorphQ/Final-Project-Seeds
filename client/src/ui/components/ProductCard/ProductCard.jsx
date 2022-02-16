@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack } from "@mui/material";
+// import Carousel from "react-material-ui-carousel";
 import PropTypes from 'prop-types';
 import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -8,13 +9,18 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
+// import { Link, useNavigate } from "react-router-dom";
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
-import Icon from "../Icon/Icon.jsx";
-import { mainCategoriesSelector } from "../../../store/selectors/selectors";
+import Icon  from "../Icon/Icon.jsx";
+import { allCategoriesSelector, mainCategoriesSelector } from "../../../store/selectors/selectors";
+// import { addProductToCart } from "../../../store/thunks/cart.thunks";
+// import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
+import { downloadRequestStates } from "../../../app/constants/index"
+
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -35,6 +41,9 @@ export const ProductCardRender = ({ data }) => {
   const [totalPrice, setTotalPrice] = useState(currentPrice);
   const [discontStart] = useState(10);
 
+  // const dispatch = useDispatch();
+  // const media = imageUrls.filter(item => item.itemNo === itemNo);
+
   useEffect(() => {
     // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
     setTotalPrice(prevProductAmount => prevProductAmount <= discontStart ? productAmount * currentPrice : productAmount * discountPrice);
@@ -45,10 +54,12 @@ export const ProductCardRender = ({ data }) => {
   const basketClasses = useBasketStyles();
   const filtersClasses = useFiltersStyles();
 
-  const mainCategory = 
-    useSelector(mainCategoriesSelector)
-      .find(category => categories
-      .includes(category.name));
+  const allCategories = useSelector(allCategoriesSelector);
+  const mainCategories = useSelector(mainCategoriesSelector)
+
+
+  const currentCategory = allCategories.find(category => categories === category.name)
+  const mainCategory = mainCategories.find(category => currentCategory.parentId === category.id)
 
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -429,17 +440,20 @@ export const ProductCardRender = ({ data }) => {
             variant="contained"
             onClick={() => toggleisOnBasket(() => !isOnBasket)}
           >
+
             {isOnBasket ? (
               <CheckBoxIcon sx={{ width: "48px", height: "48px" }} />
             ) : (
               <ShoppingCartOutlinedIcon />
             )}
+
           </IconButton>
         </CardActions>
       </Card>
     </Grid>
   );
 };
+
 
 const ProductCard = ({ product, loading }) => 
   (
@@ -452,18 +466,23 @@ const ProductCard = ({ product, loading }) =>
     />
   );
 
-ProductCard.defaultProps = {
-  product: {
-    name: "test name",
-    imageUrls: "test imageUrls",
-    categories: [""],
-  },
-};
 
 ProductCard.propTypes = {
-  product: PropTypes.object,
-  loading: PropTypes.bool,
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    currentPrice: PropTypes.number,
+    imageUrls: PropTypes.string,
+    isProductPage: PropTypes.bool,
+    isFiltersPage: PropTypes.bool,
+    categories: PropTypes.string,
+    quantity: PropTypes.number,
+    isBasket: PropTypes.bool,
+    discountPrice: PropTypes.number,
+    itemNo: PropTypes.number,
+  }),
+  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
 };
+
 ProductCardRender.propTypes = {
   data: PropTypes.object,
 }

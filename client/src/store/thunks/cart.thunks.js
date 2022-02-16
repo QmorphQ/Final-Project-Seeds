@@ -20,7 +20,7 @@ import {
 
 const fetchCart =
   (uri = `${API}cart`) =>
-  (dispatch) => {
+  (dispatch, getState) => {
     const token = localStorage.getItem("jwt");
     dispatch(downloadCartRequested());
     if (token) {
@@ -38,8 +38,8 @@ const fetchCart =
           dispatch(downloadCartError());
         });
     } else {
-      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
-      dispatch(downloadCartSuccess(cartFromLS));
+      const { cart } = getState();
+      dispatch(downloadCartSuccess(cart.cart));
     }
   };
 
@@ -62,11 +62,10 @@ const addCart = (cart) => (dispatch) => {
       });
   } else {
     dispatch(addCartSuccess(cart));
-    localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
 
-const addProductToCart = (productId) => (dispatch) => {
+const addProductToCart = (productId) => (dispatch, getState) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
@@ -85,16 +84,32 @@ const addProductToCart = (productId) => (dispatch) => {
         dispatch(addProductToCartError());
       });
   } else {
-    const newProduct = {
-      product: productId,
-      cartQuantity: 1,
-    };
-    const oldCart = JSON.parse(localStorage.getItem("cart"));
-    const updatedCart = [...oldCart];
-    updatedCart.push(newProduct);
-    dispatch(addProductToCartSuccess(updatedCart));
-    localStorage.removeItem("cart");
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    const { cart } = getState().cart;
+    let cartCopy;
+    if (!cart) {
+      cartCopy = [];
+    } else {
+      cartCopy = [...cart];
+    }
+    const product = cartCopy.find((cartItem) => productId === cartItem.id);
+    if (product) {
+      const newProduct = {
+        ...product,
+        cartQuantity: product.cartQuantity + 1,
+      };
+      const productIndex = product.findIndex(
+        (cartItem) => productId === cartItem.id
+      );
+      cartCopy.splice(productIndex, 1, newProduct);
+      dispatch(addProductToCartSuccess(cartCopy));
+    } else {
+      const newProduct = {
+        id: productId,
+        cartQuantity: 1,
+      };
+      const newCart = [...cartCopy, newProduct];
+      dispatch(addProductToCartSuccess(newCart));
+    }
   }
 };
 

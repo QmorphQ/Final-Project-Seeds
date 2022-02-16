@@ -103,7 +103,6 @@ export default function ProfileMenu () {
                     </ListItemIcon> Logout
                 </MenuItem>
             </Link> 
-
         </Menu>
       </>
     )

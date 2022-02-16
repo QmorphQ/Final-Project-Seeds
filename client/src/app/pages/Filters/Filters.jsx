@@ -107,7 +107,6 @@ const Filters = () => {
     }
   }, [maturationCheckBoxState]);
 
-  
   // ========== Sort by price =================================
 
   const handleSelectChange = (event) => {
@@ -119,7 +118,6 @@ const Filters = () => {
       setParams({ ...params, sort: "-currentPrice" });
     }
   };
-
 
   // ========= Filter by categories control ======================
 
@@ -213,10 +211,10 @@ const Filters = () => {
 
   const handleInputToChange = (event) => {
     if (event.target.value === undefined) {
-      setSliderValue([sliderValue[1], 0]);
+      setSliderValue([sliderValue[0], 30]);
       setInputToValue(event.target.value);
 
-      setParams({ ...params, minPrice: sliderValue[1], maxPrice: 0 });
+      setParams({ ...params, minPrice: sliderValue[0], maxPrice: 30 });
     } else {
       if (+event.target.value < 0) {
         setSliderValue([0, 0]);
@@ -225,10 +223,10 @@ const Filters = () => {
 
         setParams({ ...params, minPrice: 0, maxPrice: 0 });
       } else if (+event.target.value > 30) {
-        setSliderValue([sliderValue[1], 30]);
+        setSliderValue([sliderValue[0], 30]);
         setInputToValue(30);
 
-        setParams({ ...params, minPrice: sliderValue[1], maxPrice: 30 });
+        setParams({ ...params, minPrice: sliderValue[0], maxPrice: 30 });
       } else if (+event.target.value < sliderValue[0]) {
         setSliderValue([sliderValue[0], sliderValue[0]]);
         setInputToValue(event.target.value);
@@ -239,12 +237,12 @@ const Filters = () => {
           maxPrice: sliderValue[0],
         });
       } else {
-        setSliderValue([sliderValue[1], +event.target.value]);
+        setSliderValue([sliderValue[0], +event.target.value]);
         setInputToValue(event.target.value);
 
         setParams({
           ...params,
-          minPrice: sliderValue[1],
+          minPrice: sliderValue[0],
           maxPrice: +event.target.value,
         });
       }
@@ -305,7 +303,6 @@ const Filters = () => {
       setMaturationCheckBoxState(newMaturationCheckBoxState);
     }
   };
-
 
   return (
     <>

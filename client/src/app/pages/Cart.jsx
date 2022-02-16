@@ -26,18 +26,18 @@ const useStyles = makeStyles((theme) => ({
  
 const Cart = ({ loading }) => { 
     let totalPrice = 0;
-    const products = useSelector(state => state.products.productList); 
-    const cart = useSelector(state => state.cart.cart) 
+    const products = useSelector(state => state.products.productList) || []; 
+    const cart = useSelector(state => state.cart.cart) || []
     const classes = useStyles();
  
-    if(!products.length) { 
+    if (loading !== downloadRequestStates.SUCCESS) { 
         return <p>Loading</p> 
-    } if (!cart.length) { 
+    } if (Array.isArray(cart) && !cart.length) { 
         return ( 
             <p> No Products in Cart</p>  
         ) 
     } 
- 
+    
     const cartList = cart.map(cartItem => { 
     const cartProduct = products.find(product => product.itemNo === cartItem.id)
     

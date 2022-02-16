@@ -78,11 +78,21 @@ export const customersRequestSelector = (state) =>
 
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
-export const cartQuantitySelector = (state) =>
-  state.cart.cart.reduce(
-    (total, currentItem) => total + currentItem.cartQuantity,
-    0
-  );
+/**
+ * @param {object} state
+ * @returns {number | null}
+ */
+export const cartQuantitySelector = (state) => {
+  if (Array.isArray(state.cart.cart)) {
+    const total = state.cart.cart.reduce(
+      (total, currentItem) => total + currentItem.cartQuantity,
+      0
+    );
+    return total;
+  } else {
+    return null;
+  }
+};
 
 // ======================== Wishlist =======================
 export const wishlistSelector = (state) => state.wishlist.wishlist;

@@ -74,26 +74,34 @@ const Filters = () => {
   }, []);
 
   useEffect(() => {
-    setQueryParams(new URLSearchParams(params));
+       setQueryParams(new URLSearchParams(params));
   }, [params]);
 
   useEffect(() => {
-    dispatch(fetchFilteredProducts(queryParams));
+       dispatch(fetchFilteredProducts(queryParams));
   }, [queryParams]);
 
   useEffect(() => {
     if (selectedCategory !== null) {
       setParams({ ...params, categories: selectedCategory });
     } else {
-      const newParams = params;
-      delete newParams.categories;
-      setParams(newParams);
+      setParams((prevParams) => {
+        const newParams = { ...prevParams };
+        delete newParams.categories;
+        return newParams;
+      });
     }
   }, [selectedCategory]);
 
   useEffect(() => {
     if (originCheckBoxState.length > 0) {
       setParams({ ...params, origin: originCheckBoxState });
+    } else {
+      setParams((prevParams) => {
+        const newParams = { ...prevParams };
+        delete newParams.origin;
+        return newParams;
+      });
     }
   }, [originCheckBoxState]);
 
@@ -101,9 +109,11 @@ const Filters = () => {
     if (maturationCheckBoxState.length > 0) {
       setParams({ ...params, maturation: maturationCheckBoxState });
     } else {
-      const newParams = params;
-      delete newParams.maturation;
-      setParams(newParams);
+      setParams((prevParams) => {
+        const newParams = { ...prevParams };
+        delete newParams.maturation;
+        return newParams;
+      });
     }
   }, [maturationCheckBoxState]);
 

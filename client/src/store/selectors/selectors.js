@@ -4,12 +4,22 @@
  * @returns {String} - one of downloadRequestStates
  */
 
-
 // ================== Categories ===================
+
 export const downloadCategoriesRequestStateSelector = (state) =>
   state.catalog.downloadRequestState;
 
+/**
+ * @param {Object} state
+ * @returns {Array<Object>}
+ */
+
 export const allCategoriesSelector = (state) => state.catalog.categoriesList;
+
+/**
+ * @param {Object} state
+ * @returns {Array<Object>}
+ */
 
 export const mainCategoriesSelector = (state) => {
   const mainCategories = state.catalog.categoriesList.filter(
@@ -18,7 +28,6 @@ export const mainCategoriesSelector = (state) => {
 
   return mainCategories;
 };
-
 
 // =================== Products ===================
 export const downloadProductsRequestStateSelector = (state) =>
@@ -41,22 +50,21 @@ export const productsSelector = (state) => {
     (product) =>
       product.categories.indexOf(state.products.selectedCategories) > -1
   );
-  
+
   return selectedProducts;
 };
 
 export const downloadFilteredProductsRequestStateSelector = (state) =>
   state.products.downloadFilteredRequestState;
 
-export const filteredProductsSelector = (state) => state.products.filteredProducts;
-
+export const filteredProductsSelector = (state) =>
+  state.products.filteredProducts;
 
 // ========================= Slides =============================
 export const downloadSlidesRequestStateSelector = (state) =>
   state.slides.downloadRequestState;
 
 export const slidesSelector = (state) => state.slides.slideList;
-
 
 // ======================= Customers/Login ==============================
 export const customersSelector = (state) => state.customer.newCustomer;
@@ -65,13 +73,26 @@ export const loginStateSelector = (state) => state.customer.isLoggedIn;
 
 export const loginRequestSelector = (state) => state.customer.loginRequestState;
 
-export const customersRequestSelector = (state) => state.customer.addRequestState;
-
+export const customersRequestSelector = (state) =>
+  state.customer.addRequestState;
 
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
+/**
+ * @param {object} state
+ * @returns {number | null}
+ */
+export const cartQuantitySelector = (state) => {
+  if (Array.isArray(state.cart.cart)) {
+    const total = state.cart.cart.reduce(
+      (total, currentItem) => total + currentItem.cartQuantity,
+      0
+    );
+    return total;
+  } else {
+    return null;
+  }
+};
 
 // ======================== Wishlist =======================
 export const wishlistSelector = (state) => state.wishlist.wishlist;
-
-

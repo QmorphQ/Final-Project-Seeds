@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
+// import { Link, useNavigate } from "react-router-dom";
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
@@ -21,6 +22,7 @@ import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import Carousel from 'react-material-ui-carousel';
 import { imgURLs } from "./ProductMedia";
 import { addProductToWishlist, deleteProductFromWishlist, fetchWishlist } from "../../../store/thunks/wishlist.thunks.js";
+import { downloadRequestStates } from "../../../app/constants/index.js";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -491,6 +493,7 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
+
 const ProductCard = ({ product, loading }) => 
   (
     <RenderComponent
@@ -502,18 +505,24 @@ const ProductCard = ({ product, loading }) =>
     />
   );
 
-ProductCard.defaultProps = {
-  product: {
-    name: "test name",
-    imageUrls: "test imageUrls",
-    categories: [""],
-  },
-};
 
 ProductCard.propTypes = {
-  product: PropTypes.object,
-  loading: PropTypes.bool,
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    currentPrice: PropTypes.number,
+    imageUrls: PropTypes.any,
+    isProductPage: PropTypes.bool,
+    isFiltersPage: PropTypes.bool,
+    categories: PropTypes.string,
+    quantity: PropTypes.number,
+    isBasket: PropTypes.bool,
+    discountPrice: PropTypes.number,
+    itemNo: PropTypes.string,
+    imageUrls: PropTypes.array,
+  }),
+  loading: PropTypes.oneOf(Object.values(downloadRequestStates)),
 };
+
 ProductCardRender.propTypes = {
   data: PropTypes.object,
 }

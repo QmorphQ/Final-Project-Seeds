@@ -10,6 +10,10 @@ import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-m
 
 export default function ProfileMenu () {
     const [anchorEl, setAnchorEl] = useState(null);
+    const logout = () => {
+        localStorage.removeItem('jwt');
+        window.location.reload();
+    }
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -69,30 +73,37 @@ export default function ProfileMenu () {
             <Avatar/> Profile
             </MenuItem>
             <Divider />
-            <MenuItem >
-            <ListItemIcon>
-                <Favorite fontSize="small" />
-            </ListItemIcon>
-            <Link underline="none" href="#"> Favourites</Link> 
-            </MenuItem>
-            <MenuItem >
-            <ListItemIcon>
-                <History fontSize="small" />
-            </ListItemIcon>
-            <Link  underline="none" href="#"> My orders</Link> 
-            </MenuItem>
-            <MenuItem >
-            <ListItemIcon>
-                <Settings fontSize="small" />
-            </ListItemIcon>
-            <Link  underline="none" href="#"> Settings</Link> 
-            </MenuItem>
-            <MenuItem>
-            <ListItemIcon>
-                <Logout fontSize="small"/>
-            </ListItemIcon>
-             <Link  underline="none" href="#"> Logout</Link> 
-            </MenuItem>
+            <Link underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+                <MenuItem >
+                    <ListItemIcon>
+                        <Favorite fontSize="small" />                    
+                    </ListItemIcon> Favourites
+                </MenuItem>
+            </Link>    
+            <Link  underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+                <MenuItem >
+                    <ListItemIcon>
+                        <History fontSize="small" />
+                    </ListItemIcon> My orders
+                </MenuItem>
+            </Link> 
+            
+            <Link  underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+                <MenuItem >
+                    <ListItemIcon>
+                        <Settings fontSize="small" />
+                    </ListItemIcon> Settings
+                </MenuItem>
+            </Link> 
+
+            <Link  underline="none" onClick={logout}>            
+                <MenuItem>
+                    <ListItemIcon>
+                        <Logout fontSize="small"/>
+                    </ListItemIcon> Logout
+                </MenuItem>
+            </Link> 
+
         </Menu>
       </>
     )

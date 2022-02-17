@@ -93,20 +93,77 @@ export const ProductCardRender = ({ data }) => {
   if (isBasket) {
     return (
       <Card>
+        <Box className={basketClasses.productCardContainer} >
         <CardMedia
           className={basketClasses.productCardMedia}
           component="img"
           width="294px"
           image={`${imageUrls}`}
           alt={name}
-        />
+          />
+        <Box className={basketClasses.productCardNameContainer}>
+          <Typography
+            className={basketClasses.productCardName}
+            variant="h3"
+            color="text.primary"
+          >
+            {name}
+          </Typography>
+        </Box>
+        <ButtonGroup 
+            className={basketClasses.productCardButtonGroup}
+            color="primary" 
+            variant="outlined" 
+            aria-label="outlined primary button group"
+            >
+            <Button 
+              onClick={() => {
+                setProductAmount(prevProductAmount => +prevProductAmount - 1)
+              }} 
+              variant="text"
+              disabled={productAmount <= 1}
+              className={basketClasses.productCardButton}
+            >
+              {"-"}
+            </Button>
+            <FilledInput
+              className={basketClasses.productCardAmount}
+              inputProps={{sx:{textAlign:"center"}}} 
+              disableUnderline={true} 
+              hiddenLabel={true} 
+              value={productAmount}
+              onChange={e => setProductAmount(+e.target.value)}
+              id="product-amount" 
+              />
+            <Button 
+              onClick={() => {
+                setProductAmount(+productAmount + 1);
+              }} 
+              variant="text"
+              disabled={productAmount >= quantity}
+              className={basketClasses.productCardButton}
+              >
+              {"+"}
+            </Button>
+          </ButtonGroup>
+          
         <Typography
           className={basketClasses.productCardName}
           variant="h3"
           color="text.primary"
-        >
-          {name}
+          >
+          {currentPrice}
         </Typography>
+
+        <Typography
+          className={basketClasses.productCardName}
+          variant="h3"
+          color="text.primary"
+          >
+          {currentPrice * productAmount}
+        </Typography>        
+        
+        </Box>
       </Card>
     );
   }

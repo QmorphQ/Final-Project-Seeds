@@ -85,13 +85,12 @@ export const cartSelector = (state) => state.cart.cart;
 export const cartQuantitySelector = (state) => {
   if (Array.isArray(state.cart.cart)) {
     const totalQuantity = state.cart.cart.reduce(
-      (total, currentItem) => Number(total) + Number(currentItem.cartQuantity),
+      (total, currentItem) => total + currentItem.cartQuantity,
       0
     );
     return totalQuantity;
-  } else {
-    return null;
   }
+  return null;
 };
 
 // ======================== Wishlist =======================

@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         "& .MuiPaper-root": {
             display: "flex",
             flexDirection: "row",
+            alignItems: "center",
             "& .MuiCardMedia-img": {
                 width: "64px",
                 height: "63px"
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     cartList: {
         display: "flex",
         flexDirection: "column",
-        width: "730px",
+        width: "750px",
         marginLeft: "165px"
     },
     totalPrice: {

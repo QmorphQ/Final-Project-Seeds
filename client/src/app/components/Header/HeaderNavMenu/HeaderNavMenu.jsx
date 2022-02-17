@@ -20,7 +20,7 @@ export default function HeaderNavMenu({
     <MenuDesktop pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}/>
   );
   case 'mobile':
-      return(<MenuMobile pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}  login={login}/>);
+      return(<MenuMobile pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}  isLogin={login}/>);
   case 'table':
     return (<MenuTable pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}></MenuTable>)
    default:

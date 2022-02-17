@@ -10,9 +10,8 @@ import { useSelector } from "react-redux";
 // ------------------------------------------------------------------------------------
 // MUI Components:
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
+import { Box, AppBar, Toolbar, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 // ------------------------------------------------------------------------------------
 // React Components:
 // import Logo from "./headerIcons/headerIcon/Logo.jsx";
@@ -37,7 +36,6 @@ import classes from "./HeaderStyles.jsx";
 // =======================================================================================
 
 const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
-  const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMobileMenuOpen = () => {
@@ -131,7 +129,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
         </Toolbar>
       </AppBar>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        {isMenuOpen &&<ClickAwayListener onClickAway={handleClickAway}><Box>  <HeaderNavMenu  resolution={'mobile'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/></Box></ClickAwayListener>}
+        {isMenuOpen &&<ClickAwayListener onClickAway={handleClickAway}><Box>  <HeaderNavMenu login={isLogin}  resolution={'mobile'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/></Box></ClickAwayListener>}
        
       </Box>
       

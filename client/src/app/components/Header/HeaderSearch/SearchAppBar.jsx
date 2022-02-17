@@ -144,7 +144,6 @@ return (
   <>
     <Search component='input' sx={{ border: "solid rgba(0, 0, 0, 0.2) 1px", borderRadius: 20}}>
       <SearchIconWrapper><SearchIcon /></SearchIconWrapper>
-      
       <StyledInputBase
       required
         value={inputText}

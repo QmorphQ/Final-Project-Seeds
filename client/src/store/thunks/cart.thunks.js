@@ -38,11 +38,11 @@ const addCart = (cart) => (dispatch) => {
       });
   } else {
     dispatch(addCartSuccess(cart));
-    localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
 
 const addProductToCart = (productId, amount) => (dispatch) => {
+
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 

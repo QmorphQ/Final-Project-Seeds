@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
+// import { Link, useNavigate } from "react-router-dom";
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
@@ -491,6 +492,7 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
+
 const ProductCard = ({ product, loading }) => 
   (
     <RenderComponent
@@ -502,18 +504,23 @@ const ProductCard = ({ product, loading }) =>
     />
   );
 
-ProductCard.defaultProps = {
-  product: {
-    name: "test name",
-    imageUrls: "test imageUrls",
-    categories: [""],
-  },
-};
 
 ProductCard.propTypes = {
-  product: PropTypes.object,
-  loading: PropTypes.bool,
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    currentPrice: PropTypes.number,
+    imageUrls: PropTypes.string,
+    isProductPage: PropTypes.bool,
+    isFiltersPage: PropTypes.bool,
+    categories: PropTypes.string,
+    quantity: PropTypes.number,
+    isBasket: PropTypes.bool,
+    discountPrice: PropTypes.number,
+    itemNo: PropTypes.number,
+  }),
+  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
 };
+
 ProductCardRender.propTypes = {
   data: PropTypes.object,
 }

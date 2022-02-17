@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Container,
   Drawer,
@@ -38,11 +39,9 @@ const Filters = () => {
 
   const dispatch = useDispatch();
 
-  const usp = new URLSearchParams(window.location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // for(const key of usp.keys()) {
-  //   console.log(key);
-  // }
+  let initialParams = null;
 
   const defaultParams = {
     perPage: 9,
@@ -50,10 +49,20 @@ const Filters = () => {
     sort: "-currentPrice",
   };
 
-  const [selectedValue, setSelectedValue] = useState("most");
+  if (searchParams.toString() !== "") {
+    const newParams = {};
+    searchParams.forEach((value, key) => {
+      newParams[key] = value;
+    });
+    initialParams = newParams;
+  } else {
+    initialParams = defaultParams;
+  }
 
-  const [params, setParams] = useState(defaultParams);
+  const [params, setParams] = useState(initialParams);
   const [queryParams, setQueryParams] = useState(new URLSearchParams(params));
+
+  const [selectedValue, setSelectedValue] = useState("most");
 
   const [isOpenCategoriesFilter, setIsOpenCategoriesFilter] = useState(
     classes.isClosed
@@ -68,38 +77,42 @@ const Filters = () => {
   const [isOpenOriginCheckBox, setIsOpenOriginCheckBox] = useState(
     classes.isClosed
   );
-  const [originCheckBoxState, setOriginCheckBoxState] = useState(
-    usp.get("origin") || []
-  );
+  const [originCheckBoxState, setOriginCheckBoxState] = useState([]);
 
   const [isOpenMaturationCheckBox, setIsOpenMaturationCheckBox] = useState(
     classes.isClosed
   );
-  const [maturationCheckBoxState, setMaturationCheckBoxState] = useState(
-    usp.get("maturation") || []
-  );
-
-  const API = `products/`
+  const [maturationCheckBoxState, setMaturationCheckBoxState] = useState([]);
 
   useEffect(() => {
-    if (usp.toString() !== "") {
-      setParams(usp);
+    if (searchParams.get("categories") !== null) {
+      setSelectedCategory(searchParams.get("categories"));
     }
 
-    if (usp.get("categories") !== null) {
-      setSelectedCategory(usp.get("categories"));
+    if (searchParams.get("minPrice") !== null) {
+      setInputFromValue(searchParams.get("minPrice"));
     }
 
-    if (usp.get("minPrice") !== null) {
-      setInputFromValue(usp.get("minPrice"));
+    if (searchParams.get("maxPrice") !== null) {
+      setInputToValue(searchParams.get("maxPrice"));
     }
 
-    if (usp.get("maxPrice") !== null) {
-      setInputToValue(usp.get("maxPrice"));
+    if (
+      searchParams.get("minPrice") !== null &&
+      searchParams.get("maxPrice") !== null
+    ) {
+      setSliderValue([
+        +searchParams.get("minPrice"),
+        +searchParams.get("maxPrice"),
+      ]);
     }
 
-    if (usp.get("minPrice") !== null && usp.get("maxPrice") !== null) {
-      setSliderValue([usp.get("minPrice"), usp.get("maxPrice")]);
+    if (searchParams.get("origin") !== null) {
+      setOriginCheckBoxState(searchParams.get("origin"));
+    }
+
+    if (searchParams.get("maturation") !== null) {
+      setMaturationCheckBoxState(searchParams.get("maturation"));
     }
   }, []);
 
@@ -112,7 +125,7 @@ const Filters = () => {
   }, [params]);
 
   useEffect(() => {
-    window.history.pushState(null, null, `${API}${queryParams.toString()}`);
+    setSearchParams(queryParams);
     dispatch(fetchFilteredProducts(queryParams));
   }, [queryParams]);
 

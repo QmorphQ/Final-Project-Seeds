@@ -1,8 +1,9 @@
+import { useParams } from "react-router-dom";
 import {ProductCardRender} from "../../../ui/components/ProductCard/ProductCard.jsx"
 import RenderComponent from "../../hoc/RenderComponent.jsx";
 import { useFetch } from "../../hoc/useFetch.jsx";
 import { API } from "../../constants/index";
-import { useParams } from "react-router-dom";
+
 
 const Product = () => {
   const { id } = useParams();

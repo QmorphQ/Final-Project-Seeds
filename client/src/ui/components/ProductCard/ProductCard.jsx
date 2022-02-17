@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack, TableContainer, Paper, Table, TableBody, TableRow, TableCell, ListItem, List, Link } from "@mui/material";
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
+import Carousel from 'react-material-ui-carousel';
 import CloseIcon from '@mui/icons-material/Close';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+// import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import CheckIcon from '@mui/icons-material/Check';
 // import { Link, useNavigate } from "react-router-dom";
@@ -16,12 +18,10 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 import { cartSelector, mainCategoriesSelector, wishlistSelector } from "../../../store/selectors/selectors";
-import { useNavigate } from "react-router-dom";
-import { addProductToCart, fetchCart } from "../../../store/thunks/cart.thunks.js";
+import { addProductToCart, fetchCart } from "../../../store/thunks/cart.thunks";
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
-import Carousel from 'react-material-ui-carousel';
 import { imgURLs } from "./ProductMedia";
-import { addProductToWishlist, deleteProductFromWishlist, fetchWishlist } from "../../../store/thunks/wishlist.thunks.js";
+import { addProductToWishlist, deleteProductFromWishlist, fetchWishlist } from "../../../store/thunks/wishlist.thunks";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -410,7 +410,7 @@ export const ProductCardRender = ({ data }) => {
               }}
             >
               <ShoppingCartOutlinedIcon />
-              <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} cart={cart} _id={_id} />
+              <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} cart={cart} _id={_id} />
             </IconButton>
           </CardActions>
         </Card>
@@ -484,7 +484,7 @@ export const ProductCardRender = ({ data }) => {
             }}
           >
             <ShoppingCartOutlinedIcon />
-            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} cart={cart} _id={_id} />
+            <AddToCartModal data={data} discontStart={discontStart} localPrice={localPrice} totalPrice={totalPrice} setTotalPrice={setTotalPrice} isOnModal={isOnModal} toggleIsOnModal={toggleIsOnModal} cart={cart} _id={_id} />
           </IconButton>
         </CardActions>
       </Card>
@@ -518,15 +518,12 @@ ProductCard.propTypes = {
     discountPrice: PropTypes.number,
     itemNo: PropTypes.number,
   }),
-  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
+  loading: PropTypes.oneOf(Object.values).isRequired,
 };
-
 ProductCardRender.propTypes = {
   data: PropTypes.object,
 }
 
 export default ProductCard;
 
-ProductCardRender.propTypes = {
-  data: PropTypes.object,
-};
+

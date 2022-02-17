@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { API } from "../../app/constants";
 import {
   downloadCartSuccess,
@@ -68,14 +67,14 @@ const addProductToCart = (productId, amount) => (dispatch) => {
         dispatch(addProductToCartError());
       });
   } else {
-    const newProduct = {
-      product: productId,
-      cartQuantity: amount,
-    };
+    // const newProduct = {
+    //   product: productId,
+    //   cartQuantity: amount,
+    // };
     const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-    cart.map(item => {
+    cart.forEach(item => {
       if(item.product === productId) {
-        item.cartQuantity += amount;
+        item.cartQuantity += amount; // eslint-disable-line no-param-reassign
       }
     })
     if(!cart.find(item => item.product === productId)) {

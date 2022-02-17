@@ -2,10 +2,11 @@ import {ProductCardRender} from "../../../ui/components/ProductCard/ProductCard.
 import RenderComponent from "../../hoc/RenderComponent.jsx";
 import { useFetch } from "../../hoc/useFetch.jsx";
 import { API } from "../../constants/index";
+import { useParams } from "react-router-dom";
 
-const Product = (id) => {
+const Product = () => {
+  const { id } = useParams();
   const [loading, data, error] = useFetch(`${API}products/${id}`);
-
 
   return (
     <RenderComponent

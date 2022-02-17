@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { API } from "../../app/constants";
 import {
   downloadCartSuccess,
@@ -17,31 +18,6 @@ import {
   deleteProductFromCartSuccess,
   deleteProductFromCartError,
 } from "../actions/cart.actions";
-
-const fetchCart =
-  (uri = `${API}cart`) =>
-  (dispatch, getState) => {
-    const token = localStorage.getItem("jwt");
-    dispatch(downloadCartRequested());
-    if (token) {
-      axios
-        .get(uri, {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
-        .then((cart) => {
-          dispatch(downloadCartSuccess(cart.data));
-          return cart;
-        })
-        .catch(() => {
-          dispatch(downloadCartError());
-        });
-    } else {
-      const { cart } = getState();
-      dispatch(downloadCartSuccess(cart.cart));
-    }
-  };
 
 const addCart = (cart) => (dispatch) => {
   dispatch(addCartRequested());
@@ -65,13 +41,21 @@ const addCart = (cart) => (dispatch) => {
   }
 };
 
-const addProductToCart = (productId) => (dispatch, getState) => {
+const addProductToCart = (productId, amount) => (dispatch) => {
+
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
+  const newProduct = [
+    {
+      product: productId,
+      cartQuantity: amount,
+    }
+  ]
+
   if (token) {
     axios
-      .put(`${API}cart/${productId}`, false, {
+      .put(`${API}cart/${productId}`, newProduct, {
         headers: {
           Authorization: `${token}`,
         },
@@ -84,32 +68,23 @@ const addProductToCart = (productId) => (dispatch, getState) => {
         dispatch(addProductToCartError());
       });
   } else {
-    const { cart } = getState().cart;
-    let cartCopy;
-    if (!cart) {
-      cartCopy = [];
-    } else {
-      cartCopy = [...cart];
+    const newProduct = {
+      product: productId,
+      cartQuantity: amount,
+    };
+    const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+    cart.map(item => {
+      if(item.product === productId) {
+        item.cartQuantity += amount;
+      }
+    })
+    if(!cart.find(item => item.product === productId)) {
+      cart.push(newProduct);
     }
-    const product = cartCopy.find((cartItem) => productId === cartItem.id);
-    if (product) {
-      const newProduct = {
-        ...product,
-        cartQuantity: product.cartQuantity + 1,
-      };
-      const productIndex = product.findIndex(
-        (cartItem) => productId === cartItem.id
-      );
-      cartCopy.splice(productIndex, 1, newProduct);
-      dispatch(addProductToCartSuccess(cartCopy));
-    } else {
-      const newProduct = {
-        id: productId,
-        cartQuantity: 1,
-      };
-      const newCart = [...cartCopy, newProduct];
-      dispatch(addProductToCartSuccess(newCart));
-    }
+
+    dispatch(addProductToCartSuccess(cart));
+    localStorage.removeItem("cart");
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
 
@@ -152,6 +127,50 @@ const deleteProductFromCart = (productId) => (dispatch) => {
       });
   }
 };
+
+const fetchCart =
+  (uri = `${API}cart`) =>
+  (dispatch) => {
+    const token = localStorage.getItem("jwt");
+    dispatch(downloadCartRequested());
+    if (token) {
+      axios
+        .get(uri, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((cart) => {
+          const localCart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+          localCart.forEach(item => {
+            dispatch(addProductToCartRequested());
+            axios
+              .put(`${API}cart/${item.product}`, item, {
+                headers: {
+                  Authorization: `${token}`,
+                },
+              })
+              .then((updatedCart) => {
+                dispatch(addProductToCartSuccess(updatedCart.data));
+                return updatedCart;
+              })
+              .catch(() => {
+                dispatch(addProductToCartError());
+              });
+          });
+          localStorage.removeItem("cart");
+          dispatch(downloadCartSuccess(cart.data));
+          return cart;
+        })
+        .catch(() => {
+          dispatch(downloadCartError());
+        });
+    } else {
+      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
+      dispatch(downloadCartSuccess(cartFromLS));
+    }
+  };
+
 export {
   fetchCart,
   addCart,

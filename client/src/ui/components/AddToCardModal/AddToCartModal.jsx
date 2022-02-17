@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Modal, Box, Typography, Card, Grid, CardMedia, CardContent, Stack, Chip, CardActions, ButtonGroup, Button, FilledInput } from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import PropTypes from 'prop-types';
 import { useModalStyles } from "./useModalStyles";
 import { addProductToCart } from "../../../store/thunks/cart.thunks";
+import PropTypes from 'prop-types';
 
-const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal}) => {
+const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal, _id}) => {
+
   const {
     name,
     currentPrice,
@@ -151,7 +151,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(addProductToCart(itemNo, productAmount));
+                        dispatch(addProductToCart(_id, productAmount));
                       }}
                     >
                       Add to card
@@ -176,5 +176,5 @@ AddToCartModal.propTypes = {
   isOnModal: PropTypes.bool.isRequired,
   toggleIsOnModal: PropTypes.func.isRequired,
   }
-
+  
 export default AddToCartModal;

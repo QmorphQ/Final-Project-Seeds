@@ -38,6 +38,12 @@ const Filters = () => {
 
   const dispatch = useDispatch();
 
+  const usp = new URLSearchParams(window.location.search);
+
+  // for(const key of usp.keys()) {
+  //   console.log(key);
+  // }
+
   const defaultParams = {
     perPage: 9,
     startPage: 1,
@@ -62,12 +68,40 @@ const Filters = () => {
   const [isOpenOriginCheckBox, setIsOpenOriginCheckBox] = useState(
     classes.isClosed
   );
-  const [originCheckBoxState, setOriginCheckBoxState] = useState([]);
+  const [originCheckBoxState, setOriginCheckBoxState] = useState(
+    usp.get("origin") || []
+  );
 
   const [isOpenMaturationCheckBox, setIsOpenMaturationCheckBox] = useState(
     classes.isClosed
   );
-  const [maturationCheckBoxState, setMaturationCheckBoxState] = useState([]);
+  const [maturationCheckBoxState, setMaturationCheckBoxState] = useState(
+    usp.get("maturation") || []
+  );
+
+  const API = `products/`
+
+  useEffect(() => {
+    if (usp.toString() !== "") {
+      setParams(usp);
+    }
+
+    if (usp.get("categories") !== null) {
+      setSelectedCategory(usp.get("categories"));
+    }
+
+    if (usp.get("minPrice") !== null) {
+      setInputFromValue(usp.get("minPrice"));
+    }
+
+    if (usp.get("maxPrice") !== null) {
+      setInputToValue(usp.get("maxPrice"));
+    }
+
+    if (usp.get("minPrice") !== null && usp.get("maxPrice") !== null) {
+      setSliderValue([usp.get("minPrice"), usp.get("maxPrice")]);
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(fetchFilteredProducts(queryParams));
@@ -78,11 +112,12 @@ const Filters = () => {
   }, [params]);
 
   useEffect(() => {
+    window.history.pushState(null, null, `${API}${queryParams.toString()}`);
     dispatch(fetchFilteredProducts(queryParams));
   }, [queryParams]);
 
   useEffect(() => {
-    if (selectedCategory !== null) {
+    if (selectedCategory.length !== 0) {
       setParams({ ...params, categories: selectedCategory });
     } else {
       setParams((prevParams) => {

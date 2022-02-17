@@ -20,6 +20,7 @@ import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
+import SignUp from "./app/components/Forms/RegLogModal.jsx";
 // import Checkout from "./app/pages/Checkout.jsx"
 // =======================================================================
 
@@ -50,6 +51,7 @@ function App() {
         <Route path="/products" element={<Filters />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/login" element={<LogIn/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
         {/* <Route path="/cart" element={<TestCartPage />}/> */}
         {/* <Route path="*" element={<Checkout />} /> */}
         <Route path="*" element={<PageNotFound />} />

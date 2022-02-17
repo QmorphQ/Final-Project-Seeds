@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@mui/styles";
-import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
+import { Grid, Typography, Box, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
@@ -49,6 +50,7 @@ const style = makeStyles({
 export default function SignUp() {
     const requestState = useSelector(customersRequestSelector);
     const classes = useStyles();
+    const navigation = useNavigate()
     const styles = style();
     const INITIAL_FORM_STATE = {
         firstName: '',
@@ -85,13 +87,11 @@ export default function SignUp() {
         .required('The terms and conditions must be accepted.'),
     })
 
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(true)
 
-    const handleClickOpen = () =>{
-      setOpen(true)
-    }
 
     const handleClose = () =>{
+      navigation(-1)
       setOpen(false)
     }
     
@@ -106,7 +106,6 @@ export default function SignUp() {
 
     return (
     <>        
-            <Button sx={{mr:1, mt:1, height:40, width:100, fontSize:14}} onClick={handleClickOpen} variant="outlined">Sign up</Button>  
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>
@@ -185,6 +184,6 @@ export default function SignUp() {
             </Box></> : false}
             {requestState === downloadRequestStates.ERROR && (
         <ErrorHandler errorMessage={"User with this email or login are already exists"} />)}                     
-    </>);
+ </>);   
 }
 

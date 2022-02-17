@@ -9,11 +9,10 @@ import Logo from "./headerIcons/headerIcon/Logo.jsx";
 import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
 import MenuMobile from "../Menu/MenuMobile.jsx";
 import MenuDesktop from "../Menu/MenuDesktop.jsx";
-import LogIn from "../Forms/LogRegModal.jsx";
-import SignUp from "../Forms/RegLogModal.jsx";
 import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors";
 import ProfileMenu from "./ProfileMenu.jsx";
+import Auth from "../Forms/Auth.jsx"
 // import { downloadRequestStates } from "../../constants";
 
 
@@ -75,10 +74,7 @@ const Header = ({ allCategories, categories}) => {
             <HeaderIcons />
             <Box display={{ xs: "none", sm: "none", md:"flex" }}>
             {!localStorage.getItem('jwt') ? (
-              <>
-                <LogIn />
-                <SignUp /> 
-              </>
+                <Auth/>
             ) : (
               <ProfileMenu/>
             )}

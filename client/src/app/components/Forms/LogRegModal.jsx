@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles } from "@mui/styles";
-import { Grid, Typography, Box, IconButton, Button } from "@mui/material";
+import { Grid, Typography, Box, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
@@ -46,6 +47,7 @@ const style = makeStyles({
 
 export default function LogIn() {
     const requestState = useSelector(loginRequestSelector);
+    const navigation = useNavigate()
     const classes = useStyles();
     const styles = style();
     const dispatch = useDispatch()
@@ -64,13 +66,14 @@ export default function LogIn() {
         .required('Required')
     })
 
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(true)
 
-    const handleClickOpen = () =>{
-      setOpen(true)
-    }
+    // const handleClickOpen = () =>{
+    //   setOpen(true)
+    // }
 
     const handleClose = () =>{
+      navigation(-1)
       setOpen(false)
     }
 
@@ -82,7 +85,6 @@ export default function LogIn() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen} sx={{mr:1, mt:1, height:40, width:100, fontSize:14}}  color="primary" variant="text">Log In</Button>
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>

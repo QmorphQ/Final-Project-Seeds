@@ -23,11 +23,13 @@ import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors";
 import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
+import FavoriteBtn from './HeaderBtns/FavoriteBtn.jsx';
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
 // ++++++++++++++++
 // Auth Component:
 import LogIn from "../Forms/LogRegModal.jsx";
 import SignUp from "../Forms/RegLogModal.jsx";
+import ProfileMenu from './ProfileMenu.jsx';
 // ++++++++++++++++
 // ------------------------------------------------------------------------------------
 // Styles:
@@ -48,15 +50,18 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
     <Box sx={classes.Header}>
       <AppBar position="static" color="inherit" sx={{ boxShadow: "none" }}>
         <Toolbar
+        disableGutters={true}
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            border: '1px solid red',
           }}
         >
           {logoPath ? <LogoBtn linkPath={logoPath}  /> : <LogoBtn />}
           <Box
             display={{ xs: "none", sm: "none", md: "none", lg: 'block' }}
+            sx={{border: '1px solid red'}}
           >
             {/* <MenuDesktop /> */}
             <HeaderNavMenu resolution={'desktop'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
@@ -71,25 +76,23 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
             sx={{
               display: "flex",
               alignItems: "center",
+              border: '1px solid black',
+             
             }}
           >
-            <Box display={{ xs: "none", sm: "none", md: "block", border: '1px solid red' }}>
+            <Box display={{ xs: "none", sm: "none", md: "block", border: '1px solid red' }} >
               <SearchAppBar />
             </Box>
             <Box
               sx={{
                 display: { xs: "flex", md: "flex" },
-                justifyContent: "flex-start", border: '1px solid red'
+                justifyContent: "space-between", border: '1px solid red', width: '100%'
               }}
             >
               {isLogin && (
-                <IconButton>
-                  <Badge badgeContent={favoritesLength} color="primary">
-                    <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
-                  </Badge>
-                </IconButton>
+                <FavoriteBtn />
               )}
-              <CartBtn />
+              <CartBtn marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
               <Box display={{ xs: "none", sm: "none", md: "flex" }} sx={{border: '1px solid red'}}>
                 {!isLogin ? (
                   <Box sx={{border: '1px solid red', width: 'fit-content', display: "flex", flexDirection: 'column'}}>
@@ -97,16 +100,17 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                     <SignUp />
                   </Box>
                 ) : (
-                  <IconButton
-                    id='menuBtn'
-                    size="large"
-                    edge="end"
-                    aria-label="account of current user"
-                    // aria-controls={menuId}
-                    aria-haspopup="true"
-                    // onClick={handleProfileMenuOpen}
-                  >
-                  </IconButton>
+                  <ProfileMenu />
+                  // <IconButton
+                  //   id='menuBtn'
+                  //   size="large"
+                  //   edge="end"
+                  //   aria-label="account of current user"
+                  //   // aria-controls={menuId}
+                  //   aria-haspopup="true"
+                  //   // onClick={handleProfileMenuOpen}
+                  // >
+                  // </IconButton>
                 )}
               </Box>
             </Box>

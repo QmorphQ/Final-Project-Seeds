@@ -8,8 +8,8 @@ import { makeStyles } from "@material-ui/core"; // !!! <-------------- MUI CORE
 // !!!------------------------------------------
 // React Components:
 import SearchAppBar from "../../../HeaderSearch/SearchAppBar.jsx";
-// import LogIn from "../../../Forms/LogRegModal.jsx";
-// import SignUp from "../../../Forms/RegLogModal.jsx";
+import LogIn from "../../../../Forms/LogRegModal.jsx";
+import SignUp from "../../../../Forms/RegLogModal.jsx";
 import MenuItemNoChildrenMobile from "./MenuMobileComponents/MenuItemNoChildrenMobile.jsx";
 import MenuItemWithChildrenMobile from "./MenuMobileComponents/MenuItemWithChildrenMobile.jsx";
 
@@ -56,9 +56,9 @@ export default function MenuMobile({
         <Box display="flex" sx={{ justifyContent: "space-around" }}>
           {!isLogin ? (
             <>
-              <div>AUTH</div>
-              {/* <LogIn />
-                <SignUp /> */}
+             
+              <LogIn />
+                <SignUp />
             </>
           ) : (
             <IconButton

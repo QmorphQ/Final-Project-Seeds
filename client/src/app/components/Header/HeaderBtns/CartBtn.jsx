@@ -12,22 +12,20 @@ const styles = {
   },
   Icon: {
     color: "#359740",
-    pl: "0",
   },
   Badge: {
-    color: "primary",
-    mr: "0px",
+    
   },
 };
 // ==================================================================
-export default function CartBtn ({ productsQuantityInUserCart, linkPath, ...restProps }) {
+export default function CartBtn ({ quantity, linkPath, ...restProps }) {
   
   // ----------------------------------------------------------------
   return (
     <Box sx={styles.CartBtn} {...restProps}>
       <RouterLink to={linkPath} underline="none">
         {
-          <Badge badgeContent={0}  color="primary">
+          <Badge showZero badgeContent={quantity} color='primary' >
             <ShoppingCartOutlinedIcon sx={styles.Icon} />
           </Badge>
         }
@@ -39,11 +37,11 @@ export default function CartBtn ({ productsQuantityInUserCart, linkPath, ...rest
 // ===================================================================
 
 CartBtn.defaultProps = {
-  productsQuantityInUserCart: 0,
+  quantity: 0,
   linkPath: '/cart',
 };
 
 CartBtn.propTypes = {
-  productsQuantityInUserCart: PropTypes.number,
+  quantity: PropTypes.number,
   linkPath: PropTypes.string,
 };

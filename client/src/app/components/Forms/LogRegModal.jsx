@@ -80,7 +80,7 @@ export default function LogIn() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen} sx={{mr:1, mt:1, height:40, width:100, fontSize:14}}  color="primary" variant="text">Log In</Button>
+            <Button onClick={handleClickOpen} sx={{ height:20, width:80, fontSize:10}}  color="primary" variant="text">Log In</Button>
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>

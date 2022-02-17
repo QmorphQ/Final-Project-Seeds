@@ -1,11 +1,20 @@
 
 import { useState } from "react";
 // import { useSelector } from "react-redux";
-import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar, Link } from "@mui/material";
+import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar, Link, Box } from "@mui/material";
 import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-material";
 
 // import { loginStateSelector } from "../../../store/selectors/selectors";
 
+
+// Styles:
+const styles = {
+    ProfileMenu: {
+        Container: {
+            
+        },
+    },
+};
 
 
 export default function ProfileMenu () {
@@ -23,10 +32,10 @@ export default function ProfileMenu () {
     };
     
     return(
-        <>
+        <Box sx={{border: '1px solid green', width: '80px', display: "flex", justifyContent: 'center'}}>
             <IconButton
                 size="large"
-                edge="end"
+                edge={false}
                 aria-label="account of current user"
                 aria-controls={open ? 'account-menu' : undefined}
                 aria-haspopup="true"
@@ -105,6 +114,6 @@ export default function ProfileMenu () {
             </Link> 
 
         </Menu>
-      </>
+      </Box>
     )
 }

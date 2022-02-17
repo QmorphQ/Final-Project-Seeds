@@ -104,7 +104,7 @@ export default function SignUp() {
 
     return (
     <>        
-            <Button sx={{mr:1, mt:1, height:40, width:100, fontSize:14}} onClick={handleClickOpen} variant="outlined">Sign up</Button>  
+            <Button sx={{ height:20, width:80, fontSize:10}} onClick={handleClickOpen} >Sign up</Button>  
               {(open === true) ? 
               <>
               <Box onClick={handleClose} className={styles.BgClose}/>

@@ -8,8 +8,18 @@ import { downloadRequestStates } from "../constants/index";
 const useStyles = makeStyles((theme) => ({
     cartItem: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-start"
+        "& .MuiPaper-root": {
+            display: "flex",
+            flexDirection: "row",
+            "& .MuiCardMedia-img": {
+                width: "64px",
+                height: "63px"
+            },
+            "& .MuiTypography-root": {
+                fontSize: "14px",
+                LineHeight: "24.95px"
+            }
+        }
     },
     cartContainer: {
         display: "flex",
@@ -17,11 +27,14 @@ const useStyles = makeStyles((theme) => ({
     },
     cartList: {
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        width: "730px",
+        marginLeft: "165px"
     },
     totalPrice: {
-        color: theme.palette.primary.main
-    }
+        color: theme.palette.primary.main,
+        width: "350px"
+    }, 
 }))
  
 const Cart = ({ loading }) => { 

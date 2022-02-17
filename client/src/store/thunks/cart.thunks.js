@@ -18,6 +18,31 @@ import {
   deleteProductFromCartError,
 } from "../actions/cart.actions";
 
+const fetchCart =
+  (uri = `${API}cart`) =>
+  (dispatch, getState) => {
+    const token = localStorage.getItem("jwt");
+    dispatch(downloadCartRequested());
+    if (token) {
+      axios
+        .get(uri, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((cart) => {
+          dispatch(downloadCartSuccess(cart.data));
+          return cart;
+        })
+        .catch(() => {
+          dispatch(downloadCartError());
+        });
+    } else {
+      const { cart } = getState();
+      dispatch(downloadCartSuccess(cart.cart));
+    }
+  };
+
 const addCart = (cart) => (dispatch) => {
   dispatch(addCartRequested());
   const token = localStorage.getItem("jwt");
@@ -40,21 +65,13 @@ const addCart = (cart) => (dispatch) => {
   }
 };
 
-const addProductToCart = (productId, amount) => (dispatch) => {
-
+const addProductToCart = (productId) => (dispatch, getState) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
-  const newProduct = [
-    {
-      product: productId,
-      cartQuantity: amount,
-    }
-  ]
-
   if (token) {
     axios
-      .put(`${API}cart/${productId}`, newProduct, {
+      .put(`${API}cart/${productId}`, false, {
         headers: {
           Authorization: `${token}`,
         },
@@ -67,23 +84,32 @@ const addProductToCart = (productId, amount) => (dispatch) => {
         dispatch(addProductToCartError());
       });
   } else {
-    // const newProduct = {
-    //   product: productId,
-    //   cartQuantity: amount,
-    // };
-    const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-    cart.forEach(item => {
-      if(item.product === productId) {
-        item.cartQuantity += amount; // eslint-disable-line no-param-reassign
-      }
-    })
-    if(!cart.find(item => item.product === productId)) {
-      cart.push(newProduct);
+    const { cart } = getState().cart;
+    let cartCopy;
+    if (!cart) {
+      cartCopy = [];
+    } else {
+      cartCopy = [...cart];
     }
-
-    dispatch(addProductToCartSuccess(cart));
-    localStorage.removeItem("cart");
-    localStorage.setItem("cart", JSON.stringify(cart));
+    const product = cartCopy.find((cartItem) => productId === cartItem.id);
+    if (product) {
+      const newProduct = {
+        ...product,
+        cartQuantity: product.cartQuantity + 1,
+      };
+      const productIndex = product.findIndex(
+        (cartItem) => productId === cartItem.id
+      );
+      cartCopy.splice(productIndex, 1, newProduct);
+      dispatch(addProductToCartSuccess(cartCopy));
+    } else {
+      const newProduct = {
+        id: productId,
+        cartQuantity: 1,
+      };
+      const newCart = [...cartCopy, newProduct];
+      dispatch(addProductToCartSuccess(newCart));
+    }
   }
 };
 
@@ -126,49 +152,6 @@ const deleteProductFromCart = (productId) => (dispatch) => {
       });
   }
 };
-
-const fetchCart =
-  (uri = `${API}cart`) =>
-  (dispatch) => {
-    const token = localStorage.getItem("jwt");
-    dispatch(downloadCartRequested());
-    if (token) {
-      axios
-        .get(uri, {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
-        .then((cart) => {
-          const localCart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-          localCart.forEach(item => {
-            dispatch(addProductToCartRequested());
-            axios
-              .put(`${API}cart/${item.product}`, item, {
-                headers: {
-                  Authorization: `${token}`,
-                },
-              })
-              .then((updatedCart) => {
-                dispatch(addProductToCartSuccess(updatedCart.data));
-                return updatedCart;
-              })
-              .catch(() => {
-                dispatch(addProductToCartError());
-              });
-          });
-          localStorage.removeItem("cart");
-          dispatch(downloadCartSuccess(cart.data));
-          return cart;
-        })
-        .catch(() => {
-          dispatch(downloadCartError());
-        });
-    } else {
-      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
-      dispatch(downloadCartSuccess(cartFromLS));
-    }
-  };
 
 export {
   fetchCart,

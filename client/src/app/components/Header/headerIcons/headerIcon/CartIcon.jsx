@@ -20,6 +20,7 @@ const CartIcon = () => {
   }, []);
 
   
+  console.log(totalCartQuantity);
   
   const RoutesName = {
     cart: "/cart",

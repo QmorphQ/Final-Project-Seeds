@@ -7,15 +7,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useModalStyles } from "./useModalStyles";
 import { addProductToCart } from "../../../store/thunks/cart.thunks";
 
-
-const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal, _id}) => {
-
+const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal}) => {
   const {
     name,
     currentPrice,
     imageUrls,
     quantity,
-    discountPrice
+    discountPrice,
+    itemNo,
   } = data;
 
   const [productAmount, setProductAmount] = useState(1);
@@ -85,7 +84,6 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                         <CloseIcon 
                           className={modalClasses.buttonIcon}
                         />)
-                
                     } 
                   />
                 </Stack>
@@ -126,7 +124,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                         {"+"}
                       </Button>
                     </ButtonGroup>
-                    
+
                   <Box className={modalClasses.productCardButtons}>
                     <Box>
                       {productAmount > discontStart &&
@@ -153,7 +151,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(addProductToCart(_id, productAmount));
+                        dispatch(addProductToCart(itemNo, productAmount));
                       }}
                     >
                       Add to card

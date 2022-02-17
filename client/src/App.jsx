@@ -10,7 +10,7 @@ import {
   mainCategoriesSelector
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-// import Cart from "./app/pages/Cart.jsx";
+import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
@@ -50,7 +50,7 @@ function App() {
         <Route path="/products" element={<Filters />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/login" element={<LogIn/>} />
-        {/* <Route path="/cart" element={<TestCartPage />}/> */}
+        <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
         {/* <Route path="*" element={<Checkout />} /> */}
         <Route path="*" element={<PageNotFound />} />
        </Route>

@@ -84,11 +84,11 @@ export const cartSelector = (state) => state.cart.cart;
  */
 export const cartQuantitySelector = (state) => {
   if (Array.isArray(state.cart.cart)) {
-    const total = state.cart.cart.reduce(
-      (total, currentItem) => total + currentItem.cartQuantity,
+    const totalQuantity = state.cart.cart.reduce(
+      (total, currentItem) => Number(total) + Number(currentItem.cartQuantity),
       0
     );
-    return total;
+    return totalQuantity;
   } else {
     return null;
   }

@@ -15,7 +15,7 @@ const initialState = {
   downloadRequestState: downloadRequestStates.IDLE,
   addCartRequestState: downloadRequestStates.IDLE,
   addProductToCartRequestState: downloadRequestStates.IDLE,
-  cart: null,
+  cart: [],
 };
 
 const cartReducer = (state = initialState, action) => {

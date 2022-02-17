@@ -46,16 +46,14 @@ function App() {
     <BrowserRouter>
     <Routes>
        <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
-
-          <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
-          <Route path="/products" element={<Filters />} />
-          <Route path="/:id" element={<ProductPage />} />
-          <Route path="/login" element={<LogIn/>} />
-          <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="*" element={<Checkout />} />
-        </Route>
-
+        <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
+        <Route path="/products" element={<Filters />} />
+        <Route path="/products/:id" element={<ProductPage />} />
+        <Route path="/login" element={<LogIn/>} />
+        {/* <Route path="/cart" element={<TestCartPage />}/> */}
+        {/* <Route path="*" element={<Checkout />} /> */}
+        <Route path="*" element={<PageNotFound />} />
+       </Route>
     </Routes>
     </BrowserRouter>
 

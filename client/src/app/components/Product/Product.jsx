@@ -1,5 +1,5 @@
-import RenderComponent from "../../hoc/RenderComponent.jsx";
 import {ProductCardRender} from "../../../ui/components/ProductCard/ProductCard.jsx"
+import RenderComponent from "../../hoc/RenderComponent.jsx";
 import { useFetch } from "../../hoc/useFetch.jsx";
 import { API } from "../../constants/index";
 

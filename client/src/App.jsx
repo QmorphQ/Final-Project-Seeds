@@ -10,8 +10,8 @@ import {
   mainCategoriesSelector
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
+// import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
-// =======================================================================
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 // import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
@@ -20,8 +20,9 @@ import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
-import Checkout from "./app/pages/Checkout.jsx"
+// import Checkout from "./app/pages/Checkout.jsx"
 // =======================================================================
+
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -42,7 +43,6 @@ function App() {
   }, []);
 
   return (
-
     <BrowserRouter>
     <Routes>
        <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
@@ -51,7 +51,7 @@ function App() {
         <Route path="/preview" element={<ProductPage />} />
         <Route path="/login" element={<LogIn/>} />
         {/* <Route path="/cart" element={<TestCartPage />}/> */}
-        <Route path="*" element={<Checkout />} />
+        {/* <Route path="*" element={<Checkout />} /> */}
         <Route path="*" element={<PageNotFound />} />
        </Route>
     </Routes>

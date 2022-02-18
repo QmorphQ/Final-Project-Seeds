@@ -5,11 +5,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App.jsx";
 import { store, persistor } from "./store/store";
 import CustomThemeProvider from "./ui/hoc/CustomThemeProvider.jsx";
-import Preloader from "./ui/components/Preloader/Preloader.jsx";
-
-// ==================================================
-import DEVWrapper from "./DevHelper/DEVWrapper.jsx";
-import TestApp from "./TestApp.jsx";
 // ==================================================
 
 ReactDOM.render(

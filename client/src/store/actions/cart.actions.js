@@ -36,9 +36,9 @@ export const addProductToCartRequested = () => ({
 });
 
 export const PRODUCT_TO_CART_SUCCESS = "PRODUCT_TO_CART_SUCCESS";
-export const addProductToCartSuccess = (product) => ({
+export const addProductToCartSuccess = (cart) => ({
   type: PRODUCT_TO_CART_SUCCESS,
-  payload: product,
+  payload: cart,
 });
 
 export const PRODUCT_TO_CART_ERROR = "PRODUCT_TO_CART_ERROR";
@@ -56,7 +56,6 @@ export const decreaseQuantitySuccess = (cart) => ({
   type: DECREASE_QUANTITY_SUCCESS,
   payload: cart,
 });
-
 
 export const DECREASE_QUANTITY_ERROR = "DECREASE_QUANTITY_ERROR";
 export const decreaseQuantityError = () => ({

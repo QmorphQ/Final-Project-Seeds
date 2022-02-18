@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import catalog from "./reducers/catalog.reducer";
 import products from "./reducers/products.reducer";
 import slides from "./reducers/slides.reducer";
@@ -10,20 +12,29 @@ import wishlist from "./reducers/wishlist.reducer";
 
 const reduxDevToolsCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["cart"],
+};
+
 const rootReducer = combineReducers({
   catalog,
   products,
   slides,
   customer,
   cart,
-  wishlist
-  
+  wishlist,
 });
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   devTools: reduxDevToolsCompose,
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: [thunk],
 });
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };

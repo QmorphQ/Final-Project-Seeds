@@ -18,31 +18,6 @@ import {
   deleteProductFromCartError,
 } from "../actions/cart.actions";
 
-const fetchCart =
-  (uri = `${API}cart`) =>
-  (dispatch) => {
-    const token = localStorage.getItem("jwt");
-    dispatch(downloadCartRequested());
-    if (token) {
-      axios
-        .get(uri, {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
-        .then((cart) => {
-          dispatch(downloadCartSuccess(cart.data));
-          return cart;
-        })
-        .catch(() => {
-          dispatch(downloadCartError());
-        });
-    } else {
-      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
-      dispatch(downloadCartSuccess(cartFromLS));
-    }
-  };
-
 const addCart = (cart) => (dispatch) => {
   dispatch(addCartRequested());
   const token = localStorage.getItem("jwt");
@@ -62,17 +37,24 @@ const addCart = (cart) => (dispatch) => {
       });
   } else {
     dispatch(addCartSuccess(cart));
-    localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
 
-const addProductToCart = (productId) => (dispatch) => {
+const addProductToCart = (productId, amount) => (dispatch) => {
+
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
+  const newProduct = [
+    {
+      product: productId,
+      cartQuantity: amount,
+    }
+  ]
+
   if (token) {
     axios
-      .put(`${API}cart/${productId}`, false, {
+      .put(`${API}cart/${productId}`, newProduct, {
         headers: {
           Authorization: `${token}`,
         },
@@ -85,16 +67,23 @@ const addProductToCart = (productId) => (dispatch) => {
         dispatch(addProductToCartError());
       });
   } else {
-    const newProduct = {
-      product: productId,
-      cartQuantity: 1,
-    };
-    const oldCart = JSON.parse(localStorage.getItem("cart"));
-    const updatedCart = [...oldCart];
-    updatedCart.push(newProduct);
-    dispatch(addProductToCartSuccess(updatedCart));
+    // const newProduct = {
+    //   product: productId,
+    //   cartQuantity: amount,
+    // };
+    const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+    cart.forEach(item => {
+      if(item.product === productId) {
+        item.cartQuantity += amount; // eslint-disable-line no-param-reassign
+      }
+    })
+    if(!cart.find(item => item.product === productId)) {
+      cart.push(newProduct);
+    }
+
+    dispatch(addProductToCartSuccess(cart));
     localStorage.removeItem("cart");
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
 
@@ -137,6 +126,50 @@ const deleteProductFromCart = (productId) => (dispatch) => {
       });
   }
 };
+
+const fetchCart =
+  (uri = `${API}cart`) =>
+  (dispatch) => {
+    const token = localStorage.getItem("jwt");
+    dispatch(downloadCartRequested());
+    if (token) {
+      axios
+        .get(uri, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((cart) => {
+          const localCart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+          localCart.forEach(item => {
+            dispatch(addProductToCartRequested());
+            axios
+              .put(`${API}cart/${item.product}`, item, {
+                headers: {
+                  Authorization: `${token}`,
+                },
+              })
+              .then((updatedCart) => {
+                dispatch(addProductToCartSuccess(updatedCart.data));
+                return updatedCart;
+              })
+              .catch(() => {
+                dispatch(addProductToCartError());
+              });
+          });
+          localStorage.removeItem("cart");
+          dispatch(downloadCartSuccess(cart.data));
+          return cart;
+        })
+        .catch(() => {
+          dispatch(downloadCartError());
+        });
+    } else {
+      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
+      dispatch(downloadCartSuccess(cartFromLS));
+    }
+  };
+
 export {
   fetchCart,
   addCart,

@@ -60,11 +60,13 @@ const HeaderDesktop = () => {
           <Box display="flex">
             <SearchAppBar />
           </Box>
-          <IconButton sx={{ mr: 4 }}>
-            <Badge badgeContent={favoritesLength} color="primary">
-              <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
-            </Badge>
-          </IconButton>
+          <RouterLink to={'/wishlist'}>
+            <IconButton sx={{ mr: 4 }}>
+              <Badge badgeContent={favoritesLength} color="primary">
+                <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
+              </Badge>
+            </IconButton>
+          </RouterLink>
           <RouterLink to={'/cart'}><HeaderIcons /></RouterLink>
           {!isLogin ? 
             <>

@@ -3,6 +3,7 @@ import { useState } from "react";
 // import { useSelector } from "react-redux";
 import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar, Link } from "@mui/material";
 import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-material";
+import { API } from "../../constants";
 
 // import { loginStateSelector } from "../../../store/selectors/selectors";
 
@@ -73,7 +74,7 @@ export default function ProfileMenu () {
             <Avatar/> Profile
             </MenuItem>
             <Divider />
-            <Link underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+            <Link underline="none" href={`/wishlist`}>
                 <MenuItem >
                     <ListItemIcon>
                         <Favorite fontSize="small" />                    

@@ -7,17 +7,19 @@ import ProductCard from "../ProductCard/ProductCard.jsx";
 //   password: "justdrink",
 // };
 
-const ProductsListSection = ({ data, loading }, totalLength = 6) => {
-  let productsFlteredArr = data.products
+const ProductsListSection = ({ data, loading, }) => {
+  let productsFlteredArr = data.products;
     // .map((value) => ({ value, sort: Math.random() }))
     // .sort((a, b) => a.sort - b.sort)
     // .map(({ value }) => value);
 
   if (!data.isFiltersPage) {
-    productsFlteredArr = productsFlteredArr.filter(
-      (product, index) => index < totalLength
+    productsFlteredArr = data.products.filter(
+      (product, index) => index < (data.totalLength || 6)
     );
   }
+
+  console.log(data.totalLength);
 
   return (
     <>

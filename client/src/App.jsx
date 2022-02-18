@@ -7,10 +7,12 @@ import {
   downloadProductsRequestStateSelector,
   productsSelector,
   allCategoriesSelector,
-  mainCategoriesSelector
+  mainCategoriesSelector,
+  wishlistSelector,
+  downloadWishlistRequestStateSelector
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-import Cart from "./app/pages/Cart.jsx";
+// import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
@@ -20,26 +22,28 @@ import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
-import Checkout from "./app/pages/Checkout.jsx"
+import Wishlist from "./app/pages/Wishlist";
+import { fetchWishlist } from "./store/thunks/wishlist.thunks";
+import { fetchCart } from "./store/thunks/cart.thunks";
+// import Checkout from "./app/pages/Checkout.jsx"
 // =======================================================================
-
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const categories = useSelector(mainCategoriesSelector);
   const allCategories = useSelector(allCategoriesSelector);
   const productList = useSelector(productsSelector);
+  const wishlist = useSelector(wishlistSelector);
+  const downloadWishlistRequest = useSelector(downloadWishlistRequestStateSelector);
+
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(fetchCategories());
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchSlides());
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchWishlist());
+    dispatch(fetchCart());
   }, []);
 
   return (
@@ -48,6 +52,7 @@ function App() {
        <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
         <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
         <Route path="/products" element={<Filters />} />
+        <Route path="/wishlist" element={<Wishlist wishlist={wishlist} loading={downloadWishlistRequest} />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/login" element={<LogIn/>} />
         {/* <Route path="/cart" element={<TestCartPage />}/> */}

@@ -55,7 +55,7 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
                 <Link
                   className='option-with-options'
                   component={RouterLink}
-                  to={`products/${item.parentId}`}
+                  to={`/${item.parentId}`}
                   underline="none"
                   sx={{ pl: "16px", color: "#1F2533", fontWeight: "400" }}
                 >
@@ -70,7 +70,7 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
                 <AccordionDetails>
                   <Link
                     component={RouterLink}
-                    to={`products/${item.parentId}/${subItem}`}
+                    to={`/${item.parentId}/${subItem}`}
                     key={subItem}
                     underline="none"
                     sx={{

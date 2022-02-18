@@ -13,7 +13,7 @@ export default function MenuItemNoChildrenMobile({ arrOfOptions }) {
           <MenuItem disableRipple sx={{'&:hover': {backgroundColor: 'white' }}}>
             <Link 
             component={RouterLink}
-            to={`products/${item[0]}`}
+            to={`/${item[0]}`}
               underline="none"
               sx={{ pl: "16px", fontWeight: "400", color: '#70737C' }}
             >

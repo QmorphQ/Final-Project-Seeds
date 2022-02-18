@@ -54,7 +54,7 @@ export default function MenuMobile({
         }}
       >
         <Grid sx={{ flexGrow: 1 }}>
-          <Grid container sx={{ flexGrow: 1, border: '1px solid red' }}  item xs={12} alignItems='center' justifyContent={LogIn ? 'space-between' : "flex-end"}>
+          <Grid container sx={{ flexGrow: 1 }}  item xs={12} alignItems='center' justifyContent={LogIn ? 'space-between' : "flex-end"}>
             <Grid item xs={2}>{isLogin && (<ProfileMenu />) }</Grid>
             <Grid item xs={10}>
               <SearchAppBar />

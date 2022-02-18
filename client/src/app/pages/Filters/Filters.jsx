@@ -28,6 +28,8 @@ import {
 import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
 import useFiltersStyles from "./useFiltersStyles";
 
+// ==================================================================================
+// Component:
 const Filters = () => {
   const classes = useFiltersStyles();
 

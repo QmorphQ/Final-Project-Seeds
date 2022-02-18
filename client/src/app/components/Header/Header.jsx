@@ -53,13 +53,11 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            border: '1px solid red',
           }}
         >
           {logoPath ? <LogoBtn linkPath={logoPath}  /> : <LogoBtn />}
           <Box
             display={{ xs: "none", sm: "none", md: "none", lg: 'block' }}
-            sx={{border: '1px solid red'}}
           >
             {/* <MenuDesktop /> */}
             <HeaderNavMenu resolution={'desktop'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
@@ -74,26 +72,24 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
             sx={{
               display: "flex",
               alignItems: "center",
-              border: '1px solid black',
-             
             }}
           >
-            <Box display={{ xs: "none", sm: "none", md: "block", border: '1px solid red' }} >
+            <Box display={{ xs: "none", sm: "none", md: "block" }} >
               <SearchAppBar />
             </Box>
             <Box
               sx={{
                 display: { xs: "flex", md: "flex" },
-                justifyContent: "space-between", border: '1px solid red', width: '100%'
+                justifyContent: "space-between", width: '100%'
               }}
             >
               {isLogin && (
                 <FavoriteBtn />
               )}
               <CartBtn marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
-              <Box display={{ xs: "none", sm: "none", md: "flex" }} sx={{border: '1px solid red'}}>
+              <Box display={{ xs: "none", sm: "none", md: "flex" }} >
                 {!isLogin ? (
-                  <Box sx={{border: '1px solid red', width: 'fit-content', display: "flex", flexDirection: 'column'}}>
+                  <Box sx={{ width: 'fit-content', display: "flex", flexDirection: 'column'}}>
                    <LogIn />
                     <SignUp />
                   </Box>

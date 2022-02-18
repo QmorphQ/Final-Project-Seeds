@@ -4,6 +4,7 @@ import { Modal, Box, Typography, Card, Grid, CardMedia, CardContent, Stack, Chip
 import CheckIcon from '@mui/icons-material/Check';
 import { useModalStyles } from "./useModalStyles";
 import { addProductToCart } from "../../../store/thunks/cart.thunks";
+import PropTypes from 'prop-types';
 
 const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal, _id}) => {
   const {
@@ -165,4 +166,14 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
   )
 }
 
+AddToCartModal.propTypes = {
+  data: PropTypes.object.isRequired,
+  discontStart: PropTypes.number.isRequired,
+  localPrice: PropTypes.object.isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  setTotalPrice: PropTypes.func.isRequired,
+  isOnModal: PropTypes.bool.isRequired,
+  toggleIsOnModal: PropTypes.func.isRequired,
+  }
+  
 export default AddToCartModal;

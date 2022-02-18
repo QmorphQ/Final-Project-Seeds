@@ -2,8 +2,9 @@
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { Grid, Typography, IconButton, Container, Button } from "@mui/material";
+import { Grid, Typography, IconButton, Container } from "@mui/material";
 import Textfield from './Components/FormsUI/Textfield';
+import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 
 
 const INITIAL_FORM_STATE = {
@@ -11,8 +12,10 @@ const INITIAL_FORM_STATE = {
     lastName: '',
     email: '',
     phone: '',
-    addressLine1: '',
-    addressLine2: '',
+    addressLine: '',
+    house: '',
+    code: '',
+    flat: '',
     city: '',
     state: '',
     country: '',
@@ -20,32 +23,28 @@ const INITIAL_FORM_STATE = {
   };
   
   const FORM_VALIDATION = Yup.object().shape({
-    firstName: Yup.string()
-      .required('Required'),
-    lastName: Yup.string()
-      .required('Required'),
+    firstName: Yup.string(),
+    lastName: Yup.string(),
     email: Yup.string()
-      .email('Invalid email.')
-      .required('Required'),
+      .email('Invalid email.'),
     phone: Yup.number()
       .integer()
-      .typeError('Please enter a valid phone number')
-      .required('Required'),
-    addressLine1: Yup.string()
-      .required('Required'),
-    addressLine2: Yup.string(),
-    city: Yup.string()
-      .required('Required'),
-    state: Yup.string()
-      .required('Required'),
-    country: Yup.string()
-      .required('Required'),
+      .typeError('Please enter a valid phone number'),
+    addressLine: Yup.string(),
+    code: Yup.number()
+    .integer()
+    .typeError('Please enter a valid code number'),
+    flat: Yup.number()
+    .integer()
+    .typeError('Please enter the correct number'),
+    house: Yup.number()
+    .integer()
+    .typeError('Please enter the correct number'),
+    city: Yup.string(),
     password: Yup.string()
-    .required('Required')
     .min(8, 'Password is 8 chars minimum.')
     .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
     passwordConfirm : Yup.string()
-    .required('Required')
     .oneOf([Yup.ref('password')], 'Password must be the same!'),
   });
   
@@ -69,61 +68,61 @@ function PersonalInfo  ()  {
                               edge="start"
                              color="primary">
                   </IconButton>
-                    
+             
                     <Grid item xs={12}>
                       <Typography>
                         Your details
                       </Typography>
                     </Grid>
-  
                     <Grid item xs={12}>
                       <Textfield
                         name="firstName"
                         label="First Name"
                       />
                     </Grid>
-  
                     <Grid item xs={12}>
                       <Textfield
                         name="lastName"
                         label="Last Name"
                       />
                     </Grid>
-  
                     <Grid item xs={12}>
                       <Textfield
                         name="email"
                         label="Email"
                       />
                     </Grid>
-  
                     <Grid item xs={12}>
                       <Textfield
                         name="phone"
                         label="Phone"
                       />
                     </Grid>
-  
+                    <Grid item xs={12}>
+                            <Textfield
+                            name="password"
+                            label="New password"
+                            type='password'
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Textfield
+                            name="passwordConfirm"
+                            label="Confirm new password*"
+                            type='password'
+                            />
+                    </Grid> 
                     <Grid item xs={12}>
                       <Typography>
                         Address
                       </Typography>
                     </Grid>
-  
                     <Grid item xs={12}>
                       <Textfield
-                        name="addressLine1"
-                        label="Address Line 1"
+                        name="addressLine"
+                        label="Street"
                       />
-                    </Grid>
-  
-                    <Grid item xs={12}>
-                      <Textfield
-                        name="addressLine2"
-                        label="Address Line 2"
-                      />
-                    </Grid>
-  
+                    </Grid>  
                     <Grid item xs={6}>
                       <Textfield
                         name="city"
@@ -133,29 +132,27 @@ function PersonalInfo  ()  {
   
                     <Grid item xs={6}>
                       <Textfield
-                        name="state"
-                        label="State"
+                        name="house"
+                        label="House"
                       />
                     </Grid>
-                    <Grid item xs={12}>
-                            <Textfield
-                            name="password"
-                            label="Password"
-                            type='password'
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Textfield
-                            name="passwordConfirm"
-                            label="Confirm password*"
-                            type='password'
-                            />
-                        </Grid> 
-  
-                    <Grid item xs={12}>
-                      <Button>
-                        Save Changes
-                      </Button>
+                    <Grid item xs={6}>
+                      <Textfield
+                        name="flat"
+                        label="Flat"
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Textfield
+                        name="code"
+                        label="Postal code"
+                      />
+                    </Grid>
+
+                    <Grid sx={{mb:10, mt:5 }} item xs={12}>
+                    <ButtonWrapper onClick={handleSubmit}>
+                          Save Changes
+                    </ButtonWrapper>
                     </Grid> 
                   </Grid>
                 </Form>

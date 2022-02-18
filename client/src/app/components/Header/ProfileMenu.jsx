@@ -1,8 +1,9 @@
 
 import { useState } from "react";
 // import { useSelector } from "react-redux";
-import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar, Link } from "@mui/material";
+import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar } from "@mui/material";
 import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 // import { loginStateSelector } from "../../../store/selectors/selectors";
 
@@ -11,7 +12,8 @@ import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-m
 export default function ProfileMenu () {
     const [anchorEl, setAnchorEl] = useState(null);
     const logout = () => {
-        localStorage.removeItem('jwt');
+        localStorage.removeItem('jwt')
+        window.location.reload()
     }
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -72,22 +74,22 @@ export default function ProfileMenu () {
             <Avatar/> Profile
             </MenuItem>
             <Divider />
-            <Link underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+            {/* <Link underline="none"  to="#"> */}
                 <MenuItem >
                     <ListItemIcon>
                         <Favorite fontSize="small" />                    
                     </ListItemIcon> Favourites
                 </MenuItem>
-            </Link>    
-            <Link  underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+            {/* </Link>     */}
+            {/* <Link  underline="none" to="#"> */}
                 <MenuItem >
                     <ListItemIcon>
                         <History fontSize="small" />
                     </ListItemIcon> My orders
                 </MenuItem>
-            </Link> 
+            {/* </Link>  */}
             
-            <Link  underline="none" href="/settings">
+            <Link  style={{ textDecoration: 'none',color: "black" }} to="/settings">
                 <MenuItem >
                     <ListItemIcon>
                         <Settings fontSize="small" />
@@ -95,13 +97,13 @@ export default function ProfileMenu () {
                 </MenuItem>
             </Link> 
 
-            <Link  underline="none" onClick={logout}>            
-                <MenuItem>
+            {/* <Link  underline="none" onClick={logout}>             */}
+                <MenuItem onClick={logout}>
                     <ListItemIcon>
                         <Logout fontSize="small"/>
                     </ListItemIcon> Logout
                 </MenuItem>
-            </Link> 
+            {/* </Link>  */}
 
         </Menu>
       </>

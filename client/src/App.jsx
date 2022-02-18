@@ -21,8 +21,9 @@ import ProductPage from './app/pages/ProductPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 import SignUp from "./app/components/Forms/RegLogModal.jsx";
+import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
-// import Checkout from "./app/pages/Checkout.jsx"
+import Checkout from "./app/pages/Checkout.jsx"
 // =======================================================================
 
 
@@ -51,13 +52,13 @@ function App() {
         <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
         <Route path="/products" element={<Filters />} />
         <Route path="/products/:id" element={<ProductPage />} />
-        <Route path="/login" element={<LogIn/>} />
-        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="login" element={<LogIn/>} />
+        <Route path="sign-up" element={<SignUp/>} />
         <Route path="settings" element={<RequireAuth>
-          <SignUp/>
+          <PersonalInfo/>
         </RequireAuth>} />
         {/* <Route path="/cart" element={<TestCartPage />}/> */}
-        {/* <Route path="*" element={<Checkout />} /> */}
+         <Route path="*" element={<Checkout />} />
         <Route path="*" element={<PageNotFound />} />
        </Route>
     </Routes>

@@ -50,8 +50,6 @@ const Header = ({ allCategories, categories}) => {
 
   const parentsListWithoutChildren = filterBy(categoriesList, parentsListWithChildren);
 
-
-  
   
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -88,6 +86,7 @@ const Header = ({ allCategories, categories}) => {
               color="primary"
               aria-label="menu"
               onClick={handleMobileMenuOpen}
+              
               sx={{ mr: 0 }}
             >
               <MenuIcon />

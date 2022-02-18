@@ -12,7 +12,6 @@ export default function ProfileMenu () {
     const [anchorEl, setAnchorEl] = useState(null);
     const logout = () => {
         localStorage.removeItem('jwt');
-        window.location.reload();
     }
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -88,7 +87,7 @@ export default function ProfileMenu () {
                 </MenuItem>
             </Link> 
             
-            <Link  underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+            <Link  underline="none" href="/settings">
                 <MenuItem >
                     <ListItemIcon>
                         <Settings fontSize="small" />

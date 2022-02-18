@@ -1,6 +1,9 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
-const PayPal = () => (
+function PayPal ()  {
+
+        return (
+
             <PayPalScriptProvider options={{ "client-id": "test" }}>
                 <PayPalButtons style={{ layout: "horizontal" }} />
             </PayPalScriptProvider>

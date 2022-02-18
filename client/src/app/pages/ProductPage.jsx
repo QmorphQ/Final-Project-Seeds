@@ -1,6 +1,6 @@
+import { useParams } from "react-router-dom";
 import Product from "../components/Product/Product.jsx";
 import CustomerReviews from "../components/CustomerReviews/CustomerReviews.jsx";
-
 
 const scores = {
   5: 50,

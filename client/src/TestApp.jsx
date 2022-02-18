@@ -1,34 +1,34 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Box } from "@material-ui/core";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
 /* import { BrowserRouter, Routes, Route } from "react-router-dom"; */
-import { addProduct, fetchProducts } from "./store/thunks/products.thunks";
+import { fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
-import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
+// import Preloader from "./ui/components/Preloader/Preloader.jsx";
 import { loginCustomer } from "./store/thunks/customer.thunks";
-import {
-  addCart,
-  addProductToCart,
-  fetchCart,
-} from "./store/thunks/cart.thunks";
-import {
-  addProductToWishlist,
-  addWishlist,
-  fetchWishlist,
-} from "./store/thunks/wishlist.thunks";
+// import {
+//   addCart,
+//   addProductToCart,
+//   fetchCart,
+// } from "./store/thunks/cart.thunks";
+// import {
+//   addProductToWishlist,
+//   addWishlist,
+//   fetchWishlist,
+// } from "./store/thunks/wishlist.thunks";
 // =======================================================================================================
 // -------------------------------------------------------------------------------------------------------
 // ++++++
 // +++
 // ================================
 // Marker:
-import {
-  downloadProductsRequestStateSelector,
-  loginStateSelector,
-  productsSelector,
-} from "./store/selectors/selectors";
-import Filters from "./app/pages/Filters/Filters";
+// import {
+//   downloadProductsRequestStateSelector,
+//   loginStateSelector,
+//   productsSelector,
+// } from "./store/selectors/selectors";
+import Filters from "./app/pages/Filters/Filters.jsx";
 
 function TestWarning() {
   return (

@@ -1,40 +1,66 @@
-
 import { useState } from "react";
 // import { useSelector } from "react-redux";
-import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar, Link } from "@mui/material";
-import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-material";
+import {
+  IconButton,
+  Divider,
+  ListItemIcon,
+  MenuItem,
+  Menu,
+  Avatar,
+  Link,
+  Box,
+} from "@mui/material";
+import {
+  AccountCircle,
+  Settings,
+  Logout,
+  Favorite,
+  History,
+} from "@mui/icons-material";
 
 // import { loginStateSelector } from "../../../store/selectors/selectors";
 
+// ====================================== MVP
+// Styles:
+const styles = {
+  ProfileMenu: {
+    Container: {
+      width: "80px",
+      display: "flex",
+      justifyContent: "center",
+      zIndex: "99999",
+    },
+  },
+};
+// =======================================
+export default function ProfileMenu() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const logout = () => {
+    localStorage.removeItem("jwt");
+    window.location.reload();
+  };
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-
-export default function ProfileMenu () {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const logout = () => {
-        localStorage.removeItem('jwt');
-        window.location.reload();
-    }
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-    
-    return(
-        <>
-            <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={open ? 'account-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-            ><AccountCircle />
-            </IconButton>
-            <Menu
+  return (
+    <Box sx={styles.ProfileMenu.Container}>
+      <IconButton
+        size="large"
+        edge={false}
+        aria-label="account of current user"
+        aria-controls={open ? "account-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
+        <AccountCircle />
+      </IconButton>
+      <Menu
             anchorEl={anchorEl}
             id="account-menu"
             open={open}
@@ -103,7 +129,8 @@ export default function ProfileMenu () {
                     </ListItemIcon> Logout
                 </MenuItem>
             </Link> 
+
         </Menu>
-      </>
-    )
+    </Box>
+  );
 }

@@ -3,7 +3,8 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchResultContainer from "./SearchComponent/SearchResultsContainer.jsx";
-import Spinner from '../Spinner/Spinner.jsx';
+import Spinner from '../../../../ui/components/Spinner/Spinner.jsx';
+// import SearchBtn from './SearchBtns/SearchBtn.jsx';
 // =========================================================
 import searchDB from "./SearchComponent/SearchLogic/searchDB";
 import searchObserver from './SearchComponent/SearchLogic/searchObserver';
@@ -33,6 +34,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  color: theme.palette.success
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -141,9 +143,7 @@ useEffect(() => {
 return (
   <>
     <Search component='input' sx={{ border: "solid rgba(0, 0, 0, 0.2) 1px", borderRadius: 20}}>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
+      <SearchIconWrapper><SearchIcon /></SearchIconWrapper>
       <StyledInputBase
       required
         value={inputText}

@@ -1,6 +1,6 @@
 import { Box, Typography, Link, Divider } from "@mui/material";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
-import Logo from "../Header/headerIcons/headerIcon/Logo.jsx";
+import LogoBtn from "./FooterBtns/LogoBtn.jsx";
 
 export default function FooterDesktop() {
   return (
@@ -33,7 +33,7 @@ export default function FooterDesktop() {
           </Link>
         </Box>
         <Box mb="25px">
-          <Logo iconWidth={"130px"} iconHeight={"26px"} />
+          <LogoBtn />
         </Box>
         <Box
           display="flex"

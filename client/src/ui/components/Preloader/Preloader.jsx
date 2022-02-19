@@ -18,7 +18,7 @@ export default function Preloader({ spaceBetween, widthInApp, heightInApp }) {
         transform: "translate(-50%, -50%)",
       },
       Title: {
-        color: "green",
+        color: "#359740",
         fontSize: "1em",
         marginBottom: spaceBetween,
       },

@@ -20,7 +20,7 @@ const Home = ({ loading, productList }) => {
 
   return (
     <>
-      <Box component="main">
+      <Box component="main" >
         <MainPageCarousel />
         <OurProducts loading={loading} productList={productList} />
         <ProductsList loading={loading} productList={productList} />

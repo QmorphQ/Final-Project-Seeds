@@ -504,12 +504,11 @@ const ProductCard = ({ product, loading }) =>
     />
   );
 
-
 ProductCard.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string,
     currentPrice: PropTypes.number,
-    imageUrls: PropTypes.string,
+    imageUrls: PropTypes.array, // ====== MVP: string => arr
     isProductPage: PropTypes.bool,
     isFiltersPage: PropTypes.bool,
     categories: PropTypes.string,
@@ -518,7 +517,7 @@ ProductCard.propTypes = {
     discountPrice: PropTypes.number,
     itemNo: PropTypes.number,
   }),
-  loading: PropTypes.oneOf(Object.values).isRequired,
+  loading: PropTypes.oneOf(['LOADING', 'SUCCESS', 'ERROR']).isRequired,
 };
 ProductCardRender.propTypes = {
   data: PropTypes.object,

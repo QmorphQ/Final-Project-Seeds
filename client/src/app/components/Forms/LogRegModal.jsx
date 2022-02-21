@@ -15,6 +15,7 @@ import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
 import { downloadRequestStates } from '../../constants/index';
 
 
+
 const style = makeStyles({
   ItemBlock:{
     position: "relative"
@@ -25,22 +26,9 @@ const style = makeStyles({
     top: "5px"
   },
   BlockCenter: {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
+    position: 'relative',
+    margin:"100px auto",
     backgroundColor: "#FFF",
-    zIndex: 3,
-  },
-  BgClose:{
-    position: 'fixed',
-    width: '100%',
-    top: '0',
-    right: '0',
-    height:'100%',
-    backgroundColor: "#00000030",
-    zIndex: 2,
   }
 });
 
@@ -87,8 +75,7 @@ export default function LogIn() {
     <>        
               {(open === true) ? 
               <>
-              <Box onClick={handleClose} className={styles.BgClose}/>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, width:300, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, maxWidth:300}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE

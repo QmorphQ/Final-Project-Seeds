@@ -92,15 +92,18 @@ const Filters = () => {
       );
     }
 
-    if (searchParams.get("origin") !== null) {
-      dispatch(setOriginCheckboxState(searchParams.get("origin")));
-    }
-
-    if (searchParams.get("maturation") !== null) {
-      dispatch(setMaturationCheckboxState(searchParams.get("maturation")));
-    }
-
     dispatch(fetchFilteredProducts(queryParams));
+
+    return function cleanUp() {
+      dispatch(setParams(null));
+      dispatch(setQueryParams(null));
+      dispatch(setSelectedCategory([]));
+      dispatch(setInputValueFrom(0));
+      dispatch(setInputValueTo(30));
+      dispatch(setSliderValues([0, 30]));
+      dispatch(setOriginCheckboxState([]));
+      dispatch(setMaturationCheckboxState([]));
+    };
   }, []);
 
   useEffect(() => {
@@ -142,7 +145,6 @@ const Filters = () => {
     }
   }, [maturationCheckBoxState]);
 
-  
   return (
     <>
       <Grid container>

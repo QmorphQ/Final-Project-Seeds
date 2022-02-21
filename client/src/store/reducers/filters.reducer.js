@@ -25,7 +25,12 @@ const initialState = {
 const filtersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_PARAMS:
-      if (Object.keys(action.payload).length !== 0) {
+      if (action.payload === null) {
+        return {
+          ...state,
+          params: {},
+        };
+      } else if (Object.keys(action.payload).length !== 0) {
         return {
           ...state,
           params: action.payload,
@@ -35,7 +40,12 @@ const filtersReducer = (state = initialState, action) => {
       }
 
     case SET_QUERY_PARAMS:
-      if (action.payload.toString() !== "") {
+      if (action.payload === null) {
+        return {
+          ...state,
+          queryParams: {},
+        };
+      } else if (action.payload.toString() !== "") {
         return {
           ...state,
           queryParams: action.payload,

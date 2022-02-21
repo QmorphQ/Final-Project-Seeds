@@ -62,13 +62,11 @@ function PersonalInfo  ()  {
                 validationSchema={FORM_VALIDATION}
                 onSubmit={handleSubmit}>
                 <Form>
-  
                   <Grid container spacing={2}>
                   <IconButton
-                              edge="start"
-                             color="primary">
+                    edge="start"
+                    color="primary">
                   </IconButton>
-             
                     <Grid item xs={12}>
                       <Typography>
                         Your details
@@ -128,8 +126,7 @@ function PersonalInfo  ()  {
                         name="city"
                         label="City"
                       />
-                    </Grid>
-  
+                    </Grid>  
                     <Grid item xs={6}>
                       <Textfield
                         name="house"
@@ -148,7 +145,6 @@ function PersonalInfo  ()  {
                         label="Postal code"
                       />
                     </Grid>
-
                     <Grid sx={{mb:10, mt:5 }} item xs={12}>
                     <ButtonWrapper onClick={handleSubmit}>
                           Save Changes

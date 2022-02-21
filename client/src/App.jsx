@@ -24,6 +24,7 @@ import SignUp from "./app/components/Forms/RegLogModal.jsx";
 import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
 import Checkout from "./app/pages/Checkout.jsx"
+import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
 // =======================================================================
 
 
@@ -52,11 +53,9 @@ function App() {
         <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
         <Route path="/products" element={<Filters />} />
         <Route path="/products/:id" element={<ProductPage />} />
-        <Route path="login" element={<LogIn/>} />
-        <Route path="sign-up" element={<SignUp/>} />
-        <Route path="settings" element={<RequireAuth>
-          <PersonalInfo/>
-        </RequireAuth>} />
+        <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
+        <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
+        <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
         {/* <Route path="/cart" element={<TestCartPage />}/> */}
          <Route path="*" element={<Checkout />} />
         <Route path="*" element={<PageNotFound />} />

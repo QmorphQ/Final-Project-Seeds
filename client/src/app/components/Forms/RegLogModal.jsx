@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@mui/styles";
-import { Grid, Typography, Box, IconButton,Button  } from "@mui/material";
+import { Grid, Typography, Box, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
@@ -23,30 +23,17 @@ const style = makeStyles({
     top: "5px"
   },
   BlockCenter: {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
+    position: 'relative',
+    margin:"100px auto",
     backgroundColor: "#FFF",
-    zIndex: 3,
-    transition: '1s'
-  },
-  BgClose:{
-    position: 'fixed',
-    width: '100%',
-    top: '0',
-    right: '0',
-    height:'100%',
-    backgroundColor: "#00000030",
-    zIndex: 2,
-    transition: '1s'
   }
 });
 
 
 export default function SignUp() {
     const requestState = useSelector(customersRequestSelector);
+    const classes = useStyles();
+    const navigation = useNavigate()
     const styles = style();
     const INITIAL_FORM_STATE = {
         firstName: '',
@@ -83,14 +70,8 @@ export default function SignUp() {
         .required('The terms and conditions must be accepted.'),
     })
 
-    const [open, setOpen] = useState(false)
-
-    const handleClickOpen = () =>{
-      setOpen(true)
-    }
-
     const handleClose = () =>{
-      setOpen(false)
+      navigation(-1)
     }
     
     const handleSubmit = values => {
@@ -104,11 +85,7 @@ export default function SignUp() {
 
     return (
     <>        
-            <Button sx={{ height:20, width:80, fontSize:10}} onClick={handleClickOpen} >Sign up</Button>  
-              {(open === true) ? 
-              <>
-              <Box onClick={handleClose} className={styles.BgClose}/>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 3, width:400, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 3, maxWidth:400, margin:"0 auto"}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -180,9 +157,9 @@ export default function SignUp() {
                     </Grid>
                   </Form>
                 </Formik>
-            </Box></> : false}
+            </Box>
             {requestState === downloadRequestStates.ERROR && (
         <ErrorHandler errorMessage={"User with this email or login are already exists"} />)}                     
-    </>);
+ </>);   
 }
 

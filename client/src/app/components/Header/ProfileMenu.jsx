@@ -1,22 +1,8 @@
 import { useState } from "react";
 // import { useSelector } from "react-redux";
-import {
-  IconButton,
-  Divider,
-  ListItemIcon,
-  MenuItem,
-  Menu,
-  Avatar,
-  Link,
-  Box,
-} from "@mui/material";
-import {
-  AccountCircle,
-  Settings,
-  Logout,
-  Favorite,
-  History,
-} from "@mui/icons-material";
+import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar } from "@mui/material";
+import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 // import { loginStateSelector } from "../../../store/selectors/selectors";
 
@@ -47,6 +33,7 @@ export default function ProfileMenu() {
     setAnchorEl(null);
   };
 
+<<<<<<< HEAD
   return (
     <Box sx={styles.ProfileMenu.Container}>
       <IconButton
@@ -61,6 +48,36 @@ export default function ProfileMenu() {
         <AccountCircle />
       </IconButton>
       <Menu
+=======
+
+export default function ProfileMenu () {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const logout = () => {
+        localStorage.removeItem('jwt')
+        window.location.reload()
+    }
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    
+    return(
+        <>
+            <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={open ? 'account-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            ><AccountCircle />
+            </IconButton>
+            <Menu
+>>>>>>> 83238f05a523dd5bbbc4ac975f0b4dc0d43cf47c
             anchorEl={anchorEl}
             id="account-menu"
             open={open}
@@ -99,22 +116,22 @@ export default function ProfileMenu() {
             <Avatar/> Profile
             </MenuItem>
             <Divider />
-            <Link underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+            {/* <Link underline="none"  to="#"> */}
                 <MenuItem >
                     <ListItemIcon>
                         <Favorite fontSize="small" />                    
                     </ListItemIcon> Favourites
                 </MenuItem>
-            </Link>    
-            <Link  underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+            {/* </Link>     */}
+            {/* <Link  underline="none" to="#"> */}
                 <MenuItem >
                     <ListItemIcon>
                         <History fontSize="small" />
                     </ListItemIcon> My orders
                 </MenuItem>
-            </Link> 
+            {/* </Link>  */}
             
-            <Link  underline="none" href="https://trello.com/b/4gqPk1fd/fe28fpt1tea">
+            <Link  style={{ textDecoration: 'none',color: "black" }} to="/settings">
                 <MenuItem >
                     <ListItemIcon>
                         <Settings fontSize="small" />
@@ -122,13 +139,13 @@ export default function ProfileMenu() {
                 </MenuItem>
             </Link> 
 
-            <Link  underline="none" onClick={logout}>            
-                <MenuItem>
+            {/* <Link  underline="none" onClick={logout}>             */}
+                <MenuItem onClick={logout}>
                     <ListItemIcon>
                         <Logout fontSize="small"/>
                     </ListItemIcon> Logout
                 </MenuItem>
-            </Link> 
+            {/* </Link>  */}
 
         </Menu>
     </Box>

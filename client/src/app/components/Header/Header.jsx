@@ -12,38 +12,36 @@ import { useSelector } from "react-redux";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { Box, AppBar, Toolbar, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-// ------------------------------------------------------------------------------------
-// React Components:
-// import Logo from "./headerIcons/headerIcon/Logo.jsx";
-// import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
-// import MenuMobile from "../Menu/MenuMobile.jsx";
-// import MenuDesktop from "../Menu/MenuDesktop.jsx";
-import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import Logo from "./headerIcons/headerIcon/Logo.jsx";
+import HeaderIcons from "./headerIcons/HeaderIcons.jsx";
+import MenuMobile from "../Menu/MenuMobile.jsx";
+import MenuDesktop from "../Menu/MenuDesktop.jsx";
+import SearchAppBar from "../../../ui/components/SearchAppBar/SearchAppBar.jsx";
 import { loginStateSelector } from "../../../store/selectors/selectors";
-import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
-import CartBtn from "./HeaderBtns/CartBtn.jsx";
-import FavoriteBtn from './HeaderBtns/FavoriteBtn.jsx';
-import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
-// ++++++++++++++++
-// Auth Component:
-import LogIn from "../Forms/LogRegModal.jsx";
-import SignUp from "../Forms/RegLogModal.jsx";
-import ProfileMenu from './ProfileMenu.jsx';
-// ++++++++++++++++
-// ------------------------------------------------------------------------------------
-// Styles:
-import classes from "./HeaderStyles.jsx";
-// =======================================================================================
+import ProfileMenu from "./ProfileMenu.jsx";
+import Auth from "../Forms/Auth.jsx"
+// import { downloadRequestStates } from "../../constants";
 
-const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
+
+const Header = ({ allCategories, categories}) => {
+
+  const favoritesLength = 0;
   const isLogin = useSelector(loginStateSelector);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(prevVal => !prevVal)
   };
-     
-  const handleClickAway = () => setIsMenuOpen(false);
-  // =============================================== Render ==============================================
+
+  const result = Array.isArray(allCategories) ? process(allCategories) : [];
+
+  const parentsListWithChildren = result.filter((e) => e.parentId !== "null");
+
+  const filterBy = (a, b) => a.filter((e) => !b.find((item) => item.parentId === e) && e);
+
+  const parentsListWithoutChildren = filterBy(categoriesList, parentsListWithChildren);
+
+  
   return (
     <Box sx={classes.Header}>
       <AppBar position="static" color="inherit" sx={{ boxShadow: "none" }}>
@@ -68,20 +66,31 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
             {/* <MenuTable /> */}
             <HeaderNavMenu resolution={'table'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
           </Box>
-          <Box /* Search AppBar Block */
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Box display={{ xs: "none", sm: "none", md: "block" }} >
-              <SearchAppBar />
+          <Box sx={{ display: { xs: "flex", md: "flex" }, justifyContent: "flex-start" }}>
+          {isLogin && <IconButton>
+              <Badge badgeContent={favoritesLength} color="primary">
+                <FavoriteBorderOutlinedIcon sx={{ color: "#359740" }} />
+              </Badge>
+            </IconButton>}
+            <HeaderIcons />
+            <Box display={{ xs: "none", sm: "none", md:"flex" }}>
+            {!localStorage.getItem('jwt') ? (
+                <Auth/>
+            ) : (
+              <ProfileMenu/>
+            )}
             </Box>
-            <Box
-              sx={{
-                display: { xs: "flex", md: "flex" },
-                justifyContent: "space-between", width: '100%'
-              }}
+           
+          </Box>
+          <Box display={{ xs: "block", sm: "block", md: "none" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="primary"
+              aria-label="menu"
+              onClick={handleMobileMenuOpen}
+              
+              sx={{ mr: 0 }}
             >
               {isLogin && (
                 <FavoriteBtn />

@@ -47,7 +47,6 @@ const fetchFilteredProducts = (queryParams) => (dispatch) => {
 const addProduct = (product) => (dispatch) => {
   dispatch(addProductRequested());
   const token = localStorage.getItem("jwt");
-  console.log(token);
   axios
     .post(`${API}products`, product, {
       headers: {

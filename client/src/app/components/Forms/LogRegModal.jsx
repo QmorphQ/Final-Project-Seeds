@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { makeStyles } from "@mui/styles";
-import { Grid, Typography, Box, IconButton, Button } from "@mui/material";
+import { Grid, Typography, Box, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
@@ -11,6 +11,7 @@ import { loginCustomer } from '../../../store/thunks/customer.thunks';
 import { loginRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
 import { downloadRequestStates } from '../../constants/index';
+
 
 
 const style = makeStyles({
@@ -23,28 +24,17 @@ const style = makeStyles({
     top: "5px"
   },
   BlockCenter: {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
+    position: 'relative',
+    margin:"100px auto",
     backgroundColor: "#FFF",
-    zIndex: 3,
-  },
-  BgClose:{
-    position: 'fixed',
-    width: '100%',
-    top: '0',
-    right: '0',
-    height:'100%',
-    backgroundColor: "#00000030",
-    zIndex: 2,
   }
 });
 
 
 export default function LogIn() {
     const requestState = useSelector(loginRequestSelector);
+    const navigation = useNavigate()
+    const classes = useStyles();
     const styles = style();
     const dispatch = useDispatch()
     const INITIAL_FORM_STATE = {
@@ -62,14 +52,14 @@ export default function LogIn() {
         .required('Required')
     })
 
-    const [open, setOpen] = useState(false)
 
-    const handleClickOpen = () =>{
-      setOpen(true)
-    }
+
+    // const handleClickOpen = () =>{
+    //   setOpen(true)
+    // }
 
     const handleClose = () =>{
-      setOpen(false)
+      navigation(-1)
     }
 
     const handleSubmit = values => {
@@ -80,11 +70,7 @@ export default function LogIn() {
 
     return (
     <>        
-            <Button onClick={handleClickOpen} sx={{ height:20, width:80, fontSize:10}}  color="primary" variant="text">Log In</Button>
-              {(open === true) ? 
-              <>
-              <Box onClick={handleClose} className={styles.BgClose}/>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, width:300, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter}  onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, maxWidth:300}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -124,7 +110,7 @@ export default function LogIn() {
                     </Grid>
                   </Form>
                 </Formik>
-            </Box></> : false}
+            </Box>
             {requestState === downloadRequestStates.ERROR && (
         <ErrorHandler errorMessage={"Incorrect email or password."} />)}      
     </>);

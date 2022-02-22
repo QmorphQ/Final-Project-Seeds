@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,7 +53,7 @@ export default function LogIn() {
         .required('Required')
     })
 
-    const [open, setOpen] = useState(true)
+
 
     // const handleClickOpen = () =>{
     //   setOpen(true)
@@ -62,7 +61,6 @@ export default function LogIn() {
 
     const handleClose = () =>{
       navigation(-1)
-      setOpen(false)
     }
 
     const handleSubmit = values => {
@@ -73,9 +71,7 @@ export default function LogIn() {
 
     return (
     <>        
-              {(open === true) ? 
-              <>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, maxWidth:300}}>
+              <Box className={styles.BlockCenter}  onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, maxWidth:300}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -115,7 +111,7 @@ export default function LogIn() {
                     </Grid>
                   </Form>
                 </Formik>
-            </Box></> : false}
+            </Box>
             {requestState === downloadRequestStates.ERROR && (
         <ErrorHandler errorMessage={"Incorrect email or password."} />)}      
     </>);

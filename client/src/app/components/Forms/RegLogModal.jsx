@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -72,12 +71,8 @@ export default function SignUp() {
         .required('The terms and conditions must be accepted.'),
     })
 
-    const [open, setOpen] = useState(true)
-
-
     const handleClose = () =>{
       navigation(-1)
-      setOpen(false)
     }
     
     const handleSubmit = values => {
@@ -91,9 +86,7 @@ export default function SignUp() {
 
     return (
     <>        
-              {(open === true) ? 
-              <>
-              <Box className={styles.BlockCenter}  open={open} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 3, maxWidth:400, margin:"0 auto"}}>
+              <Box className={styles.BlockCenter} onClose={handleClose} sx={{border: `1px solid green`, p:3, borderRadius: 3, maxWidth:400, margin:"0 auto"}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -165,7 +158,7 @@ export default function SignUp() {
                     </Grid>
                   </Form>
                 </Formik>
-            </Box></> : false}
+            </Box>
             {requestState === downloadRequestStates.ERROR && (
         <ErrorHandler errorMessage={"User with this email or login are already exists"} />)}                     
  </>);   

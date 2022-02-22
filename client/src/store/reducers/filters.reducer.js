@@ -1,5 +1,4 @@
 import {
-  SET_PARAMS,
   SET_QUERY_PARAMS,
   SORT_PRODUCTS_BY_PRICE,
   SET_SELECTED_CATEGORY,
@@ -11,7 +10,6 @@ import {
 } from "../actions/filters.actions";
 
 const initialState = {
-  params: {},
   queryParams: {},
   sortedByPrice: "most",
   selectedCategory: [],
@@ -24,28 +22,13 @@ const initialState = {
 
 const filtersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_PARAMS:
-      if (action.payload === null) {
-        return {
-          ...state,
-          params: {},
-        };
-      } else if (Object.keys(action.payload).length !== 0) {
-        return {
-          ...state,
-          params: action.payload,
-        };
-      } else {
-        return state;
-      }
-
     case SET_QUERY_PARAMS:
       if (action.payload === null) {
         return {
           ...state,
           queryParams: {},
         };
-      } else if (action.payload.toString() !== "") {
+      } else if (Object.keys(action.payload).length !== 0) {
         return {
           ...state,
           queryParams: action.payload,

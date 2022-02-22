@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Drawer, Grid, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
 import SortBySelect from "../../../ui/components/FiltersComponents/SortBySelect.jsx";
 import CategoryFilter from "../../../ui/components/FiltersComponents/CategoryFilter.jsx";
@@ -10,7 +11,6 @@ import {
   filteredProductsSelector,
   maturationCheckboxStateSelector,
   originCheckboxStateSelector,
-  paramsSelector,
   queryParamsSelector,
   selectedCategorySelector,
 } from "../../../store/selectors/selectors";
@@ -23,7 +23,6 @@ import {
   setInputValueTo,
   setMaturationCheckboxState,
   setOriginCheckboxState,
-  setParams,
   setQueryParams,
   setSelectedCategory,
   setSliderValues,
@@ -35,7 +34,6 @@ const Filters = () => {
 
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
-  const params = useSelector(paramsSelector);
   const queryParams = useSelector(queryParamsSelector);
   const selectedCategory = useSelector(selectedCategorySelector);
   const originCheckBoxState = useSelector(originCheckboxStateSelector);
@@ -44,6 +42,7 @@ const Filters = () => {
   const dispatch = useDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const [hasMore, setHasMore] = useState(true);
 
   let initialParams = null;
 
@@ -64,9 +63,8 @@ const Filters = () => {
   }
 
   useEffect(() => {
-    dispatch(setParams(initialParams));
-
-    dispatch(setQueryParams(new URLSearchParams(initialParams)));
+    console.log("fiiiirst");
+    dispatch(setQueryParams(initialParams));
 
     if (searchParams.get("categories") !== null) {
       dispatch(setSelectedCategory(searchParams.get("categories")));
@@ -92,10 +90,10 @@ const Filters = () => {
       );
     }
 
-    dispatch(fetchFilteredProducts(queryParams));
+    dispatch(fetchFilteredProducts(initialParams));
 
     return function cleanUp() {
-      dispatch(setParams(null));
+      dispatch(setQueryParams(null));
       dispatch(setQueryParams(null));
       dispatch(setSelectedCategory([]));
       dispatch(setInputValueFrom(0));
@@ -107,43 +105,56 @@ const Filters = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setQueryParams(new URLSearchParams(params)));
-  }, [params]);
-
-  useEffect(() => {
-    setSearchParams(queryParams);
-    dispatch(fetchFilteredProducts(queryParams));
+    if (Object.keys(queryParams).length > 0) {
+      dispatch(fetchFilteredProducts(queryParams));
+    }
   }, [queryParams]);
 
   useEffect(() => {
     if (selectedCategory.length !== 0) {
-      dispatch(setParams({ ...params, categories: selectedCategory }));
+      dispatch(
+        setQueryParams({ ...queryParams, categories: selectedCategory })
+      );
     } else {
-      const newParams = { ...params };
+      const newParams = { ...queryParams };
       delete newParams.categories;
-      dispatch(setParams(newParams));
+      dispatch(setQueryParams(newParams));
     }
   }, [selectedCategory]);
 
   useEffect(() => {
     if (originCheckBoxState.length > 0) {
-      dispatch(setParams({ ...params, origin: originCheckBoxState }));
+      dispatch(setQueryParams({ ...queryParams, origin: originCheckBoxState }));
     } else {
-      const newParams = { ...params };
+      const newParams = { ...queryParams };
       delete newParams.origin;
-      dispatch(setParams(newParams));
+      dispatch(setQueryParams(newParams));
     }
   }, [originCheckBoxState]);
 
   useEffect(() => {
     if (maturationCheckBoxState.length > 0) {
-      dispatch(setParams({ ...params, maturation: maturationCheckBoxState }));
+      dispatch(
+        setQueryParams({ ...queryParams, maturation: maturationCheckBoxState })
+      );
     } else {
-      const newParams = { ...params };
+      const newParams = { ...queryParams };
       delete newParams.maturation;
-      dispatch(setParams(newParams));
+      dispatch(setQueryParams(newParams));
     }
   }, [maturationCheckBoxState]);
+
+  const fetchData = () => {
+    let newParams = {};
+    if (queryParams.perPage === 9) {
+      newParams = { ...queryParams, perPage: 18 };
+    }
+    if (queryParams.perPage === 18) {
+      newParams = { ...queryParams, perPage: 24 };
+      setHasMore(false);
+    }
+    dispatch(setQueryParams(newParams));
+  };
 
   return (
     <>
@@ -174,10 +185,16 @@ const Filters = () => {
           </Drawer>
         </Grid>
         <Grid item xs={12} md={8}>
-          <ProductsListFilters
-            loading={loading}
-            productList={filteredProducts}
-          />
+          <InfiniteScroll
+            dataLength={filteredProducts.length}
+            next={fetchData}
+            hasMore={hasMore}
+          >
+            <ProductsListFilters
+              loading={loading}
+              productList={filteredProducts}
+            />
+          </InfiniteScroll>
         </Grid>
       </Grid>
     </>

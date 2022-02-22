@@ -33,8 +33,10 @@ const fetchProducts =
 
 const fetchFilteredProducts = (queryParams) => (dispatch) => {
   dispatch(downloadFilteredProductsRequested());
+  const URLParams = new URLSearchParams(queryParams);
+  
   axios
-    .get(`${API}products/filter?${queryParams}`)
+    .get(`${API}products/filter?${URLParams}`)
     .then((filteredProducts) => {
       dispatch(downloadFilteredProductsSuccess(filteredProducts.data.products));
       return filteredProducts;

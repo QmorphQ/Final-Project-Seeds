@@ -7,20 +7,20 @@ import useFiltersStyles from "../../../app/pages/Filters/useFiltersStyles";
 import {
   setInputValueFrom,
   setInputValueTo,
-  setParams,
+  setQueryParams,
   setSliderValues,
 } from "../../../store/actions/filters.actions";
 import {
   inputValueFromSelector,
   inputValueToSelector,
-  paramsSelector,
+  queryParamsSelector,
   sliderValuesSelector,
 } from "../../../store/selectors/selectors";
 
 const PriceFilter = () => {
   const classes = useFiltersStyles();
 
-  const params = useSelector(paramsSelector);
+  const queryParams = useSelector(queryParamsSelector);
   const inputFromValue = useSelector(inputValueFromSelector);
   const inputToValue = useSelector(inputValueToSelector);
   const sliderValues = useSelector(sliderValuesSelector);
@@ -33,7 +33,7 @@ const PriceFilter = () => {
       dispatch(setInputValueFrom(event.target.value));
 
       dispatch(
-        setParams({ ...params, minPrice: 0, maxPrice: sliderValues[1] })
+        setQueryParams({ ...queryParams, minPrice: 0, maxPrice: sliderValues[1] })
       );
     } else {
       if (+event.target.value > 30) {
@@ -41,14 +41,14 @@ const PriceFilter = () => {
         dispatch(setInputValueFrom(30));
         dispatch(setInputValueTo(30));
 
-        dispatch(setParams({ ...params, minPrice: 30, maxPrice: 30 }));
+        dispatch(setQueryParams({ ...queryParams, minPrice: 30, maxPrice: 30 }));
       } else if (+event.target.value > sliderValues[1]) {
         dispatch(setSliderValues([sliderValues[1], sliderValues[1]]));
         dispatch(setInputValueFrom(sliderValues[1]));
 
         dispatch(
-          setParams({
-            ...params,
+          setQueryParams({
+            ...queryParams,
             minPrice: sliderValues[1],
             maxPrice: sliderValues[1],
           })
@@ -58,8 +58,8 @@ const PriceFilter = () => {
         dispatch(setInputValueFrom(event.target.value));
 
         dispatch(
-          setParams({
-            ...params,
+          setQueryParams({
+            ...queryParams,
             minPrice: +event.target.value,
             maxPrice: sliderValues[1],
           })
@@ -77,7 +77,7 @@ const PriceFilter = () => {
       dispatch(setInputValueTo(event.target.value));
 
       dispatch(
-        setParams({ ...params, minPrice: sliderValues[0], maxPrice: 30 })
+        setQueryParams({ ...queryParams, minPrice: sliderValues[0], maxPrice: 30 })
       );
     } else {
       if (+event.target.value < 0) {
@@ -85,21 +85,21 @@ const PriceFilter = () => {
         dispatch(setInputValueFrom(0));
         dispatch(setInputValueTo(0));
 
-        dispatch(setParams({ ...params, minPrice: 0, maxPrice: 0 }));
+        dispatch(setQueryParams({ ...queryParams, minPrice: 0, maxPrice: 0 }));
       } else if (+event.target.value > 30) {
         dispatch(setSliderValues([sliderValues[0], 30]));
         dispatch(setInputValueTo(30));
 
         dispatch(
-          setParams({ ...params, minPrice: sliderValues[0], maxPrice: 30 })
+          setQueryParams({ ...queryParams, minPrice: sliderValues[0], maxPrice: 30 })
         );
       } else if (+event.target.value < sliderValues[0]) {
         dispatch(setSliderValues([sliderValues[0], sliderValues[0]]));
         dispatch(setInputValueTo(event.target.value));
 
         dispatch(
-          setParams({
-            ...params,
+          setQueryParams({
+            ...queryParams,
             minPrice: sliderValues[0],
             maxPrice: sliderValues[0],
           })
@@ -109,8 +109,8 @@ const PriceFilter = () => {
         dispatch(setInputValueTo(event.target.value));
 
         dispatch(
-          setParams({
-            ...params,
+          setQueryParams({
+            ...queryParams,
             minPrice: sliderValues[0],
             maxPrice: +event.target.value,
           })
@@ -127,7 +127,9 @@ const PriceFilter = () => {
     dispatch(setInputValueTo(newValue[1]));
     dispatch(setSliderValues(newValue));
 
-    dispatch(setParams({ ...params, minPrice: newValue[0], maxPrice: newValue[1] }));
+    dispatch(
+      setQueryParams({ ...queryParams, minPrice: newValue[0], maxPrice: newValue[1] })
+    );
   };
 
   return (

@@ -6,49 +6,7 @@ import { Link } from "react-router-dom";
 
 // import { loginStateSelector } from "../../../store/selectors/selectors";
 
-// ====================================== MVP
-// Styles:
-const styles = {
-  ProfileMenu: {
-    Container: {
-      width: "80px",
-      display: "flex",
-      justifyContent: "center",
-      zIndex: "99999",
-    },
-  },
-};
-// =======================================
-export default function ProfileMenu() {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const logout = () => {
-    localStorage.removeItem("jwt");
-    window.location.reload();
-  };
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
-<<<<<<< HEAD
-  return (
-    <Box sx={styles.ProfileMenu.Container}>
-      <IconButton
-        size="large"
-        edge={false}
-        aria-label="account of current user"
-        aria-controls={open ? "account-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        <AccountCircle />
-      </IconButton>
-      <Menu
-=======
 
 export default function ProfileMenu () {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -77,7 +35,6 @@ export default function ProfileMenu () {
             ><AccountCircle />
             </IconButton>
             <Menu
->>>>>>> 83238f05a523dd5bbbc4ac975f0b4dc0d43cf47c
             anchorEl={anchorEl}
             id="account-menu"
             open={open}
@@ -148,6 +105,6 @@ export default function ProfileMenu () {
             {/* </Link>  */}
 
         </Menu>
-    </Box>
-  );
+      </>
+    )
 }

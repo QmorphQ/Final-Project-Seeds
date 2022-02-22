@@ -32,6 +32,8 @@ import PriceFilter from "../../../ui/components/FiltersComponents/PriceFilter.js
 const Filters = () => {
   const classes = useFiltersStyles();
 
+  const productsQuantity = 24; 
+
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
   const queryParams = useSelector(queryParamsSelector);
@@ -105,6 +107,7 @@ const Filters = () => {
   }, []);
 
   useEffect(() => {
+    setSearchParams(new URLSearchParams(queryParams));
     if (Object.keys(queryParams).length > 0) {
       dispatch(fetchFilteredProducts(queryParams));
     }
@@ -146,13 +149,14 @@ const Filters = () => {
 
   const fetchData = () => {
     let newParams = {};
-    if (queryParams.perPage === 9) {
-      newParams = { ...queryParams, perPage: 18 };
-    }
-    if (queryParams.perPage === 18) {
-      newParams = { ...queryParams, perPage: 24 };
+    const leftProducts = productsQuantity - queryParams.perPage;
+    if (leftProducts > 8) {
+      newParams = { ...queryParams, perPage: +queryParams.perPage + 9 };
+    } else {
+      newParams = { ...queryParams, perPage: +queryParams.perPage + leftProducts };
       setHasMore(false);
     }
+    
     dispatch(setQueryParams(newParams));
   };
 

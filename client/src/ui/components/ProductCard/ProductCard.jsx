@@ -515,9 +515,9 @@ ProductCard.propTypes = {
     quantity: PropTypes.number,
     isBasket: PropTypes.bool,
     discountPrice: PropTypes.number,
-    itemNo: PropTypes.number,
+    itemNo: PropTypes.string,
   }),
-  loading: PropTypes.oneOf(['LOADING', 'SUCCESS', 'ERROR']).isRequired,
+  loading: PropTypes.oneOf(['LOADING', 'SUCCESS', 'ERROR']),
 };
 ProductCardRender.propTypes = {
   data: PropTypes.object,

@@ -10,8 +10,7 @@ import { makeStyles } from "@material-ui/core"; // !!! <-------------- MUI CORE
 import SearchAppBar from "../../../HeaderSearch/SearchAppBar.jsx";
 // -----------------------
 // Auth:
-import LogIn from "../../../../Forms/LogRegModal.jsx";
-import SignUp from "../../../../Forms/RegLogModal.jsx";
+import Auth from "../../../../Forms/Auth.jsx";
 import ProfileMenu from "../../../ProfileMenu.jsx";
 //------------------------
 import MenuItemNoChildrenMobile from "./MenuMobileComponents/MenuItemNoChildrenMobile.jsx";
@@ -54,7 +53,7 @@ export default function MenuMobile({
         }}
       >
         <Grid sx={{ flexGrow: 1 }}>
-          <Grid container sx={{ flexGrow: 1 }}  item xs={12} alignItems='center' justifyContent={LogIn ? 'space-between' : "flex-end"}>
+          <Grid container sx={{ flexGrow: 1 }}  item xs={12} alignItems='center' justifyContent={isLogin ? 'space-between' : "flex-end"}>
             <Grid item xs={2}>{isLogin && (<ProfileMenu />) }</Grid>
             <Grid item xs={10}>
               <SearchAppBar />
@@ -70,10 +69,7 @@ export default function MenuMobile({
           </Grid>
           <Box display="flex" sx={{ justifyContent: "space-around" }}>
             {!isLogin && (
-              <>
-                <LogIn />
-                <SignUp />
-              </>
+                <Auth />
             ) }
           </Box>
         </Grid>

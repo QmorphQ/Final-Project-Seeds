@@ -7,6 +7,7 @@ import { downloadRequestStates } from "../constants";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
 import { downloadProductsRequestStateSelector } from "../../store/selectors/selectors";
+import Comments from "../../ui/components/Comments/CommentsCarousel.jsx";
 
 
 const Home = ({ loading, productList }) => {
@@ -24,6 +25,7 @@ const Home = ({ loading, productList }) => {
         <MainPageCarousel />
         <OurProducts loading={loading} productList={productList} />
         <ProductsList loading={loading} productList={productList} />
+          <Comments />
       </Box>
     </>
   );

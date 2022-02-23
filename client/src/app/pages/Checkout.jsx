@@ -1,5 +1,4 @@
 import { Grid } from "@mui/material";
-
 import CheckoutForm from '../components/CheckoutForm/CheckoutForm.jsx';
 
 function Checkout() {
@@ -11,3 +10,5 @@ function Checkout() {
 };
 
 export default Checkout;
+
+

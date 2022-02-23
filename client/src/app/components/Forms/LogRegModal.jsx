@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
@@ -84,7 +85,7 @@ export default function LogIn() {
                         <Typography color="primary" sx={{pb:1}}>
                           Login
                         </Typography>
-                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon sx={{color: "#359740", pl: "0"}}/></IconButton>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
                       </Grid>
     
                       <Grid item xs={12}>

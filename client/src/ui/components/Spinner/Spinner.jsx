@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export default function Spinner({ size, thickness }) {
   return (
     <Box sx={{ display: "flex" }}>
-      <CircularProgress size={size} thickness={thickness} sx={{ color: "#359740" }} />
+      <CircularProgress size={size} thickness={thickness} sx={{ color: "green" }} />
     </Box>
   );
 }

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import useStyles from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import CheckboxWrapper from './Components/FormsUI/Checkbox';
@@ -49,8 +50,14 @@ export default function SignUp() {
     
     const FORM_VALIDATION = Yup.object().shape({
         firstName: Yup.string()
+        .min(2, 'Too Short!')
+        .max(30, 'Too Long!')
+        .matches(/[a-zA-Z]/, 'Firstname can only contain Latin letters.')
         .required('Required'),
         lastName: Yup.string()
+        .min(2, 'Too Short!')
+        .max(30, 'Too Long!')
+        .matches(/[a-zA-Z]/, 'Lastname can only contain Latin letters.')
         .required('Required'),
         email: Yup.string()
         .required('Required')
@@ -99,7 +106,7 @@ export default function SignUp() {
                         <Typography color="primary" sx={{pb:1}}>
                          Sign up 
                         </Typography>
-                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon sx={{color: "#359740", pl: "0"}}/></IconButton>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
                       </Grid>
                         <Grid item xs={6}>
                             <Textfield

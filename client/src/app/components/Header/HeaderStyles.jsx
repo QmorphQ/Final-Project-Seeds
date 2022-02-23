@@ -1,13 +1,10 @@
-// import { makeStyles } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 
-const classes = {
+const useStyles = makeStyles(() => ({
   iconsStyle: {
     color: "#359740",
-    pl: "0",
+    pl: "0"
   },
-  Header: {
-   
-  }
-}
+}));
 
-export default classes;
+export default useStyles;

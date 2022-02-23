@@ -89,7 +89,7 @@ export const cartQuantitySelector = (state) => {
       0
     );
   }
-    return null;
+  return null;
 };
 
 // ======================== Wishlist =======================
@@ -97,22 +97,23 @@ export const wishlistSelector = (state) => state.wishlist.wishlist;
 
 // ====================== Filters ==========================
 
-export const paramsSelector = (state) => state.filters.params
+export const paramsSelector = (state) => state.filters.params;
 
-export const queryParamsSelector = (state) => state.filters.queryParams
+export const queryParamsSelector = (state) => state.filters.queryParams;
 
-export const sortedByPriceSelector = (state) => state.filters.sortedByPrice
+export const sortedByPriceSelector = (state) => state.filters.sortedByPrice;
 
-export const selectedCategorySelector = (state) => state.filters.selectedCategory
+export const selectedCategorySelector = (state) =>
+  state.filters.selectedCategory;
 
-export const inputValueFromSelector = (state) => state.filters.inputValueFrom
+export const inputValueFromSelector = (state) => state.filters.inputValueFrom;
 
-export const inputValueToSelector = (state) => state.filters.inputValueTo
+export const inputValueToSelector = (state) => state.filters.inputValueTo;
 
-export const sliderValuesSelector = (state) => state.filters.sliderValues
+export const sliderValuesSelector = (state) => state.filters.sliderValues;
 
-export const originCheckboxStateSelector = (state) => state.filters.originCheckboxState
+export const originCheckboxStateSelector = (state) =>
+  state.filters.originCheckboxState;
 
-export const maturationCheckboxStateSelector = (state) => state.filters.maturationCheckboxState
-
-
+export const maturationCheckboxStateSelector = (state) =>
+  state.filters.maturationCheckboxState;

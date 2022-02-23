@@ -1,19 +1,22 @@
 import { Box, Typography, Link, Divider } from "@mui/material";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
-import LogoBtn from "./FooterBtns/LogoBtn.jsx";
+import Logo from "../Header/headerIcons/headerIcon/Logo.jsx";
 
 export default function FooterDesktop() {
   return (
     <Box>
-      <Box sx={{ mb: "36px", textAlign: "center" }}>
-        <LogoBtn />
-      </Box>
-
       <Box
         display="flex"
         sx={{ pl: "5%", pr: "5%", justifyContent: "space-between" }}
       >
-        <Box display="flex" sx={{ flexDirection: "column", width: "45%" }}>
+        <Box
+          display="flex"
+          sx={{
+            flexGrow: 1,
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Link
             href="#"
             underline="none"
@@ -29,7 +32,17 @@ export default function FooterDesktop() {
             {"ABOUT SEEDRA"}
           </Link>
         </Box>
-        <Box display="flex" sx={{ flexDirection: "column", width: "45%" }}>
+        <Box mb="25px">
+          <Logo iconWidth={"130px"} iconHeight={"26px"} />
+        </Box>
+        <Box
+          display="flex"
+          sx={{
+            flexGrow: 1,
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Link
             href="#"
             underline="none"

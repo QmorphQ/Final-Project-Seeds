@@ -30,8 +30,6 @@ import {
 } from "../../../store/actions/filters.actions";
 import PriceFilter from "../../../ui/components/FiltersComponents/PriceFilter.jsx";
 
-// ==================================================================================
-// Component:
 const Filters = () => {
   const classes = useFiltersStyles();
 

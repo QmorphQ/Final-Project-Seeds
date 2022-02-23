@@ -1,16 +1,20 @@
 import IconButton from "@mui/material/IconButton";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import useStyles from "../Header/HeaderStyles.jsx";
 
-const SocialNetworks = () =>  (
+const SocialNetworks = () => {
+  const classes = useStyles();
+  return (
     <>
       <IconButton>
-        <InstagramIcon sx={{color: "#359740", pl: "0"}} />
+        <InstagramIcon className={classes.iconsStyle} />
       </IconButton>
       <IconButton>
-        <FacebookOutlinedIcon sx={{color: "#359740", pl: "0"}} />
+        <FacebookOutlinedIcon className={classes.iconsStyle} />
       </IconButton>
     </>
   );
+};
 
 export default SocialNetworks;

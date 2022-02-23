@@ -7,6 +7,8 @@ import {
   SET_SLIDER_VALUES,
   SET_ORIGIN_CHECKBOX_STATE,
   SET_MATURATION_CHECKBOX_STATE,
+  SET_HAS_MORE_FILTERED_PRODUCTS,
+  SET_PRODUCTS_QUANTITY,
 } from "../actions/filters.actions";
 
 const initialState = {
@@ -18,6 +20,8 @@ const initialState = {
   sliderValues: [0, 30],
   originCheckboxState: [],
   maturationCheckboxState: [],
+  hasMoreFilteredProducts: true,
+  productsQuantity: 0,
 };
 
 const filtersReducer = (state = initialState, action) => {
@@ -77,6 +81,18 @@ const filtersReducer = (state = initialState, action) => {
       return {
         ...state,
         maturationCheckboxState: action.payload,
+      };
+
+    case SET_HAS_MORE_FILTERED_PRODUCTS:
+      return {
+        ...state,
+        hasMoreFilteredProducts: action.payload,
+      };
+
+    case SET_PRODUCTS_QUANTITY:
+      return {
+        ...state,
+        productsQuantity: action.payload,
       };
 
     default:

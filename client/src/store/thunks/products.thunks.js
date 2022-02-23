@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API } from "../../app/constants";
+import { setProductsQuantity } from "../actions/filters.actions";
 import {
   downloadAllProductsRequested,
   downloadAllProductsSuccess,
@@ -34,11 +35,16 @@ const fetchProducts =
 const fetchFilteredProducts = (queryParams) => (dispatch) => {
   dispatch(downloadFilteredProductsRequested());
   const URLParams = new URLSearchParams(queryParams);
-  
+
   axios
     .get(`${API}products/filter?${URLParams}`)
     .then((filteredProducts) => {
       dispatch(downloadFilteredProductsSuccess(filteredProducts.data.products));
+
+      if (Object.keys(queryParams).length === 3) {
+        dispatch(setProductsQuantity(filteredProducts.data.productsQuantity));
+      }
+
       return filteredProducts;
     })
     .catch(() => {

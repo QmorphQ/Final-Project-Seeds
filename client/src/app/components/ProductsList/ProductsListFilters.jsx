@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import RenderComponent from "../../hoc/RenderComponent.jsx";
 import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection.jsx";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
+import Preloader from "../../../ui/components/Preloader/Preloader.jsx"
 
 const ProductsListFilters = ({ loading, productList }) => {
   
@@ -11,6 +12,9 @@ const ProductsListFilters = ({ loading, productList }) => {
   });
   const data = {products: updatedProducts, isFiltersPage: true}
     
+  if (loading === "loading") {
+    return <Preloader />;
+  }
 
   return (
     <RenderComponent

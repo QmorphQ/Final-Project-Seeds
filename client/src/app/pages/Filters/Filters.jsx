@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Drawer, Grid, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,10 @@ import CategoryFilter from "../../../ui/components/FiltersComponents/CategoryFil
 import {
   downloadFilteredProductsRequestStateSelector,
   filteredProductsSelector,
+  hasMoreFilteredProductsSelector,
   maturationCheckboxStateSelector,
   originCheckboxStateSelector,
+  productsQuantitySelector,
   queryParamsSelector,
   selectedCategorySelector,
 } from "../../../store/selectors/selectors";
@@ -19,6 +21,7 @@ import useFiltersStyles from "./useFiltersStyles";
 import OriginFilter from "../../../ui/components/FiltersComponents/OriginFilter.jsx";
 import MaturationFilter from "../../../ui/components/FiltersComponents/MaturationFilter.jsx";
 import {
+  setHasMoreFilteredProducts,
   setInputValueFrom,
   setInputValueTo,
   setMaturationCheckboxState,
@@ -32,10 +35,10 @@ import PriceFilter from "../../../ui/components/FiltersComponents/PriceFilter.js
 const Filters = () => {
   const classes = useFiltersStyles();
 
-  const productsQuantity = 24; 
-
+  const productsQuantity = useSelector(productsQuantitySelector);
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
+  const hasMoreFilteredProducts = useSelector(hasMoreFilteredProductsSelector);
   const queryParams = useSelector(queryParamsSelector);
   const selectedCategory = useSelector(selectedCategorySelector);
   const originCheckBoxState = useSelector(originCheckboxStateSelector);
@@ -44,7 +47,6 @@ const Filters = () => {
   const dispatch = useDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [hasMore, setHasMore] = useState(true);
 
   let initialParams = null;
 
@@ -64,8 +66,26 @@ const Filters = () => {
     initialParams = defaultParams;
   }
 
+  const fetchData = () => {
+    let newParams = {};
+    if (productsQuantity !== 0) {
+      newParams = {
+        ...queryParams,
+        perPage: +queryParams.perPage + 9,
+      };
+    }
+
+    if (productsQuantity !== 0 && newParams.perPage > productsQuantity) {
+      newParams.perPage = productsQuantity;
+      setHasMoreFilteredProducts(false);
+    }
+
+    if (hasMoreFilteredProducts) {
+      dispatch(setQueryParams(newParams));
+    }
+  };
+
   useEffect(() => {
-    console.log("fiiiirst");
     dispatch(setQueryParams(initialParams));
 
     if (searchParams.get("categories") !== null) {
@@ -92,10 +112,9 @@ const Filters = () => {
       );
     }
 
-    dispatch(fetchFilteredProducts(initialParams));
+    dispatch(fetchFilteredProducts(defaultParams));
 
     return function cleanUp() {
-      dispatch(setQueryParams(null));
       dispatch(setQueryParams(null));
       dispatch(setSelectedCategory([]));
       dispatch(setInputValueFrom(0));
@@ -103,6 +122,7 @@ const Filters = () => {
       dispatch(setSliderValues([0, 30]));
       dispatch(setOriginCheckboxState([]));
       dispatch(setMaturationCheckboxState([]));
+      dispatch(setHasMoreFilteredProducts(true));
     };
   }, []);
 
@@ -147,19 +167,6 @@ const Filters = () => {
     }
   }, [maturationCheckBoxState]);
 
-  const fetchData = () => {
-    let newParams = {};
-    const leftProducts = productsQuantity - queryParams.perPage;
-    if (leftProducts > 8) {
-      newParams = { ...queryParams, perPage: +queryParams.perPage + 9 };
-    } else {
-      newParams = { ...queryParams, perPage: +queryParams.perPage + leftProducts };
-      setHasMore(false);
-    }
-    
-    dispatch(setQueryParams(newParams));
-  };
-
   return (
     <>
       <Grid container>
@@ -192,7 +199,7 @@ const Filters = () => {
           <InfiniteScroll
             dataLength={filteredProducts.length}
             next={fetchData}
-            hasMore={hasMore}
+            hasMore={hasMoreFilteredProducts}
           >
             <ProductsListFilters
               loading={loading}

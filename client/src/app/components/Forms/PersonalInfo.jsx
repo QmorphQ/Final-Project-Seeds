@@ -1,17 +1,23 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Grid, Typography, IconButton, Container } from "@mui/material";
+import { useDispatch } from 'react-redux';
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
+import { getCustomer, updateCustomer } from '../../../store/thunks/customer.thunks';
 
+const cd={
+  firstName: "Sergey",
+  lastName: "Prymakov"
+}
 
 const INITIAL_FORM_STATE = {
-    firstName: '',
-    lastName: '',
+    firstName: cd.firstName,
+    lastName:  cd.lastName,
     email: '',
     phone: '',
     addressLine: '',
@@ -60,12 +66,21 @@ const INITIAL_FORM_STATE = {
   });
   
 function PersonalInfo  ()  { 
+    const dispatch = useDispatch()
     const navigation = useNavigate()
-    const handleSubmit = () => { navigation("/settings") }
+    const handleSubmit = () => { dispatch(updateCustomer()); navigation("/settings") }
     const [open, setOpen] = useState(false)
     const reopen = () => {
       setOpen(!open)
     }
+
+    useEffect(() => {
+        dispatch(getCustomer())},[])
+
+    // const updateCurrentCustomer = () => {
+    //   dispatch(updateCustomer())
+    // }
+    
   //  console.log(open);
     return (
       <Grid container>
@@ -172,13 +187,13 @@ function PersonalInfo  ()  {
                               type='password'
                               />
                           </Grid>
-                          <Grid item xs={12}>
+                          {/* <Grid item xs={12}>
                               <Textfield
                               name="passwordConfirm"
                               label="Confirm new password*"
                               type='password'
                               />
-                      </Grid> 
+                      </Grid>  */}
                       <Grid sx={{mb:3, mt:2}} item xs={12}>
                         <Grid sx={{mb:3 }} item xs={12}>
                           <ButtonWrapper onClick={handleSubmit}>

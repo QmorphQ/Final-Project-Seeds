@@ -7,6 +7,9 @@ import {
   loginCustomerRequested,
   loginCustomerSuccess,
   loginCustomerError,
+  customerUpdateError,
+  getCustomerRequest,
+  customerUpdateRequest,
 } from "../actions/customer.actions";
 
 const addCustomer = (customer) => (dispatch) => {
@@ -34,4 +37,35 @@ const loginCustomer = (userData) => (dispatch) => {
     });
 };
 
-export { addCustomer, loginCustomer };
+const getCustomer = () => (dispatch) => {
+  const token = localStorage.getItem("jwt");
+  dispatch(getCustomerRequest());
+  console.log(token);
+  axios.get(`${API}customers/customer`, {
+    headers: {
+      Authorization: `${token}`,
+    },
+  })
+	.then(currentCustomer => console.log(currentCustomer))
+  .catch(() => {
+    dispatch(customerUpdateError());
+    console.log("dasdasd");
+  });
+}
+
+const updateCustomer = () => (dispatch)=> {
+  const token = localStorage.getItem("jwt");
+  dispatch(customerUpdateRequest())
+  axios.put(`${API}customers`,{
+    headers: {
+      Authorization: `${token}`,
+    },
+  })
+	.then(updatedCustomer => console.log(updatedCustomer))
+  .catch(() => {
+    dispatch(customerUpdateError());
+  });
+}
+
+
+export { addCustomer, loginCustomer, updateCustomer, getCustomer };

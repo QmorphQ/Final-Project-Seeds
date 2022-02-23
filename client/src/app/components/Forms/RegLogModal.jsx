@@ -50,8 +50,14 @@ export default function SignUp() {
     
     const FORM_VALIDATION = Yup.object().shape({
         firstName: Yup.string()
+        .min(2, 'Too Short!')
+        .max(30, 'Too Long!')
+        .matches(/[a-zA-Z]/, 'Firstname can only contain Latin letters.')
         .required('Required'),
         lastName: Yup.string()
+        .min(2, 'Too Short!')
+        .max(30, 'Too Long!')
+        .matches(/[a-zA-Z]/, 'Lastname can only contain Latin letters.')
         .required('Required'),
         email: Yup.string()
         .required('Required')

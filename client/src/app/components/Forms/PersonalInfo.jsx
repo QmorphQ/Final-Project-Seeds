@@ -25,13 +25,22 @@ const INITIAL_FORM_STATE = {
   };
   
   const FORM_VALIDATION = Yup.object().shape({
-    firstName: Yup.string(),
-    lastName: Yup.string(),
+    firstName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(30, 'Too Long!')
+    .matches(/[a-zA-Z]/, 'Firstname can only contain Latin letters.'),
+    lastName: Yup.string()
+    .min(2, 'Too Short!')
+    .max(30, 'Too Long!')
+    .matches(/[a-zA-Z]/, 'Lastname can only contain Latin letters.'),
     email: Yup.string()
       .email('Invalid email.'),
     phone: Yup.number()
       .integer()
       .typeError('Please enter a valid phone number'),
+    login: Yup.string()
+      .min(3, 'Login is 3 chars minimum.')
+      .max(10, '10 is max chars.'),   
     addressLine: Yup.string(),
     code: Yup.number()
     .integer()
@@ -138,6 +147,12 @@ function PersonalInfo  ()  {
                           label="Last Name"
                         />
                       </Grid>
+                      <Grid item xs={12}>
+                            <Textfield
+                            name="login"
+                            label="Login"
+                            />
+                      </Grid> 
                       <Grid item xs={12}>
                         <Textfield
                           name="email"

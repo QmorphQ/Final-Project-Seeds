@@ -6,7 +6,7 @@ import ErrorHandler from "../components/ErrorHandler/ErrorHandler.jsx";
 
 const CheckAuth = ({children}) => {
     const auth = localStorage.getItem("jwt")
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return auth ? <>     
     {navigate("/")}
     <ErrorHandler errorMessage={"Error, you are not available for this page"} /> </> : children

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import useStyles from "../Header/HeaderStyles.jsx";
+import classes from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
@@ -35,7 +35,6 @@ const style = makeStyles({
 export default function LogIn() {
     const requestState = useSelector(loginRequestSelector);
     const navigation = useNavigate()
-    const classes = useStyles();
     const styles = style();
     const dispatch = useDispatch()
     const INITIAL_FORM_STATE = {
@@ -71,7 +70,7 @@ export default function LogIn() {
 
     return (
     <>        
-              <Box className={styles.BlockCenter}  onClose={handleClose} sx={{border: `1px solid green`, p:4, borderRadius: 3, maxWidth:300}}>
+              <Box className={styles.BlockCenter}  onClose={handleClose} sx={{zIndex: "1000" ,border: `1px solid green`, p:4, borderRadius: 3, maxWidth:300}}>
                 <Formik  
                   initialValues={{
                     ...INITIAL_FORM_STATE
@@ -85,7 +84,7 @@ export default function LogIn() {
                         <Typography color="primary" sx={{pb:1}}>
                           Login
                         </Typography>
-                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon className={classes.iconsStyle}/></IconButton>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon sx={classes.iconsStyle}/></IconButton>
                       </Grid>
     
                       <Grid item xs={12}>

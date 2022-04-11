@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -12,17 +13,41 @@ import useFiltersStyles from "../../../app/pages/Filters/useFiltersStyles";
 import { maturationCheckboxStateSelector } from "../../../store/selectors/selectors";
 import { setMaturationCheckboxState } from "../../../store/actions/filters.actions";
 
-
 const MaturationFilter = () => {
   const classes = useFiltersStyles();
+
+  const [searchParams] = useSearchParams();
 
   const maturationCheckBoxState = useSelector(maturationCheckboxStateSelector);
 
   const [isOpenMaturationCheckBox, setIsOpenMaturationCheckBox] = useState(
     classes.isClosed
   );
+  const [earlyState, setEarlyState] = useState(false);
+  const [lateState, setLateState] = useState(false);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (searchParams.get("maturation") !== null) {
+      dispatch(
+        setMaturationCheckboxState([
+          ...searchParams.get("maturation").split(","),
+        ])
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    maturationCheckBoxState.forEach((item) => {
+      if (item === "early") {
+        setEarlyState(true);
+      }
+      if (item === "late") {
+        setLateState(true);
+      }
+    });
+  }, [maturationCheckBoxState]);
 
   const toggleMaturationCheckBox = () => {
     if (isOpenMaturationCheckBox === classes.isClosed) {
@@ -34,14 +59,23 @@ const MaturationFilter = () => {
 
   const handleMaturationChange = (event) => {
     if (event.target.checked) {
-      dispatch(setMaturationCheckboxState([
-        ...maturationCheckBoxState,
-        event.target.name,
-      ]));
+      dispatch(
+        setMaturationCheckboxState([
+          ...maturationCheckBoxState,
+          event.target.name,
+        ])
+      );
     } else {
+      if (event.target.name === "early") {
+        setEarlyState(false);
+      }
+      if (event.target.name === "late") {
+        setLateState(false);
+      }
       const newMaturationCheckBoxState = maturationCheckBoxState.filter(
         (option) => option !== event.target.name
       );
+
       dispatch(setMaturationCheckboxState(newMaturationCheckBoxState));
     }
   };
@@ -61,12 +95,22 @@ const MaturationFilter = () => {
         <FormGroup>
           <FormControlLabel
             control={
-              <Checkbox onChange={handleMaturationChange} name="early" />
+              <Checkbox
+                checked={earlyState}
+                onChange={handleMaturationChange}
+                name="early"
+              />
             }
             label="Early"
           />
           <FormControlLabel
-            control={<Checkbox onChange={handleMaturationChange} name="late" />}
+            control={
+              <Checkbox
+                checked={lateState}
+                onChange={handleMaturationChange}
+                name="late"
+              />
+            }
             label="Late"
           />
         </FormGroup>

@@ -99,8 +99,6 @@ export const wishlistSelector = (state) => state.wishlist.wishlist;
 
 // ====================== Filters ==========================
 
-export const paramsSelector = (state) => state.filters.params
-
 export const queryParamsSelector = (state) => state.filters.queryParams
 
 export const sortedByPriceSelector = (state) => state.filters.sortedByPrice
@@ -116,5 +114,10 @@ export const sliderValuesSelector = (state) => state.filters.sliderValues
 export const originCheckboxStateSelector = (state) => state.filters.originCheckboxState
 
 export const maturationCheckboxStateSelector = (state) => state.filters.maturationCheckboxState
+
+export const hasMoreFilteredProductsSelector = (state) => state.filters.hasMoreFilteredProducts
+
+export const productsQuantitySelector = (state) => state.filters.productsQuantity
+
 
 

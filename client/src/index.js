@@ -9,14 +9,11 @@ import Preloader from "./ui/components/Preloader/Preloader.jsx";
 
 // ==================================================
 
-
-// ==================================================
-
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={<Preloader />} persistor={persistor}>
       <CustomThemeProvider>
-        <App />
+       <App />
       </CustomThemeProvider>
     </PersistGate>
   </Provider>,

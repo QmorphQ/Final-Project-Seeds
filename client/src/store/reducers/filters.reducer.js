@@ -30,19 +30,18 @@ const filtersReducer = (state = initialState, action) => {
           ...state,
           params: action.payload,
         };
-      } else {
+      } 
         return state;
-      }
-
+     
     case SET_QUERY_PARAMS:
       if (action.payload.toString() !== "") {
         return {
           ...state,
           queryParams: action.payload,
         };
-      } else {
+      } 
         return state;
-      }
+      
 
     case SORT_PRODUCTS_BY_PRICE:
       return {

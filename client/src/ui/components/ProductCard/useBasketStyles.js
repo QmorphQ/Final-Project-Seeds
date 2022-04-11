@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 
-export const useBasketStyles = makeStyles(() => ({
+export const useBasketStyles = makeStyles((theme) => ({
   productCardContainer: {
     display: "flex",
     justifyContent: "space-evenly",
@@ -29,13 +29,16 @@ export const useBasketStyles = makeStyles(() => ({
     height: "42px",
     display: "flex",
     alignItems: "center",
+    border: "1px solid",
+    borderColor: theme.palette.grey["300"],
+    borderRadius: "12px",
   },
   productCardButton: {
     width: "10.67px",
-    height: "10.67px",
+    height: "30px",
   },
   productCardAmount: {
-    width: "32px",
+    width: "40px",
     height: "32px",
   },
 }));

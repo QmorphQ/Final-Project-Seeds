@@ -16,6 +16,9 @@ import {
   deleteProductFromCartRequest,
   deleteProductFromCartSuccess,
   deleteProductFromCartError,
+  editStart,
+  editSuccess,
+  editError,
 } from "../actions/cart.actions";
 
 const fetchCart =
@@ -65,6 +68,33 @@ const addCart = (cart) => (dispatch) => {
   }
 };
 
+const changeLocalCart = (cart, productId, calculateCartQuantity) => {
+  let cartCopy;
+  if (!cart) {
+    cartCopy = [];
+  } else {
+    cartCopy = [...cart];
+  }
+  const product = cartCopy.find((cartItem) => productId === cartItem.id);
+  if (product) {
+    const newProduct = {
+      ...product,
+      cartQuantity: calculateCartQuantity(product.cartQuantity),
+    };
+    const productIndex = cartCopy.findIndex(
+      (cartItem) => productId === cartItem.id
+    );
+    cartCopy.splice(productIndex, 1, newProduct);
+    return cartCopy;
+  }
+  const newProduct = {
+    id: productId,
+    cartQuantity: calculateCartQuantity(),
+  };
+  const newCart = [...cartCopy, newProduct];
+  return newCart;
+};
+
 const addProductToCart = (productId) => (dispatch, getState) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
@@ -85,35 +115,48 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       });
   } else {
     const { cart } = getState().cart;
-    let cartCopy;
-    if (!cart) {
-      cartCopy = [];
-    } else {
-      cartCopy = [...cart];
-    }
-    const product = cartCopy.find((cartItem) => productId === cartItem.id);
-    if (product) {
-      const newProduct = {
-        ...product,
-        cartQuantity: product.cartQuantity + 1,
-      };
-      const productIndex = product.findIndex(
-        (cartItem) => productId === cartItem.id
-      );
-      cartCopy.splice(productIndex, 1, newProduct);
-      dispatch(addProductToCartSuccess(cartCopy));
-    } else {
-      const newProduct = {
-        id: productId,
-        cartQuantity: 1,
-      };
-      const newCart = [...cartCopy, newProduct];
-      dispatch(addProductToCartSuccess(newCart));
-    }
+    const calculateQuantity = (quantity) => (quantity ? quantity + 1 : 1);
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    dispatch(addProductToCartSuccess(updatedCart));
   }
 };
 
-const decreaseProductQuantity = (productId) => (dispatch) => {
+const changeProductQuantity = (productId, quantity) => (dispatch, getState) => {
+  dispatch(editStart());
+  const token = localStorage.getItem("jwt");
+  const { cart } = getState().cart;
+  if (token) {
+    const calculateQuantity = () => quantity;
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    const cartForAPI = updatedCart.map((item) => ({
+      product: item.id,
+      cartQuantity: item.cartQuantity,
+    }));
+    axios
+      .put(
+        `${API}cart`,
+        { products: cartForAPI },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
+      .then((newCart) => {
+        dispatch(editSuccess(newCart.data));
+        return updatedCart;
+      })
+      .catch(() => {
+        dispatch(editError());
+      });
+  } else {
+    const calculateQuantity = () => quantity;
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    dispatch(editSuccess(updatedCart));
+  }
+};
+
+const decreaseProductQuantity = (productId) => (dispatch, getState) => {
   dispatch(decreaseQuantityRequested());
   const token = localStorage.getItem("jwt");
   if (token) {
@@ -130,6 +173,11 @@ const decreaseProductQuantity = (productId) => (dispatch) => {
       .catch(() => {
         dispatch(decreaseQuantityError());
       });
+  } else {
+    const { cart } = getState().cart;
+    const calculateQuantity = (quantity) => (quantity ? quantity - 1 : 1);
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    dispatch(deleteProductFromCartSuccess(updatedCart));
   }
 };
 
@@ -159,4 +207,6 @@ export {
   addProductToCart,
   decreaseProductQuantity,
   deleteProductFromCart,
+  changeProductQuantity,
+  changeLocalCart,
 };

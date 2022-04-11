@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux"; 
 import PropTypes from 'prop-types';
@@ -6,6 +6,12 @@ import ProductCard from "../../ui/components/ProductCard/ProductCard.jsx";
 import { downloadRequestStates } from "../constants/index";
 
 const useStyles = makeStyles((theme) => ({
+    yourCartHeading: {
+        marginBottom: "40px !important",
+        marginTop: "40px !important",
+        fontWeight: "bold !important",
+        marginLeft: "210px"
+      },
     cartItem: {
         display: "flex",
         "& .MuiPaper-root": {
@@ -24,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cartContainer: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
     },
     cartList: {
         display: "flex",
@@ -53,7 +59,7 @@ const Cart = ({ loading }) => {
     } 
     
     const cartList = cart.map(cartItem => { 
-    const cartProduct = products.find(product => product.itemNo === cartItem.id)
+    const cartProduct = products.find(product => product._id === cartItem.id)
     
     if(!cartProduct) return null
 
@@ -63,31 +69,35 @@ const Cart = ({ loading }) => {
     return <Box component="li" className={classes.cartItem} key={cartItem.id}>
         <ProductCard 
         product={{
-            name: cartProduct.name,
-            currentPrice: cartProduct.currentPrice,
-            imageUrls: cartProduct.imageUrls,
-            isProductPage: false,
-            isFiltersPage: false,
-            categories: cartProduct.categories,
-            quantity: cartProduct.quantity,
+            ...cartProduct,
             isBasket: true,
-            discountPrice: cartProduct.discountPrice,
-            itemNo: cartProduct.itemNo,
+            cartQuantity: cartItem.cartQuantity
         }}
         loading={ loading }
         />
     </Box>
     })
 
+    
+
     return (
-        <Box component="main" className={classes.cartContainer}> 
+        <>
+            <Typography 
+                className={classes.yourCartHeading}
+                variant="h2"
+                component="h2">
+                Your cart.
+            </Typography>
+            <Box component="main" className={classes.cartContainer}> 
             <ul className={classes.cartList}> 
                 {cartList}  
             </ul>   
             <Box className={classes.totalPrice}>
-                {totalPrice}
+                {totalPrice.toFixed(2)}
             </Box> 
         </Box> 
+        
+        </>
     )
        
 }

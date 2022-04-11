@@ -5,7 +5,7 @@ import { Modal, Box, Typography, Card, Grid, CardMedia, CardContent, Stack, Chip
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useModalStyles } from "./useModalStyles";
-import { addProductToCart } from "../../../store/thunks/cart.thunks";
+import { changeProductQuantity } from "../../../store/thunks/cart.thunks";
 
 const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal}) => {
   const {
@@ -14,7 +14,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
     imageUrls,
     quantity,
     discountPrice,
-    itemNo,
+    _id,
   } = data;
 
   const [productAmount, setProductAmount] = useState(1);
@@ -151,7 +151,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(addProductToCart(itemNo, productAmount));
+                        dispatch(changeProductQuantity(_id, productAmount));
                       }}
                     >
                       Add to card

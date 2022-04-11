@@ -18,7 +18,7 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 import { cartSelector, mainCategoriesSelector, wishlistSelector } from "../../../store/selectors/selectors";
-import { addProductToCart, fetchCart } from "../../../store/thunks/cart.thunks";
+import { addProductToCart, fetchCart, decreaseProductQuantity, deleteProductFromCart } from "../../../store/thunks/cart.thunks";
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import { imgURLs } from "./ProductMedia";
 import { addProductToWishlist, deleteProductFromWishlist, fetchWishlist } from "../../../store/thunks/wishlist.thunks";
@@ -35,8 +35,10 @@ export const ProductCardRender = ({ data }) => {
     isBasket,
     discountPrice,
     itemNo,
-    _id
+    _id,
+    cartQuantity
   } = data;
+  console.log(data);
 
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
@@ -118,7 +120,7 @@ export const ProductCardRender = ({ data }) => {
             >
             <Button 
               onClick={() => {
-                setProductAmount(prevProductAmount => +prevProductAmount - 1)
+                dispatch(decreaseProductQuantity(_id));
               }} 
               variant="text"
               disabled={productAmount <= 1}
@@ -131,13 +133,13 @@ export const ProductCardRender = ({ data }) => {
               inputProps={{sx:{textAlign:"center"}}} 
               disableUnderline={true} 
               hiddenLabel={true} 
-              value={productAmount}
+              value={cartQuantity}
               onChange={e => setProductAmount(+e.target.value)}
               id="product-amount" 
               />
             <Button 
               onClick={() => {
-                setProductAmount(+productAmount + 1);
+                dispatch(addProductToCart(_id));
               }} 
               variant="text"
               disabled={productAmount >= quantity}
@@ -160,7 +162,7 @@ export const ProductCardRender = ({ data }) => {
           variant="h3"
           color="text.primary"
           >
-          {currentPrice * productAmount}
+          {(currentPrice * cartQuantity).toFixed(2)}
         </Typography>        
         
         </Box>
@@ -574,6 +576,8 @@ ProductCard.propTypes = {
     isBasket: PropTypes.bool,
     discountPrice: PropTypes.number,
     itemNo: PropTypes.number,
+    _id: PropTypes.string,
+    cartQuantity: PropTypes.number
   }),
   loading: PropTypes.oneOf(Object.values).isRequired,
 };

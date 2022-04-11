@@ -2,15 +2,17 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Drawer, Grid, Stack, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
 import SortBySelect from "../../../ui/components/FiltersComponents/SortBySelect.jsx";
 import CategoryFilter from "../../../ui/components/FiltersComponents/CategoryFilter.jsx";
 import {
   downloadFilteredProductsRequestStateSelector,
   filteredProductsSelector,
+  hasMoreFilteredProductsSelector,
   maturationCheckboxStateSelector,
   originCheckboxStateSelector,
-  paramsSelector,
+  productsQuantitySelector,
   queryParamsSelector,
   selectedCategorySelector,
 } from "../../../store/selectors/selectors";
@@ -19,11 +21,11 @@ import useFiltersStyles from "./useFiltersStyles";
 import OriginFilter from "../../../ui/components/FiltersComponents/OriginFilter.jsx";
 import MaturationFilter from "../../../ui/components/FiltersComponents/MaturationFilter.jsx";
 import {
+  setHasMoreFilteredProducts,
   setInputValueFrom,
   setInputValueTo,
   setMaturationCheckboxState,
   setOriginCheckboxState,
-  setParams,
   setQueryParams,
   setSelectedCategory,
   setSliderValues,
@@ -33,9 +35,10 @@ import PriceFilter from "../../../ui/components/FiltersComponents/PriceFilter.js
 const Filters = () => {
   const classes = useFiltersStyles();
 
+  const productsQuantity = useSelector(productsQuantitySelector);
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
-  const params = useSelector(paramsSelector);
+  const hasMoreFilteredProducts = useSelector(hasMoreFilteredProductsSelector);
   const queryParams = useSelector(queryParamsSelector);
   const selectedCategory = useSelector(selectedCategorySelector);
   const originCheckBoxState = useSelector(originCheckboxStateSelector);
@@ -63,10 +66,27 @@ const Filters = () => {
     initialParams = defaultParams;
   }
 
-  useEffect(() => {
-    dispatch(setParams(initialParams));
+  const fetchData = () => {
+    let newParams = {};
+    if (productsQuantity !== 0) {
+      newParams = {
+        ...queryParams,
+        perPage: +queryParams.perPage + 9,
+      };
+    }
 
-    dispatch(setQueryParams(new URLSearchParams(initialParams)));
+    if (productsQuantity !== 0 && newParams.perPage > productsQuantity) {
+      newParams.perPage = productsQuantity;
+      setHasMoreFilteredProducts(false);
+    }
+
+    if (hasMoreFilteredProducts) {
+      dispatch(setQueryParams(newParams));
+    }
+  };
+
+  useEffect(() => {
+    dispatch(setQueryParams(initialParams));
 
     if (searchParams.get("categories") !== null) {
       dispatch(setSelectedCategory(searchParams.get("categories")));
@@ -92,57 +112,61 @@ const Filters = () => {
       );
     }
 
-    if (searchParams.get("origin") !== null) {
-      dispatch(setOriginCheckboxState(searchParams.get("origin")));
-    }
+    dispatch(fetchFilteredProducts(defaultParams));
 
-    if (searchParams.get("maturation") !== null) {
-      dispatch(setMaturationCheckboxState(searchParams.get("maturation")));
-    }
-
-    dispatch(fetchFilteredProducts(queryParams));
+    return function cleanUp() {
+      dispatch(setQueryParams(null));
+      dispatch(setSelectedCategory([]));
+      dispatch(setInputValueFrom(0));
+      dispatch(setInputValueTo(30));
+      dispatch(setSliderValues([0, 30]));
+      dispatch(setOriginCheckboxState([]));
+      dispatch(setMaturationCheckboxState([]));
+      dispatch(setHasMoreFilteredProducts(true));
+    };
   }, []);
 
   useEffect(() => {
-    dispatch(setQueryParams(new URLSearchParams(params)));
-  }, [params]);
-
-  useEffect(() => {
-    setSearchParams(queryParams);
-    dispatch(fetchFilteredProducts(queryParams));
+    setSearchParams(new URLSearchParams(queryParams));
+    if (Object.keys(queryParams).length > 0) {
+      dispatch(fetchFilteredProducts(queryParams));
+    }
   }, [queryParams]);
 
   useEffect(() => {
     if (selectedCategory.length !== 0) {
-      dispatch(setParams({ ...params, categories: selectedCategory }));
+      dispatch(
+        setQueryParams({ ...queryParams, categories: selectedCategory })
+      );
     } else {
-      const newParams = { ...params };
+      const newParams = { ...queryParams };
       delete newParams.categories;
-      dispatch(setParams(newParams));
+      dispatch(setQueryParams(newParams));
     }
   }, [selectedCategory]);
 
   useEffect(() => {
     if (originCheckBoxState.length > 0) {
-      dispatch(setParams({ ...params, origin: originCheckBoxState }));
+      dispatch(setQueryParams({ ...queryParams, origin: originCheckBoxState }));
     } else {
-      const newParams = { ...params };
+      const newParams = { ...queryParams };
       delete newParams.origin;
-      dispatch(setParams(newParams));
+      dispatch(setQueryParams(newParams));
     }
   }, [originCheckBoxState]);
 
   useEffect(() => {
     if (maturationCheckBoxState.length > 0) {
-      dispatch(setParams({ ...params, maturation: maturationCheckBoxState }));
+      dispatch(
+        setQueryParams({ ...queryParams, maturation: maturationCheckBoxState })
+      );
     } else {
-      const newParams = { ...params };
+      const newParams = { ...queryParams };
       delete newParams.maturation;
-      dispatch(setParams(newParams));
+      dispatch(setQueryParams(newParams));
     }
   }, [maturationCheckBoxState]);
 
-  
   return (
     <>
       <Grid container>
@@ -172,10 +196,16 @@ const Filters = () => {
           </Drawer>
         </Grid>
         <Grid item xs={12} md={8}>
-          <ProductsListFilters
-            loading={loading}
-            productList={filteredProducts}
-          />
+          <InfiniteScroll
+            dataLength={filteredProducts.length}
+            next={fetchData}
+            hasMore={hasMoreFilteredProducts}
+          >
+            <ProductsListFilters
+              loading={loading}
+              productList={filteredProducts}
+            />
+          </InfiniteScroll>
         </Grid>
       </Grid>
     </>

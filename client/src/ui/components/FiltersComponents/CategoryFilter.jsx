@@ -77,7 +77,7 @@ const CategoryFilter = () => {
 
   const handleCategoryFilter = (category) => {
     if (category === "all") {
-      dispatch(setSelectedCategory(subCategories));
+      dispatch(setSelectedCategory([]));
     } else if (category === "bundles") {
       dispatch(setSelectedCategory(mixCategories));
     } else {

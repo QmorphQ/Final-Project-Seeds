@@ -1,5 +1,4 @@
 import {
-  SET_PARAMS,
   SET_QUERY_PARAMS,
   SORT_PRODUCTS_BY_PRICE,
   SET_SELECTED_CATEGORY,
@@ -8,10 +7,11 @@ import {
   SET_SLIDER_VALUES,
   SET_ORIGIN_CHECKBOX_STATE,
   SET_MATURATION_CHECKBOX_STATE,
+  SET_HAS_MORE_FILTERED_PRODUCTS,
+  SET_PRODUCTS_QUANTITY,
 } from "../actions/filters.actions";
 
 const initialState = {
-  params: {},
   queryParams: {},
   sortedByPrice: "most",
   selectedCategory: [],
@@ -20,21 +20,19 @@ const initialState = {
   sliderValues: [0, 30],
   originCheckboxState: [],
   maturationCheckboxState: [],
+  hasMoreFilteredProducts: true,
+  productsQuantity: 0,
 };
 
 const filtersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_PARAMS:
-      if (Object.keys(action.payload).length !== 0) {
+    case SET_QUERY_PARAMS:
+      if (action.payload === null) {
         return {
           ...state,
-          params: action.payload,
+          queryParams: {},
         };
-      } 
-        return state;
-     
-    case SET_QUERY_PARAMS:
-      if (action.payload.toString() !== "") {
+      } else if (Object.keys(action.payload).length !== 0) {
         return {
           ...state,
           queryParams: action.payload,
@@ -83,6 +81,18 @@ const filtersReducer = (state = initialState, action) => {
       return {
         ...state,
         maturationCheckboxState: action.payload,
+      };
+
+    case SET_HAS_MORE_FILTERED_PRODUCTS:
+      return {
+        ...state,
+        hasMoreFilteredProducts: action.payload,
+      };
+
+    case SET_PRODUCTS_QUANTITY:
+      return {
+        ...state,
+        productsQuantity: action.payload,
       };
 
     default:

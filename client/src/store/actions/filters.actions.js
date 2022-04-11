@@ -52,4 +52,16 @@ export const setMaturationCheckboxState = (maturation) => ({
   payload: maturation,
 });
 
+export const  SET_HAS_MORE_FILTERED_PRODUCTS = "SET_HAS_MORE_FILTERED_PRODUCTS";
+export const setHasMoreFilteredProducts = (hasMore) => ({
+  type: SET_HAS_MORE_FILTERED_PRODUCTS,
+  payload: hasMore,
+});
+
+export const  SET_PRODUCTS_QUANTITY = "SET_PRODUCTS_QUANTITY";
+export const setProductsQuantity = (productsQuantity) => ({
+  type: SET_PRODUCTS_QUANTITY,
+  payload: productsQuantity,
+});
+
 

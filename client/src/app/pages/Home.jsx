@@ -37,7 +37,7 @@ Home.propTypes = {
       currentPrice: PropTypes.number,
       categories: PropTypes.string,
       description: PropTypes.string,
-      imageUrls: PropTypes.string,
+      imageUrls: PropTypes.array, // !!! MVP: string ---> array
       quantity: PropTypes.number,
       popular: PropTypes.bool,
     })

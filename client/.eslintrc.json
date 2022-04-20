@@ -30,6 +30,7 @@
         "default-param-last": "off",
         "import/prefer-default-export": "off",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-        "no-unused-expressions": "off"
+        "no-unused-expressions": "off",
+        "import/no-named-as-default": "off"
     }
 }

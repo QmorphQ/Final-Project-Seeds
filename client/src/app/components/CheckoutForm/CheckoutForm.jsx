@@ -58,7 +58,6 @@ export default function CheckoutForm() {
     <p>Sincerely, your WMF team.</p>`,
     };
 
-
     return {
       ...newOrder,
       products: "cart.products",
@@ -114,14 +113,11 @@ export default function CheckoutForm() {
       }}
     >
       <Stepper activeStep={activeStep}>
-        {steps.map((index) => {
-          console.log("");
-          return (
-            <Step key={index}>
-              <StepLabel></StepLabel>
-            </Step>
-          );
-        })}
+        {steps.map((index) => (
+          <Step key={index}>
+            <StepLabel></StepLabel>
+          </Step>
+        ))}
       </Stepper>
       {activeStep === steps.length ? (
         <>
@@ -143,16 +139,16 @@ export default function CheckoutForm() {
             </Grid>
           </>
           <Box sx={{ display: "flex", flexDirection: "row", pb: "20px" }}>
-          {activeStep !== 0 && (
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-          )}
+            {activeStep !== 0 && (
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+            )}
             <Box sx={{ flex: "1 1 auto" }} />
             <Button
               onClick={

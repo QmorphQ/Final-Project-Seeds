@@ -1,0 +1,55 @@
+// import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { Link as RouterLink } from "react-router-dom";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { Badge, Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { cartSelector } from "../../../../store/selectors/selectors";
+
+const styles = {
+  CartBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    width: 'fit-content',
+  },
+  Icon: {
+    color: "#359740",
+  },
+  Badge: {
+    
+  },
+};
+// ==================================================================
+export default function CartBtn ({ linkPath, ...restProps }) {
+  const cart = useSelector(cartSelector)
+    
+  let quantity = 0;
+  cart.forEach(item => {
+    quantity += item.cartQuantity
+  });
+  
+  // ----------------------------------------------------------------
+  return (
+    <Box sx={styles.CartBtn} {...restProps}>
+      <RouterLink to={linkPath} underline="none">
+        {
+          <Badge showZero badgeContent={quantity} color='primary' >
+            <ShoppingCartOutlinedIcon sx={styles.Icon} />
+          </Badge>
+        }
+      </RouterLink>
+    </Box>
+  );
+};
+
+// ===================================================================
+
+CartBtn.defaultProps = {
+  quantity: 0,
+  linkPath: '/cart',
+};
+
+CartBtn.propTypes = {
+  quantity: PropTypes.number,
+  linkPath: PropTypes.string,
+};

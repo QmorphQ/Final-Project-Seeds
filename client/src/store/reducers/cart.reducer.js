@@ -96,6 +96,7 @@ const cartReducer = (state = initialState, action) => {
       };
 
     case EDIT_SUCCESS:
+      console.log(action.payload);
       return {
         ...state,
         editCartState: downloadRequestStates.SUCCESS,

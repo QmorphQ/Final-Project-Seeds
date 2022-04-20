@@ -5,7 +5,7 @@ import { Modal, Box, Typography, Card, Grid, CardMedia, CardContent, Stack, Chip
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useModalStyles } from "./useModalStyles";
-import { changeProductQuantity } from "../../../store/thunks/cart.thunks";
+import { manageCart } from "../../../store/thunks/cart.thunks";
 
 const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal}) => {
   const {
@@ -151,7 +151,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(changeProductQuantity(_id, productAmount));
+                        dispatch(manageCart(_id, productAmount));
                       }}
                     >
                       Add to card
@@ -175,7 +175,7 @@ AddToCartModal.propTypes = {
   setTotalPrice: PropTypes.func.isRequired,
   isOnModal: PropTypes.bool.isRequired,
   toggleIsOnModal: PropTypes.func.isRequired,
-  _id: PropTypes.number.isRequired 
+  _id: PropTypes.string.isRequired // !!! MVP: number---> string
   }
   
 export default AddToCartModal;

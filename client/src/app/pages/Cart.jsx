@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
@@ -7,18 +7,34 @@ import ProductCard from "../../ui/components/ProductCard/ProductCard.jsx";
 import { downloadRequestStates } from "../constants/index";
 import {
   cartSelector,
-  loginStateSelector,
   productsSelector,
 } from "../../store/selectors/selectors";
 
 import { writeCartToDatabase } from "../../store/thunks/cart.thunks";
+import { height } from "@mui/system";
 
 const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
+    width: "900px",
     marginBottom: "40px !important",
     marginTop: "40px !important",
     fontWeight: "bold !important",
-    marginLeft: "210px",
+    marginLeft: "160px",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+  },
+  titleContainer: {
+    marginLeft: "165px",
+    marginBottom: "20px",
+    display: "flex",
+    width: "900px",
+    justifyContent: "space-around",
+  },
+  title: {
+    opacity: "0.7"
+  },
+  productTitle: {
+    width: "600px",
+    opacity: "0.7"
   },
   cartItem: {
     display: "flex",
@@ -27,29 +43,39 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "row",
       alignItems: "center",
       "& .MuiCardMedia-img": {
-        width: "64px",
-        height: "63px",
+        width: "90px",
+        height: "90px",
       },
       "& .MuiTypography-root": {
         fontSize: "14px",
         LineHeight: "24.95px",
+        margin: "20px",
       },
     },
   },
   cartContainer: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
+    marginBottom: "30px",
   },
   cartList: {
     display: "flex",
     flexDirection: "column",
-    width: "750px",
-    marginLeft: "165px",
+    width: "900px",
+    marginLeft: "115px",
   },
   totalPrice: {
+    marginLeft: "160px",
+    fontSize: "20px",
     color: theme.palette.primary.main,
     width: "350px",
   },
+  continueButton: {
+    margin: "40px",
+    marginLeft: "160px",
+    width: "130px",
+    height: "50px"
+  }
 }));
 
 const Cart = ({ loading }) => {
@@ -108,9 +134,22 @@ const Cart = ({ loading }) => {
       >
         Your cart.
       </Typography>
+      <Box className={classes.titleContainer}>
+        <Typography className={classes.productTitle}>
+          PRODUCT DETAILS
+        </Typography>
+        <Typography className={classes.title}>AMOUNT</Typography>
+        <Typography className={classes.title}>PRICE</Typography>
+        <Typography className={classes.title}>TOTAL</Typography>
+      </Box>
       <Box component="main" className={classes.cartContainer}>
         <ul className={classes.cartList}>{cartList}</ul>
-        <Box className={classes.totalPrice}>{totalPrice.toFixed(2)}</Box>
+        {
+          <Box className={classes.totalPrice}>
+            TOTAL PRICE {totalPrice.toFixed(2)}
+          </Box>
+        }
+        <Button variant="contained" className={classes.continueButton}>Continue</Button>
       </Box>
     </>
   );

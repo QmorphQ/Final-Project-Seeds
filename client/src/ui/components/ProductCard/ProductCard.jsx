@@ -140,7 +140,7 @@ export const ProductCardRender = ({ data }) => {
 
   if (isBasket) {
     return (
-      <Card>
+      <Box className={basketClasses.card}>
         <Box className={basketClasses.productCardContainer}>
           <CardMedia
             className={basketClasses.productCardMedia}
@@ -211,7 +211,7 @@ export const ProductCardRender = ({ data }) => {
             {(currentPrice * cartQuantity).toFixed(2)}
           </Typography>
         </Box>
-      </Card>
+      </Box>
     );
   }
 

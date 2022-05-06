@@ -57,6 +57,7 @@ const Cart = ({ loading }) => {
             <p> No Products in Cart</p>  
         ) 
     } 
+    console.log(cart);
     
     const cartList = cart.map(cartItem => { 
     const cartProduct = products.find(product => product._id === cartItem.id)

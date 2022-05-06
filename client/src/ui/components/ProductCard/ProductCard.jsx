@@ -18,7 +18,7 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 import { cartSelector, mainCategoriesSelector, wishlistSelector } from "../../../store/selectors/selectors";
-import { addProductToCart, fetchCart, decreaseProductQuantity, deleteProductFromCart } from "../../../store/thunks/cart.thunks";
+import { addProductToCart, fetchCart, decreaseProductQuantity, changeProductQuantity } from "../../../store/thunks/cart.thunks";
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import { imgURLs } from "./ProductMedia";
 import { addProductToWishlist, deleteProductFromWishlist, fetchWishlist } from "../../../store/thunks/wishlist.thunks";
@@ -38,7 +38,7 @@ export const ProductCardRender = ({ data }) => {
     _id,
     cartQuantity
   } = data;
-  console.log(data);
+  
 
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
@@ -123,7 +123,7 @@ export const ProductCardRender = ({ data }) => {
                 dispatch(decreaseProductQuantity(_id));
               }} 
               variant="text"
-              disabled={productAmount <= 1}
+              disabled={cartQuantity <= 1}
               className={basketClasses.productCardButton}
             >
               {"-"}
@@ -134,7 +134,7 @@ export const ProductCardRender = ({ data }) => {
               disableUnderline={true} 
               hiddenLabel={true} 
               value={cartQuantity}
-              onChange={e => setProductAmount(+e.target.value)}
+              onChange={e => dispatch(changeProductQuantity(_id, +e.target.value))}
               id="product-amount" 
               />
             <Button 
@@ -142,7 +142,7 @@ export const ProductCardRender = ({ data }) => {
                 dispatch(addProductToCart(_id));
               }} 
               variant="text"
-              disabled={productAmount >= quantity}
+              disabled={cartQuantity >= quantity}
               className={basketClasses.productCardButton}
               >
               {"+"}

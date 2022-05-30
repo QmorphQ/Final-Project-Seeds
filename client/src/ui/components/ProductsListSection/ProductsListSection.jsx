@@ -1,25 +1,17 @@
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import ProductCard from "../ProductCard/ProductCard.jsx";
+import { downloadRequestStates, PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../../../app/constants";
+import ProductCardLoader from "../ProductCard/ProductCardLoader.jsx";
 
 // const userData = { /* UNUSED DATA!!! *//
 //   loginOrEmail: "valeron",
 //   password: "justdrink",
 // };
 
-const ProductsListSection = ({ data, loading, }) => {
-  let productsFlteredArr = data.products;
-    // .map((value) => ({ value, sort: Math.random() }))
-    // .sort((a, b) => a.sort - b.sort)
-    // .map(({ value }) => value);
+const ProductsListSection = ({ data, loading, isLoading }) => {
 
-  if (!data.isFiltersPage) {
-    productsFlteredArr = data.products.filter(
-      (product, index) => index < (data.totalLength || 6)
-    );
-  }
-
-  console.log(data.totalLength);
+  let productsFlteredArr = data?.products;
 
   return (
     <>
@@ -29,13 +21,18 @@ const ProductsListSection = ({ data, loading, }) => {
           rowSpacing={{ xs: 1, sm: 2, md: 3 }}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          {productsFlteredArr.map((product, i) => (
-            <ProductCard
-              key={product.id || i}
-              product={product}
-              loading={loading}
-            /> /* MVP-key of Product Card */
-          ))}
+          {isLoading ? 
+          [...Array(PRODUCTS_NUMBER_ON_MAIN_PAGE)].map(() => (
+            <ProductCardLoader />
+          )) :
+          productsFlteredArr?.map((product, i) => (
+              <ProductCard
+                key={product.id || i}
+                product={product}
+                loading={loading}
+              />
+            )
+          )}
         </Grid>
       </Container>
     </>

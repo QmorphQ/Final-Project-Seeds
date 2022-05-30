@@ -2,17 +2,23 @@ import PropTypes from "prop-types";
 import RenderComponent  from "../../hoc/RenderComponent.jsx";
 import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection.jsx";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-import Spinner from "../../../ui/components/Spinner/Spinner.jsx";
+import { useSelector } from "react-redux";
+import { downloadFilteredProductsRequestStateSelector, filteredProductsSelector } from "../../../store/selectors/selectors.js";
 
-const ProductsList = ({loading, productList, totalLength}) => (
-    <RenderComponent
-      loading={loading}
-      data={{products: productList, totalLength: totalLength}}
-      renderSuccess={ProductsListSection}
-      loadingFallback={Spinner}
-      renderError={<ErrorHandler errorMessage="There is some problem with products downloading"/>}
-    />
-  )
+const ProductsList = () => {
+  const downloadRequestState = useSelector(downloadFilteredProductsRequestStateSelector);
+  const productList = useSelector(filteredProductsSelector);
+
+  return (
+      <RenderComponent
+        loading={downloadRequestState}
+        data={{products: productList}}
+        renderSuccess={ProductsListSection}
+        loadingFallback={<ProductsListSection isLoading={true} />}
+        renderError={<ErrorHandler errorMessage="There is some problem with products downloading"/>}
+      />
+    )
+}
 
 ProductsList.propTypes = {
   productList: PropTypes.array,

@@ -1,22 +1,16 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
 import {
-  downloadProductsRequestStateSelector,
-  productsSelector,
   allCategoriesSelector,
   mainCategoriesSelector,
-  wishlistSelector,
-  downloadWishlistRequestStateSelector
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 // import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
-// import Preloader from "./ui/components/Preloader/Prelodaer.jsx";
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
@@ -29,20 +23,13 @@ import { fetchCart } from "./store/thunks/cart.thunks";
 // =======================================================================
 
 function App() {
-  const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const categories = useSelector(mainCategoriesSelector);
   const allCategories = useSelector(allCategoriesSelector);
-  const productList = useSelector(productsSelector);
-  const wishlist = useSelector(wishlistSelector);
-  const downloadWishlistRequest = useSelector(downloadWishlistRequestStateSelector);
 
   const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(fetchSlides());
-    dispatch(fetchProducts());
-    dispatch(fetchWishlist());
     dispatch(fetchCart());
   }, []);
 
@@ -50,9 +37,9 @@ function App() {
     <BrowserRouter>
     <Routes>
        <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
-        <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
+        <Route index element={<Home />} />
         <Route path="/products" element={<Filters />} />
-        <Route path="/wishlist" element={<Wishlist wishlist={wishlist} loading={downloadWishlistRequest} />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/login" element={<LogIn/>} />
         {/* <Route path="/cart" element={<TestCartPage />}/> */}

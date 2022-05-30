@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack, TableContainer, Paper, Table, TableBody, TableRow, TableCell, ListItem, List, Link } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Container, Grid, IconButton, Rating, Typography, Box, ButtonGroup, Chip, FilledInput, Stack, TableContainer, Paper, Table, TableBody, TableRow, TableCell, ListItem, List, Link, Skeleton } from "@mui/material";
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 import Carousel from 'react-material-ui-carousel';
@@ -36,7 +36,7 @@ export const ProductCardRender = ({ data }) => {
     isBasket,
     discountPrice,
     itemNo,
-    _id
+    _id,
   } = data;
 
   const [isFavourite, toggleIsFavourite] = useState(false);
@@ -410,7 +410,7 @@ export const ProductCardRender = ({ data }) => {
         </Card>
       </Grid>
     );
-  }
+  };
 
   return (
     <Grid item xs={12} md={6} lg={4}>

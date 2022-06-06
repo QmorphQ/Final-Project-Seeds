@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
         width: "350px"
     }, 
 }))
+
  
 const Cart = ({ loading }) => { 
     let totalPrice = 0;

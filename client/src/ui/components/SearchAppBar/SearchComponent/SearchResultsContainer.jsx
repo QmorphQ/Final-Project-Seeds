@@ -115,7 +115,9 @@ export default function SearchResultContainer({
   const [productsToRender, setProductsToRender] = useState([]);
   useEffect(() => {
     setProductsToRender(products);
+    console.log(products)
   }, [products]);
+  
   return (
     <Container
       className={classes.searchContainer}

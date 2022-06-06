@@ -38,6 +38,18 @@ const useStyles = makeStyles((theme) => ({
         width: "750px",
         marginLeft: "165px"
     },
+
+    totalResultContainer: {
+        width: "350px",
+        border: "1px",
+        color: theme.palette.grey
+    },
+
+    orderSummeryHeading: {
+        fontWeight: "bold !important",
+        marginLeft: "34px"
+    },
+
     totalPrice: {
         color: theme.palette.primary.main,
         width: "350px"
@@ -57,7 +69,6 @@ const Cart = ({ loading }) => {
             <p> No Products in Cart</p>  
         ) 
     } 
-    console.log(cart);
     
     const cartList = cart.map(cartItem => { 
     const cartProduct = products.find(product => product._id === cartItem.id)
@@ -93,9 +104,18 @@ const Cart = ({ loading }) => {
             <ul className={classes.cartList}> 
                 {cartList}  
             </ul>   
-            <Box className={classes.totalPrice}>
-                {totalPrice.toFixed(2)}
-            </Box> 
+            <Box className={classes.totalResultContainer}>
+                <Typography
+                className={classes.orderSummeryHeading}
+                variant="h3"
+                component="h3">
+                    Order Summery
+
+                </Typography>
+                <Box className={classes.totalPrice}>
+                    {totalPrice.toFixed(2)}
+                </Box> 
+            </Box>
         </Box> 
         
         </>

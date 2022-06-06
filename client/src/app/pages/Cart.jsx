@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
     }, 
 }))
 
- 
 const Cart = ({ loading }) => { 
     let totalPrice = 0;
     const products = useSelector(state => state.products.productList) || []; 

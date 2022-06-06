@@ -12,7 +12,7 @@ const initialState = {
   addRequestState: downloadRequestStates.IDLE,
   newCustomer: null,
   loginRequestState: downloadRequestStates.IDLE,
-  isLoggedIn: false,
+  isLoggedIn: Boolean(localStorage.getItem('jwt')),
 };
 
 const customerReducer = (state = initialState, action) => {

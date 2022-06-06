@@ -81,7 +81,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
               )}
               <CartBtn marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
               <Box display={{ xs: "none", sm: "none", md: "flex" }} >
-                {!localStorage.getItem('jwt') ? (
+                {!isLogin ? (
                   <Box sx={{ width: 'fit-content', display: "flex", flexDirection: 'column'}}>
                    <Auth />
                   </Box>

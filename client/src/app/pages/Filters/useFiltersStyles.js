@@ -8,6 +8,15 @@ const useFiltersStyles = makeStyles({
     width: "100%",
   },
 
+  loader: {
+    position: "absolute",
+    width: "200px",
+    top: "50%",
+    left: "50%",
+    color: "green",
+    fontSize: "40px"
+  },
+
   drawer: {
     width: drawerWidth,
   },
@@ -51,7 +60,7 @@ const useFiltersStyles = makeStyles({
 
   superCategoryTitle: {
     fontWeight: "300",
-    cursor: "pointer"
+    cursor: "pointer",
   },
 
   subCategoriesTitle: {
@@ -59,14 +68,14 @@ const useFiltersStyles = makeStyles({
     margin: "10px",
     paddingLeft: "20px",
     cursor: "pointer",
-    fontSize: "20px"
+    fontSize: "20px",
   },
 
   expandIcon: {
     position: "absolute",
     top: "5px",
     right: "10px",
-    cursor: "pointer"
+    cursor: "pointer",
   },
 
   originFilterContainer: {

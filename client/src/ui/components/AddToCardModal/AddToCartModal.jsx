@@ -175,7 +175,7 @@ AddToCartModal.propTypes = {
   setTotalPrice: PropTypes.func.isRequired,
   isOnModal: PropTypes.bool.isRequired,
   toggleIsOnModal: PropTypes.func.isRequired,
-  _id: PropTypes.number.isRequired 
+  _id: PropTypes.string.isRequired // !!! MVP: number---> string
   }
   
 export default AddToCartModal;

@@ -1,9 +1,3 @@
-export const SORT_PRODUCTS_BY_PRICE = "SORT_PRODUCTS_BY_PRICE";
-export const sortProductsByPrice = (request) => ({
-  type: SORT_PRODUCTS_BY_PRICE,
-  payload: request,
-});
-
 export const  SET_PARAMS = "SET_PARAMS";
 export const setParams = (params) => ({
   type: SET_PARAMS,
@@ -14,6 +8,18 @@ export const  SET_QUERY_PARAMS = "SET_QUERY_PARAMS";
 export const setQueryParams = (queryParams) => ({
   type: SET_QUERY_PARAMS,
   payload: queryParams,
+});
+
+export const SORT_PRODUCTS_BY_PRICE = "SORT_PRODUCTS_BY_PRICE";
+export const sortProductsByPrice = (request) => ({
+  type: SORT_PRODUCTS_BY_PRICE,
+  payload: request,
+});
+
+export const  SET_SELECTED_CATEGORY = "SET_SELECTED_CATEGORY";
+export const setSelectedCategory = (category) => ({
+  type: SET_SELECTED_CATEGORY,
+  payload: category,
 });
 
 export const  SET_INPUT_VALUE_FROM = "SET_INPUT_VALUE_FROM";
@@ -34,16 +40,28 @@ export const setSliderValues = (values) => ({
   payload: values,
 });
 
-export const  SET_IS_OPEN_ORIGIN_CHECKBOX = "SET_IS_OPEN_ORIGIN_CHECKBOX";
-export const setIsOpenOriginCheckbox = (isOpen) => ({
-  type: SET_IS_OPEN_ORIGIN_CHECKBOX,
-  payload: isOpen,
+export const  SET_ORIGIN_CHECKBOX_STATE = "SET_ORIGIN_CHECKBOX_STATE";
+export const setOriginCheckboxState = (origin) => ({
+  type: SET_ORIGIN_CHECKBOX_STATE,
+  payload: origin,
 });
 
-export const  SET_ORIGIN_CHECKBOX_STATE = "SET_ORIGIN_CHECKBOX_STATE";
-export const setOriginCheckboxState = (checkboxState) => ({
-  type: SET_ORIGIN_CHECKBOX_STATE,
-  payload: checkboxState,
+export const  SET_MATURATION_CHECKBOX_STATE = "SET_MATURATION_CHECKBOX_STATE";
+export const setMaturationCheckboxState = (maturation) => ({
+  type: SET_MATURATION_CHECKBOX_STATE,
+  payload: maturation,
+});
+
+export const  SET_HAS_MORE_FILTERED_PRODUCTS = "SET_HAS_MORE_FILTERED_PRODUCTS";
+export const setHasMoreFilteredProducts = (hasMore) => ({
+  type: SET_HAS_MORE_FILTERED_PRODUCTS,
+  payload: hasMore,
+});
+
+export const  SET_PRODUCTS_QUANTITY = "SET_PRODUCTS_QUANTITY";
+export const setProductsQuantity = (productsQuantity) => ({
+  type: SET_PRODUCTS_QUANTITY,
+  payload: productsQuantity,
 });
 
 

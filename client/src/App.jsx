@@ -6,8 +6,6 @@ import fetchCategories from "./store/thunks/catalog.thunks";
 import {
   downloadProductsRequestStateSelector,
   productsSelector,
-  allCategoriesSelector,
-  mainCategoriesSelector
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 import Cart from "./app/pages/Cart.jsx";
@@ -20,14 +18,16 @@ import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
-// import Checkout from "./app/pages/Checkout.jsx"
+import SignUp from "./app/components/Forms/RegLogModal.jsx";
+import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
+import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
+import Checkout from "./app/pages/Checkout.jsx"
+import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
 // =======================================================================
 
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
-  const categories = useSelector(mainCategoriesSelector);
-  const allCategories = useSelector(allCategoriesSelector);
   const productList = useSelector(productsSelector);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -45,14 +45,16 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-       <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
+       <Route path="/" element={<AppLayout />} >
         <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
         <Route path="/products" element={<Filters />} />
         <Route path="/products/:id" element={<ProductPage />} />
-        <Route path="/login" element={<LogIn/>} />
+        <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
+        <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
+        <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
         <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
-        {/* <Route path="*" element={<Checkout />} /> */}
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="*" element={<Checkout />} />
+
        </Route>
     </Routes>
     </BrowserRouter>

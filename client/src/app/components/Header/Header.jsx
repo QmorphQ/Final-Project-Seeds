@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------------------
 // Libraries Components:
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 // ------------------------------------------------------------------------------------
 // MUI Components:
@@ -30,7 +30,7 @@ import classes from "./HeaderStyles.jsx";
 
 const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
   const isLogin = useSelector(loginStateSelector);
-  // const favoriteQuantity = useSelector(wishlistSelector) ?? 0;
+  const favoriteQuantity = useSelector(wishlistSelector) ?? 0;
   const cartQuantity = useSelector(cartQuantitySelector) ?? 0;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMobileMenuOpen = () => {
@@ -38,12 +38,6 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
   };
      
   const handleClickAway = () => setIsMenuOpen(false);
-  // useEffect(() => {
-  //   console.log(favoriteQuantity)
-  // }, [favoriteQuantity])
-  useEffect(() => {
-    console.log(cartQuantity)
-  }, [cartQuantity])
   // =============================================== Render ==============================================
   return (
     <Box sx={classes.Header}>
@@ -85,7 +79,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
               }}
             >
               {isLogin && (
-                <FavoriteBtn />
+                <FavoriteBtn quantity={favoriteQuantity.products?.length} />
               )}
               <CartBtn quantity={cartQuantity} marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
               <Box display={{ xs: "none", sm: "none", md: "flex" }} >

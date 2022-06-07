@@ -16,13 +16,15 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
-import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
+// import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 import SignUp from "./app/components/Forms/RegLogModal.jsx";
 import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
 import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
+import { fetchCart } from "./store/thunks/cart.thunks";
+import { fetchWishlist } from "./store/thunks/wishlist.thunks";
 // =======================================================================
 
 
@@ -41,7 +43,12 @@ function App() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
-
+  useEffect(() => {
+    if(localStorage.getItem('jwt')){
+      dispatch(fetchCart());
+      dispatch(fetchWishlist());
+    }
+  }, [])
   return (
     <BrowserRouter>
     <Routes>
@@ -54,7 +61,6 @@ function App() {
         <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
         <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
         <Route path="*" element={<Checkout />} />
-
        </Route>
     </Routes>
     </BrowserRouter>

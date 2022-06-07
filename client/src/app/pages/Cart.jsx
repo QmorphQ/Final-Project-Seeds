@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux"; 
 import PropTypes from 'prop-types';
@@ -6,24 +6,56 @@ import ProductCard from "../../ui/components/ProductCard/ProductCard.jsx";
 import { downloadRequestStates } from "../constants/index";
 
 const useStyles = makeStyles((theme) => ({
+    yourCartHeading: {
+        marginBottom: "40px !important",
+        marginTop: "40px !important",
+        fontWeight: "bold !important",
+        marginLeft: "210px"
+      },
     cartItem: {
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "flex-start"
+        "& .MuiPaper-root": {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            "& .MuiCardMedia-img": {
+                width: "64px",
+                height: "63px"
+            },
+            "& .MuiTypography-root": {
+                fontSize: "14px",
+                LineHeight: "24.95px"
+            }
+        }
     },
     cartContainer: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
     },
     cartList: {
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        width: "750px",
+        marginLeft: "165px"
     },
+
+    totalResultContainer: {
+        width: "350px",
+        border: "1px",
+        color: theme.palette.grey
+    },
+
+    orderSummeryHeading: {
+        fontWeight: "bold !important",
+        marginLeft: "34px"
+    },
+
     totalPrice: {
-        color: theme.palette.primary.main
-    }
+        color: theme.palette.primary.main,
+        width: "350px"
+    }, 
 }))
- 
+
 const Cart = ({ loading }) => { 
     let totalPrice = 0;
     const products = useSelector(state => state.products.productList) || []; 
@@ -39,7 +71,7 @@ const Cart = ({ loading }) => {
     } 
     
     const cartList = cart.map(cartItem => { 
-    const cartProduct = products.find(product => product.itemNo === cartItem.id)
+    const cartProduct = products.find(product => product._id === cartItem.id)
     
     if(!cartProduct) return null
 
@@ -49,31 +81,44 @@ const Cart = ({ loading }) => {
     return <Box component="li" className={classes.cartItem} key={cartItem.id}>
         <ProductCard 
         product={{
-            name: cartProduct.name,
-            currentPrice: cartProduct.currentPrice,
-            imageUrls: cartProduct.imageUrls,
-            isProductPage: false,
-            isFiltersPage: false,
-            categories: cartProduct.categories,
-            quantity: cartProduct.quantity,
+            ...cartProduct,
             isBasket: true,
-            discountPrice: cartProduct.discountPrice,
-            itemNo: cartProduct.itemNo,
+            cartQuantity: cartItem.cartQuantity
         }}
         loading={ loading }
         />
     </Box>
     })
 
+    
+
     return (
-        <Box component="main" className={classes.cartContainer}> 
+        <>
+            <Typography 
+                className={classes.yourCartHeading}
+                variant="h2"
+                component="h2">
+                Your cart.
+            </Typography>
+            <Box component="main" className={classes.cartContainer}> 
             <ul className={classes.cartList}> 
                 {cartList}  
             </ul>   
-            <Box className={classes.totalPrice}>
-                {totalPrice}
-            </Box> 
+            <Box className={classes.totalResultContainer}>
+                <Typography
+                className={classes.orderSummeryHeading}
+                variant="h3"
+                component="h3">
+                    Order Summery
+
+                </Typography>
+                <Box className={classes.totalPrice}>
+                    {totalPrice.toFixed(2)}
+                </Box> 
+            </Box>
         </Box> 
+        
+        </>
     )
        
 }

@@ -43,12 +43,9 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
-import {
-  cartSelector,
-  mainCategoriesSelector,
-  wishlistSelector,
-} from "../../../store/selectors/selectors";
-import { addProductToCart, fetchCart } from "../../../store/thunks/cart.thunks";
+import { cartSelector, mainCategoriesSelector, wishlistSelector } from "../../../store/selectors/selectors";
+import { addProductToCart, fetchCart, decreaseProductQuantity, changeProductQuantity } from "../../../store/thunks/cart.thunks";
+
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import { imgURLs } from "./ProductMedia";
 import {
@@ -70,7 +67,9 @@ export const ProductCardRender = ({ data }) => {
     discountPrice,
     itemNo,
     _id,
+    cartQuantity
   } = data;
+  
 
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
@@ -130,20 +129,77 @@ export const ProductCardRender = ({ data }) => {
   if (isBasket) {
     return (
       <Card>
+        <Box className={basketClasses.productCardContainer} >
         <CardMedia
           className={basketClasses.productCardMedia}
           component="img"
           width="294px"
           image={`${imageUrls}`}
           alt={name}
-        />
+          />
+        <Box className={basketClasses.productCardNameContainer}>
+          <Typography
+            className={basketClasses.productCardName}
+            variant="h3"
+            color="text.primary"
+          >
+            {name}
+          </Typography>
+        </Box>
+        <ButtonGroup 
+            className={basketClasses.productCardButtonGroup}
+            color="primary" 
+            variant="outlined" 
+            aria-label="outlined primary button group"
+            >
+            <Button 
+              onClick={() => {
+                dispatch(decreaseProductQuantity(_id));
+              }} 
+              variant="text"
+              disabled={cartQuantity <= 1}
+              className={basketClasses.productCardButton}
+            >
+              {"-"}
+            </Button>
+            <FilledInput
+              className={basketClasses.productCardAmount}
+              inputProps={{sx:{textAlign:"center"}}} 
+              disableUnderline={true} 
+              hiddenLabel={true} 
+              value={cartQuantity}
+              onChange={e => dispatch(changeProductQuantity(_id, +e.target.value))}
+              id="product-amount" 
+              />
+            <Button 
+              onClick={() => {
+                dispatch(addProductToCart(_id));
+              }} 
+              variant="text"
+              disabled={cartQuantity >= quantity}
+              className={basketClasses.productCardButton}
+              >
+              {"+"}
+            </Button>
+          </ButtonGroup>
+          
         <Typography
           className={basketClasses.productCardName}
           variant="h3"
           color="text.primary"
-        >
-          {name}
+          >
+          {currentPrice}
         </Typography>
+
+        <Typography
+          className={basketClasses.productCardName}
+          variant="h3"
+          color="text.primary"
+          >
+          {(currentPrice * cartQuantity).toFixed(2)}
+        </Typography>        
+        
+        </Box>
       </Card>
     );
   }
@@ -636,7 +692,9 @@ ProductCard.propTypes = {
     quantity: PropTypes.number,
     isBasket: PropTypes.bool,
     discountPrice: PropTypes.number,
-    itemNo: PropTypes.string, // !!! MVP: string ---> number
+    itemNo: PropTypes.number,
+    _id: PropTypes.string,
+    cartQuantity: PropTypes.number
   }),
   loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any;
 };

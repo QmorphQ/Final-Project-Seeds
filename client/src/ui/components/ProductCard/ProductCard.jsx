@@ -692,7 +692,7 @@ ProductCard.propTypes = {
     quantity: PropTypes.number,
     isBasket: PropTypes.bool,
     discountPrice: PropTypes.number,
-    itemNo: PropTypes.number,
+    itemNo: PropTypes.string, // MVP: string ---> number
     _id: PropTypes.string,
     cartQuantity: PropTypes.number
   }),

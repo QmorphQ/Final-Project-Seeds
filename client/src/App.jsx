@@ -8,7 +8,7 @@ import {
   productsSelector,
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-// import Cart from "./app/pages/Cart.jsx";
+import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
@@ -52,9 +52,9 @@ function App() {
         <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
         <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
         <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
-        {/* <Route path="/cart" element={<TestCartPage />}/> */}
-         <Route path="*" element={<Checkout />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
+        <Route path="*" element={<Checkout />} />
+
        </Route>
     </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------------------
 // Libraries Components:
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 // ------------------------------------------------------------------------------------
 // MUI Components:
@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 // ------------------------------------------------------------------------------------
 // React Components:
 import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
-import { loginStateSelector } from "../../../store/selectors/selectors";
+import { loginStateSelector, cartQuantitySelector, wishlistSelector } from "../../../store/selectors/selectors";
 import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import FavoriteBtn from './HeaderBtns/FavoriteBtn.jsx';
@@ -30,12 +30,20 @@ import classes from "./HeaderStyles.jsx";
 
 const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
   const isLogin = useSelector(loginStateSelector);
+  // const favoriteQuantity = useSelector(wishlistSelector) ?? 0;
+  const cartQuantity = useSelector(cartQuantitySelector) ?? 0;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(prevVal => !prevVal)
   };
      
   const handleClickAway = () => setIsMenuOpen(false);
+  // useEffect(() => {
+  //   console.log(favoriteQuantity)
+  // }, [favoriteQuantity])
+  useEffect(() => {
+    console.log(cartQuantity)
+  }, [cartQuantity])
   // =============================================== Render ==============================================
   return (
     <Box sx={classes.Header}>
@@ -79,7 +87,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
               {isLogin && (
                 <FavoriteBtn />
               )}
-              <CartBtn marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
+              <CartBtn quantity={cartQuantity} marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
               <Box display={{ xs: "none", sm: "none", md: "flex" }} >
                 {!isLogin ? (
                   <Box sx={{ width: 'fit-content', display: "flex", flexDirection: 'column'}}>

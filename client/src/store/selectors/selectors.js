@@ -118,5 +118,8 @@ export const hasMoreFilteredProductsSelector = (state) => state.filters.hasMoreF
 
 export const productsQuantitySelector = (state) => state.filters.productsQuantity
 
+// MVP:wishlist
+export const wishlistDowloadedSuccessSelector = (state) => state.wishlist.downloadRequestState
 
-
+export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.products?.length
+// ========================================================================================

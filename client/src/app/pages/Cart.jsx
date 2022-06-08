@@ -61,7 +61,7 @@ const Cart = ({ loading }) => {
     const products = useSelector(state => state.products.productList) || []; 
     const cart = useSelector(state => state.cart.cart) || []
     const classes = useStyles();
- 
+    
     if (loading !== downloadRequestStates.SUCCESS) { 
         return <p>Loading</p> 
     } if (Array.isArray(cart) && !cart.length) { 

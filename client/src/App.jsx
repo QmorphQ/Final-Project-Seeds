@@ -23,10 +23,7 @@ import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
 import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
-import { fetchCart } from "./store/thunks/cart.thunks";
-import { fetchWishlist } from "./store/thunks/wishlist.thunks";
 // =======================================================================
-
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -43,12 +40,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
-  useEffect(() => {
-    if(localStorage.getItem('jwt')){
-      dispatch(fetchCart());
-      dispatch(fetchWishlist());
-    }
-  }, [])
+ 
   return (
     <BrowserRouter>
     <Routes>

@@ -10,6 +10,7 @@ import customer from "./reducers/customer.reducer";
 import cart from "./reducers/cart.reducer";
 import wishlist from "./reducers/wishlist.reducer";
 import filters from "./reducers/filters.reducer";
+import staticPage from "./reducers/staticPage.reducer";
 
 const reduxDevToolsCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
@@ -26,8 +27,8 @@ const rootReducer = combineReducers({
   customer,
   cart,
   wishlist,
-  filters
-  
+  filters,
+  staticPage 
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

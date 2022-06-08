@@ -20,7 +20,6 @@ const CartIcon = () => {
   }, []);
 
   
-  
   const RoutesName = {
     cart: "/cart",
   };

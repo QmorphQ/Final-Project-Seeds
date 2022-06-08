@@ -8,7 +8,7 @@ import {
   productsSelector,
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-// import Cart from "./app/pages/Cart.jsx";
+import Cart from "./app/pages/Cart.jsx";
 import fetchSlides from "./store/thunks/slides.thunks";
 // Pages:
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
@@ -16,7 +16,7 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
-import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
+// import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 import SignUp from "./app/components/Forms/RegLogModal.jsx";
 import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
@@ -24,7 +24,6 @@ import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
 import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
 // =======================================================================
-
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -41,7 +40,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
-
+ 
   return (
     <BrowserRouter>
     <Routes>
@@ -52,9 +51,8 @@ function App() {
         <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
         <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
         <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
-        {/* <Route path="/cart" element={<TestCartPage />}/> */}
-         <Route path="*" element={<Checkout />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
+        <Route path="*" element={<Checkout />} />
        </Route>
     </Routes>
     </BrowserRouter>

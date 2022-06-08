@@ -84,14 +84,13 @@ export const cartSelector = (state) => state.cart.cart;
  */
 export const cartQuantitySelector = (state) => {
   if (Array.isArray(state.cart.cart)) {
-    const total = state.cart.cart.reduce(
+    const totalQuantity = state.cart.cart.reduce(
       (total, currentItem) => total + currentItem.cartQuantity,
       0
     );
-    return total;
-  } else {
-    return null;
+    return totalQuantity;
   }
+  return null;
 };
 
 // ======================== Wishlist =======================
@@ -119,5 +118,8 @@ export const hasMoreFilteredProductsSelector = (state) => state.filters.hasMoreF
 
 export const productsQuantitySelector = (state) => state.filters.productsQuantity
 
+// MVP:wishlist
+export const wishlistDowloadedSuccessSelector = (state) => state.wishlist.downloadRequestState
 
-
+export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.products?.length
+// ========================================================================================

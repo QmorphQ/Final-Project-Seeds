@@ -3,8 +3,8 @@
 // ------------------------------------------------------------------------------------
 // Libraries Components:
 import PropTypes from "prop-types";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 // ------------------------------------------------------------------------------------
 // MUI Components:
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -13,11 +13,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 // ------------------------------------------------------------------------------------
 // React Components:
 import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
-import { loginStateSelector } from "../../../store/selectors/selectors";
+import { loginStateSelector, cartQuantitySelector, wishlistQuantitySelector } from "../../../store/selectors/selectors";
 import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import FavoriteBtn from './HeaderBtns/FavoriteBtn.jsx';
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
+import {store} from '../../../store/store';
+import { fetchWishlist } from "../../../store/thunks/wishlist.thunks";
+import { fetchCart } from "../../../store/thunks/cart.thunks";
 // ++++++++++++++++
 // Auth Component:
 import Auth from "../Forms/Auth.jsx";
@@ -29,12 +32,26 @@ import classes from "./HeaderStyles.jsx";
 // =======================================================================================
 
 const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
+  const dispatch = useDispatch();
   const isLogin = useSelector(loginStateSelector);
+  const favoriteQuantity = useSelector(wishlistQuantitySelector) ?? 0;
+  const cartQuantity = useSelector(cartQuantitySelector) ?? 0;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(prevVal => !prevVal)
   };
-     
+
+  useEffect(() => {
+    console.log(store.getState())
+  }, [store])
+
+  useEffect(() => {
+    if(localStorage.getItem('jwt')){
+      dispatch(fetchCart());
+      dispatch(fetchWishlist());
+    }
+  }, [])
+
   const handleClickAway = () => setIsMenuOpen(false);
   // =============================================== Render ==============================================
   return (
@@ -77,11 +94,11 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
               }}
             >
               {isLogin && (
-                <FavoriteBtn />
+                <FavoriteBtn quantity={favoriteQuantity} />
               )}
-              <CartBtn marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
+              <CartBtn quantity={cartQuantity} marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
               <Box display={{ xs: "none", sm: "none", md: "flex" }} >
-                {!localStorage.getItem('jwt') ? (
+                {!isLogin ? (
                   <Box sx={{ width: 'fit-content', display: "flex", flexDirection: 'column'}}>
                    <Auth />
                   </Box>

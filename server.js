@@ -69,8 +69,9 @@ app.use("/api/comments", comments);
 app.use("/api/shipping-methods", shippingMethods);
 app.use("/api/payment-methods", paymentMethods);
 app.use("/api/partners", partners);
-app.use("/", mainRoute);
 app.use("/api/searchKeys", searchKeys);
+app.use("/", mainRoute);
+
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {

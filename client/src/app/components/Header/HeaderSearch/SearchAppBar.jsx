@@ -7,10 +7,10 @@ import SearchResultContainer from "./SearchComponent/SearchResultsContainer.jsx"
 import Spinner from "../../../../ui/components/Spinner/Spinner.jsx";
 // import SearchBtn from './SearchBtns/SearchBtn.jsx';
 // =========================================================
-import searchDB from "./SearchComponent/SearchLogic/searchDB";
+// import searchDB from "./SearchComponent/SearchLogic/searchDB";
 import searchObserver from "./SearchComponent/SearchLogic/searchObserver";
 import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
-import { API } from "../../../constants/index"
+import { API } from "../../../constants/index";
 
 // =========================================================
 const Search = styled("div")(({ theme }) => ({
@@ -64,7 +64,7 @@ export default function SearchAppBar() {
   const [arrIDs, setIDsArr] = useState([]);
   const [fetchedProducts, setFetchedProducts] = useState([]); // Array of products
   const [loading, setLoading] = useState(false); // Request status
-  const [activeSaerchContainer, setActiveSearchContainer] = useState(false); // Render container
+  const [activeSearchContainer, setActiveSearchContainer] = useState(false); // Render container
   const [ready, setReady] = useState(false);
   // -----------------------------------------------------------------------------------
   // Functions:
@@ -86,7 +86,7 @@ export default function SearchAppBar() {
   };
   // ++++++
 
-  // const [searchKeys, setSearchKeys] = useState([]);
+ const [searchKeys, setSearchKeys] = useState([]);
   // Get products from server by itemNo:
   const getSearchProducts = async (arrOfProductsItemNo = []) => {
     arrOfProductsItemNo.map(async (itemNo) => {
@@ -124,7 +124,7 @@ export default function SearchAppBar() {
       const regEx = new RegExp(`${inputText.trim()}`, "gi");
       const filteredProducts = Array.from(
         new Set(
-          searchDB
+          searchKeys
             .filter((prod) => regEx.test(prod.name))
             .map((prod) => prod.itemNo)
         )
@@ -151,16 +151,23 @@ export default function SearchAppBar() {
     }
     return [setTrigger(false), setReady(false)];
   }, [ready]);
-  
+
   useEffect(() => {
     document.addEventListener("click", searchContainerHandler);
     return () => document.removeEventListener("click", searchContainerHandler);
   }, []);
 
   useEffect(async () => {
-    const keys = await axios.get(`${API}searchKeys`);
-   console.log(keys.data)
-  
+    const keysObjects = await axios.get(`${API}searchKeys`);
+    const keys = keysObjects.data.map((obj) => {
+      const keyObj = {
+        name: obj.name,
+        itemNo: obj.itemNo,
+      };
+      return keyObj;
+    });
+    
+    setSearchKeys(keys);
   }, []);
   // ---------------------------------------------------------------------------------
   return (
@@ -181,7 +188,7 @@ export default function SearchAppBar() {
         {loading ? <Spinner left={"70%"} top={"22%"} /> : false}
         {
           <SearchResultContainer
-            active={activeSaerchContainer}
+            active={activeSearchContainer}
             products={fetchedProducts}
             oneCard={fetchedProducts.length === 1}
           />

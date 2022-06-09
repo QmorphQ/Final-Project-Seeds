@@ -44,7 +44,7 @@ const ButtonLeft = styled("button")({
 
 
 
-const PaymentInfo = ({setForm, formData }) => {
+const PaymentInfo = (formData) => {
 
   const { paymentMethod } = formData;
 
@@ -74,7 +74,7 @@ const PaymentInfo = ({setForm, formData }) => {
           sx={{flexDirection: "row", justifyItems: "center", width: "100%"}}
           aria-labelledby="demo-controlled-radio-buttons-group"
           value={paymentMethod}
-          onChange={setForm}
+          // onChange={setForm}
         >
           <FormControlLabel
             value="card"

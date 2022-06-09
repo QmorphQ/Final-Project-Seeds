@@ -1,28 +1,9 @@
-import { Grid, TextField, Typography, Box, IconButton } from "@mui/material";
+import { Grid, Typography, Box, IconButton } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { PropTypes } from 'prop-types';
+import InputField from "../CheckoutFormFields/InputField.jsx";
 
-const CustomerInfo = ({ setForm, formData }) => {
-  const { firstName, lastName, email, telephone } = formData;
-
-  const textField = (name, label, prop) => (
-    <TextField
-    inputProps={{
-      style: {
-        padding: 5
-      }
-   }}
-      name={prop}
-      defaultValue={name || ""}
-      label={label}
-      onBlur={setForm}
-      fullWidth
-    />
-  );
-
-  return (
+const CustomerInfo = () => (
     <>
-      {" "}
       <Box
         display="flex"
         height="40px"
@@ -47,28 +28,20 @@ const CustomerInfo = ({ setForm, formData }) => {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={6}>
-            {textField(firstName, "First Name", "firstName")}
+            <InputField name="firstName" type="text" label="First Name" />
           </Grid>
           <Grid item xs={12} lg={6}>
-            {textField(lastName, "Last Name", "lastName")}
+            <InputField name={"lastName"} label={"Last Name"} />
           </Grid>
           <Grid item xs={12}>
-            {textField(email, "Email", "email")}
+            <InputField name={"email"} label={"Email"} />
           </Grid>
           <Grid item xs={12}>
-            {textField(telephone, "Telephone", "telephone")}
+            <InputField name={"telephone"} label={"Telephone"} />
           </Grid>
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
 
 export default CustomerInfo;
-
-
-CustomerInfo.propTypes = {
-  formData: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.object]),
-  step: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.object]),
-  setForm: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.object, () => {}]),
-};

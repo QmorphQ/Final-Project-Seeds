@@ -51,7 +51,7 @@ function App() {
         <Route path="/preview" element={<ProductPage />} />
         <Route path="/login" element={<LogIn/>} />
         {/* <Route path="/cart" element={<TestCartPage />}/> */}
-        <Route path="*" element={<Checkout />} />
+        <Route path="checkout" element={<Checkout />} />
         <Route path="*" element={<PageNotFound />} />
        </Route>
     </Routes>

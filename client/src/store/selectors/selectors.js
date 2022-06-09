@@ -69,7 +69,9 @@ export const slidesSelector = (state) => state.slides.slideList;
 // ======================= Customers/Login ==============================
 export const customersSelector = (state) => state.customer.newCustomer;
 
-export const loginStateSelector = (state) => state.customer.isLoggedIn;
+export const loginStateSelector = (state) => state.customer.isLoggedIn; 
+
+export const isAdminStateSelector = (state) => state.customer.isAdmin;
 
 export const loginRequestSelector = (state) => state.customer.loginRequestState;
 
@@ -85,10 +87,11 @@ export const cartSelector = (state) => state.cart.cart;
 export const cartQuantitySelector = (state) => {
   if (Array.isArray(state.cart.cart)) {
     const total = state.cart.cart.reduce(
-      (total, currentItem) => total + currentItem.cartQuantity,
+      (acc, currentItem) => acc + currentItem.cartQuantity,
       0
     );
     return total;
+  // eslint-disable-next-line no-else-return
   } else {
     return null;
   }
@@ -117,7 +120,9 @@ export const maturationCheckboxStateSelector = (state) => state.filters.maturati
 
 export const hasMoreFilteredProductsSelector = (state) => state.filters.hasMoreFilteredProducts
 
-export const productsQuantitySelector = (state) => state.filters.productsQuantity
+export const productsQuantitySelector = (state) => state.filters.productsQuantity 
 
 
+// ====================== Admin =========================== 
 
+export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState; 

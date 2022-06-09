@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { fetchProducts } from "./store/thunks/products.thunks";
 import fetchCategories from "./store/thunks/catalog.thunks";
+import { getUserDetails } from "./store/thunks/customer.thunks";
 import {
   downloadProductsRequestStateSelector,
-  productsSelector,
+  productsSelector, 
+  isAdminStateSelector, 
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 // import Cart from "./app/pages/Cart.jsx";
@@ -23,13 +25,17 @@ import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
 import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
+import AddProduct from "./app/components/AdminPanel/AddProduct.jsx";
 // =======================================================================
 
 
 function App() {
   const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
-  const productList = useSelector(productsSelector);
-  const dispatch = useDispatch();
+  const productList = useSelector(productsSelector); 
+  const isAdmin = useSelector(isAdminStateSelector);
+
+  const dispatch = useDispatch(); 
+
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
@@ -40,23 +46,31 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchProducts());
+  }, []); 
+
+  useEffect(() => {
+    if (localStorage.jwt) {
+      dispatch(getUserDetails()); 
+    }
   }, []);
+
 
   return (
     <BrowserRouter>
-    <Routes>
-       <Route path="/" element={<AppLayout />} >
-        <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
-        <Route path="/products" element={<Filters />} />
-        <Route path="/products/:id" element={<ProductPage />} />
-        <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
-        <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
-        <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
-        {/* <Route path="/cart" element={<TestCartPage />}/> */}
-         <Route path="*" element={<Checkout />} />
-        <Route path="*" element={<PageNotFound />} />
-       </Route>
-    </Routes>
+      <Routes>
+          <Route path="/" element={<AppLayout />} >
+              <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
+              <Route path="/products" element={<Filters />} />
+              <Route path="/products/:id" element={<ProductPage />} />
+              <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
+              <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
+              <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
+              {/* <Route path="/cart" element={<TestCartPage />}/> */}
+              <Route path="*" element={<Checkout />} />
+              <Route path="*" element={<PageNotFound />} />
+              {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
+          </Route>
+      </Routes>
     </BrowserRouter>
 
   );

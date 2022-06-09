@@ -79,3 +79,35 @@ export const DELETE_PRODUCT_FROM_CART_ERROR = "DELETE_PRODUCT_FROM_CART_ERROR";
 export const deleteProductFromCartError = () => ({
   type: DELETE_PRODUCT_FROM_CART_ERROR,
 });
+
+export const CART_LOAD_START = "CART_LOAD_START";
+export const cartLoadStart = () => ({
+  type: CART_LOAD_START,
+});
+
+export const CART_LOAD_SUCCESS = "CART_LOAD_SUCCESS";
+export const cartLoadSuccess = (cart) => ({
+  type: CART_LOAD_SUCCESS,
+  payload: cart,
+});
+
+export const CART_LOAD_ERROR = "CART_LOAD_ERROR";
+export const cartLoadError = () => ({
+  type: CART_LOAD_ERROR,
+});
+
+export const EDIT_START = "EDIT_START";
+export const editStart = () => ({
+  type: EDIT_START,
+});
+
+export const EDIT_SUCCESS = "EDIT_SUCCESS";
+export const editSuccess = (cart) => ({
+  type: EDIT_SUCCESS,
+  payload: cart,
+});
+
+export const EDIT_ERROR = "EDIT_ERROR";
+export const editError = () => ({
+  type: EDIT_ERROR,
+});

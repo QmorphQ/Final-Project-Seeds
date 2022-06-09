@@ -7,7 +7,7 @@ export const useFiltersStyles = makeStyles(() => ({
     border: "2px solid #EFEFEF",
     boxShadow: "none",
     minHeight: "400px",
-    maxWidth: "350px",
+    maxWidth: "400px",
   },
   productCardHeader: {
     position: "absolute",
@@ -17,7 +17,7 @@ export const useFiltersStyles = makeStyles(() => ({
     border: "1px solid #EFEFEF",
   },
   productCardMedia: {
-    width: "230px",
+    width: "210px",
     margin: "28px auto",
     borderRadius: "12px",
   },
@@ -41,7 +41,7 @@ export const useFiltersStyles = makeStyles(() => ({
   productCardButtonBasket: {
     position: "absolute !important",
     bottom: "28px",
-    right: "50px",
+    right: "15px",
     borderRadius: "8px",
     width: "48px",
     height: "48px",

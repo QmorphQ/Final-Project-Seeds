@@ -10,10 +10,15 @@ import { useSelector, useDispatch } from "react-redux";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { Box, AppBar, Toolbar, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+
 // ------------------------------------------------------------------------------------
 // React Components:
 import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
-import { loginStateSelector, cartQuantitySelector, wishlistQuantitySelector } from "../../../store/selectors/selectors";
+
+import { loginStateSelector, 
+         cartQuantitySelector, 
+         wishlistQuantitySelector, 
+        isAdminStateSelector } from "../../../store/selectors/selectors";
 import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import FavoriteBtn from './HeaderBtns/FavoriteBtn.jsx';
@@ -24,7 +29,8 @@ import { fetchCart } from "../../../store/thunks/cart.thunks";
 // ++++++++++++++++
 // Auth Component:
 import Auth from "../Forms/Auth.jsx";
-import ProfileMenu from './ProfileMenu.jsx';
+import ProfileMenu from './ProfileMenu.jsx'; 
+import ProfileMenuAdmin from "./ProfileMenuAdmin.jsx";
 // ++++++++++++++++
 // ------------------------------------------------------------------------------------
 // Styles:
@@ -32,10 +38,14 @@ import classes from "./HeaderStyles.jsx";
 // =======================================================================================
 
 const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
+  
   const dispatch = useDispatch();
-  const isLogin = useSelector(loginStateSelector);
+  const isLogin = useSelector(loginStateSelector); 
+  const isAdmin = useSelector(isAdminStateSelector);
   const favoriteQuantity = useSelector(wishlistQuantitySelector) ?? 0;
   const cartQuantity = useSelector(cartQuantitySelector) ?? 0;
+  
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMobileMenuOpen = () => {
     setIsMenuOpen(prevVal => !prevVal)
@@ -86,8 +96,10 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
           >
             <Box display={{ xs: "none", sm: "none", md: "block" }} >
               <SearchAppBar />
-            </Box>
-            <Box
+            </Box> 
+
+
+            {isAdmin === false ? (<Box
               sx={{
                 display: { xs: "flex", md: "flex" },
                 justifyContent: "space-between", width: '100%'
@@ -106,7 +118,8 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                   <ProfileMenu />
                 )}
               </Box>
-            </Box>
+            </Box>) : (< ProfileMenuAdmin />)} 
+
              <Box  display={{ xs: "block", sm: "block", md: "none" }}>
               <IconButton
                id='menuBtn'

@@ -2,70 +2,19 @@
 import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
+import { useSelector, useDispatch  } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Grid, Typography, IconButton, Container } from "@mui/material";
-import { useDispatch } from 'react-redux';
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { getCustomer, updateCustomer } from '../../../store/thunks/customer.thunks';
+import { currentCustomerSelector } from '../../../store/selectors/selectors';
 
-const cd={
-  firstName: "Sergey",
-  lastName: "Prymakov"
-}
 
-const INITIAL_FORM_STATE = {
-    firstName: cd.firstName,
-    lastName:  cd.lastName,
-    email: '',
-    phone: '',
-    addressLine: '',
-    house: '',
-    code: '',
-    flat: '',
-    city: '',
-    state: '',
-    country: '',
-    password: '',
-  };
-  
-  const FORM_VALIDATION = Yup.object().shape({
-    firstName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(30, 'Too Long!')
-    .matches(/[a-zA-Z]/, 'Firstname can only contain Latin letters.'),
-    lastName: Yup.string()
-    .min(2, 'Too Short!')
-    .max(30, 'Too Long!')
-    .matches(/[a-zA-Z]/, 'Lastname can only contain Latin letters.'),
-    email: Yup.string()
-      .email('Invalid email.'),
-    phone: Yup.number()
-      .integer()
-      .typeError('Please enter a valid phone number'),
-    login: Yup.string()
-      .min(3, 'Login is 3 chars minimum.')
-      .max(10, '10 is max chars.'),   
-    addressLine: Yup.string(),
-    code: Yup.number()
-    .integer()
-    .typeError('Please enter a valid code number'),
-    flat: Yup.number()
-    .integer()
-    .typeError('Please enter the correct number'),
-    house: Yup.number()
-    .integer()
-    .typeError('Please enter the correct number'),
-    city: Yup.string(),
-    password: Yup.string()
-    .min(8, 'Password is 8 chars minimum.')
-    .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
-    passwordConfirm : Yup.string()
-    .oneOf([Yup.ref('password')], 'Password must be the same!'),
-  });
   
 function PersonalInfo  ()  { 
+    const currentCustomer = useSelector(currentCustomerSelector)
     const dispatch = useDispatch()
     const navigation = useNavigate()
     const handleSubmit = () => { dispatch(updateCustomer()); navigation("/settings") }
@@ -74,14 +23,67 @@ function PersonalInfo  ()  {
       setOpen(!open)
     }
 
-    useEffect(() => {
-        dispatch(getCustomer())},[])
+    useEffect(() => { dispatch(getCustomer())}, [])
 
     // const updateCurrentCustomer = () => {
     //   dispatch(updateCustomer())
     // }
     
   //  console.log(open);
+
+  
+  const INITIAL_FORM_STATE = {
+      firstName: currentCustomer?.firstName,
+      lastName: currentCustomer?.lastName,
+      email: currentCustomer?.email,
+      phone: '',
+      addressLine: '',
+      house: '',
+      code: '',
+      flat: '',
+      city: '',
+      state: '',
+      login:  currentCustomer?.login, 
+      country: '',
+      password: '',
+    };
+    
+    const FORM_VALIDATION = Yup.object().shape({
+      firstName: Yup.string()
+      .min(2, 'Too Short!')
+      .max(30, 'Too Long!')
+      .matches(/[a-zA-Z]/, 'Firstname can only contain Latin letters.'),
+      lastName: Yup.string()
+      .min(2, 'Too Short!')
+      .max(30, 'Too Long!')
+      .matches(/[a-zA-Z]/, 'Lastname can only contain Latin letters.'),
+      email: Yup.string()
+        .email('Invalid email.'),
+      phone: Yup.number()
+        .integer()
+        .typeError('Please enter a valid phone number'),
+      login: Yup.string()
+        .min(3, 'Login is 3 chars minimum.')
+        .max(10, '10 is max chars.'),   
+      addressLine: Yup.string(),
+      code: Yup.number()
+      .integer()
+      .typeError('Please enter a valid code number'),
+      flat: Yup.number()
+      .integer()
+      .typeError('Please enter the correct number'),
+      house: Yup.number()
+      .integer()
+      .typeError('Please enter the correct number'),
+      city: Yup.string(),
+      password: Yup.string()
+      .min(8, 'Password is 8 chars minimum.')
+      .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
+      passwordConfirm : Yup.string()
+      .oneOf([Yup.ref('password')], 'Password must be the same!'),
+    });
+
+
     return (
       <Grid container>
           <Container maxWidth="md">

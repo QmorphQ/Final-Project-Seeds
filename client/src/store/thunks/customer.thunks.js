@@ -10,6 +10,8 @@ import {
   customerUpdateError,
   getCustomerRequest,
   customerUpdateRequest,
+  getCustomerSuccess,
+  customerUpdateSuccess,
 } from "../actions/customer.actions";
 
 const addCustomer = (customer) => (dispatch) => {
@@ -40,16 +42,15 @@ const loginCustomer = (userData) => (dispatch) => {
 const getCustomer = () => (dispatch) => {
   const token = localStorage.getItem("jwt");
   dispatch(getCustomerRequest());
-  console.log(token);
   axios.get(`${API}customers/customer`, {
     headers: {
       Authorization: `${token}`,
     },
   })
-	.then(currentCustomer => console.log(currentCustomer))
+	.then(currentCustomer => {console.log(currentCustomer.data) 
+    dispatch(getCustomerSuccess(currentCustomer.data))} )
   .catch(() => {
     dispatch(customerUpdateError());
-    console.log("dasdasd");
   });
 }
 
@@ -61,7 +62,7 @@ const updateCustomer = () => (dispatch)=> {
       Authorization: `${token}`,
     },
   })
-	.then(updatedCustomer => console.log(updatedCustomer))
+	.then(updatedCustomer => dispatch(customerUpdateSuccess(updatedCustomer.data)))
   .catch(() => {
     dispatch(customerUpdateError());
   });

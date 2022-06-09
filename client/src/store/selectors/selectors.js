@@ -67,7 +67,9 @@ export const downloadSlidesRequestStateSelector = (state) =>
 export const slidesSelector = (state) => state.slides.slideList;
 
 // ======================= Customers/Login ==============================
-export const customersSelector = (state) => state.customer.newCustomer;
+export const newCustomerSelector = (state) => state.customer.newCustomer;
+
+export const currentCustomerSelector = (state) => state.customer.currentCustomer;
 
 export const loginStateSelector = (state) => state.customer.isLoggedIn;
 

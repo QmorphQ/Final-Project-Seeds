@@ -36,8 +36,9 @@ export const getCustomerRequest = () => ({
 })
 
 export const GET_CUSTOMER_SUCCESS = "GET_CUSTOMER_SUCCESS";
-export const getCustomerSuccess = () => ({
+export const getCustomerSuccess = (currentCustomer) => ({
   type: GET_CUSTOMER_SUCCESS,
+  payload: currentCustomer
 })
 
 export const GET_CUSTOMER_ERROR = "GET_CUSTOMER_ERROR";

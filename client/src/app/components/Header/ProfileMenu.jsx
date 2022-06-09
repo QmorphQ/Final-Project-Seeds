@@ -1,8 +1,9 @@
 
 import { useState } from "react";
 // import { useSelector } from "react-redux";
-import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar, Link } from "@mui/material";
+import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar } from "@mui/material";
 import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 // import { loginStateSelector } from "../../../store/selectors/selectors";
 
@@ -10,6 +11,10 @@ import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-m
 
 export default function ProfileMenu () {
     const [anchorEl, setAnchorEl] = useState(null);
+    const logout = () => {
+        localStorage.removeItem('jwt')
+        window.location.reload()
+    }
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -69,30 +74,37 @@ export default function ProfileMenu () {
             <Avatar/> Profile
             </MenuItem>
             <Divider />
-            <MenuItem >
-            <ListItemIcon>
-                <Favorite fontSize="small" />
-            </ListItemIcon>
-            <Link underline="none" href="#"> Favourites</Link> 
-            </MenuItem>
-            <MenuItem >
-            <ListItemIcon>
-                <History fontSize="small" />
-            </ListItemIcon>
-            <Link  underline="none" href="#"> My orders</Link> 
-            </MenuItem>
-            <MenuItem >
-            <ListItemIcon>
-                <Settings fontSize="small" />
-            </ListItemIcon>
-            <Link  underline="none" href="#"> Settings</Link> 
-            </MenuItem>
-            <MenuItem>
-            <ListItemIcon>
-                <Logout fontSize="small"/>
-            </ListItemIcon>
-             <Link  underline="none" href="#"> Logout</Link> 
-            </MenuItem>
+            {/* <Link underline="none"  to="#"> */}
+                <MenuItem >
+                    <ListItemIcon>
+                        <Favorite fontSize="small" />                    
+                    </ListItemIcon> Favourites
+                </MenuItem>
+            {/* </Link>     */}
+            {/* <Link  underline="none" to="#"> */}
+                <MenuItem >
+                    <ListItemIcon>
+                        <History fontSize="small" />
+                    </ListItemIcon> My orders
+                </MenuItem>
+            {/* </Link>  */}
+            
+            <Link  style={{ textDecoration: 'none',color: "black" }} to="/settings">
+                <MenuItem >
+                    <ListItemIcon>
+                        <Settings fontSize="small" />
+                    </ListItemIcon> Settings
+                </MenuItem>
+            </Link> 
+
+            {/* <Link  underline="none" onClick={logout}>             */}
+                <MenuItem onClick={logout}>
+                    <ListItemIcon>
+                        <Logout fontSize="small"/>
+                    </ListItemIcon> Logout
+                </MenuItem>
+            {/* </Link>  */}
+
         </Menu>
       </>
     )

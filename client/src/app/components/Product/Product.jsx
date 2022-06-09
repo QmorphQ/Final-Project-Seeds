@@ -1,10 +1,13 @@
-import RenderComponent from "../../hoc/RenderComponent.jsx";
+import { useParams } from "react-router-dom";
 import {ProductCardRender} from "../../../ui/components/ProductCard/ProductCard.jsx"
+import RenderComponent from "../../hoc/RenderComponent.jsx";
 import { useFetch } from "../../hoc/useFetch.jsx";
 import { API } from "../../constants/index";
 
+
 const Product = () => {
-  const [loading, data, error] = useFetch(`${API}products/822862`); // MVP change
+  const { id } = useParams();
+  const [loading, data, error] = useFetch(`${API}products/${id}`);
 
   return (
     <RenderComponent

@@ -16,32 +16,61 @@ import {
   deleteProductFromCartRequest,
   deleteProductFromCartSuccess,
   deleteProductFromCartError,
+  editStart,
+  editSuccess,
+  editError,
 } from "../actions/cart.actions";
 
-const fetchCart =
-  (uri = `${API}cart`) =>
-  (dispatch) => {
-    const token = localStorage.getItem("jwt");
-    dispatch(downloadCartRequested());
-    if (token) {
-      axios
-        .get(uri, {
+const concatCarts = (localCart, remoteCart) =>
+  [...localCart, ...remoteCart].reduce((accumulator, cartItem) => {
+    const isDublicate = accumulator.some((item) => item.id === cartItem.id);
+    if (!isDublicate) {
+      return [...accumulator, cartItem];
+    }
+    return accumulator;
+  }, []);
+
+const fetchCart = () => async (dispatch, getState) => {
+  const token = localStorage.getItem("jwt");
+  dispatch(downloadCartRequested());
+  const { cart } = getState().cart;
+  if (token) {
+    try {
+      const response = await axios.get(`${API}cart`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+
+      const cartFromApi = response.data.products.map((cartProduct) => ({
+        id: cartProduct.product._id,
+        cartQuantity: cartProduct.cartQuantity,
+      }));
+      let newCart = [...cartFromApi];
+      if (Array.isArray(cart) && cart.length > 0) {
+        newCart = concatCarts(cart, cartFromApi);
+      }
+      const cartForAPI = newCart.map((item) => ({
+        product: item.id,
+        cartQuantity: item.cartQuantity,
+      }));
+      await axios.put(
+        `${API}cart`,
+        { products: cartForAPI },
+        {
           headers: {
             Authorization: `${token}`,
           },
-        })
-        .then((cart) => {
-          dispatch(downloadCartSuccess(cart.data));
-          return cart;
-        })
-        .catch(() => {
-          dispatch(downloadCartError());
-        });
-    } else {
-      const cartFromLS = JSON.parse(localStorage.getItem("cart"));
-      dispatch(downloadCartSuccess(cartFromLS));
+        }
+      );
+      dispatch(downloadCartSuccess(newCart));
+    } catch (error) {
+      dispatch(downloadCartError());
     }
-  };
+  } else {
+    dispatch(downloadCartSuccess(cart));
+  }
+};
 
 const addCart = (cart) => (dispatch) => {
   dispatch(addCartRequested());
@@ -53,20 +82,49 @@ const addCart = (cart) => (dispatch) => {
           Authorization: `${token}`,
         },
       })
-      .then((addedCart) => {
-        dispatch(addCartSuccess(addedCart.data));
-        return addedCart;
+      .then((response) => {
+        const newCart = response.data.products.map((cartProduct) => ({
+          id: cartProduct.product._id,
+          cartQuantity: cartProduct.cartQuantity,
+        }));
+        dispatch(addCartSuccess(newCart));
       })
       .catch(() => {
         dispatch(addCartError());
       });
   } else {
     dispatch(addCartSuccess(cart));
-    localStorage.setItem("cart", JSON.stringify(cart));
   }
 };
 
-const addProductToCart = (productId) => (dispatch) => {
+const changeLocalCart = (cart, productId, calculateCartQuantity) => {
+  let cartCopy;
+  if (!cart) {
+    cartCopy = [];
+  } else {
+    cartCopy = [...cart];
+  }
+  const product = cartCopy.find((cartItem) => productId === cartItem.id);
+  if (product) {
+    const newProduct = {
+      ...product,
+      cartQuantity: calculateCartQuantity(product.cartQuantity),
+    };
+    const productIndex = cartCopy.findIndex(
+      (cartItem) => productId === cartItem.id
+    );
+    cartCopy.splice(productIndex, 1, newProduct);
+    return cartCopy;
+  }
+  const newProduct = {
+    id: productId,
+    cartQuantity: calculateCartQuantity(),
+  };
+  const newCart = [...cartCopy, newProduct];
+  return newCart;
+};
+
+const addProductToCart = (productId) => (dispatch, getState) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
@@ -77,44 +135,87 @@ const addProductToCart = (productId) => (dispatch) => {
           Authorization: `${token}`,
         },
       })
-      .then((updatedCart) => {
-        dispatch(addProductToCartSuccess(updatedCart.data));
-        return updatedCart;
+      .then((response) => {
+        const cart = response.data.products.map((cartProduct) => ({
+          id: cartProduct.product._id,
+          cartQuantity: cartProduct.cartQuantity,
+        }));
+        dispatch(addProductToCartSuccess(cart));
       })
       .catch(() => {
         dispatch(addProductToCartError());
       });
   } else {
-    const newProduct = {
-      product: productId,
-      cartQuantity: 1,
-    };
-    const oldCart = JSON.parse(localStorage.getItem("cart"));
-    const updatedCart = [...oldCart];
-    updatedCart.push(newProduct);
+    const { cart } = getState().cart;
+    const calculateQuantity = (quantity) => (quantity ? quantity + 1 : 1);
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
     dispatch(addProductToCartSuccess(updatedCart));
-    localStorage.removeItem("cart");
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
   }
 };
 
-const decreaseProductQuantity = (productId) => (dispatch) => {
+const changeProductQuantity = (productId, quantity) => (dispatch, getState) => {
+  dispatch(editStart());
+  const token = localStorage.getItem("jwt");
+  const { cart } = getState().cart;
+  if (token) {
+    const calculateQuantity = () => quantity;
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    const cartForAPI = updatedCart.map((item) => ({
+      product: item.id,
+      cartQuantity: item.cartQuantity,
+    }));
+    axios
+      .put(
+        `${API}cart`,
+        { products: cartForAPI },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        const newCart = response.data.products.map((cartProduct) => ({
+          id: cartProduct.product._id,
+          cartQuantity: cartProduct.cartQuantity,
+        }));
+        dispatch(editSuccess(newCart));
+      })
+      .catch(() => {
+        dispatch(editError());
+      });
+  } else {
+    const calculateQuantity = () => quantity;
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    dispatch(editSuccess(updatedCart));
+  }
+};
+
+const decreaseProductQuantity = (productId) => (dispatch, getState) => {
   dispatch(decreaseQuantityRequested());
   const token = localStorage.getItem("jwt");
   if (token) {
     axios
-      .delete(`${API}cart/${productId}`, {
+      .delete(`${API}cart/product/${productId}`, {
         headers: {
           Authorization: `${token}`,
         },
       })
-      .then((updatedCart) => {
-        dispatch(decreaseQuantitySuccess(updatedCart.data));
-        return updatedCart;
+      .then((response) => {
+        const cart = response.data.products.map((cartProduct) => ({
+          id: cartProduct.product._id,
+          cartQuantity: cartProduct.cartQuantity,
+        }));
+        dispatch(decreaseQuantitySuccess(cart));
       })
       .catch(() => {
         dispatch(decreaseQuantityError());
       });
+  } else {
+    const { cart } = getState().cart;
+    const calculateQuantity = (quantity) => (quantity ? quantity - 1 : 1);
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    dispatch(deleteProductFromCartSuccess(updatedCart));
   }
 };
 
@@ -128,19 +229,25 @@ const deleteProductFromCart = (productId) => (dispatch) => {
           Authorization: `${token}`,
         },
       })
-      .then((updatedCart) => {
-        dispatch(deleteProductFromCartSuccess(updatedCart.data));
-        return updatedCart;
+      .then((response) => {
+        const cart = response.data.products.map((cartProduct) => ({
+          id: cartProduct.product._id,
+          cartQuantity: cartProduct.cartQuantity,
+        }));
+        dispatch(deleteProductFromCartSuccess(cart));
       })
       .catch(() => {
         dispatch(deleteProductFromCartError());
       });
   }
 };
+
 export {
   fetchCart,
   addCart,
   addProductToCart,
   decreaseProductQuantity,
   deleteProductFromCart,
+  changeProductQuantity,
+  changeLocalCart,
 };

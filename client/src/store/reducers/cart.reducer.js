@@ -8,6 +8,15 @@ import {
   PRODUCT_TO_CART_REQUESTED,
   PRODUCT_TO_CART_SUCCESS,
   PRODUCT_TO_CART_ERROR,
+  EDIT_START,
+  EDIT_SUCCESS,
+  EDIT_ERROR,
+  DECREASE_QUANTITY_REQUESTED,
+  DECREASE_QUANTITY_SUCCESS,
+  DECREASE_QUANTITY_ERROR,
+  DELETE_PRODUCT_FROM_CART_REQUEST,
+  DELETE_PRODUCT_FROM_CART_SUCCESS,
+  DELETE_PRODUCT_FROM_CART_ERROR,
 } from "../actions/cart.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -15,7 +24,10 @@ const initialState = {
   downloadRequestState: downloadRequestStates.IDLE,
   addCartRequestState: downloadRequestStates.IDLE,
   addProductToCartRequestState: downloadRequestStates.IDLE,
-  cart: null,
+  editCartState: downloadRequestStates.IDLE,
+  decreaseQuantityState: downloadRequestStates.IDLE,
+  deleteProductFromCartState: downloadRequestStates.IDLE,
+  cart: [],
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -48,7 +60,7 @@ const cartReducer = (state = initialState, action) => {
     case ADD_CART_SUCCESS:
       return {
         ...state,
-        addCartRequestState: downloadRequestStates.LOADING,
+        addCartRequestState: downloadRequestStates.SUCCESS,
         cart: action.payload,
       };
 
@@ -67,7 +79,7 @@ const cartReducer = (state = initialState, action) => {
     case PRODUCT_TO_CART_SUCCESS:
       return {
         ...state,
-        addProductToCartRequestState: downloadRequestStates.LOADING,
+        addProductToCartRequestState: downloadRequestStates.SUCCESS,
         cart: action.payload,
       };
 
@@ -75,6 +87,63 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         addProductToCartRequestState: downloadRequestStates.ERROR,
+      };
+
+    case EDIT_START:
+      return {
+        ...state,
+        editCartState: downloadRequestStates.LOADING,
+      };
+
+    case EDIT_SUCCESS:
+      return {
+        ...state,
+        editCartState: downloadRequestStates.SUCCESS,
+        cart: action.payload,
+      };
+
+    case EDIT_ERROR:
+      return {
+        ...state,
+        editCartState: downloadRequestStates.ERROR,
+      };
+
+    case DECREASE_QUANTITY_REQUESTED:
+      return {
+        ...state,
+        decreaseQuantityState: downloadRequestStates.LOADING,
+      };
+
+    case DECREASE_QUANTITY_SUCCESS:
+      return {
+        ...state,
+        decreaseQuantityState: downloadRequestStates.SUCCESS,
+        cart: action.payload,
+      };
+
+    case DECREASE_QUANTITY_ERROR:
+      return {
+        ...state,
+        decreaseQuantityState: downloadRequestStates.ERROR,
+      };
+
+    case DELETE_PRODUCT_FROM_CART_REQUEST:
+      return {
+        ...state,
+        deleteProductFromCartState: downloadRequestStates.LOADING,
+      };
+
+    case DELETE_PRODUCT_FROM_CART_SUCCESS:
+      return {
+        ...state,
+        deleteProductFromCartState: downloadRequestStates.SUCCESS,
+        cart: action.payload,
+      };
+
+    case DELETE_PRODUCT_FROM_CART_ERROR:
+      return {
+        ...state,
+        deleteProductFromCartState: downloadRequestStates.ERROR,
       };
 
     default:

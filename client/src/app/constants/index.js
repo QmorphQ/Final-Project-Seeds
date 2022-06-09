@@ -5,4 +5,13 @@ export const downloadRequestStates = {
   IDLE: "idle",
 };
 
-export const API = "http://localhost:8000/api/"
+export const API = "http://localhost:8000/api/"; 
+
+export const productCategories = [
+  { code: '1', label: 'herbs-mono'},
+  { code: '2', label: 'herbs-mix'},
+  { code: '3', label: 'vegetables-mono'},
+  { code: '4', label: 'vegetables-mix'},
+  { code: '5', label: 'flowers-mono'},
+  { code: '6', label: 'flowers-mix'}, 
+]; 

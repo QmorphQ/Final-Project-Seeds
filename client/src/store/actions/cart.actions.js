@@ -36,9 +36,9 @@ export const addProductToCartRequested = () => ({
 });
 
 export const PRODUCT_TO_CART_SUCCESS = "PRODUCT_TO_CART_SUCCESS";
-export const addProductToCartSuccess = (product) => ({
+export const addProductToCartSuccess = (cart) => ({
   type: PRODUCT_TO_CART_SUCCESS,
-  payload: product,
+  payload: cart,
 });
 
 export const PRODUCT_TO_CART_ERROR = "PRODUCT_TO_CART_ERROR";
@@ -56,7 +56,6 @@ export const decreaseQuantitySuccess = (cart) => ({
   type: DECREASE_QUANTITY_SUCCESS,
   payload: cart,
 });
-
 
 export const DECREASE_QUANTITY_ERROR = "DECREASE_QUANTITY_ERROR";
 export const decreaseQuantityError = () => ({
@@ -79,4 +78,36 @@ export const deleteProductFromCartSuccess = (cart) => ({
 export const DELETE_PRODUCT_FROM_CART_ERROR = "DELETE_PRODUCT_FROM_CART_ERROR";
 export const deleteProductFromCartError = () => ({
   type: DELETE_PRODUCT_FROM_CART_ERROR,
+});
+
+export const CART_LOAD_START = "CART_LOAD_START";
+export const cartLoadStart = () => ({
+  type: CART_LOAD_START,
+});
+
+export const CART_LOAD_SUCCESS = "CART_LOAD_SUCCESS";
+export const cartLoadSuccess = (cart) => ({
+  type: CART_LOAD_SUCCESS,
+  payload: cart,
+});
+
+export const CART_LOAD_ERROR = "CART_LOAD_ERROR";
+export const cartLoadError = () => ({
+  type: CART_LOAD_ERROR,
+});
+
+export const EDIT_START = "EDIT_START";
+export const editStart = () => ({
+  type: EDIT_START,
+});
+
+export const EDIT_SUCCESS = "EDIT_SUCCESS";
+export const editSuccess = (cart) => ({
+  type: EDIT_SUCCESS,
+  payload: cart,
+});
+
+export const EDIT_ERROR = "EDIT_ERROR";
+export const editError = () => ({
+  type: EDIT_ERROR,
 });

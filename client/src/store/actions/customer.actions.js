@@ -31,3 +31,20 @@ export const loginCustomerError = () => ({
 });
 
 
+export const GET_USERDETAILS_REQUESTED = "GET_USERDETAILS_REQUESTED";
+export const getUserDetailsRequested = () => ({
+  type: GET_USERDETAILS_REQUESTED,
+});
+
+export const GET_USERDETAILS_SUCCESS = "GET_USERDETAILS_SUCCESS";
+export const getUserDetailsSuccess = (isAdmin) => ({
+  type: GET_USERDETAILS_SUCCESS,
+  payload: isAdmin,
+});
+
+export const GET_USERDETAILS_ERROR = "GET_USERDETAILS_ERROR";
+export const getUserDetailsError = () => ({
+  type: GET_USERDETAILS_ERROR,
+});
+
+

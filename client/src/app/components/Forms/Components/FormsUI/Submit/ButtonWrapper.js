@@ -15,8 +15,7 @@ const ButtonWrapper = ({ children }) => {
   
 
   return (
-    <Button {...configButton} 
-    >
+    <Button  {...configButton}>
       {children}
     </Button>
   );

@@ -1,49 +1,31 @@
 import { useSelector, useDispatch} from "react-redux";
 import { useEffect } from "react";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import { Badge, IconButton, MenuItem } from "@mui/material";
 import useStyles from "../../HeaderStyles.jsx";
 import {fetchCart} from "../../../../../store/thunks/cart.thunks";
 import {
-  cartSelector
+  cartQuantitySelector
 } from "../../../../../store/selectors/selectors";
 
 const CartIcon = () => {
   const classes = useStyles();
-  
-  const cart = useSelector(cartSelector);
-  
-  
-  
-  // const totalCartQuantity = useSelector((state) => state.cart.totalCartQuantity);
+
+  const totalCartQuantity = useSelector(cartQuantitySelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCart());
-    
-     
-    
   }, []);
 
-
-//  const testCart = [
-//     "4",
-//     "1"
-// ]
-  
-  // const {lengthCart} = cart;
-  // console.log(lengthCart);
-  
-  
-  const totalCartQuantity = cart?.length;
   
   const RoutesName = {
     cart: "/cart",
   };
 
   return (
-    <Link href={RoutesName.cart} underline="none">
+    <Link to={RoutesName.cart}>
       {
         <MenuItem className={classes.headerMenuItem}>
           <IconButton>

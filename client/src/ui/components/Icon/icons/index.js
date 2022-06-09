@@ -7,3 +7,4 @@ export { default as Supplies } from "./Supplies.jsx";
 export { default as Tomato } from "./Tomato.jsx";
 export { default as Star } from "./Star.jsx";
 export { default as StarHalf } from "./StarHalf.jsx";
+export { default as Logo } from "./Logo.jsx";

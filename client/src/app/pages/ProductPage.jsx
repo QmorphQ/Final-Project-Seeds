@@ -1,7 +1,6 @@
 import Product from "../components/Product/Product.jsx";
 import CustomerReviews from "../components/CustomerReviews/CustomerReviews.jsx";
 
-
 const scores = {
   5: 50,
   4: 25,

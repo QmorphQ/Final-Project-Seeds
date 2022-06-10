@@ -17,4 +17,27 @@ export const adminAddProductSuccess = () => ({
 export const ADMIN_ADD_PRODUCT_ERROR = "ADMIN_ADD_PRODUCT_ERROR";
 export const adminAddProductError = () => ({
   type: ADMIN_ADD_PRODUCT_ERROR,
+}); 
+
+ 
+
+
+export const ADMIN_DELETE_PRODUCT_IDLE = "ADMIN_DELETE_PRODUCT_IDLE";
+export const adminDeleteProductIdle = () => ({
+  type: ADMIN_DELETE_PRODUCT_IDLE,
+});
+
+export const ADMIN_DELETE_PRODUCT_REQUESTED = "ADMIN_DELETE_PRODUCT_REQUESTED";
+export const adminDeleteProductRequested = () => ({
+  type: ADMIN_DELETE_PRODUCT_REQUESTED,
+});
+
+export const ADMIN_DELETE_PRODUCT_SUCCESS = "ADMIN_DELETE_PRODUCT_SUCCESS";
+export const adminDeleteProductSuccess = () => ({ 
+  type: ADMIN_DELETE_PRODUCT_SUCCESS, 
+});
+
+export const ADMIN_DELETE_PRODUCT_ERROR = "ADMIN_DELETE_PRODUCT_ERROR";
+export const adminDeleteProductError = () => ({
+  type: ADMIN_DELETE_PRODUCT_ERROR,
 });

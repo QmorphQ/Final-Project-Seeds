@@ -52,8 +52,9 @@ export const customerUpdateRequest = () => ({
 })
 
 export const UPDATE_CUSTOMER_SUCCESS = "UPDATE_CUSTOMER_SUCCESS";
-export const customerUpdateSuccess = () => ({
+export const customerUpdateSuccess = (updatedCustomer) => ({
   type: UPDATE_CUSTOMER_SUCCESS,
+  payload: updatedCustomer
 })
 
 export const UPDATE_CUSTOMER_ERROR = "UPDATE_CUSTOMER_ERROR";

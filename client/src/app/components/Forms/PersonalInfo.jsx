@@ -17,11 +17,13 @@ function PersonalInfo  ()  {
     const currentCustomer = useSelector(currentCustomerSelector)
     const dispatch = useDispatch()
     const navigation = useNavigate()
-    const handleSubmit = () => { dispatch(updateCustomer()); navigation("/settings") }
+    const handleSubmit = (values) => { dispatch(updateCustomer(values)); navigation("/settings") }
     const [open, setOpen] = useState(false)
     const reopen = () => {
       setOpen(!open)
     }
+
+    console.log(currentCustomer);
 
     useEffect(() => { dispatch(getCustomer())}, [])
 
@@ -36,16 +38,16 @@ function PersonalInfo  ()  {
       firstName: currentCustomer?.firstName,
       lastName: currentCustomer?.lastName,
       email: currentCustomer?.email,
-      phone: '',
-      addressLine: '',
-      house: '',
-      code: '',
-      flat: '',
-      city: '',
-      state: '',
-      login:  currentCustomer?.login, 
-      country: '',
-      password: '',
+      phone: currentCustomer?.phone,
+      addressLine: currentCustomer?.addressLine,
+      house: currentCustomer?.house,
+      code: currentCustomer?.code,
+      flat: currentCustomer?.flat,
+      city: currentCustomer?.city,
+      state: currentCustomer?.state,
+      login: currentCustomer?.login, 
+      country: currentCustomer?.country,
+      // password: '',
     };
     
     const FORM_VALIDATION = Yup.object().shape({

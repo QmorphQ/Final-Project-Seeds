@@ -54,15 +54,16 @@ const getCustomer = () => (dispatch) => {
   });
 }
 
-const updateCustomer = () => (dispatch)=> {
+const updateCustomer = (modifyCustomer) => (dispatch)=> {
   const token = localStorage.getItem("jwt");
+  console.log(modifyCustomer);
   dispatch(customerUpdateRequest())
-  axios.put(`${API}customers`,{
+  axios.put(`${API}customers`, modifyCustomer, {
     headers: {
       Authorization: `${token}`,
     },
   })
-	.then(updatedCustomer => dispatch(customerUpdateSuccess(updatedCustomer.data)))
+	.then(updatedCustomer => dispatch(customerUpdateSuccess(updatedCustomer)))
   .catch(() => {
     dispatch(customerUpdateError());
   });

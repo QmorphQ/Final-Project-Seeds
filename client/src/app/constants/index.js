@@ -6,6 +6,7 @@ export const downloadRequestStates = {
 };
 
 export const API = "http://localhost:8000/api/"; 
+export const PRODUCTS_NUMBER_ON_MAIN_PAGE = 6
 
 export const productCategories = [
   { code: '1', label: 'herbs-mono'},

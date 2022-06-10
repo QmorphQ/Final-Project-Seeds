@@ -47,6 +47,7 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
+
 import { cartSelector, 
          mainCategoriesSelector, 
          wishlistSelector, 
@@ -60,13 +61,15 @@ import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
 
 import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
 
+
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import { imgURLs } from "./ProductMedia";
 import {
   addProductToWishlist,
   deleteProductFromWishlist,
-  fetchWishlist,
+  // fetchWishlist,
 } from "../../../store/thunks/wishlist.thunks";
+import Spinner from "../Spinner/Spinner.jsx";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -95,7 +98,8 @@ export const ProductCardRender = ({ data }) => {
   const navigation = useNavigate(); 
 
   const wishlist = useSelector(wishlistSelector); 
-  const isAdmin = useSelector(isAdminStateSelector);
+  const isAdmin = useSelector(isAdminStateSelector); 
+  const cart = useSelector(cartSelector);
   const isProductDeleted = useSelector(adminDeleteProductRequestSelector); 
 
 
@@ -107,13 +111,12 @@ export const ProductCardRender = ({ data }) => {
     dispatch(fetchCart());
   }, []);
 
+
   useEffect(() => {
     if (wishlist) {
       toggleIsFavourite(!!wishlist.products.find((item) => item._id === _id));
     }
   }, [wishlist]);
-
-  const cart = useSelector(cartSelector);
 
   const media = imgURLs.filter((item) => +item.itemNo === +itemNo);
   // console.log(JSON.stringify(data));
@@ -234,6 +237,7 @@ export const ProductCardRender = ({ data }) => {
   }
 
   if (isProductPage) {
+
     return (
       <Container sx={{ marginTop: "50px" }}>
         <Card className={productPageClasses.productCard}>
@@ -624,10 +628,10 @@ export const ProductCardRender = ({ data }) => {
         </Card>
       </Grid>
     );
-  }
+  };
 
   return (
-    <Grid item xs={12} md={6} lg={4}>
+    <Grid item xs={12} md={6} lg={4} sx={{display: "flex", justifyContent:"center"}}>
       <Card className={mainClasses.productCard}>
         <CardHeader
           className={mainClasses.productCardHeader}
@@ -725,13 +729,15 @@ export const ProductCardRender = ({ data }) => {
 };
 
 const ProductCard = ({ product, loading }) => 
-  <RenderComponent
-    loading={loading}
-    data={product}
-    renderSuccess={ProductCardRender}
-    loadingFallback={<p>Loading...</p>}
-    renderError={<p>Error</p>}
-  />
+  (
+    <RenderComponent
+      loading={loading}
+      data={product}
+      renderSuccess={ProductCardRender}
+      loadingFallback={Spinner}
+      renderError={<p>Error</p>}
+    />
+  );
 
 
 ProductCard.propTypes = {

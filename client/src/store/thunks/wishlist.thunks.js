@@ -16,8 +16,8 @@ const fetchWishlist =
   (uri = `${API}wishlist`) =>
   (dispatch) => {
     const token = localStorage.getItem("jwt");
-    dispatch(downloadWishlistRequested());
     if (token) {
+      dispatch(downloadWishlistRequested());
       axios
         .get(uri, {
           headers: {

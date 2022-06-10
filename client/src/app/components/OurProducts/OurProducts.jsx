@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Typography, Box } from "@mui/material";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import Tab from "../../../ui/components/Tab/Tab.jsx";
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx";
@@ -12,7 +11,7 @@ import {
   mainCategoriesSelector,
 } from "../../../store/selectors/selectors";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-import { fetchFilteredProducts, filterProductsByCategory } from "../../../store/thunks/products.thunks";
+import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
 
 const useStyles = makeStyles((theme) => ({
   tab: {
@@ -71,6 +70,7 @@ const OurProducts = () => {
   const [value, setValue] = React.useState(0);
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const categories = useSelector(mainCategoriesSelector);
   if (downloadRequestState === downloadRequestStates.LOADING)
     return <div>Loading...</div>; // Here must be a loader
@@ -84,10 +84,10 @@ const OurProducts = () => {
     );
 
   const handleClick = (event) => {
-    if(event.target.dataset.category == "all") {
+    if(event.target.dataset.category === "all") {
       dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`));
-    } else if (event.target.dataset.category == "bundles") {
-      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=` + categories.map(category => category.name).reduce((acc, curr) => acc + curr + "-mix,")));
+    } else if (event.target.dataset.category === "bundles") {
+      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${categories.map(category => category.name).reduce((acc, curr) => `${acc}${curr}-mix,`)}`));
     } else {
       dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${event.target.dataset.category},${event.target.dataset.category}-mono,${event.target.dataset.category}-mix`));
     }
@@ -133,20 +133,5 @@ const OurProducts = () => {
     </>
   );
 };
-
-// OurProducts.propTypes = {
-//   loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-//   productList: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.string,
-//       currentPrice: PropTypes.number,
-//       categories: PropTypes.string,
-//       description: PropTypes.string,
-//       imageUrls: PropTypes.any,
-//       quantity: PropTypes.number,
-//       popular: PropTypes.bool,
-//     })
-//   ),
-// };
 
 export default OurProducts;

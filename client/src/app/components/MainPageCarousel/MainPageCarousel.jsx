@@ -1,5 +1,8 @@
 import Carousel from "react-material-ui-carousel";
-import { useDispatch, useSelector } from "react-redux";
+import { 
+  // useDispatch, 
+  useSelector 
+} from "react-redux";
 import { Typography, Container, Icon, Grid, Box, CardMedia } from "@mui/material";
 import { makeStyles, styled } from "@mui/styles";
 import PropTypes from "prop-types";
@@ -11,8 +14,8 @@ import {
 } from "../../../store/selectors/selectors";
 import { downloadRequestStates } from "../../constants";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-import fetchSlides from "../../../store/thunks/slides.thunks";
-import { useEffect } from "react";
+// import fetchSlides from "../../../store/thunks/slides.thunks";
+// import { useEffect } from "react";
 
 
 const useStyles = makeStyles({

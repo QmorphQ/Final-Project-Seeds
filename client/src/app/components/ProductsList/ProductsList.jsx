@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 import RenderComponent  from "../../hoc/RenderComponent.jsx";
 import ProductsListSection from "../../../ui/components/ProductsListSection/ProductsListSection.jsx";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-import { useSelector } from "react-redux";
-import { downloadFilteredProductsRequestStateSelector, filteredProductsSelector } from "../../../store/selectors/selectors.js";
+import { downloadFilteredProductsRequestStateSelector, filteredProductsSelector } from "../../../store/selectors/selectors";
 
 const ProductsList = () => {
   const downloadRequestState = useSelector(downloadFilteredProductsRequestStateSelector);

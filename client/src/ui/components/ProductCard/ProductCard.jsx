@@ -67,7 +67,7 @@ import { imgURLs } from "./ProductMedia";
 import {
   addProductToWishlist,
   deleteProductFromWishlist,
-  // fetchWishlist,
+  fetchWishlist,
 } from "../../../store/thunks/wishlist.thunks";
 import Spinner from "../Spinner/Spinner.jsx";
 

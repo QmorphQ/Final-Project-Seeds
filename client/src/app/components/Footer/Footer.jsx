@@ -1,22 +1,3 @@
-// import { Box } from "@mui/material";
-// import FooterDesktop from "./FooterDesktop.jsx";
-// import FooterMobile from "./FooterMobile.jsx";
-// import classes from './FooterStyles.jsx';
-// // ==============================================================
-
-// export default function Footer() {
-//   return (
-//     <Box sx={classes.Footer}>
-//       <Box display={{ xs: "block", sm: "block", md: "none" }}>
-//         <FooterMobile />
-//       </Box>
-//       <Box display={{ xs: "none", sm: "none", md: "block" }}>
-//         <FooterDesktop />
-//       </Box>
-//     </Box>
-//   );
-// }
-
 import {
   Box,
   Typography,
@@ -24,7 +5,6 @@ import {
   Divider,
   Container,
   Grid,
-  Hidden,
 } from "@mui/material";
 import SocialNetworks from "../SocialNetworks/SocialNetworks.jsx";
 import LogoBtn from "./FooterBtns/LogoBtn.jsx";
@@ -34,10 +14,11 @@ export default function Footer() {
   const FooterClasses = useFooterStyles();
   return (
     <Container>
+     
       <Box className={FooterClasses.LogoUp}>
-        <Hidden smUp="xs">
+        <Box sx={{ display: { xs: "block", sm: "block", md: "none" } }}>
           <LogoBtn iconWidth={"130px"} iconHeight={"26px"} />
-        </Hidden>
+        </Box>
       </Box>
 
       <Grid className={FooterClasses.BoxTop} container>
@@ -49,13 +30,13 @@ export default function Footer() {
               </Link>
             </Typography>
           </Grid>
-          <Hidden only="xs">
+          <Box sx={{ display: {  xs: "none", sm: "none", md: "block" } }}>
             <Divider
               className={FooterClasses.DividerVertical}
               orientation="vertical"
               color="#4FA083"
             />
-          </Hidden>
+          </Box>
           <Grid item>
             <Link className={FooterClasses.Link} href="about-us" variant="body1">
               {"ABOUT SEEDRA"}
@@ -63,9 +44,12 @@ export default function Footer() {
           </Grid>
         </Grid>
         <Grid item className={FooterClasses.LogoBox}>
-          <Hidden smDown="xs">
+          {/* <Hidden smDown="xs">
             <LogoBtn iconWidth={"130px"} iconHeight={"26px"} />
-          </Hidden>
+          </Hidden> */}
+          <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
+            <LogoBtn iconWidth={"130px"} iconHeight={"26px"} />
+          </Box>
         </Grid>
         <Grid className={FooterClasses.GridContainer} container>
           <Grid item>
@@ -73,13 +57,20 @@ export default function Footer() {
               {"Terms&Conditions"}
             </Link>
           </Grid>
-          <Hidden only="xs">
+          {/* <Hidden only="xs">
             <Divider
               className={FooterClasses.DividerVertical}
               orientation="vertical"
               color="#4FA083"
             />
-          </Hidden>
+          </Hidden> */}
+          <Box sx={{ display: {  xs: "none", sm: "none", md: "block" } }}>
+            <Divider
+              className={FooterClasses.DividerVertical}
+              orientation="vertical"
+              color="#4FA083"
+            />
+          </Box>
           <Grid item>
             <Link className={FooterClasses.Link} href="#" variant="body1">
               {"Privacy Policy"}

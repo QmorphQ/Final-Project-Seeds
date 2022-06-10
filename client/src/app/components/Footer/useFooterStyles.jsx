@@ -23,6 +23,15 @@ export const useFooterStyles = makeStyles(() => ({
     // paddingBottom: "24px",
   },
 
+  GridContainerColumn: {
+    flexWrap: "wrap",
+    flexDirection: "column",
+    alignContent: "space-around",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    // paddingBottom: "24px",
+  },
+
   TypogLink: {
     display: "inlineBlock",
 

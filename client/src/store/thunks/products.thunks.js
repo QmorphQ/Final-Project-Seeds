@@ -18,17 +18,21 @@ import {
 } from "../actions/products.actions";
 
 const fetchProducts =
-  (uri = `${API}products`) =>
+  (uri = `${API}`) =>
   (dispatch) => {
     dispatch(downloadAllProductsRequested());
+    dispatch(downloadFilteredProductsRequested());
     axios
       .get(uri)
       .then((products) => {
-        dispatch(downloadAllProductsSuccess(products));
+        console.log(products);
+        dispatch(downloadAllProductsSuccess(products.data.products));
+        dispatch(downloadFilteredProductsSuccess(products.data.products));
         return products;
       })
       .catch(() => {
         dispatch(downloadAllProductsError());
+        dispatch(downloadFilteredProductsError());
       });
   };
 

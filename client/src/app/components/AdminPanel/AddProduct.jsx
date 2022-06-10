@@ -85,7 +85,17 @@ const AddProduct = () => {
 
         onSubmit: (values) => { 
             
-            dispatch(adminAddProduct(values)); 
+            dispatch(adminAddProduct({
+                                        name: values.name, 
+                                        description: values.description, 
+                                        categories: values.categories, 
+                                        currentPrice: Number(values.currentPrice), 
+                                        discountPrice: Number(values.discountPrice), 
+                                        packageDimensions: values.packageDimensions, 
+                                        currentRating: Number(values.currentRating), 
+                                        quantity: Number(values.quantity), 
+                                        imageUrls: values.imageUrls, 
+                                    })); 
             formik.resetForm(); 
         }
     });

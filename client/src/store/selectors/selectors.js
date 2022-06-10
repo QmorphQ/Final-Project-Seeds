@@ -128,4 +128,6 @@ export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.prod
 
 // ====================== Admin =========================== 
 
-export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState;
+export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState; 
+
+export const adminDeleteProductRequestSelector = (state) => state.admin.adminDeleteProductRequestState;

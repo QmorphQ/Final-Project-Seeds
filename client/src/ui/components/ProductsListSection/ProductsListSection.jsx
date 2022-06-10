@@ -1,23 +1,19 @@
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import ProductCard from "../ProductCard/ProductCard.jsx";
+import { PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../../../app/constants";
+import ProductCardLoader from "../ProductCard/ProductCardLoader.jsx";
 
 // const userData = { /* UNUSED DATA!!! *//
 //   loginOrEmail: "valeron",
 //   password: "justdrink",
 // };
 
-const ProductsListSection = ({ data, loading }, totalLength = 6) => {
-  let productsFlteredArr = data.products
-    // .map((value) => ({ value, sort: Math.random() }))
-    // .sort((a, b) => a.sort - b.sort)
-    // .map(({ value }) => value);
+const ProductsListSection = ({ data, loading, isLoading, productsNumber }) => {
 
-  if (!data.isFiltersPage) {
-    productsFlteredArr = productsFlteredArr.filter(
-      (product, index) => index < totalLength
-    );
-  }
+  const productsFlteredArr = data?.products || [];
+
+  console.log(productsFlteredArr);
 
   return (
     <>
@@ -27,13 +23,28 @@ const ProductsListSection = ({ data, loading }, totalLength = 6) => {
           rowSpacing={{ xs: 1, sm: 2, md: 3 }}
           columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          {productsFlteredArr.map((product, i) => (
-            <ProductCard
-              key={product.id || i}
-              product={product}
-              loading={loading}
-            /> /* MVP-key of Product Card */
-          ))}
+          {isLoading ? 
+          [...Array(productsNumber)].map((item, index) => (
+            <ProductCardLoader key={index} />
+          )) :
+          productsFlteredArr?.map((product, i) => (
+              <ProductCard
+                key={product.id || i}
+                product={product}
+                loading={loading}
+              />
+            )
+          )}
+          {productsFlteredArr?.length === 0 && (
+            <Box sx={{height: "512px", display: "flex", width: "100%", justifyContent: "center", marginTop:"40px"}}>
+              <Typography
+                variant="h3"
+                color="text.primary"
+              >
+                List is empty
+              </Typography>
+            </Box>
+          )}
         </Grid>
       </Container>
     </>
@@ -43,6 +54,12 @@ const ProductsListSection = ({ data, loading }, totalLength = 6) => {
 ProductsListSection.propTypes = {
   data: PropTypes.array,
   loading: PropTypes.string,
+  isLoading: PropTypes.bool,
+  productsNumber: PropTypes.number
 };
+
+ProductsListSection.defaultProps = {
+  productsNumber: PRODUCTS_NUMBER_ON_MAIN_PAGE 
+}
 
 export default ProductsListSection;

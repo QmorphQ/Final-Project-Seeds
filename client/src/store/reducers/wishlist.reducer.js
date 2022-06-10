@@ -12,7 +12,7 @@ import {
 import { downloadRequestStates } from "../../app/constants";
 
 const initialState = {
-  downloadRequestState: downloadRequestStates.IDLE,
+  downloadWishlistRequestState: downloadRequestStates.IDLE,
   addWishlistRequestState: downloadRequestStates.IDLE,
   addProductToWishlistRequestState: downloadRequestStates.IDLE,
   wishlist: null,
@@ -23,20 +23,20 @@ const wishlistReducer = (state = initialState, action) => {
     case DOWNLOAD_WISHLIST_REQUESTED:
       return {
         ...state,
-        downloadRequestState: downloadRequestStates.LOADING,
+        downloadWishlistRequestState: downloadRequestStates.LOADING,
       };
 
     case DOWNLOAD_WISHLIST_SUCCESS:
       return {
         ...state,
-        downloadRequestState: downloadRequestStates.SUCCESS,
+        downloadWishlistRequestState: downloadRequestStates.SUCCESS,
         wishlist: action.payload,
       };
 
     case DOWNLOAD_WISHLIST_ERROR:
       return {
         ...state,
-        downloadRequestState: downloadRequestStates.ERROR,
+        downloadWishlistRequestState: downloadRequestStates.ERROR,
       };
 
     case ADD_WISHLIST_REQUESTED:

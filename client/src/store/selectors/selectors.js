@@ -33,6 +33,9 @@ export const mainCategoriesSelector = (state) => {
 export const downloadProductsRequestStateSelector = (state) =>
   state.products.downloadAllRequestState;
 
+export const downloadWishlistRequestStateSelector = (state) =>
+  state.wishlist.downloadWishlistRequestState;
+
 export const productsSelector = (state) => {
   if (state.products.selectedCategories === "all") {
     return state.products.productList;
@@ -69,7 +72,9 @@ export const slidesSelector = (state) => state.slides.slideList;
 // ======================= Customers/Login ==============================
 export const customersSelector = (state) => state.customer.newCustomer;
 
-export const loginStateSelector = (state) => state.customer.isLoggedIn;
+export const loginStateSelector = (state) => state.customer.isLoggedIn; 
+
+export const isAdminStateSelector = (state) => state.customer.isAdmin;
 
 export const loginRequestSelector = (state) => state.customer.loginRequestState;
 
@@ -116,10 +121,16 @@ export const maturationCheckboxStateSelector = (state) => state.filters.maturati
 
 export const hasMoreFilteredProductsSelector = (state) => state.filters.hasMoreFilteredProducts
 
-export const productsQuantitySelector = (state) => state.filters.productsQuantity
+export const productsQuantitySelector = (state) => state.filters.productsQuantity 
 
 // MVP:wishlist
-export const wishlistDowloadedSuccessSelector = (state) => state.wishlist.downloadRequestState
+export const wishlistDowloadedSuccessSelector = (state) => state.wishlist.downloadRequestState 
 
 export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.products?.length
-// ========================================================================================
+
+
+// ====================== Admin =========================== 
+
+export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState; 
+
+export const adminDeleteProductRequestSelector = (state) => state.admin.adminDeleteProductRequestState;

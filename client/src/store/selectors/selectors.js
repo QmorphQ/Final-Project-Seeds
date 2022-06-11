@@ -33,6 +33,9 @@ export const mainCategoriesSelector = (state) => {
 export const downloadProductsRequestStateSelector = (state) =>
   state.products.downloadAllRequestState;
 
+export const downloadWishlistRequestStateSelector = (state) =>
+  state.wishlist.downloadWishlistRequestState;
+
 export const productsSelector = (state) => {
   if (state.products.selectedCategories === "all") {
     return state.products.productList;
@@ -67,14 +70,21 @@ export const downloadSlidesRequestStateSelector = (state) =>
 export const slidesSelector = (state) => state.slides.slideList;
 
 // ======================= Customers/Login ==============================
-export const customersSelector = (state) => state.customer.newCustomer;
+export const newCustomerSelector = (state) => state.customer.newCustomer;
 
-export const loginStateSelector = (state) => state.customer.isLoggedIn;
+export const currentCustomerSelector = (state) =>
+  state.customer.currentCustomer;
+
+export const loginStateSelector = (state) => state.customer.isLoggedIn; 
+
+export const isAdminStateSelector = (state) => state.customer.isAdmin;
 
 export const loginRequestSelector = (state) => state.customer.loginRequestState;
 
 export const customersRequestSelector = (state) =>
   state.customer.addRequestState;
+
+export const isRightPasswordSelector = (state) => state.customer.isRightPassword;
 
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
@@ -98,28 +108,41 @@ export const wishlistSelector = (state) => state.wishlist.wishlist;
 
 // ====================== Filters ==========================
 
-export const queryParamsSelector = (state) => state.filters.queryParams
 
-export const sortedByPriceSelector = (state) => state.filters.sortedByPrice
+export const paramsSelector = (state) => state.filters.params;
 
-export const selectedCategorySelector = (state) => state.filters.selectedCategory
+export const queryParamsSelector = (state) => state.filters.queryParams;
 
-export const inputValueFromSelector = (state) => state.filters.inputValueFrom
+export const sortedByPriceSelector = (state) => state.filters.sortedByPrice;
 
-export const inputValueToSelector = (state) => state.filters.inputValueTo
+export const selectedCategorySelector = (state) =>
+  state.filters.selectedCategory;
 
-export const sliderValuesSelector = (state) => state.filters.sliderValues
+export const inputValueFromSelector = (state) => state.filters.inputValueFrom;
 
-export const originCheckboxStateSelector = (state) => state.filters.originCheckboxState
+export const inputValueToSelector = (state) => state.filters.inputValueTo;
 
-export const maturationCheckboxStateSelector = (state) => state.filters.maturationCheckboxState
+export const sliderValuesSelector = (state) => state.filters.sliderValues;
+
+export const originCheckboxStateSelector = (state) =>
+  state.filters.originCheckboxState;
+
+export const maturationCheckboxStateSelector = (state) =>
+  state.filters.maturationCheckboxState;
 
 export const hasMoreFilteredProductsSelector = (state) => state.filters.hasMoreFilteredProducts
 
-export const productsQuantitySelector = (state) => state.filters.productsQuantity
+export const productsQuantitySelector = (state) => state.filters.productsQuantity 
 
 // MVP:wishlist
-export const wishlistDowloadedSuccessSelector = (state) => state.wishlist.downloadRequestState
+export const wishlistDowloadedSuccessSelector = (state) => state.wishlist.downloadRequestState 
 
 export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.products?.length
-// ========================================================================================
+
+
+// ====================== Admin =========================== 
+
+export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState; 
+
+export const adminDeleteProductRequestSelector = (state) => state.admin.adminDeleteProductRequestState;
+

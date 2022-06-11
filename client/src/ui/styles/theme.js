@@ -26,7 +26,7 @@ const createCustomTheme = (theme) => {
         contrastText: "rgba(255, 255, 255, 1)",
       },
       info: {
-        main: "rgba(79, 160, 131, 1)",
+        main: "rgba(239, 239, 239, 1)",
         primary: "rgba(53, 151, 64, 0,08)"
       },
       text: {

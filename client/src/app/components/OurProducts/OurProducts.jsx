@@ -1,18 +1,17 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Typography, Box } from "@mui/material";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import Tab from "../../../ui/components/Tab/Tab.jsx";
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx";
 import Icon from "../../../ui/components/Icon/Icon.jsx";
-import { downloadRequestStates } from "../../constants";
+import { downloadRequestStates, PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../../constants";
 import {
   downloadCategoriesRequestStateSelector,
   mainCategoriesSelector,
 } from "../../../store/selectors/selectors";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-import { filterProductsByCategory } from "../../../store/thunks/products.thunks";
+import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
 
 const useStyles = makeStyles((theme) => ({
   tab: {
@@ -43,6 +42,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const productsSelector = (state) => {
+  if (state.products.selectedCategories === "all") {
+    return state.products.productList;
+  }
+
+  if (state.products.selectedCategories === "bundles") {
+    const bundle = state.products.productList.filter(
+      (product) => product.categories.indexOf("mix") > -1
+    );
+
+    return bundle;
+  }
+
+  const selectedProducts = state.products.productList.filter(
+    (product) =>
+      product.categories.indexOf(state.products.selectedCategories) > -1
+  );
+
+  return selectedProducts;
+};
+
 const OurProducts = () => {
   const downloadRequestState = useSelector(
     downloadCategoriesRequestStateSelector
@@ -50,6 +70,7 @@ const OurProducts = () => {
   const [value, setValue] = React.useState(0);
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const categories = useSelector(mainCategoriesSelector);
   if (downloadRequestState === downloadRequestStates.LOADING)
     return <div>Loading...</div>; // Here must be a loader
@@ -62,20 +83,20 @@ const OurProducts = () => {
       />
     );
 
-  
- 
-
-  
-
   const handleClick = (event) => {
-    dispatch(filterProductsByCategory(event.target.dataset.category));
+    if(event.target.dataset.category === "all") {
+      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`));
+    } else if (event.target.dataset.category === "bundles") {
+      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${categories.map(category => category.name).reduce((acc, curr) => `${acc}${curr}-mix,`)}`));
+    } else {
+      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${event.target.dataset.category},${event.target.dataset.category}-mono,${event.target.dataset.category}-mix`));
+    }
   };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  
 
   const categoriesTabs = categories.map((category) => (
     <Tab
@@ -111,21 +132,6 @@ const OurProducts = () => {
       </Box>
     </>
   );
-};
-
-OurProducts.propTypes = {
-  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-  productList: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      currentPrice: PropTypes.number,
-      categories: PropTypes.string,
-      description: PropTypes.string,
-      imageUrls: PropTypes.string,
-      quantity: PropTypes.number,
-      popular: PropTypes.bool,
-    })
-  ),
 };
 
 export default OurProducts;

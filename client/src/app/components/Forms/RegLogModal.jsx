@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import useStyles from "../Header/HeaderStyles.jsx";
-import Textfield from "./Components/FormsUI/Textfield";
-import ButtonWrapper from "./Components/FormsUI/Submit/ButtonWrapper";
-import CheckboxWrapper from "./Components/FormsUI/Checkbox";
-import { addCustomer } from "../../../store/thunks/customer.thunks";
-import { downloadRequestStates } from "../../constants/index";
-import { customersRequestSelector } from "../../../store/selectors/selectors";
-import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
+import CloseIcon from '@mui/icons-material/Close';
+import classes from "../Header/HeaderStyles.jsx";
+import Textfield from './Components/FormsUI/Textfield';
+import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
+import CheckboxWrapper from './Components/FormsUI/Checkbox';
+import { addCustomer } from '../../../store/thunks/customer.thunks';
+import { downloadRequestStates } from '../../constants/index';
+import { customersRequestSelector } from '../../../store/selectors/selectors';
+import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
 
 const style = makeStyles({
   ItemBlock: {
@@ -31,18 +31,19 @@ const style = makeStyles({
 });
 
 export default function SignUp() {
-  const requestState = useSelector(customersRequestSelector);
-  const classes = useStyles();
-  const navigation = useNavigate();
-  const styles = style();
-  const INITIAL_FORM_STATE = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    login: "",
-    password: "",
-    termsOfService: "",
-  };
+  
+    const requestState = useSelector(customersRequestSelector);
+    const navigation = useNavigate()
+    const styles = style();
+    const INITIAL_FORM_STATE = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        login: '',
+        password: '',
+        termsOfService: '',
+    };
+
 
   const dispatch = useDispatch();
 

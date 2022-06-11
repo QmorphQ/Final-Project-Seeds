@@ -5,15 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Grid, Typography, Box, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import useStyles from "../Header/HeaderStyles.jsx";
-import Textfield from "./Components/FormsUI/Textfield";
-import ButtonWrapper from "./Components/FormsUI/Submit/ButtonWrapper";
-import { loginCustomer } from "../../../store/thunks/customer.thunks";
-import { loginRequestSelector } from "../../../store/selectors/selectors";
-import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-import { downloadRequestStates } from "../../constants/index";
-
+import CloseIcon from '@mui/icons-material/Close';
+import classes from "../Header/HeaderStyles.jsx";
+import Textfield from './Components/FormsUI/Textfield';
+import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
+import { loginCustomer } from '../../../store/thunks/customer.thunks';
+import { loginRequestSelector } from '../../../store/selectors/selectors';
+import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
+import { downloadRequestStates } from '../../constants/index';
 
 const style = makeStyles({
   ItemBlock: {
@@ -31,26 +30,24 @@ const style = makeStyles({
   },
 });
 
-export default function LogIn() {
-  const requestState = useSelector(loginRequestSelector);
-  const navigation = useNavigate();
-  const classes = useStyles();
-  const styles = style();
-  const dispatch = useDispatch();
-
-     
-  const INITIAL_FORM_STATE = {
-    loginOrEmail: "",
-    password: "",
-  };
-
-  const FORM_VALIDATION = Yup.object().shape({
-    loginOrEmail: Yup.string().required("Required").email("Invalid email."),
-    password: Yup.string()
-      .min(8, "Password is 8 chars minimum.")
-      .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")
-      .required("Required"),
-  });
+    const requestState = useSelector(loginRequestSelector);
+    const navigation = useNavigate()
+    const styles = style();
+    const dispatch = useDispatch()
+    const INITIAL_FORM_STATE = {
+        loginOrEmail: '',
+        password: '',
+    };
+  
+    const FORM_VALIDATION = Yup.object().shape({
+        loginOrEmail: Yup.string()
+        .required('Required')
+        .email('Invalid email.'),
+        password: Yup.string()
+        .min(8, 'Password is 8 chars minimum.')
+        .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
+        .required('Required')
+    });
 
   // const handleClickOpen = () =>{
   //   setOpen(true)
@@ -71,31 +68,32 @@ export default function LogIn() {
     }
   }, [requestState]);
 
-  
-  return (
-    <>
-      <Box
-        className={styles.BlockCenter}
-        onClose={handleClose}
-        sx={{ border: `1px solid green`, p: 4, borderRadius: 3, maxWidth: 300 }}
-      >
-        <Formik
-          initialValues={{
-            ...INITIAL_FORM_STATE,
-          }}
-          validationSchema={FORM_VALIDATION}
-          onSubmit={handleSubmit}
-        >
-          <Form>
-            <Grid container spacing={2}>
-              <Grid className={styles.ItemBlock} item xs={12}>
-                <Typography color="primary" sx={{ pb: 1 }}>
-                  Login
-                </Typography>
-                <IconButton onClick={handleClose} className={styles.ItemRight}>
-                  <CloseIcon className={classes.iconsStyle} />
-                </IconButton>
-              </Grid>
+
+    return (
+    <>        
+              <Box className={styles.BlockCenter}  onClose={handleClose} sx={{zIndex: "1000" ,border: `1px solid green`, p:4, borderRadius: 3, maxWidth:300}}>
+                <Formik  
+                  initialValues={{
+                    ...INITIAL_FORM_STATE
+                  }}
+                  validationSchema={FORM_VALIDATION}
+                  onSubmit={handleSubmit}
+                >
+                  <Form>
+                    <Grid container spacing={2}>
+                      <Grid className={styles.ItemBlock} item xs={12}>
+                        <Typography color="primary" sx={{pb:1}}>
+                          Login
+                        </Typography>
+                        <IconButton onClick={handleClose} className={styles.ItemRight}><CloseIcon sx={classes.iconsStyle}/></IconButton>
+                      </Grid>
+    
+                      <Grid item xs={12}>
+                        <Textfield
+                          name="loginOrEmail"
+                          label="Email"
+                        />
+                      </Grid>  
 
               <Grid item xs={12}>
                 <Textfield name="loginOrEmail" label="Email" />

@@ -1,47 +1,36 @@
-import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import Preloader from "../../ui/components/Preloader/Preloader.jsx";
+import { useEffect } from "react";
+import { 
+  useDispatch, 
+  // useSelector 
+} from "react-redux";
 import OurProducts from "../components/OurProducts/OurProducts.jsx";
-import { downloadRequestStates } from "../constants";
+import { API, PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../constants";
 import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
 import ProductsList from "../components/ProductsList/ProductsList.jsx";
-import { downloadProductsRequestStateSelector } from "../../store/selectors/selectors";
+import fetchCategories from "../../store/thunks/catalog.thunks";
+import fetchSlides from "../../store/thunks/slides.thunks";
+import { fetchProducts } from "../../store/thunks/products.thunks";
 
+const Home = () => {
 
-const Home = ({ loading, productList }) => {
-  const downloadRequestState = useSelector(
-    downloadProductsRequestStateSelector
-  );
+  const dispatch = useDispatch();
 
-  if (downloadRequestState === "loading") {
-    return <Preloader />;
-  }
+  useEffect(() => {
+    dispatch(fetchSlides());
+    dispatch(fetchProducts(`${API}products/filter?perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`));
+    dispatch(fetchCategories());
+  }, []);
 
   return (
     <>
       <Box component="main">
         <MainPageCarousel />
-        <OurProducts loading={loading} productList={productList} />
-        <ProductsList loading={loading} productList={productList} />
+        <OurProducts />
+        <ProductsList />
       </Box>
     </>
   );
-};
-
-Home.propTypes = {
-  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-  productList: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      currentPrice: PropTypes.number,
-      categories: PropTypes.string,
-      description: PropTypes.string,
-      imageUrls: PropTypes.string,
-      quantity: PropTypes.number,
-      popular: PropTypes.bool,
-    })
-  ),
 };
 
 export default Home;

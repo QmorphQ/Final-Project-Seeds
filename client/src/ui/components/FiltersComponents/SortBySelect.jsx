@@ -6,19 +6,16 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  paramsSelector,
+  queryParamsSelector,
   sortedByPriceSelector,
 } from "../../../store/selectors/selectors";
-import {
-  setParams,
-  sortProductsByPrice,
-} from "../../../store/actions/filters.actions";
+import { setQueryParams, sortProductsByPrice } from "../../../store/actions/filters.actions";
 import useFiltersStyles from "../../../app/pages/Filters/useFiltersStyles";
 
 const SortBySelect = () => {
   const classes = useFiltersStyles();
 
-  const params = useSelector(paramsSelector);
+  const queryParams = useSelector(queryParamsSelector);
   const sortedByPrice = useSelector(sortedByPriceSelector);
 
   const dispatch = useDispatch();
@@ -26,9 +23,9 @@ const SortBySelect = () => {
   const handleChange = (event) => {
     dispatch(sortProductsByPrice(event.target.value));
     if (event.target.value === "less") {
-      dispatch(setParams({ ...params, sort: "currentPrice" }));
+      dispatch(setQueryParams({ ...queryParams, sort: "currentPrice" }));
     } else {
-      dispatch(setParams({ ...params, sort: "-currentPrice" }));
+      dispatch(setQueryParams({ ...queryParams, sort: "-currentPrice" }));
     }
   };
 

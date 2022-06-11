@@ -9,7 +9,7 @@ import Spinner from "../../../../ui/components/Spinner/Spinner.jsx";
 // =========================================================
 // import searchDB from "./SearchComponent/SearchLogic/searchDB";
 import searchObserver from "./SearchComponent/SearchLogic/searchObserver";
-import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
+// import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
 import { API } from "../../../constants/index";
 
 // =========================================================
@@ -73,7 +73,7 @@ export default function SearchAppBar() {
   // ++++++
   // Input controller:
   const inputHandler = (event) => {
-    setInputText(searchNormalize(event.target.value));
+    setInputText(event.target.value);
   };
   // ++++++
   // +++
@@ -151,8 +151,10 @@ export default function SearchAppBar() {
   // ++++++
   // Fetch products from server:
   useEffect(() => {
-    setLoading(true);
-    getAllProducts();
+    if (trigger) {
+      setLoading(true);
+      getAllProducts();
+    }
   }, [trigger]);
 
   useEffect(() => {

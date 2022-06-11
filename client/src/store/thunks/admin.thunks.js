@@ -3,7 +3,10 @@ import axios from "axios";
 import { API } from "../../app/constants";
 import { adminAddProductRequested, 
          adminAddProductError, 
-         adminAddProductSuccess } from "../actions/admin.actions";
+         adminAddProductSuccess, 
+         adminDeleteProductRequested, 
+         adminDeleteProductError, 
+         adminDeleteProductSuccess } from "../actions/admin.actions";
 
 
 
@@ -26,6 +29,30 @@ const adminAddProduct = (product) => (dispatch) => {
             dispatch(adminAddProductError());
         });
     }
+};  
+
+
+
+const adminDeleteProduct = (productID) => (dispatch) => { 
+
+    dispatch(adminDeleteProductRequested()); 
+
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      axios
+        .delete(`${API}products/${productID}`, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        })
+        .then(() => {
+            dispatch(adminDeleteProductSuccess()); 
+        })
+        .catch(() => {
+            dispatch(adminDeleteProductError());
+        });
+    }
 }; 
 
-export { adminAddProduct };
+
+export { adminAddProduct, adminDeleteProduct };

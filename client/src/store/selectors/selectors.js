@@ -33,6 +33,9 @@ export const mainCategoriesSelector = (state) => {
 export const downloadProductsRequestStateSelector = (state) =>
   state.products.downloadAllRequestState;
 
+export const downloadWishlistRequestStateSelector = (state) =>
+  state.wishlist.downloadWishlistRequestState;
+
 export const productsSelector = (state) => {
   if (state.products.selectedCategories === "all") {
     return state.products.productList;
@@ -128,4 +131,6 @@ export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.prod
 
 // ====================== Admin =========================== 
 
-export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState;
+export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState; 
+
+export const adminDeleteProductRequestSelector = (state) => state.admin.adminDeleteProductRequestState;

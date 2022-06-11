@@ -55,19 +55,6 @@ function App() {
 
   return (
     <BrowserRouter>
-<<<<<<< HEAD
-    <Routes>
-       <Route path="/" element={<AppLayout allMenuCategories={allCategories} menuCategories={categories} />} >
-        <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
-        <Route path="/products" element={<Filters />} />
-        <Route path="/preview" element={<ProductPage />} />
-        <Route path="/login" element={<LogIn/>} />
-        {/* <Route path="/cart" element={<TestCartPage />}/> */}
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="*" element={<PageNotFound />} />
-       </Route>
-    </Routes>
-=======
       <Routes>
           <Route path="/" element={<AppLayout />} >
               <Route index element={<Home loading={downloadRequestState} productList={productList} />} />
@@ -77,11 +64,10 @@ function App() {
               <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
               <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
               <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
-              <Route path="*" element={<Checkout />} />
+              <Route path="checkout" element={<Checkout />} />
               {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
           </Route>
       </Routes>
->>>>>>> c66c6b36b826f8a6882dc9f193ec02d5892c0ebb
     </BrowserRouter>
   );
 }

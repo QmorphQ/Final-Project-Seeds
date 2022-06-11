@@ -73,47 +73,9 @@ export default function CheckoutForm() {
   //   };
   // };
 
-<<<<<<< HEAD
   // const handleNext = () => {
   //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
   // };
-=======
-    return {
-      ...newOrder,
-      products: "cart.products",
-    };
-  };
-
-  const submitNewOrder = () => {
-    const newOrder = createOrder();
-    console.log(newOrder);
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const props = { formData, setForm };
-
-  const StepContent = ({ step }) => {
-    switch (step) {
-      case 0:
-        return (
-          <>
-            <CustomerInfo {...props} />
-            <DeliveryInfo {...props} />
-          </>
-        );
-      case 1:
-        return <PaymentInfo {...props} />;
-      case 2:
-        return <CheckoutSummary {...props} />;
-      default:
-        return <></>;
-    }
-  };
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
->>>>>>> c66c6b36b826f8a6882dc9f193ec02d5892c0ebb
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -178,7 +140,6 @@ export default function CheckoutForm() {
     padding="20px"
     >
       <Stepper activeStep={activeStep}>
-<<<<<<< HEAD
         {steps.map((index) => 
  (
             <Step key={index}>
@@ -193,13 +154,6 @@ export default function CheckoutForm() {
             </Step>
           )
         )}
-=======
-        {steps.map((index) => (
-          <Step key={index}>
-            <StepLabel></StepLabel>
-          </Step>
-        ))}
->>>>>>> c66c6b36b826f8a6882dc9f193ec02d5892c0ebb
       </Stepper>
       {activeStep === steps.length ? (
         <>
@@ -212,8 +166,6 @@ export default function CheckoutForm() {
           </Box>
         </>
       ) : (
-<<<<<<< HEAD
-        
         <Formik initialValues={defaultData} validationSchema={FORM_VALIDATION} onSubmit={_handleSubmit}>
           {(props) => (
             <Form id={formId}>
@@ -233,37 +185,6 @@ export default function CheckoutForm() {
             </Form>
           )}
         </Formik>
-=======
-        <>
-          <>
-            <Grid container spacing={2} direction="column">
-              <Grid item xs={12} sm={4} md={4}>
-                <StepContent step={activeStep} />
-              </Grid>
-            </Grid>
-          </>
-          <Box sx={{ display: "flex", flexDirection: "row", pb: "20px" }}>
-            {activeStep !== 0 && (
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-            )}
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button
-              onClick={
-                activeStep === steps.length - 1 ? submitNewOrder : handleNext
-              }
-            >
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
-          </Box>
-        </>
->>>>>>> c66c6b36b826f8a6882dc9f193ec02d5892c0ebb
       )}
     </Box>
   );

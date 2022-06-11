@@ -70,7 +70,10 @@ export const downloadSlidesRequestStateSelector = (state) =>
 export const slidesSelector = (state) => state.slides.slideList;
 
 // ======================= Customers/Login ==============================
-export const customersSelector = (state) => state.customer.newCustomer;
+export const newCustomerSelector = (state) => state.customer.newCustomer;
+
+export const currentCustomerSelector = (state) =>
+  state.customer.currentCustomer;
 
 export const loginStateSelector = (state) => state.customer.isLoggedIn; 
 
@@ -80,6 +83,8 @@ export const loginRequestSelector = (state) => state.customer.loginRequestState;
 
 export const customersRequestSelector = (state) =>
   state.customer.addRequestState;
+
+export const isRightPasswordSelector = (state) => state.customer.isRightPassword;
 
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
@@ -103,21 +108,31 @@ export const wishlistSelector = (state) => state.wishlist.wishlist;
 
 // ====================== Filters ==========================
 
+
+export const paramsSelector = (state) => state.filters.params;
+
 export const queryParamsSelector = (state) => state.filters.queryParams
 
 export const sortedByPriceSelector = (state) => state.filters.sortedByPrice
 
-export const selectedCategorySelector = (state) => state.filters.selectedCategory
+export const queryParamsSelector = (state) => state.filters.queryParams;
 
-export const inputValueFromSelector = (state) => state.filters.inputValueFrom
+export const sortedByPriceSelector = (state) => state.filters.sortedByPrice;
 
-export const inputValueToSelector = (state) => state.filters.inputValueTo
+export const selectedCategorySelector = (state) =>
+  state.filters.selectedCategory;
 
-export const sliderValuesSelector = (state) => state.filters.sliderValues
+export const inputValueFromSelector = (state) => state.filters.inputValueFrom;
 
-export const originCheckboxStateSelector = (state) => state.filters.originCheckboxState
+export const inputValueToSelector = (state) => state.filters.inputValueTo;
 
-export const maturationCheckboxStateSelector = (state) => state.filters.maturationCheckboxState
+export const sliderValuesSelector = (state) => state.filters.sliderValues;
+
+export const originCheckboxStateSelector = (state) =>
+  state.filters.originCheckboxState;
+
+export const maturationCheckboxStateSelector = (state) =>
+  state.filters.maturationCheckboxState;
 
 export const hasMoreFilteredProductsSelector = (state) => state.filters.hasMoreFilteredProducts
 
@@ -134,3 +149,4 @@ export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.prod
 export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState; 
 
 export const adminDeleteProductRequestSelector = (state) => state.admin.adminDeleteProductRequestState;
+

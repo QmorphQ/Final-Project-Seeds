@@ -11,6 +11,8 @@ import {
   UPDATE_CUSTOMER_ERROR,
   UPDATE_CUSTOMER_SUCCESS,
   UPDATE_CUSTOMER_REQUEST,
+  CLEAN_UP_LOGIN_STATE,
+  IS_RIGHT_PASSWORD,
 } from "../actions/customer.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -23,6 +25,7 @@ const initialState = {
   updatedCustomer: null,
   getCurrentCustomerRequestState: downloadRequestStates.IDLE,
   updateCustomerRequestState: downloadRequestStates.IDLE,
+  isRightPassword: null,
 };
 
 const customerReducer = (state = initialState, action) => {
@@ -97,6 +100,18 @@ const customerReducer = (state = initialState, action) => {
       return {
         ...state,
         updateCustomerRequestState: downloadRequestStates.ERROR,
+      };
+
+    case CLEAN_UP_LOGIN_STATE:
+      return {
+        ...state,
+        loginRequestState: downloadRequestStates.IDLE,
+      };
+
+    case IS_RIGHT_PASSWORD:
+      return {
+        ...state,
+        isRightPassword: action.payload,
       };
 
     default:

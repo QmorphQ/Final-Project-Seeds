@@ -62,3 +62,14 @@ export const customerUpdateError = () => ({
   type: UPDATE_CUSTOMER_ERROR,
 })
 
+export const CLEAN_UP_LOGIN_STATE = "CLEAN_UP_LOGIN_STATE";
+export const cleanUpLoginState = () => ({
+  type: CLEAN_UP_LOGIN_STATE,
+})
+
+export const IS_RIGHT_PASSWORD = "IS_RIGHT_PASSWORD";
+export const isRightPassword = (isRight) => ({
+  type: IS_RIGHT_PASSWORD,
+  payload: isRight
+})
+

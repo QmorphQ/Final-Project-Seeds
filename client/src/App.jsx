@@ -25,6 +25,7 @@ import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
 import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
+import { cleanUpLoginState } from "./store/actions/customer.actions";
 // =======================================================================
 
 
@@ -45,6 +46,12 @@ function App() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
+
+  useEffect(() => {
+    if (window.location.href !== "http://localhost:3000/login") {
+      dispatch(cleanUpLoginState());
+    }
+  }, [window.location.href]);
 
   return (
     <BrowserRouter>

@@ -69,7 +69,8 @@ export const slidesSelector = (state) => state.slides.slideList;
 // ======================= Customers/Login ==============================
 export const newCustomerSelector = (state) => state.customer.newCustomer;
 
-export const currentCustomerSelector = (state) => state.customer.currentCustomer;
+export const currentCustomerSelector = (state) =>
+  state.customer.currentCustomer;
 
 export const loginStateSelector = (state) => state.customer.isLoggedIn;
 
@@ -77,6 +78,8 @@ export const loginRequestSelector = (state) => state.customer.loginRequestState;
 
 export const customersRequestSelector = (state) =>
   state.customer.addRequestState;
+
+export const isRightPasswordSelector = (state) => state.customer.isRightPassword;
 
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
@@ -101,22 +104,23 @@ export const wishlistSelector = (state) => state.wishlist.wishlist;
 
 // ====================== Filters ==========================
 
-export const paramsSelector = (state) => state.filters.params
+export const paramsSelector = (state) => state.filters.params;
 
-export const queryParamsSelector = (state) => state.filters.queryParams
+export const queryParamsSelector = (state) => state.filters.queryParams;
 
-export const sortedByPriceSelector = (state) => state.filters.sortedByPrice
+export const sortedByPriceSelector = (state) => state.filters.sortedByPrice;
 
-export const selectedCategorySelector = (state) => state.filters.selectedCategory
+export const selectedCategorySelector = (state) =>
+  state.filters.selectedCategory;
 
-export const inputValueFromSelector = (state) => state.filters.inputValueFrom
+export const inputValueFromSelector = (state) => state.filters.inputValueFrom;
 
-export const inputValueToSelector = (state) => state.filters.inputValueTo
+export const inputValueToSelector = (state) => state.filters.inputValueTo;
 
-export const sliderValuesSelector = (state) => state.filters.sliderValues
+export const sliderValuesSelector = (state) => state.filters.sliderValues;
 
-export const originCheckboxStateSelector = (state) => state.filters.originCheckboxState
+export const originCheckboxStateSelector = (state) =>
+  state.filters.originCheckboxState;
 
-export const maturationCheckboxStateSelector = (state) => state.filters.maturationCheckboxState
-
-
+export const maturationCheckboxStateSelector = (state) =>
+  state.filters.maturationCheckboxState;

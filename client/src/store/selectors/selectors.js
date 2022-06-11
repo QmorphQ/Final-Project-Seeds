@@ -111,10 +111,6 @@ export const wishlistSelector = (state) => state.wishlist.wishlist;
 
 export const paramsSelector = (state) => state.filters.params;
 
-export const queryParamsSelector = (state) => state.filters.queryParams
-
-export const sortedByPriceSelector = (state) => state.filters.sortedByPrice
-
 export const queryParamsSelector = (state) => state.filters.queryParams;
 
 export const sortedByPriceSelector = (state) => state.filters.sortedByPrice;

@@ -118,6 +118,7 @@ const customerReducer = (state = initialState, action) => {
       return {
         ...state,
         isRightPassword: action.payload,
+      };
 
     case GET_USERDETAILS_REQUESTED:
       return {

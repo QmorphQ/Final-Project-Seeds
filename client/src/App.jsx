@@ -27,8 +27,8 @@ import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import { RequireAuth } from "./app/hoc/RequireAuth.jsx";
 import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
+import StaticPage from "./ui/components/StaticPage/StaticPage.jsx";
 import AddProduct from "./app/components/AdminPanel/AddProduct.jsx";
-
 // =======================================================================
 
 function App() {
@@ -49,6 +49,7 @@ function App() {
 
   return (
     <BrowserRouter>
+
       <Routes>
           <Route path="/" element={<AppLayout />} >
               <Route index element={<Home />} />
@@ -61,8 +62,11 @@ function App() {
               <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
               <Route path="*" element={<Checkout />} />
               {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
+              <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
+              <Route path="/terms" element={<StaticPage page={"terms"} />} />
           </Route>
       </Routes>
+
     </BrowserRouter>
   );
 }

@@ -2,8 +2,8 @@ import {Box, Typography} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux"; 
 import PropTypes from 'prop-types';
-import ProductCard from "../../ui/components/ProductCard/ProductCard.jsx";
-import { downloadRequestStates } from "../constants/index";
+import ProductCard from "../../../ui/components/ProductCard/ProductCard.jsx";
+import { downloadRequestStates } from "../../constants/index";
 
 const useStyles = makeStyles((theme) => ({
     yourCartHeading: {
@@ -61,7 +61,7 @@ const Cart = ({ loading }) => {
     const products = useSelector(state => state.products.productList) || []; 
     const cart = useSelector(state => state.cart.cart) || []
     const classes = useStyles();
- 
+    
     if (loading !== downloadRequestStates.SUCCESS) { 
         return <p>Loading</p> 
     } if (Array.isArray(cart) && !cart.length) { 

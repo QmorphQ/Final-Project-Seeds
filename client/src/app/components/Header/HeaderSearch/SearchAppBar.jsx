@@ -9,7 +9,7 @@ import Spinner from "../../../../ui/components/Spinner/Spinner.jsx";
 // =========================================================
 // import searchDB from "./SearchComponent/SearchLogic/searchDB";
 import searchObserver from "./SearchComponent/SearchLogic/searchObserver";
-import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
+// import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
 import { API } from "../../../constants/index";
 
 // =========================================================
@@ -62,16 +62,18 @@ export default function SearchAppBar() {
   const [inputText, setInputText] = useState("");
   const [trigger, setTrigger] = useState(false); // Start searching
   const [arrIDs, setIDsArr] = useState([]);
+  const [products, setProducts] = useState([]);
   const [fetchedProducts, setFetchedProducts] = useState([]); // Array of products
   const [loading, setLoading] = useState(false); // Request status
   const [activeSearchContainer, setActiveSearchContainer] = useState(false); // Render container
   const [ready, setReady] = useState(false);
+
   // -----------------------------------------------------------------------------------
   // Functions:
   // ++++++
   // Input controller:
   const inputHandler = (event) => {
-    setInputText(searchNormalize(event.target.value));
+    setInputText(event.target.value);
   };
   // ++++++
   // +++
@@ -79,6 +81,8 @@ export default function SearchAppBar() {
     setActiveSearchContainer(false);
     setTrigger(false);
     setIDsArr([]);
+    setProducts([]);
+    setFetchedProducts([]);
     setFetchedProducts([]);
     setLoading(false);
     setReady(false);
@@ -86,19 +90,31 @@ export default function SearchAppBar() {
   };
   // ++++++
 
- const [searchKeys, setSearchKeys] = useState([]);
+  const [searchKeys, setSearchKeys] = useState([]);
   // Get products from server by itemNo:
-  const getSearchProducts = async (arrOfProductsItemNo = []) => {
-    arrOfProductsItemNo.map(async (itemNo) => {
-      await fetch(`http://localhost:8000/api/products/${itemNo}`)
-        .then((r) => r.json())
-        .then((r) =>
-          setFetchedProducts((val) =>
-            val.find((prod) => prod.itemNo === r.itemNo) ? val : [...val, r]
-          )
-        )
-        .catch((error) => console.log(error.message));
-    });
+  // const getSearchProducts = async (arrOfProductsItemNo = []) => {
+  //   arrOfProductsItemNo.map(async (itemNo) => {
+  //     await fetch(`http://localhost:8000/api/products/${itemNo}`)
+  //       .then((r) => r.json())
+  //       .then((r) =>
+  //         setFetchedProducts((val) =>
+  //           val.find((prod) => prod.itemNo === r.itemNo) ? val : [...val, r]
+  //         )
+  //       )
+  //       .catch((error) => console.log(error.message));
+  //   });
+  //   setLoading(false);
+  //   setReady(true);
+  // };
+
+  const getAllProducts = async () => {
+    axios
+      .get(`http://localhost:8000/api/products`)
+      .then((r) => {
+        setFetchedProducts(r.data);
+      })
+      .catch((error) => console.log(error.message));
+
     setLoading(false);
     setReady(true);
   };
@@ -120,28 +136,51 @@ export default function SearchAppBar() {
   // ++++++
   // Loading:
   useEffect(() => {
-    if (trigger) {
-      const regEx = new RegExp(`${inputText.trim()}`, "gi");
-      const filteredProducts = Array.from(
-        new Set(
-          searchKeys
-            .filter((prod) => regEx.test(prod.name))
-            .map((prod) => prod.itemNo)
-        )
-      );
-      return filteredProducts.length > 0
-        ? setIDsArr([...filteredProducts])
-        : [console.log("no results"), setTrigger(false)];
-    }
-    return false;
-  }, [trigger]);
+    const regEx = new RegExp(`${inputText.trim()}`, "gi");
+    const filteredProducts = Array.from(
+      new Set(
+        searchKeys
+          .filter((prod) => regEx.test(prod.name))
+          .map((prod) => prod.itemNo)
+      )
+    );
+    return filteredProducts.length > 0
+      ? setIDsArr([...filteredProducts])
+      : [console.log("no results"), setTrigger(false)];
+  }, [searchKeys]);
   // ++++++
   // Fetch products from server:
   useEffect(() => {
-    if (arrIDs.length > 0) {
+    if (trigger) {
       setLoading(true);
-      getSearchProducts(arrIDs);
+      getAllProducts();
     }
+  }, [trigger]);
+
+  useEffect(() => {
+    const keys = fetchedProducts.map((product) => {
+      const k = {
+        name: product.name,
+        itemNo: product.itemNo,
+      };
+
+      return k;
+    });
+
+    setSearchKeys(keys);
+  }, [fetchedProducts]);
+
+  useEffect(() => {
+    const productsToShow = [];
+    fetchedProducts.forEach((product) => {
+      arrIDs.forEach((id) => {
+        if (product.itemNo === id) {
+          productsToShow.push(product);
+        }
+      });
+    });
+
+    setProducts(productsToShow);
   }, [arrIDs]);
   // ++++++
   // Rendering results:
@@ -166,7 +205,7 @@ export default function SearchAppBar() {
       };
       return keyObj;
     });
-    
+
     setSearchKeys(keys);
   }, []);
   // ---------------------------------------------------------------------------------
@@ -189,7 +228,7 @@ export default function SearchAppBar() {
         {
           <SearchResultContainer
             active={activeSearchContainer}
-            products={fetchedProducts}
+            products={products}
             oneCard={fetchedProducts.length === 1}
           />
         }

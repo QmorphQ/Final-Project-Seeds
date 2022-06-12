@@ -4,6 +4,7 @@ export const useFooterStyles = makeStyles(() => ({
   Wrapper: {
     color: "#70737C",
     fontSize: "14px",
+    maxWidth: "100vw",
   },
   BoxTop: {
     justifyContent: "center",

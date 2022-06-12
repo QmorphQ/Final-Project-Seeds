@@ -70,7 +70,8 @@ function App() {
               {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />
-          </Route>
+              <Route path="/privacy-policy" element={<StaticPage page={"privacy-policy"} />} />
+      </Route>
       </Routes>
 
     </BrowserRouter>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useFormikContext } from "formik";
 
+
 const ShippingNovaPoshta = () => {
   const { setFieldValue } = useFormikContext();
 
@@ -79,6 +80,7 @@ const ShippingNovaPoshta = () => {
           renderInput={(params) => (           
             <TextField
               {...params}
+              required
               size="small"
               onChange={() => {
               handlerCity(params);
@@ -108,6 +110,7 @@ const ShippingNovaPoshta = () => {
           renderInput={(params) => (
             <TextField   
               {...params} 
+              required
               size="small"
               onChange={() => {
                 handlerCity(params);

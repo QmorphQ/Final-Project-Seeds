@@ -67,15 +67,6 @@ export default function CheckoutForm() {
   //   <p>Sincerely, your WMF team.</p>`,
   //   };
 
-  //   return {
-  //     ...newOrder,
-  //     products: "cart.products",
-  //   };
-  // };
-
-  // const handleNext = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  // };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);

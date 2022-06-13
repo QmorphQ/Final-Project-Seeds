@@ -22,6 +22,10 @@ const phoneRegExp = /^\+(?:[0-9] ?){6,14}[0-9]$/;
     .required('Required'),
     city: Yup.string()
     .required('Required'),
+    // postOfficeWarehouse: Yup.string()
+    // .required('Required'),
+    // postOfficeCity: Yup.string()
+    // .required('Required'),
 })
 
 

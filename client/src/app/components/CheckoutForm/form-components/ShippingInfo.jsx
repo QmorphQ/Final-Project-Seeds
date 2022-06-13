@@ -8,10 +8,17 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
+// import axios from "axios";
 import { PropTypes } from "prop-types";
 import { useField, useFormikContext } from "formik";
 import ShippingNovaPoshta from "../ShippingMethods/ShippingNovaPoshta.jsx";
 import ExpressDelivery from "../ShippingMethods/ExpressDelivery.jsx";
+
+
+  // axios.get("http://localhost:8000/api/shipping-methods").then((response) => {
+  //   console.log(response);
+  // });
+
 
 const shippingData = [
   {

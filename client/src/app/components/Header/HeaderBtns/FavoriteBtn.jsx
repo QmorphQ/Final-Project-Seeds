@@ -38,7 +38,7 @@ export default function FavoriteBtn({ quantity, linkPath, ...restProps }) {
 
 FavoriteBtn.defaultProps = {
   quantity: 0,
-  linkPath: "/favorites",
+  linkPath: "/wishlist",
 };
 
 FavoriteBtn.propTypes = {

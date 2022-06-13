@@ -3,8 +3,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 
 
-const SocialNetworks = () => {
-  return (
+const SocialNetworks = () => (
     <>
       <IconButton>
         <InstagramIcon sx={{color: "#359740", pl: "0"}} />
@@ -14,6 +13,5 @@ const SocialNetworks = () => {
       </IconButton>
     </>
   );
-};
 
 export default SocialNetworks;

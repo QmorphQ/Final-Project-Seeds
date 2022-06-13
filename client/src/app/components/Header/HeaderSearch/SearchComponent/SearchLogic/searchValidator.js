@@ -14,6 +14,7 @@ const keyWords = {
     "gmo",
     "mix",
     "heirloom",
+    "cucumber"
   ],
   cocrette: [
     "beets",

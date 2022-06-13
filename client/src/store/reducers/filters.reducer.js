@@ -32,13 +32,14 @@ const filtersReducer = (state = initialState, action) => {
           ...state,
           queryParams: {},
         };
-      } else if (Object.keys(action.payload).length !== 0) {
+      } 
+      if (Object.keys(action.payload).length !== 0) {
         return {
           ...state,
           queryParams: action.payload,
         };
       } 
-        return state;
+      return state;
       
 
     case SORT_PRODUCTS_BY_PRICE:

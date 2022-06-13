@@ -4,7 +4,8 @@ const classes = {
         flexDirection: 'column',
         alignItems: 'stretch',
         width: '90%',
-        height: '100%',
+        justifyContent: 'space-between',
+        height: '100Vh',
         margin: 'auto',
     }
 };

@@ -87,7 +87,7 @@ export const ProductCardRender = ({ data }) => {
     cartQuantity
   } = data;
   
-
+console.log(data);
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);

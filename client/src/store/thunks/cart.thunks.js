@@ -178,6 +178,8 @@ const changeProductQuantity = (productId, quantity) => (dispatch, getState) => {
         const newCart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
           cartQuantity: cartProduct.cartQuantity,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
         }));
         dispatch(editSuccess(newCart));
       })

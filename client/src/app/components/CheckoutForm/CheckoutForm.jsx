@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
+// import axios from "axios";
 import {
   Stepper,
   Step,
@@ -8,64 +9,104 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
+import { useSelector, useDispatch  } from "react-redux";
 import { Formik, Form } from "formik";
-
-// import { useForm } from "react-hooks-helper";
 import { PropTypes } from "prop-types";
+import {
+  getCustomer
+} from "../../../store/thunks/customer.thunks";
+import { currentCustomerSelector } from "../../../store/selectors/selectors";
 import FORM_VALIDATION from "./FormValidation.jsx";
-// import DeliveryInfo from "./form-components/DeliveryInfo.jsx";
 import PaymentInfo from "./form-components/PaymentInfo.jsx";
 import CustomerInfo from "./form-components/CustomerInfo.jsx";
 import CheckoutSummary from "./form-components/CheckoutSummary.jsx";
-// import ExpressDelivery from "./ShippingMethods/ExpressDelivery.jsx";
-// import ShippingNovaPoshta from "./ShippingMethods/ShippingNovaPoshta.jsx";
 import ShippingInfo from "./form-components/ShippingInfo.jsx";
 
 const steps = ["1", "2", "3"];
 
-const defaultData = {
-  firstName: "Anton",
-  lastName: "Ogniev",
-  email: "anton@icloud.com",
-  telephone: "+38 095 514 3233",
-  street: "Hegenheimerstrasse",
-  house: "79",
-  flat: "130",
-  postalCode: "4055",
-  city: "Basel",
-  deliveryMethod: "",
-  postOfficeCity: "",
-  postOfficeWarehouse: "",
-  paymentMethod: "card",
-};
+// const defaultData = {
+//   firstName: "Anton",
+//   lastName: "Ogniev",
+//   email: "anton@icloud.com",
+//   telephone: "+38 095 514 3233",
+//   street: "Hegenheimerstrasse",
+//   house: "79",
+//   flat: "130",
+//   postalCode: "4055",
+//   city: "Basel",
+//   deliveryMethod: "",
+//   postOfficeCity: "",
+//   postOfficeWarehouse: "",
+//   paymentMethod: "card",
+// };
 
 
 export default function CheckoutForm() {
+  const currentCustomer = useSelector(currentCustomerSelector);
   const [activeStep, setActiveStep] = useState(0);
   const [orderSummary, setOrderSummary] = useState(0);
-  const [formData] = useState(defaultData);
   const isLastStep = activeStep === steps.length - 1;
   const formId = "checkoutForm";
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCustomer());
+  }, []);
+
+  
  
-  // const createOrder = () => {
-  //   const newOrder = {
+  // const createOrder = (order) => {
+  //   const interimOrder = {
   //     customerId: "5d99ce196d40fb1b747bc5f5",
   //     deliveryAddress: {
   //       country: "Ukraine",
-  //       city: formData.city,
-  //       address: `${formData.street} ${formData.house}, f.${formData.flat}`,
-  //       postal: formData.postalCode,
+  //       city: order.city,
+  //       address: `${order.street} ${order.house}, f.${order.flat}`,
+  //       postal: order.postalCode,
   //     },
   //     shipping: "Kiev 50UAH",
-  //     paymentInfo: formData.paymentMethod,
+  //     paymentInfo: order.paymentMethod,
   //     status: "not shipped",
-  //     email: formData.email,
-  //     mobile: formData.telephone,
+  //     email: order.email,
+  //     mobile: order.telephone,
   //     letterSubject: "Thank you for order! You are welcome!",
   //     letterHtml: `<h1>Your order №XXXXXXXX is placed. </h1>
   //   <p>Looking forward to see you again soon. In case of any questions - we are happy to help!</p>
   //   <p>Sincerely, your WMF team.</p>`,
   //   };
+  //   return {
+  //     interimOrder
+  //   }
+  
+  // }
+
+
+
+  // const placeOrderToDB = (newOrder) => {
+  //   return axios
+  //     .post('http://localhost:8000/api/orders', newOrder)
+  //     .then((response) => {
+  //       console.log(response)
+  //     })
+  //     .catch((error) => {
+  //       alert(newOrder);
+  //       return error
+  //     })
+  // }
+
+  // const submitNewOrder = (order) => {
+  //   const newOrder = createOrder(order.interimOrder);
+
+  //   placeOrderToDB(newOrder)
+  //     .then((response) => {
+  //       if (response.orderIsPlaced) {
+  //         console.log('sent')
+  //       }
+  //     })
+  //     .catch(() => {
+  //       console.log('error');;
+  //     });
+  // };
 
 
   const handleBack = () => {
@@ -78,7 +119,7 @@ export default function CheckoutForm() {
 
   async function _submitForm(values, actions) {
     alert(JSON.stringify(values, null, 2));
-    actions.setSubmitting(false);
+    actions.setSubmitting(true);
 
     setActiveStep(activeStep + 1);
   }
@@ -93,6 +134,8 @@ export default function CheckoutForm() {
       actions.setSubmitting(false);
     }
   }
+
+  const orderNumber = "#222555"
   
 
   // const submitNewOrder = () => {
@@ -108,12 +151,12 @@ export default function CheckoutForm() {
       case 0:
         return (
           <>
-            <CustomerInfo formField={formData} />
-            <ShippingInfo formField={formData} />
+            <CustomerInfo/>
+            <ShippingInfo/>
           </>
         ) 
       case 1:
-        return <PaymentInfo formField={formData} />;
+        return <PaymentInfo/>;
       case 2:
         return <CheckoutSummary formField={orderSummary}/>;
       default:
@@ -122,6 +165,7 @@ export default function CheckoutForm() {
   };
 
   return (
+    currentCustomer != null &&
     <Box
     margin={'auto'}
     width={{ xs: "100%", sm: "50%"}}
@@ -149,7 +193,8 @@ export default function CheckoutForm() {
       {activeStep === steps.length ? (
         <>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            Your oder {orderNumber} has been sended!
+            Thank You!
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
@@ -157,8 +202,9 @@ export default function CheckoutForm() {
           </Box>
         </>
       ) : (
-        <Formik initialValues={defaultData} validationSchema={FORM_VALIDATION} onSubmit={_handleSubmit}>
-          {(props) => (
+        <Formik initialValues={currentCustomer} validationSchema={FORM_VALIDATION} onSubmit={_handleSubmit}>
+          {
+          (props) => (
             <Form id={formId}>
               {stepContent(activeStep, props.setFieldValue)}
               <Box display="flex" mt="20px" justifyContent="flex-end"> 

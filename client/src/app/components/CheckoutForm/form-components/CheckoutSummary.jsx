@@ -17,7 +17,6 @@ const CheckoutSummary = (formData) => {
         }
 })
 
-console.log(arr);
 
     return (
         <>

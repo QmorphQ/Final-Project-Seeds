@@ -24,6 +24,7 @@ const ShippingInfo = () => {
   const [shippingData, setShippingData] = useState([]);
   
   let defaultMethod;
+  
 
   useEffect(() => {
     axios
@@ -32,7 +33,7 @@ const ShippingInfo = () => {
       .catch(() => console.log("Some problem with shipping methods fetching"));
   }, []);
 
-  field.value === ""
+  field.value === undefined
     ? shippingData.forEach((item) => {
         item.default && (defaultMethod = item.customId);
       })

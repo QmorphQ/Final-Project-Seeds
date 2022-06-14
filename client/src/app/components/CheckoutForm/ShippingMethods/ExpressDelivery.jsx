@@ -9,7 +9,7 @@ const ExpressDelivery = () =>
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <InputField name="street" label="Street" />
+            <InputField name="addressLine" label="Street" />
           </Grid>
           <Grid item xs={12} lg={6}>
             <InputField name="house" label="House" />
@@ -18,7 +18,7 @@ const ExpressDelivery = () =>
             <InputField name="flat" label="Flat" />
           </Grid>
           <Grid item xs={12} lg={6}>
-            <InputField name="postalCode" label="Postal Code" />
+            <InputField name="code" label="Postal Code" />
           </Grid>
           <Grid item xs={12} lg={6}>
             <InputField name="city" label="City" />

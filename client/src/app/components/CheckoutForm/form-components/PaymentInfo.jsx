@@ -6,15 +6,14 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  TextField,
-  Grid,
   Typography,
   IconButton,
   Box,
   Container,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { styled } from "@mui/styles";
+import { useField, useFormikContext } from "formik";
+// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+// import { styled } from "@mui/styles";
 import { PropTypes } from "prop-types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import PayPal from "./PayPal.jsx";
@@ -26,28 +25,33 @@ import { API } from "../../../constants/index";
 // import cash from './img/cash.ico';
 // import maestro from './img/maestro.png';
 
-const ButtonLeft = styled("button")({
-  width: "100%",
-  height: "47px",
-  border: "none",
-  fontSize: "14px",
-  color: "#FFFFFF",
-  backgroundColor: " #359740",
-  borderRadius: "10px",
-  cursor: "pointer",
-  marginRight: "15px",
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  position: "relative",
-  paddingLeft: "15px",
-  paddingRight: "15px",
-});
+// const ButtonLeft = styled("button")({
+//   width: "100%",
+//   height: "47px",
+//   border: "none",
+//   fontSize: "14px",
+//   color: "#FFFFFF",
+//   backgroundColor: " #359740",
+//   borderRadius: "10px",
+//   cursor: "pointer",
+//   marginRight: "15px",
+//   display: "flex",
+//   justifyContent: "space-between",
+//   alignItems: "center",
+//   position: "relative",
+//   paddingLeft: "15px",
+//   paddingRight: "15px",
+// });
 
-const PaymentInfo = (formData) => {
-  const { paymentMethod } = formData;
 
+
+const PaymentInfo = () => {
+  // const { paymentMethod } = formData;
+  const [field] = useField("paymentMethod");
+  const { setFieldValue } = useFormikContext();
   const [paymentData, setPaymentData] = useState([]);
+
+  let defaultMethod;
  
   useEffect(() => {
     axios
@@ -56,9 +60,34 @@ const PaymentInfo = (formData) => {
       .catch(() => console.log("Some problem with payment methods fetching"));
   }, []);
 
-  const textField = (name, label) => (
-    <TextField name={name} defaultValue={""} label={label} fullWidth />
-  );
+  // const textField = (name, label) => (
+  //   <TextField name={name} defaultValue={""} label={label} fullWidth />
+  // );
+
+
+  field.value === undefined
+  ? paymentData.forEach((item) => {
+      item.default && (defaultMethod = item.customId);
+    })
+  : (defaultMethod = field.value);
+  
+
+  const paymentMethods = (method) => {
+    switch (method) {
+      case "paypal":
+        return <PayPal />;
+      case "cash":
+        return <Typography>You will pay after delivery</Typography>;
+      default:
+        return <Typography>Not Found</Typography>;
+    }
+  };
+
+  const handleChange = (event) => {
+    setFieldValue("paymentMethod", event.target.value);
+  };
+
+
 
   return (
     <>
@@ -84,8 +113,8 @@ const PaymentInfo = (formData) => {
             name="paymentMethod"
             sx={{ flexDirection: "row", justifyItems: "center", width: "100%" }}
             aria-labelledby="demo-controlled-radio-buttons-group"
-            value={paymentMethod}
-            // onChange={setForm}
+            value={defaultMethod}
+            onChange={handleChange}
           >
             {paymentData.length !== 0 &&
               paymentData.map((payMethod, index) => (
@@ -111,7 +140,7 @@ const PaymentInfo = (formData) => {
               ))}
           </RadioGroup>
         </FormControl>
-        {paymentMethod === "card" && (
+        {/* {paymentMethod === "card" && (
           <>
             <Grid>
               <Grid container spacing={2}>
@@ -141,8 +170,9 @@ const PaymentInfo = (formData) => {
             </Grid>
           </>
         )}
-        {paymentMethod === "paypal" && <PayPal />}
+        {paymentMethod === "paypal" && <PayPal />} */}
       </Container>
+      {paymentMethods(defaultMethod)}
     </>
   );
 };

@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer.jsx';
 import classes from './AppLayoutStyle.jsx';
 
 export default function AppLayout() {
+
   return (
     <Box sx={classes.AppLayout}>
       <Header />

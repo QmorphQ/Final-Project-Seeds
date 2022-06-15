@@ -19,7 +19,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
 
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
-
+  console.log(data);
   useEffect(() => {
     setTotalPrice(prevProductAmount => prevProductAmount <= discontStart ? productAmount * currentPrice : productAmount * discountPrice);
   },[productAmount, discontStart]);
@@ -151,7 +151,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(changeProductQuantity(_id, productAmount));
+                        dispatch(changeProductQuantity(_id, productAmount, name, currentPrice, imageUrls));
                       }}
                     >
                       Add to card

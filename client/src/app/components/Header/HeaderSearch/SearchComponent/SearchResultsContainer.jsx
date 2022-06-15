@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 // ------------------------------------------
@@ -9,7 +9,8 @@ import { Card } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   searchContainer: {
@@ -45,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: "12px",
     },
   },
+  link: {
+    cursor: "pointer",
+  },
 }));
 
 const pressets = {
@@ -61,10 +65,17 @@ const pressets = {
     },
   },
 };
-function RenderUnit({ imgUrl, name, price }) {
+function RenderUnit({ imgUrl, name, price, itemNo }) {
   const classes = useStyles();
+
+  const navigate = useNavigate();
+
+  const goToProduct = () => {
+    navigate(`products/${itemNo}`);
+  };
+
   return (
-    <Link data-link="search" href="#">
+    <Link data-link="search" onClick={goToProduct} className={classes.link}>
       <Card className={classes.searchOption} sx={pressets.styles.optionCard}>
         <CardMedia
           className={classes.searchImage}
@@ -106,6 +117,7 @@ RenderUnit.propTypes = {
   name: PropTypes.string,
   price: PropTypes.number,
   style: PropTypes.object,
+  itemNo: PropTypes.string,
 };
 
 export default function SearchResultContainer({
@@ -118,6 +130,7 @@ export default function SearchResultContainer({
   useEffect(() => {
     setProductsToRender(products);
   }, [products]);
+
   return (
     <Container
       className={classes.searchContainer}
@@ -143,19 +156,18 @@ export default function SearchResultContainer({
         overflow: active ? "auto" : "hidden",
       }}
     >
-     
-        <Grid spacing={1} container>
-          {productsToRender.map((prod, i) => (
-            <Grid sm={oneCard ? 12 : 6} item key={prod.itemNo + i}>
-              <RenderUnit
-                imgUrl={prod.imageUrls[0]}
-                name={prod.name}
-                price={prod.currentPrice}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      
+      <Grid spacing={1} container>
+        {productsToRender.map((prod, i) => (
+          <Grid sm={oneCard ? 12 : 6} item key={prod.itemNo + i}>
+            <RenderUnit
+              imgUrl={prod.imageUrls[0]}
+              name={prod.name}
+              price={prod.currentPrice}
+              itemNo={prod.itemNo}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Container>
   );
 }

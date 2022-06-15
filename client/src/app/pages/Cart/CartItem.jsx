@@ -46,9 +46,6 @@ const CartItem = ({ product }) => {
           <p className={classes.productName}>{product.name}</p>
         </div>
       </TableCell>
-      <TableCell align="right">{product.quantity}</TableCell>
-      <TableCell align="right">${product.price}</TableCell>
-      <TableCell align="right">${product.totalPrice}</TableCell>
       <TableCell>
         <ButtonGroup
           color="primary"
@@ -68,7 +65,7 @@ const CartItem = ({ product }) => {
             inputProps={{ sx: { textAlign: "center" } }}
             disableUnderline={true}
             hiddenLabel={true}
-            // value={productAmount}
+            value={product.quantity}
             // onChange={(e) => setProductAmount(+e.target.value)}
             id="product-amount"
             // className={productPageClasses.productAmountInput}
@@ -84,6 +81,10 @@ const CartItem = ({ product }) => {
           </Button>
         </ButtonGroup>
       </TableCell>
+      {/* <TableCell align="right">{product.quantity}</TableCell> */}
+      <TableCell align="right">${product.price}</TableCell>
+      <TableCell align="right">${product.totalPrice}</TableCell>
+    
     </TableRow>
   );
 };

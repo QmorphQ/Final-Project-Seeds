@@ -97,7 +97,7 @@ const addCart = (cart) => (dispatch) => {
   }
 };
 
-const changeLocalCart = (cart, productId, calculateCartQuantity) => {
+const changeLocalCart = (cart, productId, calculateCartQuantity, name, currentPrice,  imageUrls) => {
   let cartCopy;
   if (!cart) {
     cartCopy = [];
@@ -108,6 +108,9 @@ const changeLocalCart = (cart, productId, calculateCartQuantity) => {
   if (product) {
     const newProduct = {
       ...product,
+      imageUrls,
+      name, 
+      currentPrice,
       cartQuantity: calculateCartQuantity(product.cartQuantity),
     };
     const productIndex = cartCopy.findIndex(
@@ -118,6 +121,9 @@ const changeLocalCart = (cart, productId, calculateCartQuantity) => {
   }
   const newProduct = {
     id: productId,
+    imageUrls,
+    name, 
+    currentPrice,
     cartQuantity: calculateCartQuantity(),
   };
   const newCart = [...cartCopy, newProduct];
@@ -148,12 +154,12 @@ const addProductToCart = (productId) => (dispatch, getState) => {
   } else {
     const { cart } = getState().cart;
     const calculateQuantity = (quantity) => (quantity ? quantity + 1 : 1);
-    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    const updatedCart = changeLocalCart(cart, productId, name, calculateQuantity);
     dispatch(addProductToCartSuccess(updatedCart));
   }
 };
 
-const changeProductQuantity = (productId, quantity) => (dispatch, getState) => {
+const changeProductQuantity = (productId, quantity, name, currentPrice, imageUrls) => (dispatch, getState) => {
   dispatch(editStart());
   const token = localStorage.getItem("jwt");
   const { cart } = getState().cart;
@@ -188,7 +194,7 @@ const changeProductQuantity = (productId, quantity) => (dispatch, getState) => {
       });
   } else {
     const calculateQuantity = () => quantity;
-    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    const updatedCart = changeLocalCart(cart, productId, calculateQuantity, name, currentPrice, imageUrls);
     dispatch(editSuccess(updatedCart));
   }
 };

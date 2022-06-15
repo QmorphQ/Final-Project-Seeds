@@ -9,6 +9,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux";
 import CartItem from "./CartItem.jsx";
+// import ProductCard from "../../../ui/components/ProductCard/ProductCard.jsx";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -39,18 +40,21 @@ const CartList = () => {
       Number(cartItem.cartQuantity) * Number(cartProduct.currentPrice);
 
     return (
-      <CartItem
-        key={cartProduct.id}
-        product={{
-          ...cartProduct,
-          img: cartProduct.imageUrls[0],
-          name: cartProduct.name,
-          isBasket: true,
-          quantity: cartItem.cartQuantity,
-          price: cartProduct.currentPrice,
-          totalPrice,
-        }}
-      />
+      <>
+        <CartItem
+          key={cartProduct._id}
+          product={{
+            ...cartProduct,
+            id: cartProduct._id,
+            img: cartProduct.imageUrls[0],
+            name: cartProduct.name,
+            quantity: cartProduct.quantity,
+            cartQuantity: cartItem.cartQuantity,
+            price: cartProduct.currentPrice,
+            totalPrice,
+          }}
+        />
+      </>
     );
   });
 

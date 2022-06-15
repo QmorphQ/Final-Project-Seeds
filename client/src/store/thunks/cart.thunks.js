@@ -240,6 +240,9 @@ const deleteProductFromCart = (productId) => (dispatch) => {
         dispatch(deleteProductFromCartError());
       });
   }
+  // else {
+  //   dispatch(deleteProductFromCartSuccess(productId));
+  // }
 };
 
 export {

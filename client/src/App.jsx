@@ -7,7 +7,7 @@ import {
   isAdminStateSelector, 
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-import Cart from "./app/pages/Cart/Cart.jsx";
+import Cart from "./app/pages/Cart/Cart.jsx"
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';

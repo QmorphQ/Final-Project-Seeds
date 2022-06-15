@@ -9,7 +9,6 @@ import {
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux";
 import CartItem from "./CartItem.jsx";
-// import ProductCard from "../../../ui/components/ProductCard/ProductCard.jsx";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -43,8 +42,10 @@ const CartList = () => {
       <CartItem
         key={cartProduct.id}
         product={{
+          ...cartProduct,
           img: cartProduct.imageUrls[0],
           name: cartProduct.name,
+          isBasket: true,
           quantity: cartItem.cartQuantity,
           price: cartProduct.currentPrice,
           totalPrice,

@@ -43,7 +43,7 @@ const CartList = () => {
         key={cartItem.id}
         product={{
           ...cartItem,
-          img: cartItem.imageUrls[0],
+          // img: cartItem.imageUrls[0],
           name: cartItem.name,
           isBasket: true,
           quantity: cartItem.cartQuantity,

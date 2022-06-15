@@ -1,12 +1,19 @@
 import {
   TableCell,
   TableRow,
-  Button,
   ButtonGroup,
+  Button,
   FilledInput,
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { makeStyles } from "@mui/styles";
+import { useDispatch } from "react-redux";
+import {
+  addProductToCart,
+  changeProductQuantity,
+  decreaseProductQuantity,
+  deleteProductFromCart,
+} from "../../../store/thunks/cart.thunks";
 
 const useStyles = makeStyles(() => ({
   tableRow: {
@@ -30,6 +37,7 @@ const useStyles = makeStyles(() => ({
 
 const CartItem = ({ product }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <TableRow
@@ -46,18 +54,18 @@ const CartItem = ({ product }) => {
           <p className={classes.productName}>{product.name}</p>
         </div>
       </TableCell>
-      <TableCell>
+      <TableCell align="right">
         <ButtonGroup
           color="primary"
           variant="outlined"
           aria-label="outlined primary button group"
         >
           <Button
-            // onClick={() => {
-            //   setProductAmount((prevProductAmount) => +prevProductAmount - 1);
-            // }}
+            onClick={() => {
+              dispatch(decreaseProductQuantity(product.id));
+            }}
             variant="text"
-            // disabled={productAmount <= 1}
+            disabled={product.quantity <= 1}
           >
             {"-"}
           </Button>
@@ -65,35 +73,45 @@ const CartItem = ({ product }) => {
             inputProps={{ sx: { textAlign: "center" } }}
             disableUnderline={true}
             hiddenLabel={true}
-            value={product.quantity}
-            // onChange={(e) => setProductAmount(+e.target.value)}
-            id="product-amount"
-            // className={productPageClasses.productAmountInput}
+            value={product.cartQuantity}
+            onChange={(e) =>
+              dispatch(changeProductQuantity(product.id, +e.target.value))
+            }
           />
           <Button
             onClick={() => {
-              //   setProductAmount(+productAmount + 1);
+              dispatch(addProductToCart(product.id));
             }}
             variant="text"
-            // disabled={productAmount >= quantity}
+            // disabled={product.quantity >= cartQuantity}
           >
             {"+"}
           </Button>
         </ButtonGroup>
       </TableCell>
-      {/* <TableCell align="right">{product.quantity}</TableCell> */}
       <TableCell align="right">${product.price}</TableCell>
-      <TableCell align="right">${product.totalPrice}</TableCell>
-    
+      <TableCell align="right">${product.totalPrice.toFixed(2)}</TableCell>
+      <TableCell align="right">
+        <Button
+          variant="outlined"
+          onClick={() => {
+            dispatch(deleteProductFromCart(product.id));
+          }}
+        >
+          delete
+        </Button>
+      </TableCell>
     </TableRow>
   );
 };
 
 CartItem.propTypes = {
   product: PropTypes.shape({
+    id: PropTypes.string,
     img: PropTypes.string,
     name: PropTypes.string,
     quantity: PropTypes.number,
+    cartQuantity: PropTypes.number,
     price: PropTypes.number,
     totalPrice: PropTypes.number,
   }),

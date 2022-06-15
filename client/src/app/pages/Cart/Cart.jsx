@@ -12,32 +12,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "40px !important",
     fontWeight: "bold !important",
   },
-  cartItem: {
-    display: "flex",
 
-    "& .MuiPaper-root": {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "center",
-      "& .MuiCardMedia-img": {
-        width: "64px",
-        height: "63px",
-      },
-      "& .MuiTypography-root": {
-        fontSize: "14px",
-        LineHeight: "24.95px",
-      },
-    },
-  },
   cartContainer: {
     display: "flex",
     flexDirection: "row",
-  },
-  cartList: {
-    display: "flex",
-    flexDirection: "column",
-    width: "750px",
-    marginLeft: "165px",
   },
 
   totalResultContainer: {

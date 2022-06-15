@@ -25,7 +25,8 @@ import {
   TableCell,
   ListItem,
   List,
-  Link,
+  Link, 
+  Modal, 
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -36,17 +37,18 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 // import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"; 
-// import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'; 
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import CheckIcon from "@mui/icons-material/Check"; 
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'; 
+import SyncAltOutlinedIcon from '@mui/icons-material/SyncAltOutlined';
+import CheckIcon from "@mui/icons-material/Check";
 
-// import { Link, useNavigate } from "react-router-dom";
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
-import Icon from "../Icon/Icon.jsx";
+import Icon from "../Icon/Icon.jsx"; 
+
+import { API } from '../../../app/constants/index'; 
 
 import { cartSelector, 
          mainCategoriesSelector, 
@@ -61,8 +63,8 @@ import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
 
 import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
 
-
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
+import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
 import { imgURLs } from "./ProductMedia";
 import {
   addProductToWishlist,
@@ -92,7 +94,11 @@ export const ProductCardRender = ({ data }) => {
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
-  const [discontStart] = useState(10);
+  const [discontStart] = useState(10); 
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false); 
 
   const dispatch = useDispatch();
   const navigation = useNavigate(); 
@@ -101,6 +107,15 @@ export const ProductCardRender = ({ data }) => {
   const isAdmin = useSelector(isAdminStateSelector); 
   const cart = useSelector(cartSelector);
   const isProductDeleted = useSelector(adminDeleteProductRequestSelector); 
+
+  const [productItem, setProductItem] = useState(); 
+
+
+  useEffect(() => {
+      fetch(`${API}products/${itemNo}`)
+          .then(res => res.json())
+          .then(result => setProductItem(result))
+  }, [open]);
 
 
   useEffect(() => {
@@ -482,22 +497,68 @@ export const ProductCardRender = ({ data }) => {
                     </Box> 
                   }  
 
-                  {isAdmin && isProductDeleted === 'idle' && 
-                  <IconButton onClick={() => {
-                                          dispatch(adminDeleteProduct(_id)); 
-                                          reloadAfterDelete(); 
-                                          }} >
-                    < DeleteOutlinedIcon sx={{ fontSize: '32px',  
-                                               color: '#FF6D6D' }} 
-                    />
-                  </IconButton>} 
+                  <div>
+                      {isAdmin && 
+                      <IconButton onClick={handleOpen} >
+                          <SyncAltOutlinedIcon sx={{ fontSize: '26px',  
+                                                     color: '#FF6D6D' }} />
+                      </IconButton>} 
 
-                  {isAdmin && isProductDeleted === 'success' && 
-                  <span style={{ margin: '10px 0 5px 30px', 
-                                 color: '#FF6D6D', 
-                                 fontFamily: "'Lexend', sans-serif", }}>
-                                         product has been deleted successfully
-                  </span>}
+                      <Modal
+                          open={open}
+                          onClose={handleClose}
+                          aria-labelledby='modal-modal-title'
+                          aria-describedby='modal-modal-description'
+                      >
+                          <Box sx={{ position: 'absolute',  
+                                    overflow: 'scroll',
+                                    top: '50%',
+                                    left: '75%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: 370, 
+                                    height: 400, 
+                                    bgcolor: 'white',
+                                    boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)', 
+                                    borderRadius: '10px', 
+                                    p: 6,
+                                    '@media (max-width: 768px)': {
+                                      top: '50%',
+                                      left: '50%', 
+                                    }, 
+                                }} 
+                          >
+                              <Typography id='modal-modal-title' 
+                                          variant='h6' 
+                                          component='h2'
+                                          sx={{ mb: '30px', 
+                                                ml: '10px', 
+                                                fontSize: 16 }}>
+                                  What do you want to update: 
+                              </Typography>
+
+                              <AddProduct product={productItem} 
+                                          onClose={handleClose}/>
+
+                          </Box>
+                      </Modal>
+
+                      {isAdmin && isProductDeleted === 'idle' && 
+                      <IconButton onClick={() => {
+                                              dispatch(adminDeleteProduct(_id)); 
+                                              reloadAfterDelete(); 
+                                              }} >
+                        < DeleteOutlinedIcon sx={{ fontSize: '26px',  
+                                                   color: '#FF6D6D' }} 
+                        />
+                      </IconButton>} 
+
+                      {isAdmin && isProductDeleted === 'success' && 
+                      <span style={{ margin: '10px 0 5px 30px', 
+                                     color: '#FF6D6D', 
+                                     fontFamily: "'Lexend', sans-serif", }}>
+                                            product has been deleted successfully
+                      </span>}
+                  </div>
 
                 </Box>
               </CardActions>

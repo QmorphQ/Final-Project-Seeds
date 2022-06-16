@@ -17,7 +17,6 @@ import { adminAddProduct, adminUpdateProduct } from '../../../store/thunks/admin
 
 
 
-
 const validationSchema = yup.object({
 
     name: yup
@@ -63,7 +62,7 @@ const validationSchema = yup.object({
 const AddProduct = ({ product, onClose }) => {
 
     const isProductAdded = useSelector(adminAddProductRequestSelector);
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
 
     const [restAfterDeleteImg, setRestAfterDeleteImg] = useState(product?.imageUrls)
     const [fieldsList, setFieldsList] = useState([0]);
@@ -118,11 +117,11 @@ const AddProduct = ({ product, onClose }) => {
                               currentRating: Number(values.currentRating), 
                               quantity: Number(values.quantity) };
 
-            if (product) {
+            if (product) { 
 
-                const resultImgList = [...newAddedImg, ...restAfterDeleteImg]; 
-                 
-                dispatch(adminUpdateProduct(product._id, { ...payload, imageUrls: resultImgList })); 
+                const resultImgList = [...new Set([...newAddedImg, ...restAfterDeleteImg])]; 
+
+                dispatch(adminUpdateProduct(product._id, { ...payload, imageUrls: resultImgList }));
                 onClose(); 
 
             } else { 
@@ -130,6 +129,7 @@ const AddProduct = ({ product, onClose }) => {
                 dispatch(adminAddProduct({ ...payload, imageUrls: newAddedImg })); 
                 formik.resetForm();
             }  
+ 
         }
     }); 
 

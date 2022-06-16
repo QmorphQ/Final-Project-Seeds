@@ -35,8 +35,6 @@ import Carousel from "react-material-ui-carousel";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-// import CheckBoxIcon from '@mui/icons-material/CheckBox';
-
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"; 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'; 
 import SyncAltOutlinedIcon from '@mui/icons-material/SyncAltOutlined';
@@ -71,7 +69,6 @@ import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
-import { imgURLs } from "./ProductMedia";
 import {
   addProductToWishlist,
   deleteProductFromWishlist,
@@ -86,11 +83,15 @@ export const ProductCardRender = ({ data }) => {
     imageUrls,
     isProductPage,
     isFiltersPage,
+    packageDimensions,
     categories,
     quantity,
     isBasket,
     discountPrice,
     itemNo,
+    itemWeight,
+    ASIN,
+    itemAbout,
     _id,
     cartQuantity,
   } = data;
@@ -137,10 +138,6 @@ export const ProductCardRender = ({ data }) => {
       toggleIsFavourite(!!wishlist.products.find((item) => item._id === _id));
     }
   }, [wishlist]);
-
-  const media = imgURLs.filter((item) => +item.itemNo === +itemNo);
-  // console.log(JSON.stringify(data));
-  // console.log(JSON.stringify(imgURLs));
 
   useEffect(() => {
     // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
@@ -283,7 +280,7 @@ export const ProductCardRender = ({ data }) => {
                     marginTop: "22px",
                   },
                 }}
-                IndicatorIcon={media[0].url.map((url, i) => (
+                IndicatorIcon={imageUrls.map((url, i) => (
                   <CardMedia
                     key={i}
                     sx={{ width: "67px" }}
@@ -302,7 +299,7 @@ export const ProductCardRender = ({ data }) => {
                   },
                 }}
               >
-                {media[0].url.map((item, i) => (
+                {imageUrls.map((item, i) => (
                   <CardMedia
                     key={i}
                     className={productPageClasses.productCardMedia}
@@ -370,7 +367,7 @@ export const ProductCardRender = ({ data }) => {
                           Package Dimensions
                         </TableCell>
                         <TableCell align="right">
-                          {media[0].packageDimensions}
+                          {packageDimensions}
                         </TableCell>
                       </TableRow>
                       <TableRow
@@ -382,7 +379,7 @@ export const ProductCardRender = ({ data }) => {
                           Item Weight
                         </TableCell>
                         <TableCell align="right">
-                          {media[0].itemWeight}
+                          {itemWeight}
                         </TableCell>
                       </TableRow>
                       <TableRow
@@ -393,7 +390,7 @@ export const ProductCardRender = ({ data }) => {
                         <TableCell component="th" scope="row">
                           ASIN
                         </TableCell>
-                        <TableCell align="right">{media[0].ASIN}</TableCell>
+                        <TableCell align="right">{ASIN}</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -586,7 +583,7 @@ export const ProductCardRender = ({ data }) => {
               variant="body1"
               color="text.primary"
             >
-              {media[0].itemAbout.map((item, i) => (
+              {itemAbout.map((item, i) => (
                 <ListItem key={i}>
                   <Typography>{item}</Typography>
                 </ListItem>

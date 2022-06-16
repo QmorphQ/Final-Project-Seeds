@@ -272,9 +272,9 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
         dispatch(deleteProductFromCartError());
       });
   } else {
+
     const { cart } = getState().cart;
     const updatedCart = cart.filter((product) => product.id !== productId);
-    //  const updatedCart= cart. map(product => product.id !== productId);
     console.log(updatedCart);
     dispatch(deleteProductFromCartSuccess(updatedCart));
   }

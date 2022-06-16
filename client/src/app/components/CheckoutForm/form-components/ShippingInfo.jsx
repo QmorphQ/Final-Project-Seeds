@@ -16,63 +16,6 @@ import ShippingNovaPoshta from "../ShippingMethods/ShippingNovaPoshta.jsx";
 import ExpressDelivery from "../ShippingMethods/ExpressDelivery.jsx";
 import { API } from "../../../constants/index";
 
-// const shippingData = [
-//   {
-//     enabled: true,
-//     default: true,
-//     costValue: 50,
-//     costType: "fix",
-//     _id: "5db97b344f42d81a14e674fe",
-//     customId: "expressDelivery",
-//     name: "Express Delivery",
-//     freeShippingOrderSum: 1000,
-//     date: "2019-10-30T11:59:48.145Z",
-//     __v: 0,
-//     imageUrl: "https://static.novaposhta.ua/sitecard/misc/img/courier_auto.png",
-//   },
-//   {
-//     enabled: true,
-//     default: false,
-//     costValue: 100,
-//     costType: "fix",
-//     _id: "5dbee039246d7b1ba0c719a6",
-//     customId: "novaPoshta",
-//     name: "Nova Poshta",
-//     locations: [
-//       {
-//         country: "UKR",
-//       },
-//     ],
-//     freeShippingOrderSum: 500,
-//     period: "2 days",
-//     currency: "UAH",
-//     date: "2019-11-03T14:12:09.239Z",
-//     __v: 0,
-//     imageUrl:
-//       "https://static.novaposhta.ua/sitecard/misc/img/ico/med_Icon%203-svg.png",
-//   },
-//   {
-//     enabled: false,
-//     default: false,
-//     costValue: 100,
-//     costType: "fix",
-//     _id: "5dbee039246d7b1ba0c7729a6",
-//     customId: "dhl",
-//     name: "DHL",
-//     locations: [
-//       {
-//         country: "UKR",
-//       },
-//     ],
-//     freeShippingOrderSum: 500,
-//     period: "2 days",
-//     currency: "UAH",
-//     date: "2019-11-03T14:12:09.149Z",
-//     __v: 0,
-//     imageUrl:
-//       "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/v1473147170/urdahj7veaunf7f9tjhl.png",
-//   },
-// ];
 
 const ShippingInfo = () => {
   const [field] = useField("deliveryMethod");
@@ -81,6 +24,7 @@ const ShippingInfo = () => {
   const [shippingData, setShippingData] = useState([]);
   
   let defaultMethod;
+  
 
   useEffect(() => {
     axios
@@ -89,7 +33,7 @@ const ShippingInfo = () => {
       .catch(() => console.log("Some problem with shipping methods fetching"));
   }, []);
 
-  field.value === ""
+  field.value === undefined
     ? shippingData.forEach((item) => {
         item.default && (defaultMethod = item.customId);
       })

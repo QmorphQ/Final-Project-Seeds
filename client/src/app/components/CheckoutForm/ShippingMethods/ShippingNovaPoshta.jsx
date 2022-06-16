@@ -3,14 +3,15 @@ import { useState } from "react";
 import axios from "axios";
 import { useFormikContext } from "formik";
 
+
 const ShippingNovaPoshta = () => {
   const { setFieldValue } = useFormikContext();
-
   const [cityes, setPostOfficeCity] = useState({
     data: {
       data: [{ Description: "Enter min 3 characters" }],
     },
   });
+
   const [postOffice, setPostOffice] = useState({
     data: {
       data: [{ Description: "Loading..." }],
@@ -18,6 +19,7 @@ const ShippingNovaPoshta = () => {
   });
 
   const novaPoshtaApiKey = "7cf87c82521d99729382a37e171da6e7";
+  
 
   const fetchData = (func, settings) => {
     const config = {
@@ -72,13 +74,14 @@ const ShippingNovaPoshta = () => {
           getOptionLabel={(option) => option.Description}
           isOptionEqualToValue={(option) => option.Description}
           renderOption={(props, option) => (
-            <Box component="li" {...props}>
+            <Box key={option.Description} component="li" {...props}>
               {option.Description}
             </Box>
           )}
           renderInput={(params) => (           
             <TextField
               {...params}
+              required
               size="small"
               onChange={() => {
               handlerCity(params);
@@ -108,6 +111,7 @@ const ShippingNovaPoshta = () => {
           renderInput={(params) => (
             <TextField   
               {...params} 
+              required
               size="small"
               onChange={() => {
                 handlerCity(params);

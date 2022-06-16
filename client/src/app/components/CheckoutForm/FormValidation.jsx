@@ -10,18 +10,23 @@ const phoneRegExp = /^\+(?:[0-9] ?){6,14}[0-9]$/;
     email: Yup.string()
     .required('Required')
     .email('Invalid email.'),
-    telephone: Yup.string()
-    .matches(phoneRegExp, 'Phone number is not valid'),
-    street: Yup.string()
+    phone: Yup.string()
+    .matches(phoneRegExp, 'Phone number is not valid')
+    .required('Required'),
+    addressLine: Yup.string()
     .required('Required'),
     house: Yup.string()
     .required('Required'),
     flat: Yup.string()
     .required('Required'),
-    postalCode: Yup.number()
+    code: Yup.number()
     .required('Required'),
     city: Yup.string()
     .required('Required'),
+    // postOfficeWarehouse: Yup.string()
+    // .required('Required'),
+    // postOfficeCity: Yup.string()
+    // .required('Required'),
 })
 
 

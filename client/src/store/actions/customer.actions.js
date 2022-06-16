@@ -30,6 +30,48 @@ export const loginCustomerError = () => ({
   type: LOGIN_CUSTOMER_ERROR,
 });
 
+export const GET_CUSTOMER_REQUEST = "GET_CUSTOMER_REQUEST";
+export const getCustomerRequest = () => ({
+  type: GET_CUSTOMER_REQUEST,
+})
+
+export const GET_CUSTOMER_SUCCESS = "GET_CUSTOMER_SUCCESS";
+export const getCustomerSuccess = (currentCustomer) => ({
+  type: GET_CUSTOMER_SUCCESS,
+  payload: currentCustomer
+})
+
+export const GET_CUSTOMER_ERROR = "GET_CUSTOMER_ERROR";
+export const getCustomerError = () => ({
+  type: GET_CUSTOMER_ERROR,
+})
+
+export const UPDATE_CUSTOMER_REQUEST = "UPDATE_CUSTOMER_REQUEST";
+export const customerUpdateRequest = () => ({
+  type: UPDATE_CUSTOMER_REQUEST,
+})
+
+export const UPDATE_CUSTOMER_SUCCESS = "UPDATE_CUSTOMER_SUCCESS";
+export const customerUpdateSuccess = (updatedCustomer) => ({
+  type: UPDATE_CUSTOMER_SUCCESS,
+  payload: updatedCustomer
+})
+
+export const UPDATE_CUSTOMER_ERROR = "UPDATE_CUSTOMER_ERROR";
+export const customerUpdateError = () => ({
+  type: UPDATE_CUSTOMER_ERROR,
+})
+
+export const CLEAN_UP_LOGIN_STATE = "CLEAN_UP_LOGIN_STATE";
+export const cleanUpLoginState = () => ({
+  type: CLEAN_UP_LOGIN_STATE,
+})
+
+export const IS_RIGHT_PASSWORD = "IS_RIGHT_PASSWORD";
+export const isRightPassword = (isRight) => ({
+  type: IS_RIGHT_PASSWORD,
+  payload: isRight
+})
 
 export const GET_USERDETAILS_REQUESTED = "GET_USERDETAILS_REQUESTED";
 export const getUserDetailsRequested = () => ({

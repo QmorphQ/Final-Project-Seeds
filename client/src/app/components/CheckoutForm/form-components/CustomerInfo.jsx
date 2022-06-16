@@ -37,7 +37,7 @@ const CustomerInfo = () => (
             <InputField name={"email"} label={"Email"} />
           </Grid>
           <Grid item xs={12}>
-            <InputField name={"telephone"} label={"Telephone"} />
+            <InputField name={"phone"} label={"Telephone"} />
           </Grid>
         </Grid>
       </Grid>

@@ -38,12 +38,12 @@ const Cart = ({ loading }) => {
   const cart = useSelector((state) => state.cart.cart) || [];
   const classes = useStyles();
 
-  if (loading !== downloadRequestStates.SUCCESS) {
-    return <p>Loading</p>;
-  }
-  if (Array.isArray(cart) && !cart.length) {
-    return <p> No Products in Cart</p>;
-  }
+  // if (loading !== downloadRequestStates.SUCCESS) {
+  //   return <p>Loading</p>;
+  // }
+  // if (Array.isArray(cart) && !cart.length) {
+  //   return <p> No Products in Cart</p>;
+  // }
 
   return (
     <>

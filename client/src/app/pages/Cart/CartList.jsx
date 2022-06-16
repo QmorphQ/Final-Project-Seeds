@@ -34,6 +34,7 @@ const CartList = () => {
       Number(cartItem.cartQuantity) * Number(cartItem.currentPrice);
 
     return (
+
       <>
         <CartItem
           key={cartItem.id}
@@ -48,6 +49,7 @@ const CartList = () => {
           }}
         />
       </>
+
     );
   });
 

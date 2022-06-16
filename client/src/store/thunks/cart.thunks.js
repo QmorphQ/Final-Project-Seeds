@@ -243,7 +243,6 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
   } else {
     const { cart } = getState().cart;
     console.log(cart);
-    
 
     // const calculateQuantity = (quantity) => (quantity ? quantity - 1 : 1);
     // const updatedCart = changeLocalCart(cart, productId, calculateCartQuantity);
@@ -272,10 +271,8 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
         dispatch(deleteProductFromCartError());
       });
   } else {
-
     const { cart } = getState().cart;
     const updatedCart = cart.filter((product) => product.id !== productId);
-    console.log(updatedCart);
     dispatch(deleteProductFromCartSuccess(updatedCart));
   }
 };

@@ -274,7 +274,7 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
     const { cart } = getState().cart;
     const updatedCart = cart.filter((product) => product.id !== productId);
     dispatch(deleteProductFromCartSuccess(updatedCart));
-  
+  }
 };
 
 export {

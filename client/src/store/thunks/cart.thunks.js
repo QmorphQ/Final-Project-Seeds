@@ -41,9 +41,12 @@ const fetchCart = () => async (dispatch, getState) => {
           Authorization: `${token}`,
         },
       });
-
+      console.log(response.data.products);
       const cartFromApi = response.data.products.map((cartProduct) => ({
         id: cartProduct.product._id,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
         cartQuantity: cartProduct.cartQuantity,
       }));
       let newCart = [...cartFromApi];
@@ -52,6 +55,9 @@ const fetchCart = () => async (dispatch, getState) => {
       }
       const cartForAPI = newCart.map((item) => ({
         product: item.id,
+        imageUrls: item.imageUrls,
+        name: item.name,
+        currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       await axios.put(
@@ -151,7 +157,10 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
-          cartQuantity: cartProduct.cartQuantity,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
+        cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addProductToCartSuccess(cart));
       })
@@ -180,6 +189,9 @@ const changeProductQuantity =
       const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
+        imageUrls: item.imageUrls,
+        name: item.name,
+        currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       axios
@@ -231,7 +243,10 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
-          cartQuantity: cartProduct.cartQuantity,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
+        cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(decreaseQuantitySuccess(cart));
       })
@@ -245,7 +260,7 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
         ? { ...cartItem, cartQuantity: cartItem.cartQuantity - 1 }
         : cartItem
     );
-    
+
     dispatch(decreaseQuantitySuccess(updatedCart));
   }
 };
@@ -263,7 +278,10 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
-          cartQuantity: cartProduct.cartQuantity,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
+        cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(deleteProductFromCartSuccess(cart));
       })

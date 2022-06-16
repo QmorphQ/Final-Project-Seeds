@@ -160,13 +160,13 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       });
   } else {
     const { cart } = getState().cart;
-    const calculateQuantity = (quantity) => (quantity ? quantity + 1 : 1);
-    const updatedCart = changeLocalCart(
-      cart,
-      productId,
-      name,
-      calculateQuantity
-    );
+    const updatedCart = cart.map((cartItem) => (
+      cartItem.id === productId
+        ? { ...cartItem, cartQuantity: cartItem.cartQuantity + 1 }
+        : cartItem
+    ));
+   
+    console.log(updatedCart);
     dispatch(addProductToCartSuccess(updatedCart));
   }
 };

@@ -245,7 +245,7 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
         ? { ...cartItem, cartQuantity: cartItem.cartQuantity - 1 }
         : cartItem
     );
-    
+
     dispatch(decreaseQuantitySuccess(updatedCart));
   }
 };

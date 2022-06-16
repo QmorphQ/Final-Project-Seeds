@@ -186,7 +186,13 @@ const changeProductQuantity =
     const { cart } = getState().cart;
     if (token) {
       const calculateQuantity = () => quantity;
-      const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+      const updatedCart = changeLocalCart(
+        cart,
+        productId,
+        calculateQuantity,
+        name,
+        currentPrice,
+        imageUrls);
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
         imageUrls: item.imageUrls,
@@ -207,9 +213,10 @@ const changeProductQuantity =
         .then((response) => {
           const newCart = response.data.products.map((cartProduct) => ({
             id: cartProduct.product._id,
-            cartQuantity: cartProduct.cartQuantity,
+            imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
             currentPrice: cartProduct.product.currentPrice,
+            cartQuantity: cartProduct.cartQuantity,
           }));
           dispatch(editSuccess(newCart));
         })

@@ -117,7 +117,6 @@ export const ProductCardRender = ({ data }) => {
           .then(result => setProductItem(result))
   }, [open]);
 
-
   useEffect(() => {
     dispatch(fetchWishlist());
   }, []);
@@ -497,12 +496,13 @@ export const ProductCardRender = ({ data }) => {
                     </Box> 
                   }  
 
+                  {isAdmin &&
                   <div>
-                      {isAdmin && 
+                       
                       <IconButton onClick={handleOpen} >
                           <SyncAltOutlinedIcon sx={{ fontSize: '26px',  
                                                      color: '#FF6D6D' }} />
-                      </IconButton>} 
+                      </IconButton>
 
                       <Modal
                           open={open}
@@ -542,7 +542,7 @@ export const ProductCardRender = ({ data }) => {
                           </Box>
                       </Modal>
 
-                      {isAdmin && isProductDeleted === 'idle' && 
+                      {isProductDeleted === 'idle' && 
                       <IconButton onClick={() => {
                                               dispatch(adminDeleteProduct(_id)); 
                                               reloadAfterDelete(); 
@@ -552,13 +552,13 @@ export const ProductCardRender = ({ data }) => {
                         />
                       </IconButton>} 
 
-                      {isAdmin && isProductDeleted === 'success' && 
+                      {isProductDeleted === 'success' && 
                       <span style={{ margin: '10px 0 5px 30px', 
                                      color: '#FF6D6D', 
                                      fontFamily: "'Lexend', sans-serif", }}>
                                             product has been deleted successfully
                       </span>}
-                  </div>
+                  </div>}
 
                 </Box>
               </CardActions>

@@ -160,12 +160,10 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       });
   } else {
     const { cart } = getState().cart;
-    const calculateQuantity = (quantity) => (quantity ? quantity + 1 : 1);
-    const updatedCart = changeLocalCart(
-      cart,
-      productId,
-      name,
-      calculateQuantity
+    const updatedCart = cart.map((cartItem) =>
+      cartItem.id === productId
+        ? { ...cartItem, cartQuantity: cartItem.cartQuantity + 1 }
+        : cartItem
     );
     dispatch(addProductToCartSuccess(updatedCart));
   }
@@ -242,13 +240,17 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
       });
   } else {
     const { cart } = getState().cart;
-    const calculateQuantity = (quantity) => (quantity ? quantity - 1 : 1);
-    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
-    dispatch(deleteProductFromCartSuccess(updatedCart));
+    const updatedCart = cart.map((cartItem) =>
+      cartItem.id === productId
+        ? { ...cartItem, cartQuantity: cartItem.cartQuantity - 1 }
+        : cartItem
+    );
+
+    dispatch(decreaseQuantitySuccess(updatedCart));
   }
 };
 
-const deleteProductFromCart = (productId) => (dispatch) => {
+const deleteProductFromCart = (productId) => (dispatch, getState) => {
   dispatch(deleteProductFromCartRequest());
   const token = localStorage.getItem("jwt");
   if (token) {
@@ -269,7 +271,9 @@ const deleteProductFromCart = (productId) => (dispatch) => {
         dispatch(deleteProductFromCartError());
       });
   } else {
-    // dispatch(deleteProductFromCartSuccess(productId));
+    const { cart } = getState().cart;
+    const updatedCart = cart.filter((product) => product.id !== productId);
+    dispatch(deleteProductFromCartSuccess(updatedCart));
   }
 };
 

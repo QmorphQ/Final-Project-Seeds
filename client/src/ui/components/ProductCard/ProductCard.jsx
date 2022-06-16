@@ -30,14 +30,15 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import Carousel from "react-material-ui-carousel"; 
+import Carousel from "react-material-ui-carousel";
 
 import CloseIcon from "@mui/icons-material/Close";
-import FavoriteIcon from "@mui/icons-material/Favorite"; 
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"; 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'; 
 import SyncAltOutlinedIcon from '@mui/icons-material/SyncAltOutlined';
+
 import CheckIcon from "@mui/icons-material/Check";
 
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
@@ -49,15 +50,19 @@ import Icon from "../Icon/Icon.jsx";
 
 import { API } from '../../../app/constants/index'; 
 
-import { cartSelector, 
-         mainCategoriesSelector, 
-         wishlistSelector, 
-         isAdminStateSelector, 
-         adminDeleteProductRequestSelector } from "../../../store/selectors/selectors";
-import { addProductToCart, 
-         fetchCart, 
-         decreaseProductQuantity, 
-         changeProductQuantity } from "../../../store/thunks/cart.thunks"; 
+import {
+  cartSelector,
+  mainCategoriesSelector,
+  wishlistSelector,
+  isAdminStateSelector,
+  adminDeleteProductRequestSelector,
+} from "../../../store/selectors/selectors";
+import {
+  addProductToCart,
+  fetchCart,
+  decreaseProductQuantity,
+  changeProductQuantity,
+} from "../../../store/thunks/cart.thunks";
 import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
 
 import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
@@ -88,10 +93,8 @@ export const ProductCardRender = ({ data }) => {
     ASIN,
     itemAbout,
     _id,
-    cartQuantity
+    cartQuantity,
   } = data;
-
-  console.log(data);
 
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
@@ -104,11 +107,12 @@ export const ProductCardRender = ({ data }) => {
   const handleClose = () => setOpen(false); 
 
   const dispatch = useDispatch();
-  const navigation = useNavigate(); 
+  const navigation = useNavigate();
 
-  const wishlist = useSelector(wishlistSelector); 
-  const isAdmin = useSelector(isAdminStateSelector); 
+  const wishlist = useSelector(wishlistSelector);
+  const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
+
   const isProductDeleted = useSelector(adminDeleteProductRequestSelector); 
 
   const [productItem, setProductItem] = useState(); 
@@ -120,6 +124,7 @@ export const ProductCardRender = ({ data }) => {
           .then(result => setProductItem(result))
   }, [open]);
 
+
   useEffect(() => {
     dispatch(fetchWishlist());
   }, []);
@@ -127,7 +132,6 @@ export const ProductCardRender = ({ data }) => {
   useEffect(() => {
     dispatch(fetchCart());
   }, []);
-
 
   useEffect(() => {
     if (wishlist) {
@@ -159,48 +163,45 @@ export const ProductCardRender = ({ data }) => {
     style: "currency",
     currency: "USD",
     currencyDisplay: "symbol",
-  }); 
+  });
 
-  
   const reloadAfterDelete = () => {
-      setTimeout(() => {
-        dispatch(adminDeleteProductIdle());
-        navigation(-1)
-         
-      }, 3000); 
-  }
-
+    setTimeout(() => {
+      dispatch(adminDeleteProductIdle());
+      navigation(-1);
+    }, 3000);
+  };
 
   if (isBasket) {
     return (
       <Card>
-        <Box className={basketClasses.productCardContainer} >
-        <CardMedia
-          className={basketClasses.productCardMedia}
-          component="img"
-          width="294px"
-          image={`${imageUrls}`}
-          alt={name}
+        <Box className={basketClasses.productCardContainer}>
+          <CardMedia
+            className={basketClasses.productCardMedia}
+            component="img"
+            width="294px"
+            image={`${imageUrls}`}
+            alt={name}
           />
-        <Box className={basketClasses.productCardNameContainer}>
-          <Typography
-            className={basketClasses.productCardName}
-            variant="h3"
-            color="text.primary"
-          >
-            {name}
-          </Typography>
-        </Box>
-        <ButtonGroup 
-            className={basketClasses.productCardButtonGroup}
-            color="primary" 
-            variant="outlined" 
-            aria-label="outlined primary button group"
+          <Box className={basketClasses.productCardNameContainer}>
+            <Typography
+              className={basketClasses.productCardName}
+              variant="h3"
+              color="text.primary"
             >
-            <Button 
+              {name}
+            </Typography>
+          </Box>
+          <ButtonGroup
+            className={basketClasses.productCardButtonGroup}
+            color="primary"
+            variant="outlined"
+            aria-label="outlined primary button group"
+          >
+            <Button
               onClick={() => {
                 dispatch(decreaseProductQuantity(_id));
-              }} 
+              }}
               variant="text"
               disabled={cartQuantity <= 1}
               className={basketClasses.productCardButton}
@@ -209,48 +210,48 @@ export const ProductCardRender = ({ data }) => {
             </Button>
             <FilledInput
               className={basketClasses.productCardAmount}
-              inputProps={{sx:{textAlign:"center"}}} 
-              disableUnderline={true} 
-              hiddenLabel={true} 
+              inputProps={{ sx: { textAlign: "center" } }}
+              disableUnderline={true}
+              hiddenLabel={true}
               value={cartQuantity}
-              onChange={e => dispatch(changeProductQuantity(_id, +e.target.value))}
-              id="product-amount" 
-              />
-            <Button 
+              onChange={(e) =>
+                dispatch(changeProductQuantity(_id, +e.target.value))
+              }
+              id="product-amount"
+            />
+            <Button
               onClick={() => {
                 dispatch(addProductToCart(_id));
-              }} 
+              }}
               variant="text"
               disabled={cartQuantity >= quantity}
               className={basketClasses.productCardButton}
-              >
+            >
               {"+"}
             </Button>
           </ButtonGroup>
-          
-        <Typography
-          className={basketClasses.productCardName}
-          variant="h3"
-          color="text.primary"
-          >
-          {currentPrice}
-        </Typography>
 
-        <Typography
-          className={basketClasses.productCardName}
-          variant="h3"
-          color="text.primary"
+          <Typography
+            className={basketClasses.productCardName}
+            variant="h3"
+            color="text.primary"
           >
-          {(currentPrice * cartQuantity).toFixed(2)}
-        </Typography>        
-        
+            {currentPrice}
+          </Typography>
+
+          <Typography
+            className={basketClasses.productCardName}
+            variant="h3"
+            color="text.primary"
+          >
+            {(currentPrice * cartQuantity).toFixed(2)}
+          </Typography>
         </Box>
       </Card>
     );
   }
 
   if (isProductPage) {
-
     return (
       <Container sx={{ marginTop: "50px" }}>
         <Card className={productPageClasses.productCard}>
@@ -405,9 +406,9 @@ export const ProductCardRender = ({ data }) => {
                     <Typography component="span" sx={{ fontSize: "16px" }}>
                       {+productAmount} PACK
                     </Typography>
-                  </Typography> 
+                  </Typography>
 
-                  {isAdmin === false && 
+                  {isAdmin === false && (
                     <ButtonGroup
                       className={productPageClasses.amountInputGroup}
                       color="primary"
@@ -444,8 +445,7 @@ export const ProductCardRender = ({ data }) => {
                         {"+"}
                       </Button>
                     </ButtonGroup>
-                  } 
-
+                  )}
                 </Box>
                 <Box className={productPageClasses.productCardActionBtns}>
                   <Box>
@@ -469,7 +469,7 @@ export const ProductCardRender = ({ data }) => {
                     </Typography>
                   </Box>
 
-                  {isAdmin === false && 
+                  {isAdmin === false && (
                     <Box className={productPageClasses.productCardButtons}>
                       <IconButton
                         className={productPageClasses.productCardButton}
@@ -481,7 +481,11 @@ export const ProductCardRender = ({ data }) => {
                             : () => dispatch(addProductToWishlist(_id))
                         }
                       >
-                        {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                        {isFavourite ? (
+                          <FavoriteIcon />
+                        ) : (
+                          <FavoriteBorderIcon />
+                        )}
                       </IconButton>
                       <Button
                         className={productPageClasses.productCardButtonBasket}
@@ -492,8 +496,9 @@ export const ProductCardRender = ({ data }) => {
                       >
                         Add to card
                       </Button>
+
                     </Box> 
-                  }  
+                  )}  
 
                   {isAdmin &&
                   <div>
@@ -558,6 +563,7 @@ export const ProductCardRender = ({ data }) => {
                                             product has been deleted successfully
                       </span>}
                   </div>}
+
 
                 </Box>
               </CardActions>
@@ -688,10 +694,16 @@ export const ProductCardRender = ({ data }) => {
         </Card>
       </Grid>
     );
-  };
+  }
 
   return (
-    <Grid item xs={12} md={6} lg={4} sx={{display: "flex", justifyContent:"center"}}>
+    <Grid
+      item
+      xs={12}
+      md={6}
+      lg={4}
+      sx={{ display: "flex", justifyContent: "center" }}
+    >
       <Card className={mainClasses.productCard}>
         <CardHeader
           className={mainClasses.productCardHeader}
@@ -788,17 +800,15 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
-const ProductCard = ({ product, loading }) => 
-  (
-    <RenderComponent
-      loading={loading}
-      data={product}
-      renderSuccess={ProductCardRender}
-      loadingFallback={Spinner}
-      renderError={<p>Error</p>}
-    />
-  );
-
+const ProductCard = ({ product, loading }) => (
+  <RenderComponent
+    loading={loading}
+    data={product}
+    renderSuccess={ProductCardRender}
+    loadingFallback={Spinner}
+    renderError={<p>Error</p>}
+  />
+);
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
@@ -813,7 +823,7 @@ ProductCard.propTypes = {
     discountPrice: PropTypes.number,
     itemNo: PropTypes.string, // MVP: string ---> number
     _id: PropTypes.string,
-    cartQuantity: PropTypes.number
+    cartQuantity: PropTypes.number,
   }),
   loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any;
 };

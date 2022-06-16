@@ -40,19 +40,19 @@ const CheckoutSummary = (formData) => {
         </Box>
         <Box className={classes.box}>
           <Typography className={classes.fieldName}>TELEPHONE: </Typography>
-          <Typography>{formData.formField.telephone}</Typography>
+          <Typography>{formData.formField.phone}</Typography>
         </Box>
         <Box className={classes.box}>
           <Typography className={classes.fieldName}>ADDRESS: </Typography>
-          <Typography></Typography>
+          <Typography>{formData.formField.addressLine},{formData.formField.house},{formData.formField.flat}</Typography>
         </Box>
         <Box className={classes.box}>
           <Typography className={classes.fieldName}>PAYMENT METHOD: </Typography>
-          <Typography></Typography>
+          <Typography>{formData.formField.paymentMethod}</Typography>
         </Box>
         <Box className={classes.box}>
           <Typography className={classes.fieldName}>SHIPPING METHOD: </Typography>
-          <Typography></Typography>
+          <Typography>{formData.formField.deliveryMethod}</Typography>
         </Box>
         <Box className={classes.box}>
           <Typography className={`${classes.fieldName} ${classes.sum}`}>TOTAL SUM: </Typography>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Box, Typography, Divider } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux";
@@ -5,6 +6,7 @@ import PropTypes from "prop-types";
 // import ProductCard from "../../../ui/components/ProductCard/ProductCard.jsx";
 import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
+
 
 const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
@@ -34,9 +36,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = ({ loading }) => {
-  const totalPrice = 0;
   const cart = useSelector((state) => state.cart.cart) || [];
   const classes = useStyles();
+  const [totalSum, setTotalSum] = useState(0);
+
+  useEffect(() => {
+    const initialValue = 0;
+    const sumOrder = cart.reduce(function (accumulator, currentValue) {
+      return (
+        accumulator + currentValue.currentPrice * currentValue.cartQuantity
+      );
+    }, initialValue);
+    setTotalSum(sumOrder)
+  }, [cart]);
 
   // if (loading !== downloadRequestStates.SUCCESS) {
   //   return <p>Loading</p>;
@@ -67,7 +79,7 @@ const Cart = ({ loading }) => {
           >
             Order Summery
           </Typography>
-          <Box className={classes.totalPrice}>{totalPrice.toFixed(2)}</Box>
+          <Box className={classes.totalPrice}>${totalSum.toFixed(2)}</Box>
         </Box>
       </Box>
     </>

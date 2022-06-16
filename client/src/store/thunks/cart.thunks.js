@@ -41,7 +41,6 @@ const fetchCart = () => async (dispatch, getState) => {
           Authorization: `${token}`,
         },
       });
-      console.log(response.data.products);
       const cartFromApi = response.data.products.map((cartProduct) => ({
         id: cartProduct.product._id,
         imageUrls: cartProduct.product.imageUrls,
@@ -157,10 +156,10 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
-        imageUrls: cartProduct.product.imageUrls,
-        name: cartProduct.product.name,
-        currentPrice: cartProduct.product.currentPrice,
-        cartQuantity: cartProduct.cartQuantity,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
+          cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addProductToCartSuccess(cart));
       })
@@ -192,7 +191,8 @@ const changeProductQuantity =
         calculateQuantity,
         name,
         currentPrice,
-        imageUrls);
+        imageUrls
+      );
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
         imageUrls: item.imageUrls,
@@ -250,10 +250,10 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
-        imageUrls: cartProduct.product.imageUrls,
-        name: cartProduct.product.name,
-        currentPrice: cartProduct.product.currentPrice,
-        cartQuantity: cartProduct.cartQuantity,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
+          cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(decreaseQuantitySuccess(cart));
       })
@@ -285,10 +285,10 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
-        imageUrls: cartProduct.product.imageUrls,
-        name: cartProduct.product.name,
-        currentPrice: cartProduct.product.currentPrice,
-        cartQuantity: cartProduct.cartQuantity,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
+          cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(deleteProductFromCartSuccess(cart));
       })

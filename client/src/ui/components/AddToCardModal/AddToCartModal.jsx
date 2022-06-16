@@ -1,28 +1,46 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import PropTypes from 'prop-types';
-import { Modal, Box, Typography, Card, Grid, CardMedia, CardContent, Stack, Chip, CardActions, ButtonGroup, Button, FilledInput } from "@mui/material";
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+import PropTypes from "prop-types";
+import {
+  Modal,
+  Box,
+  Typography,
+  Card,
+  Grid,
+  CardMedia,
+  CardContent,
+  Stack,
+  Chip,
+  CardActions,
+  ButtonGroup,
+  Button,
+  FilledInput,
+} from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import { useModalStyles } from "./useModalStyles";
 import { changeProductQuantity } from "../../../store/thunks/cart.thunks";
 
-const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPrice, isOnModal, toggleIsOnModal}) => {
-  const {
-    name,
-    currentPrice,
-    imageUrls,
-    quantity,
-    discountPrice,
-    _id,
-  } = data;
+const AddToCartModal = ({
+  data,
+  discontStart,
+  localPrice,
+  totalPrice,
+  setTotalPrice,
+  isOnModal,
+  toggleIsOnModal,
+}) => {
+  const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
 
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
-  console.log(data);
   useEffect(() => {
-    setTotalPrice(prevProductAmount => prevProductAmount <= discontStart ? productAmount * currentPrice : productAmount * discountPrice);
-  },[productAmount, discontStart]);
+    setTotalPrice((prevProductAmount) =>
+      prevProductAmount <= discontStart
+        ? productAmount * currentPrice
+        : productAmount * discountPrice
+    );
+  }, [productAmount, discontStart]);
 
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -30,7 +48,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
   }, [isOnModal]);
 
   useEffect(() => {
-    if(!open) {
+    if (!open) {
       toggleIsOnModal(false);
     }
   }, [open]);
@@ -41,7 +59,7 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
     <Modal
       open={open}
       onClose={() => {
-        setOpen(false)
+        setOpen(false);
       }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -70,92 +88,102 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
                   className={modalClasses.productCardName}
                   variant="h3"
                   color="text.primary"
-                >{name}</Typography>
+                >
+                  {name}
+                </Typography>
 
                 <Stack direction="row" spacing={1}>
-                  <Chip 
+                  <Chip
                     color="disable"
-                    label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"} 
+                    label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
                     icon={
                       quantity > 0 ? (
-                        <CheckIcon
-                          className={modalClasses.buttonIcon}  
-                        />) : (
-                        <CloseIcon 
-                          className={modalClasses.buttonIcon}
-                        />)
-                    } 
+                        <CheckIcon className={modalClasses.buttonIcon} />
+                      ) : (
+                        <CloseIcon className={modalClasses.buttonIcon} />
+                      )
+                    }
                   />
                 </Stack>
               </CardContent>
               <CardActions className={modalClasses.productActionsBox}>
                 <Box className={modalClasses.productCardActionBtns}>
-                  <ButtonGroup 
-                      className={modalClasses.amountInputGroup} 
-                      color="primary" 
-                      variant="outlined" 
-                      aria-label="outlined primary button group"
+                  <ButtonGroup
+                    className={modalClasses.amountInputGroup}
+                    color="primary"
+                    variant="outlined"
+                    aria-label="outlined primary button group"
+                  >
+                    <Button
+                      onClick={() => {
+                        setProductAmount(
+                          (prevProductAmount) => +prevProductAmount - 1
+                        );
+                      }}
+                      variant="text"
+                      disabled={productAmount <= 1}
                     >
-                      <Button 
-                        onClick={() => {
-                          setProductAmount(prevProductAmount => +prevProductAmount - 1)
-                        }} 
-                        variant="text"
-                        disabled={productAmount <= 1}
-                      >
-                        {"-"}
-                      </Button>
-                      <FilledInput
-                        inputProps={{sx:{textAlign:"center"}}} 
-                        disableUnderline={true} 
-                        hiddenLabel={true} 
-                        value={productAmount}
-                        onChange={e => setProductAmount(+e.target.value)}
-                        id="product-amount" 
-                        className={modalClasses.productAmountInput} 
-                      />
-                      <Button 
-                        onClick={() => {
-                          setProductAmount(+productAmount + 1);
-                        }} 
-                        variant="text"
-                        disabled={productAmount >= quantity}
-                      >
-                        {"+"}
-                      </Button>
-                    </ButtonGroup>
+                      {"-"}
+                    </Button>
+                    <FilledInput
+                      inputProps={{ sx: { textAlign: "center" } }}
+                      disableUnderline={true}
+                      hiddenLabel={true}
+                      value={productAmount}
+                      onChange={(e) => setProductAmount(+e.target.value)}
+                      id="product-amount"
+                      className={modalClasses.productAmountInput}
+                    />
+                    <Button
+                      onClick={() => {
+                        setProductAmount(+productAmount + 1);
+                      }}
+                      variant="text"
+                      disabled={productAmount >= quantity}
+                    >
+                      {"+"}
+                    </Button>
+                  </ButtonGroup>
 
                   <Box className={modalClasses.productCardButtons}>
                     <Box>
-                      {productAmount > discontStart &&
-                        <Typography 
-                          className={modalClasses.productCardOldPrice} 
-                          component="div" 
-                          variant="h5" 
+                      {productAmount > discontStart && (
+                        <Typography
+                          className={modalClasses.productCardOldPrice}
+                          component="div"
+                          variant="h5"
                           color="text.primary"
                         >
                           {localPrice.format(productAmount * +currentPrice)}
                         </Typography>
-                      }
-                      <Typography 
-                        className={modalClasses.productCardPrice} 
-                        component="div" 
-                        variant="h5" 
+                      )}
+                      <Typography
+                        className={modalClasses.productCardPrice}
+                        component="div"
+                        variant="h5"
                         color="text.primary"
-                        >
+                      >
                         {localPrice.format(totalPrice)}
                       </Typography>
                     </Box>
-                    <Button 
-                      className={modalClasses.productCardButtonBasket} 
+                    <Button
+                      className={modalClasses.productCardButtonBasket}
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(changeProductQuantity(_id, productAmount, name, currentPrice, imageUrls));
+                        dispatch(
+                          changeProductQuantity(
+                            _id,
+                            productAmount,
+                            name,
+                            currentPrice,
+                            imageUrls
+                          )
+                        );
                       }}
                     >
                       Add to card
-                    </Button>              
+                    </Button>
                   </Box>
                 </Box>
               </CardActions>
@@ -164,8 +192,8 @@ const AddToCartModal = ({data, discontStart, localPrice, totalPrice, setTotalPri
         </Card>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
 AddToCartModal.propTypes = {
   data: PropTypes.object.isRequired,
@@ -175,7 +203,7 @@ AddToCartModal.propTypes = {
   setTotalPrice: PropTypes.func.isRequired,
   isOnModal: PropTypes.bool.isRequired,
   toggleIsOnModal: PropTypes.func.isRequired,
-  _id: PropTypes.string.isRequired // !!! MVP: number---> string
-  }
-  
+  _id: PropTypes.string.isRequired, // !!! MVP: number---> string
+};
+
 export default AddToCartModal;

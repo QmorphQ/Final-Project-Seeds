@@ -35,7 +35,7 @@ const CartList = () => {
 
     return (
 
-      <>
+      
         <CartItem
           key={cartItem.id}
           product={{
@@ -48,7 +48,7 @@ const CartList = () => {
             totalPrice,
           }}
         />
-      </>
+      
 
     );
   });

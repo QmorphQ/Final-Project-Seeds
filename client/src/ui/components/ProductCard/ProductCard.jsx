@@ -29,16 +29,16 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import Carousel from "react-material-ui-carousel"; 
+import Carousel from "react-material-ui-carousel";
 
 import CloseIcon from "@mui/icons-material/Close";
-import FavoriteIcon from "@mui/icons-material/Favorite"; 
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 // import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"; 
-// import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'; 
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import CheckIcon from "@mui/icons-material/Check"; 
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+// import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import CheckIcon from "@mui/icons-material/Check";
 
 // import { Link, useNavigate } from "react-router-dom";
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
@@ -48,19 +48,22 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 
-import { cartSelector, 
-         mainCategoriesSelector, 
-         wishlistSelector, 
-         isAdminStateSelector, 
-         adminDeleteProductRequestSelector } from "../../../store/selectors/selectors";
-import { addProductToCart, 
-         fetchCart, 
-         decreaseProductQuantity, 
-         changeProductQuantity } from "../../../store/thunks/cart.thunks"; 
+import {
+  cartSelector,
+  mainCategoriesSelector,
+  wishlistSelector,
+  isAdminStateSelector,
+  adminDeleteProductRequestSelector,
+} from "../../../store/selectors/selectors";
+import {
+  addProductToCart,
+  fetchCart,
+  decreaseProductQuantity,
+  changeProductQuantity,
+} from "../../../store/thunks/cart.thunks";
 import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
 
 import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
-
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import { imgURLs } from "./ProductMedia";
@@ -84,10 +87,9 @@ export const ProductCardRender = ({ data }) => {
     discountPrice,
     itemNo,
     _id,
-    cartQuantity
+    cartQuantity,
   } = data;
-  
-console.log(data);
+
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
@@ -95,13 +97,12 @@ console.log(data);
   const [discontStart] = useState(10);
 
   const dispatch = useDispatch();
-  const navigation = useNavigate(); 
+  const navigation = useNavigate();
 
-  const wishlist = useSelector(wishlistSelector); 
-  const isAdmin = useSelector(isAdminStateSelector); 
+  const wishlist = useSelector(wishlistSelector);
+  const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
-  const isProductDeleted = useSelector(adminDeleteProductRequestSelector); 
-
+  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);
 
   useEffect(() => {
     dispatch(fetchWishlist());
@@ -110,7 +111,6 @@ console.log(data);
   useEffect(() => {
     dispatch(fetchCart());
   }, []);
-
 
   useEffect(() => {
     if (wishlist) {
@@ -146,48 +146,45 @@ console.log(data);
     style: "currency",
     currency: "USD",
     currencyDisplay: "symbol",
-  }); 
+  });
 
-  
   const reloadAfterDelete = () => {
-      setTimeout(() => {
-        dispatch(adminDeleteProductIdle());
-        navigation(-1)
-         
-      }, 3000); 
-  }
-
+    setTimeout(() => {
+      dispatch(adminDeleteProductIdle());
+      navigation(-1);
+    }, 3000);
+  };
 
   if (isBasket) {
     return (
       <Card>
-        <Box className={basketClasses.productCardContainer} >
-        <CardMedia
-          className={basketClasses.productCardMedia}
-          component="img"
-          width="294px"
-          image={`${imageUrls}`}
-          alt={name}
+        <Box className={basketClasses.productCardContainer}>
+          <CardMedia
+            className={basketClasses.productCardMedia}
+            component="img"
+            width="294px"
+            image={`${imageUrls}`}
+            alt={name}
           />
-        <Box className={basketClasses.productCardNameContainer}>
-          <Typography
-            className={basketClasses.productCardName}
-            variant="h3"
-            color="text.primary"
-          >
-            {name}
-          </Typography>
-        </Box>
-        <ButtonGroup 
-            className={basketClasses.productCardButtonGroup}
-            color="primary" 
-            variant="outlined" 
-            aria-label="outlined primary button group"
+          <Box className={basketClasses.productCardNameContainer}>
+            <Typography
+              className={basketClasses.productCardName}
+              variant="h3"
+              color="text.primary"
             >
-            <Button 
+              {name}
+            </Typography>
+          </Box>
+          <ButtonGroup
+            className={basketClasses.productCardButtonGroup}
+            color="primary"
+            variant="outlined"
+            aria-label="outlined primary button group"
+          >
+            <Button
               onClick={() => {
                 dispatch(decreaseProductQuantity(_id));
-              }} 
+              }}
               variant="text"
               disabled={cartQuantity <= 1}
               className={basketClasses.productCardButton}
@@ -196,48 +193,48 @@ console.log(data);
             </Button>
             <FilledInput
               className={basketClasses.productCardAmount}
-              inputProps={{sx:{textAlign:"center"}}} 
-              disableUnderline={true} 
-              hiddenLabel={true} 
+              inputProps={{ sx: { textAlign: "center" } }}
+              disableUnderline={true}
+              hiddenLabel={true}
               value={cartQuantity}
-              onChange={e => dispatch(changeProductQuantity(_id, +e.target.value))}
-              id="product-amount" 
-              />
-            <Button 
+              onChange={(e) =>
+                dispatch(changeProductQuantity(_id, +e.target.value))
+              }
+              id="product-amount"
+            />
+            <Button
               onClick={() => {
                 dispatch(addProductToCart(_id));
-              }} 
+              }}
               variant="text"
               disabled={cartQuantity >= quantity}
               className={basketClasses.productCardButton}
-              >
+            >
               {"+"}
             </Button>
           </ButtonGroup>
-          
-        <Typography
-          className={basketClasses.productCardName}
-          variant="h3"
-          color="text.primary"
-          >
-          {currentPrice}
-        </Typography>
 
-        <Typography
-          className={basketClasses.productCardName}
-          variant="h3"
-          color="text.primary"
+          <Typography
+            className={basketClasses.productCardName}
+            variant="h3"
+            color="text.primary"
           >
-          {(currentPrice * cartQuantity).toFixed(2)}
-        </Typography>        
-        
+            {currentPrice}
+          </Typography>
+
+          <Typography
+            className={basketClasses.productCardName}
+            variant="h3"
+            color="text.primary"
+          >
+            {(currentPrice * cartQuantity).toFixed(2)}
+          </Typography>
         </Box>
       </Card>
     );
   }
 
   if (isProductPage) {
-
     return (
       <Container sx={{ marginTop: "50px" }}>
         <Card className={productPageClasses.productCard}>
@@ -392,9 +389,9 @@ console.log(data);
                     <Typography component="span" sx={{ fontSize: "16px" }}>
                       {+productAmount} PACK
                     </Typography>
-                  </Typography> 
+                  </Typography>
 
-                  {isAdmin === false && 
+                  {isAdmin === false && (
                     <ButtonGroup
                       className={productPageClasses.amountInputGroup}
                       color="primary"
@@ -431,8 +428,7 @@ console.log(data);
                         {"+"}
                       </Button>
                     </ButtonGroup>
-                  } 
-
+                  )}
                 </Box>
                 <Box className={productPageClasses.productCardActionBtns}>
                   <Box>
@@ -456,7 +452,7 @@ console.log(data);
                     </Typography>
                   </Box>
 
-                  {isAdmin === false && 
+                  {isAdmin === false && (
                     <Box className={productPageClasses.productCardButtons}>
                       <IconButton
                         className={productPageClasses.productCardButton}
@@ -468,7 +464,11 @@ console.log(data);
                             : () => dispatch(addProductToWishlist(_id))
                         }
                       >
-                        {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                        {isFavourite ? (
+                          <FavoriteIcon />
+                        ) : (
+                          <FavoriteBorderIcon />
+                        )}
                       </IconButton>
                       <Button
                         className={productPageClasses.productCardButtonBasket}
@@ -479,26 +479,33 @@ console.log(data);
                       >
                         Add to card
                       </Button>
-                    </Box> 
-                  }  
+                    </Box>
+                  )}
 
-                  {isAdmin && isProductDeleted === 'idle' && 
-                  <IconButton onClick={() => {
-                                          dispatch(adminDeleteProduct(_id)); 
-                                          reloadAfterDelete(); 
-                                          }} >
-                    < DeleteOutlinedIcon sx={{ fontSize: '32px',  
-                                               color: '#FF6D6D' }} 
-                    />
-                  </IconButton>} 
+                  {isAdmin && isProductDeleted === "idle" && (
+                    <IconButton
+                      onClick={() => {
+                        dispatch(adminDeleteProduct(_id));
+                        reloadAfterDelete();
+                      }}
+                    >
+                      <DeleteOutlinedIcon
+                        sx={{ fontSize: "32px", color: "#FF6D6D" }}
+                      />
+                    </IconButton>
+                  )}
 
-                  {isAdmin && isProductDeleted === 'success' && 
-                  <span style={{ margin: '10px 0 5px 30px', 
-                                 color: '#FF6D6D', 
-                                 fontFamily: "'Lexend', sans-serif", }}>
-                                         product has been deleted successfully
-                  </span>}
-
+                  {isAdmin && isProductDeleted === "success" && (
+                    <span
+                      style={{
+                        margin: "10px 0 5px 30px",
+                        color: "#FF6D6D",
+                        fontFamily: "'Lexend', sans-serif",
+                      }}
+                    >
+                      product has been deleted successfully
+                    </span>
+                  )}
                 </Box>
               </CardActions>
             </Grid>
@@ -628,10 +635,16 @@ console.log(data);
         </Card>
       </Grid>
     );
-  };
+  }
 
   return (
-    <Grid item xs={12} md={6} lg={4} sx={{display: "flex", justifyContent:"center"}}>
+    <Grid
+      item
+      xs={12}
+      md={6}
+      lg={4}
+      sx={{ display: "flex", justifyContent: "center" }}
+    >
       <Card className={mainClasses.productCard}>
         <CardHeader
           className={mainClasses.productCardHeader}
@@ -728,17 +741,15 @@ console.log(data);
   );
 };
 
-const ProductCard = ({ product, loading }) => 
-  (
-    <RenderComponent
-      loading={loading}
-      data={product}
-      renderSuccess={ProductCardRender}
-      loadingFallback={Spinner}
-      renderError={<p>Error</p>}
-    />
-  );
-
+const ProductCard = ({ product, loading }) => (
+  <RenderComponent
+    loading={loading}
+    data={product}
+    renderSuccess={ProductCardRender}
+    loadingFallback={Spinner}
+    renderError={<p>Error</p>}
+  />
+);
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
@@ -753,7 +764,7 @@ ProductCard.propTypes = {
     discountPrice: PropTypes.number,
     itemNo: PropTypes.string, // MVP: string ---> number
     _id: PropTypes.string,
-    cartQuantity: PropTypes.number
+    cartQuantity: PropTypes.number,
   }),
   loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any;
 };

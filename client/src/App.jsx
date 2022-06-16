@@ -7,13 +7,12 @@ import {
   isAdminStateSelector, 
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
-import Cart from "./app/pages/Cart.jsx";
-// Pages:
+import Cart from "./app/pages/Cart/Cart.jsx"
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
-// import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
+import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 
 import Wishlist from "./app/pages/Wishlist.jsx";

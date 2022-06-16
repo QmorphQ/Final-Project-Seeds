@@ -41,9 +41,11 @@ const fetchCart = () => async (dispatch, getState) => {
           Authorization: `${token}`,
         },
       });
-
       const cartFromApi = response.data.products.map((cartProduct) => ({
         id: cartProduct.product._id,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
         cartQuantity: cartProduct.cartQuantity,
       }));
       let newCart = [...cartFromApi];
@@ -52,6 +54,9 @@ const fetchCart = () => async (dispatch, getState) => {
       }
       const cartForAPI = newCart.map((item) => ({
         product: item.id,
+        imageUrls: item.imageUrls,
+        name: item.name,
+        currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       await axios.put(
@@ -97,7 +102,14 @@ const addCart = (cart) => (dispatch) => {
   }
 };
 
-const changeLocalCart = (cart, productId, calculateCartQuantity) => {
+const changeLocalCart = (
+  cart,
+  productId,
+  calculateCartQuantity,
+  name,
+  currentPrice,
+  imageUrls
+) => {
   let cartCopy;
   if (!cart) {
     cartCopy = [];
@@ -108,6 +120,9 @@ const changeLocalCart = (cart, productId, calculateCartQuantity) => {
   if (product) {
     const newProduct = {
       ...product,
+      imageUrls,
+      name,
+      currentPrice,
       cartQuantity: calculateCartQuantity(product.cartQuantity),
     };
     const productIndex = cartCopy.findIndex(
@@ -118,6 +133,9 @@ const changeLocalCart = (cart, productId, calculateCartQuantity) => {
   }
   const newProduct = {
     id: productId,
+    imageUrls,
+    name,
+    currentPrice,
     cartQuantity: calculateCartQuantity(),
   };
   const newCart = [...cartCopy, newProduct];
@@ -138,6 +156,9 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addProductToCartSuccess(cart));
@@ -147,49 +168,74 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       });
   } else {
     const { cart } = getState().cart;
-    const calculateQuantity = (quantity) => (quantity ? quantity + 1 : 1);
-    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+    const updatedCart = cart.map((cartItem) =>
+      cartItem.id === productId
+        ? { ...cartItem, cartQuantity: cartItem.cartQuantity + 1 }
+        : cartItem
+    );
     dispatch(addProductToCartSuccess(updatedCart));
   }
 };
 
-const changeProductQuantity = (productId, quantity) => (dispatch, getState) => {
-  dispatch(editStart());
-  const token = localStorage.getItem("jwt");
-  const { cart } = getState().cart;
-  if (token) {
-    const calculateQuantity = () => quantity;
-    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
-    const cartForAPI = updatedCart.map((item) => ({
-      product: item.id,
-      cartQuantity: item.cartQuantity,
-    }));
-    axios
-      .put(
-        `${API}cart`,
-        { products: cartForAPI },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        const newCart = response.data.products.map((cartProduct) => ({
-          id: cartProduct.product._id,
-          cartQuantity: cartProduct.cartQuantity,
-        }));
-        dispatch(editSuccess(newCart));
-      })
-      .catch(() => {
-        dispatch(editError());
-      });
-  } else {
-    const calculateQuantity = () => quantity;
-    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
-    dispatch(editSuccess(updatedCart));
-  }
-};
+const changeProductQuantity =
+  (productId, quantity, name, currentPrice, imageUrls) =>
+  (dispatch, getState) => {
+    dispatch(editStart());
+    const token = localStorage.getItem("jwt");
+    const { cart } = getState().cart;
+    if (token) {
+      const calculateQuantity = () => quantity;
+      const updatedCart = changeLocalCart(
+        cart,
+        productId,
+        calculateQuantity,
+        name,
+        currentPrice,
+        imageUrls
+      );
+      const cartForAPI = updatedCart.map((item) => ({
+        product: item.id,
+        imageUrls: item.imageUrls,
+        name: item.name,
+        currentPrice: item.currentPrice,
+        cartQuantity: item.cartQuantity,
+      }));
+      axios
+        .put(
+          `${API}cart`,
+          { products: cartForAPI },
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          const newCart = response.data.products.map((cartProduct) => ({
+            id: cartProduct.product._id,
+            imageUrls: cartProduct.product.imageUrls,
+            name: cartProduct.product.name,
+            currentPrice: cartProduct.product.currentPrice,
+            cartQuantity: cartProduct.cartQuantity,
+          }));
+          dispatch(editSuccess(newCart));
+        })
+        .catch(() => {
+          dispatch(editError());
+        });
+    } else {
+      const calculateQuantity = () => quantity;
+      const updatedCart = changeLocalCart(
+        cart,
+        productId,
+        calculateQuantity,
+        name,
+        currentPrice,
+        imageUrls
+      );
+      dispatch(editSuccess(updatedCart));
+    }
+  };
 
 const decreaseProductQuantity = (productId) => (dispatch, getState) => {
   dispatch(decreaseQuantityRequested());
@@ -204,6 +250,9 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(decreaseQuantitySuccess(cart));
@@ -213,13 +262,17 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
       });
   } else {
     const { cart } = getState().cart;
-    const calculateQuantity = (quantity) => (quantity ? quantity - 1 : 1);
-    const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
-    dispatch(deleteProductFromCartSuccess(updatedCart));
+    const updatedCart = cart.map((cartItem) =>
+      cartItem.id === productId
+        ? { ...cartItem, cartQuantity: cartItem.cartQuantity - 1 }
+        : cartItem
+    );
+
+    dispatch(decreaseQuantitySuccess(updatedCart));
   }
 };
 
-const deleteProductFromCart = (productId) => (dispatch) => {
+const deleteProductFromCart = (productId) => (dispatch, getState) => {
   dispatch(deleteProductFromCartRequest());
   const token = localStorage.getItem("jwt");
   if (token) {
@@ -232,6 +285,9 @@ const deleteProductFromCart = (productId) => (dispatch) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(deleteProductFromCartSuccess(cart));
@@ -239,6 +295,10 @@ const deleteProductFromCart = (productId) => (dispatch) => {
       .catch(() => {
         dispatch(deleteProductFromCartError());
       });
+  } else {
+    const { cart } = getState().cart;
+    const updatedCart = cart.filter((product) => product.id !== productId);
+    dispatch(deleteProductFromCartSuccess(updatedCart));
   }
 };
 

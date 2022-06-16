@@ -148,7 +148,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
 // =====================================================================
 Header.defaultProps = {
   arrWithChildrenBlock: [{parentId:'herbs', name: ['herbs-mono', 'herbs-mix']}, {parentId:'vegetables',name: ['vegetables-mono', 'vegetables-mix']}, {parentId:'flowers', name: ['flowers-mono', 'flowers-mix']}],
-  arrNoChildrenBlock: [['products', 'all'], ['products/bundles', 'bundles']],
+  arrNoChildrenBlock: [['products', 'all'], ['products?perPage=9&startPage=1&sort=-currentPrice&categories=herbs-mix%2Cvegetables-mix%2Cflowers-mix', 'bundles']],
 }
 
 Header.propTypes = {

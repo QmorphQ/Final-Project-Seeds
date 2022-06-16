@@ -61,7 +61,7 @@ const Filters = () => {
     searchParams.forEach((value, key) => {
       newParams[key] = value;
     });
-    initialParams = newParams;
+    initialParams = { ...newParams, ...defaultParams };
   } else {
     initialParams = defaultParams;
   }
@@ -132,6 +132,24 @@ const Filters = () => {
       dispatch(fetchFilteredProducts(queryParams));
     }
   }, [queryParams]);
+
+  useEffect(() => {
+    let verifiedParams = {};
+    searchParams.forEach((value, key) => {
+      verifiedParams[key] = value;
+    });
+
+    if (!verifiedParams.hasOwnProperty("startPage")) {
+      verifiedParams = { ...verifiedParams, ...defaultParams };
+    }
+
+    if (Object.keys(verifiedParams).length > 0) {
+      dispatch(fetchFilteredProducts(verifiedParams));
+    }
+
+    dispatch(setQueryParams(verifiedParams));
+    setSearchParams(new URLSearchParams(verifiedParams));
+  }, [searchParams]);
 
   useEffect(() => {
     if (selectedCategory.length !== 0) {

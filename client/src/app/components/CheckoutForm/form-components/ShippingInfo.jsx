@@ -33,6 +33,8 @@ const ShippingInfo = () => {
       .catch(() => console.log("Some problem with shipping methods fetching"));
   }, []);
 
+  console.log(field.value );
+
   field.value === undefined
     ? shippingData.forEach((item) => {
         item.default && (defaultMethod = item.customId);

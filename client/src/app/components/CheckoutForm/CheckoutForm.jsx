@@ -15,7 +15,7 @@ import { PropTypes } from "prop-types";
 import {
   getCustomer
 } from "../../../store/thunks/customer.thunks";
-import { currentCustomerSelector } from "../../../store/selectors/selectors";
+import { currentCustomerSelector, loginStateSelector } from "../../../store/selectors/selectors";
 import FORM_VALIDATION from "./FormValidation.jsx";
 import PaymentInfo from "./form-components/PaymentInfo.jsx";
 import CustomerInfo from "./form-components/CustomerInfo.jsx";
@@ -24,21 +24,21 @@ import ShippingInfo from "./form-components/ShippingInfo.jsx";
 
 const steps = ["1", "2", "3"];
 
-// const defaultData = {
-//   firstName: "Anton",
-//   lastName: "Ogniev",
-//   email: "anton@icloud.com",
-//   telephone: "+38 095 514 3233",
-//   street: "Hegenheimerstrasse",
-//   house: "79",
-//   flat: "130",
-//   postalCode: "4055",
-//   city: "Basel",
-//   deliveryMethod: "",
-//   postOfficeCity: "",
-//   postOfficeWarehouse: "",
-//   paymentMethod: "card",
-// };
+const defaultData = {
+  firstName: "Heiko",
+  lastName: "Shipper",
+  email: "anton@icloud.com",
+  phone: "+38 095 514 3233",
+  addressLine: "Hegenheimerstrasse",
+  house: "79",
+  flat: "130",
+  code: "4055",
+  city: "Basel",
+  deliveryMethod: "expressDelivery",
+  postOfficeCity: "",
+  postOfficeWarehouse: "",
+  paymentMethod: "card",
+};
 
 const cart = {
   products: [
@@ -69,9 +69,6 @@ const cart = {
 }
 
 
-
-
-
 export default function CheckoutForm() {
   const currentCustomer = useSelector(currentCustomerSelector);
   const [activeStep, setActiveStep] = useState(0);
@@ -79,13 +76,20 @@ export default function CheckoutForm() {
   const isLastStep = activeStep === steps.length - 1;
   const formId = "checkoutForm";
   const dispatch = useDispatch();
+  const isLogin = useSelector(loginStateSelector); 
 
   useEffect(() => {
     dispatch(getCustomer());
   }, []);
 
-  
- 
+  console.log(isLogin);
+
+  let defaultCustomer;
+
+  isLogin ? 
+  (defaultCustomer = currentCustomer)
+  : (defaultCustomer = defaultData)
+
   const createOrder = (order) => {
     const interimOrder = {
       customerId: order._id,
@@ -93,13 +97,14 @@ export default function CheckoutForm() {
         country: "Ukraine",
         city: order.city,
         address: `${order.addressLine} ${order.house}, ${order.flat}`,
-        postal: order.postalCode,
+        postal: order.code,
       },
       shipping: order.deliveryMethod,
       paymentInfo: order.paymentMethod,
+      canceled: false,
       status: "not shipped",
       email: order.email,
-      mobile: order.telephone,
+      mobile: order.phone,
       letterSubject: "Thank you for order! You are welcome!",
       letterHtml: `<h1>Your order №XXXXXXXX is placed. </h1>
     <p>Looking forward to see you again soon. In case of any questions - we are happy to help!</p>
@@ -107,8 +112,7 @@ export default function CheckoutForm() {
     };
     if (order._id) {
       return {
-        ...interimOrder,
-        customerId: `${order._id}`
+        ...interimOrder
       }
     }
 
@@ -119,15 +123,14 @@ export default function CheckoutForm() {
   }
 
 
-
-  const placeOrderToDB = (newOrder) => {
+  const placeOrderToDB = (newOrder) => {  
     return axios
       .post('http://localhost:8000/api/orders', newOrder)
       .then((response) => {
         console.log(response)
       })
       .catch((error) => {
-        alert(newOrder);
+        console.log(newOrder);
         return error
       })
   }
@@ -217,7 +220,7 @@ export default function CheckoutForm() {
   };
 
   return (
-    currentCustomer != null &&
+    defaultCustomer != null && 
     <Box
     margin={'auto'}
     width={{ xs: "100%", sm: "50%"}}
@@ -254,7 +257,7 @@ export default function CheckoutForm() {
           </Box>
         </>
       ) : (
-        <Formik initialValues={currentCustomer} validationSchema={FORM_VALIDATION} onSubmit={_handleSubmit}>
+        <Formik initialValues={defaultCustomer} validationSchema={FORM_VALIDATION} onSubmit={_handleSubmit}>
           {
           (props) => (
             <Form id={formId}>

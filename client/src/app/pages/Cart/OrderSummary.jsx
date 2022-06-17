@@ -56,9 +56,14 @@ const useStyles = makeStyles((theme) => ({
 
 const OrderSummary = () => {
   const classes = useStyles();
-  const cart = useSelector((state) => state.cart.cart)
+  const cart = useSelector((state) => state.cart.cart);
   const totalSum = useSelector((state) => state.cart.totalSum);
-  
+  let discount = 0;
+  if (totalSum >= 500) {
+    discount = (totalSum / 100) * 20;
+  }
+
+  const totalAmount = totalSum - discount;
 
   return (
     <>
@@ -79,15 +84,15 @@ const OrderSummary = () => {
             {cart.length} ITEMS
           </Typography>
           <Typography className={classes.totalSumm} component={"p"}>
-            $ {totalSum.toFixed()}
+            $ {totalSum.toFixed(2)}
           </Typography>
         </Box>
         <Box>
           <Typography className={classes.discountTitle} component={"p"}>
-            Discount (from $500)
+            Discount 20% (from $500)
           </Typography>
           <Box className={classes.discountSumm}>
-            <Typography> $25 sale</Typography>
+            <Typography>${discount.toFixed(2)}</Typography>
           </Box>
         </Box>
         <Divider variant="middle" />
@@ -97,7 +102,7 @@ const OrderSummary = () => {
             Total amount
           </Typography>
           <Typography className={classes.totalSumm} component={"p"}>
-            $ 12.45
+            $ {totalAmount.toFixed(2)}
           </Typography>
         </Box>
         <Button className={classes.continueBtn} variant="contained">

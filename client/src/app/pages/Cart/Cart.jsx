@@ -11,9 +11,7 @@ import {
 } from "../../../store/thunks/cart.thunks";
 import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
 
-
 const useStyles = makeStyles(() => ({
-
   yourCartHeading: {
     marginBottom: "40px !important",
     marginTop: "40px !important",
@@ -35,15 +33,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Cart = () => {
-
   // const  totalSumStore = useSelector((state) => state.cart.totalSum)
   const cart = useSelector((state) => state.cart.cart) || [];
   // const totalSum = useSelector((state) => state.cart.totalSum);
   const loading = useSelector((state) => state.cart.downloadRequestState);
   const isLoggedIn = useSelector((state) => state.customer.isLoggedIn);
   const dispatch = useDispatch();
-
-
 
   const classes = useStyles();
 
@@ -94,10 +89,7 @@ const Cart = () => {
           <Divider />
           <Box component="main" className={classes.cartContainer}>
             <CartList />
-
-
           </Box>
-
         </Box>
         <OrderSummary />
       </Box>

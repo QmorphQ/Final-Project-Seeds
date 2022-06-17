@@ -65,7 +65,7 @@ function App() {
               <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
               <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
               <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
-              <Route path="*" element={<Checkout />} />
+              <Route path="checkout" element={<Checkout />} />
               {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />

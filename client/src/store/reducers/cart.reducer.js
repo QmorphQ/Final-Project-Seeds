@@ -17,6 +17,7 @@ import {
   DELETE_PRODUCT_FROM_CART_REQUEST,
   DELETE_PRODUCT_FROM_CART_SUCCESS,
   DELETE_PRODUCT_FROM_CART_ERROR,
+  ORDER_AMOUNT_UPDATED,
 } from "../actions/cart.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -27,7 +28,9 @@ const initialState = {
   editCartState: downloadRequestStates.IDLE,
   decreaseQuantityState: downloadRequestStates.IDLE,
   deleteProductFromCartState: downloadRequestStates.IDLE,
+  downloadOrderAmountUpdated: downloadRequestStates.IDLE,
   cart: [],
+  totalSum: 0,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -145,6 +148,13 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         deleteProductFromCartState: downloadRequestStates.ERROR,
       };
+
+    case ORDER_AMOUNT_UPDATED:
+      return {
+        ...state,
+          downloadOrderAmountUpdated: downloadRequestStates.SUCCESS,
+          totalSum: action.payload,
+        };
 
     default:
       return state;

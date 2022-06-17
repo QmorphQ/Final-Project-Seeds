@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, Divider } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 // import ProductCard from "../../../ui/components/ProductCard/ProductCard.jsx";
+import { countTotalAmountOrder,  fetchCart } from "../../../store/thunks/cart.thunks";
 import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
 
@@ -36,19 +37,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = ({ loading }) => {
+  const  totalSumStore = useSelector((state) => state.cart.totalSum)
   const cart = useSelector((state) => state.cart.cart) || [];
+  const totalSum = useSelector((state) => state.cart.totalSum);
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [totalSum, setTotalSum] = useState(0);
+  // const [totalSum, setTotalSum] = useState(0);
+
+  // useEffect(() => {
+  //   const initialValue = 0;
+  //   const sumOrder = cart.reduce(function (accumulator, currentValue) {
+  //     return (
+  //       accumulator + currentValue.currentPrice * currentValue.cartQuantity
+  //     );
+  //   }, initialValue);
+  //   setTotalSum(sumOrder)
+  // }, [cart]);
 
   useEffect(() => {
-    const initialValue = 0;
-    const sumOrder = cart.reduce(function (accumulator, currentValue) {
-      return (
-        accumulator + currentValue.currentPrice * currentValue.cartQuantity
-      );
-    }, initialValue);
-    setTotalSum(sumOrder)
+    dispatch(countTotalAmountOrder());
   }, [cart]);
+
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, []);
+
+ 
 
   // if (loading !== downloadRequestStates.SUCCESS) {
   //   return <p>Loading</p>;

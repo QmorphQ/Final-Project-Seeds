@@ -98,7 +98,7 @@ const OrderSummary = () => {
             Total amount
           </Typography>
           <Typography className={classes.totalSumm} component={"p"}>
-            $ {totalSum - discount}
+            $ {(totalSum > 500) ? (totalSum - discount).toFixed(2) : totalSum.toFixed(2) }
           </Typography>
         </Box>
         <Button className={classes.continueBtn} variant="contained">

@@ -19,7 +19,17 @@ import {
   editStart,
   editSuccess,
   editError,
+  orderAmountUpdated,
 } from "../actions/cart.actions";
+
+const countTotalAmountOrder = () => (dispatch, getState) => {
+  const { cart } = getState().cart;
+  const sumOrder = cart.reduce((accumulator, currentValue) => (
+     accumulator + currentValue.currentPrice * currentValue.cartQuantity
+  ), 0);
+
+  dispatch(orderAmountUpdated(sumOrder));
+};
 
 const concatCarts = (localCart, remoteCart) =>
   [...localCart, ...remoteCart].reduce((accumulator, cartItem) => {
@@ -310,4 +320,5 @@ export {
   deleteProductFromCart,
   changeProductQuantity,
   changeLocalCart,
+  countTotalAmountOrder,
 };

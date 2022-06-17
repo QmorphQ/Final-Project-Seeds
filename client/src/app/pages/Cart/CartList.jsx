@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTableContainer-root": {
       boxShadow: "none",
     },
+    "& .MuiTable-root": {
+      width: "700px",
+    },
   },
   tableTitle: {
     "& .MuiTableCell-root": {
@@ -23,13 +26,14 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: "24px",
     },
   },
+  productDetails: {
+    width: "",
+  },
 }));
 
 const CartList = () => {
   const cart = useSelector((state) => state.cart.cart) || [];
   const classes = useStyles();
-
-  
 
   const cartList = cart.map((cartItem) => {
     const totalPrice =
@@ -37,20 +41,18 @@ const CartList = () => {
 
     return (
 
-      
-        <CartItem
-          key={cartItem.id}
-          product={{
-            ...cartItem,
-            img: cartItem.imageUrls[0],
-            name: cartItem.name,
-            isBasket: true,
-            quantity: cartItem.cartQuantity,
-            price: cartItem.currentPrice,
-            totalPrice,
-          }}
-        />
-      
+      <CartItem
+        key={cartItem.id}
+        product={{
+          ...cartItem,
+          img: cartItem.imageUrls[0],
+          name: cartItem.name,
+          isBasket: true,
+          quantity: cartItem.cartQuantity,
+          price: cartItem.currentPrice,
+          totalPrice,
+        }}
+      />
 
     );
   });
@@ -61,7 +63,9 @@ const CartList = () => {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="product-list">
           <TableHead className={classes.tableTitle}>
             <TableRow>
-              <TableCell>PRODUCT DETAILS</TableCell>
+              <TableCell className={classes.productDetails}>
+                PRODUCT DETAILS
+              </TableCell>
               <TableCell align="right">AMOUNT</TableCell>
               <TableCell align="right">PRICE</TableCell>
               <TableCell align="right">TOTAL</TableCell>

@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "48px",
     marginLeft: "60px",
     width: "350px",
-    height: "484px",
+    height: "450px",
   },
 
   orderHeading: {
@@ -43,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     paddingTop: "2px",
     paddingLeft: "34px",
-    paddingBottom: "35px",
   },
 
   continueBtn: {
@@ -51,15 +51,21 @@ const useStyles = makeStyles((theme) => ({
     height: "51px",
     marginLeft: "34px",
     backgroundColor: theme.palette.primary.main,
+    textTransform: "none",
   },
 }));
 
 const OrderSummary = () => {
   const classes = useStyles();
-  const cart = useSelector((state) => state.cart.cart)
+  const cart = useSelector((state) => state.cart.cart);
   const totalSum = useSelector((state) => state.cart.totalSum);
-  const discount = 25;
-  
+
+  let discount = 0;
+  if (totalSum >= 500) {
+    discount = (totalSum / 100) * 20;
+  }
+
+  const totalAmount = totalSum - discount;
 
   return (
     <>
@@ -85,10 +91,10 @@ const OrderSummary = () => {
         </Box>
         <Box>
           <Typography className={classes.discountTitle} component={"p"}>
-            Discount (from $500)
+            Discount 20% (from $500)
           </Typography>
           <Box className={classes.discountSumm}>
-            <Typography> $ {discount} sale</Typography>
+            <Typography>${discount.toFixed(2)}</Typography>
           </Box>
         </Box>
         <Divider variant="middle" />
@@ -98,12 +104,14 @@ const OrderSummary = () => {
             Total amount
           </Typography>
           <Typography className={classes.totalSumm} component={"p"}>
-            $ {(totalSum > 500) ? (totalSum - discount).toFixed(2) : totalSum.toFixed(2) }
+            $ {totalAmount.toFixed(2)}
           </Typography>
         </Box>
-        <Button className={classes.continueBtn} variant="contained">
-          <Typography>Continue</Typography>
-        </Button>
+        <Link to={"*"} style={{ textDecoration: "none" }}>
+          <Button className={classes.continueBtn} variant="contained">
+            <Typography>Continue</Typography>
+          </Button>
+        </Link>
       </Box>
     </>
   );

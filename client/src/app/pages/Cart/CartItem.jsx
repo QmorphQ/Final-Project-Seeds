@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   filledInput: {
-    width: "32px",
+    width: "auto",
     height: "32px",
     borderRadius: "5px",
     backgroundColor: theme.palette.disable.main,

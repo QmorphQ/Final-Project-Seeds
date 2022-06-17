@@ -22,16 +22,13 @@ import {
   orderAmountUpdated,
 } from "../actions/cart.actions";
 
-const countTotalAmountOrder= () => (dispatch, getState) => {
+const countTotalAmountOrder = () => (dispatch, getState) => {
   const { cart } = getState().cart;
-  const initialValue = 0;
-    const sumOrder = cart.reduce(function (accumulator, currentValue) {
-      return (
-        accumulator + currentValue.currentPrice * currentValue.cartQuantity
-      );
-    }, initialValue);
-    dispatch(orderAmountUpdated(sumOrder));
-    
+  const sumOrder = cart.reduce((accumulator, currentValue) => (
+     accumulator + currentValue.currentPrice * currentValue.cartQuantity
+  ), 0);
+
+  dispatch(orderAmountUpdated(sumOrder));
 };
 
 const concatCarts = (localCart, remoteCart) =>
@@ -82,8 +79,6 @@ const fetchCart = () => async (dispatch, getState) => {
         }
       );
       dispatch(downloadCartSuccess(newCart));
-     
-     
     } catch (error) {
       dispatch(downloadCartError());
     }
@@ -316,8 +311,6 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
     dispatch(deleteProductFromCartSuccess(updatedCart));
   }
 };
-
-
 
 export {
   fetchCart,

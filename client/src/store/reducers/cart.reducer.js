@@ -152,7 +152,6 @@ const cartReducer = (state = initialState, action) => {
     case ORDER_AMOUNT_UPDATED:
       return {
         ...state,
-          downloadOrderAmountUpdated: downloadRequestStates.SUCCESS,
           totalSum: action.payload,
         };
 

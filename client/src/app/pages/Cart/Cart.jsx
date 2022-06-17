@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
-import { Box, Typography, Divider } from "@mui/material";
+// import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { Box, Typography, Divider, Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
-import { countTotalAmountOrder,  fetchCart } from "../../../store/thunks/cart.thunks";
-import { downloadRequestStates } from "../../constants/index";
+// import PropTypes from "prop-types";
+import {
+  countTotalAmountOrder,
+  fetchCart,
+} from "../../../store/thunks/cart.thunks";
+// import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
+import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
 
+// import { Container } from "@mui/system";
 
 const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
@@ -35,45 +41,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Cart = ({ loading }) => {
-
+const Cart = () => {
   // const  totalSumStore = useSelector((state) => state.cart.totalSum)
   const cart = useSelector((state) => state.cart.cart) || [];
   const totalSum = useSelector((state) => state.cart.totalSum);
+  const loading = useSelector((state) => state.cart.downloadRequestState);
+  const isLoggedIn = useSelector((state) => state.customer.isLoggedIn);
   const dispatch = useDispatch();
-
-  // const totalPrice = 0;
-
-
   const classes = useStyles();
+
   // const [totalSum, setTotalSum] = useState(0);
 
   // useEffect(() => {
-  //   const initialValue = 0;
-  //   const sumOrder = cart.reduce(function (accumulator, currentValue) {
-  //     return (
-  //       accumulator + currentValue.currentPrice * currentValue.cartQuantity
-  //     );
-  //   }, initialValue);
+  //   const sumOrder = cart.reduce((accumulator, currentValue) => (
+  //     accumulator + currentValue.currentPrice * currentValue.cartQuantity
+  //  ), 0);
   //   setTotalSum(sumOrder)
   // }, [cart]);
-
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [isLoggedIn]);
   useEffect(() => {
     dispatch(countTotalAmountOrder());
   }, [cart]);
 
-  useEffect(() => {
-    dispatch(fetchCart());
-  }, []);
-
- 
-
-  // if (loading !== downloadRequestStates.SUCCESS) {
-  //   return <p>Loading</p>;
-  // }
-  // if (Array.isArray(cart) && !cart.length) {
-  //   return <p> No Products in Cart</p>;
-  // }
+  if (loading !==  "success") {
+    return    <Preloader />
+  }
+  if (Array.isArray(cart) && !cart.length) {
+    return (
+    <Container>
+      <Typography
+        className={classes.yourCartHeading}
+        variant="h2"
+        component="h2"
+        sx={{textAlign: "center"}}
+      >
+        No Products in Car
+      </Typography>
+    </Container>
+    )
+  }
 
   return (
     <>
@@ -104,8 +112,8 @@ const Cart = ({ loading }) => {
   );
 };
 
-Cart.propTypes = {
-  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-};
+// Cart.propTypes = {
+//   loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
+// };
 
 export default Cart;

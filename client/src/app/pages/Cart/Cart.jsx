@@ -11,8 +11,8 @@ import {
 // import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
 import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
+import OrderSummary from "./OrderSummary.jsx";
 
-// import { Container } from "@mui/system";
 
 const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
@@ -24,10 +24,6 @@ const useStyles = makeStyles((theme) => ({
   cartContainer: {
     display: "flex",
     flexDirection: "row",
-  },
-
-  totalResultContainer: {
-    width: "350px",
   },
 
   orderSummeryHeading: {
@@ -42,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = () => {
+
   // const  totalSumStore = useSelector((state) => state.cart.totalSum)
   const cart = useSelector((state) => state.cart.cart) || [];
   const totalSum = useSelector((state) => state.cart.totalSum);
@@ -85,28 +82,34 @@ const Cart = () => {
 
   return (
     <>
-      <Typography
-        className={classes.yourCartHeading}
-        variant="h2"
-        component="h2"
-      >
-        Your cart.
-      </Typography>
-
-      <Divider variant="middle" />
-
-      <Box component="main" className={classes.cartContainer}>
-        <CartList />
-        <Box className={classes.totalResultContainer}>
+      <Box className={classes.cartContainer}>
+        <Box>
           <Typography
+            className={classes.yourCartHeading}
+            variant="h2"
+            component="h2"
+          >
+            Your cart.
+          </Typography>
+          <Divider />
+          <Box component="main" className={classes.cartContainer}>
+            <CartList />
+            {/* <Box className={classes.totalResultContainer}> */}
+            {/* <Typography
             className={classes.orderSummeryHeading}
             variant="h3"
             component="h3"
           >
             Order Summery
-          </Typography>
-          <Box className={classes.totalPrice}>${totalSum.toFixed(2)}</Box>
+
+          </Typography> */}
+            {/* <Box className={classes.totalPrice}>{totalPrice.toFixed(2)}</Box> */}
+          </Box>
+
         </Box>
+        {/* </Box> */}
+
+        <OrderSummary />
       </Box>
     </>
   );

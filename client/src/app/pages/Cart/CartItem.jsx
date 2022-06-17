@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
   },
   productName: {
     textTransform: "capitalize",
+    fontSize: "14px",
+    lineHeight: "24.95px",
   },
   cartDeleteBtn: {
     position: "relative",
@@ -43,6 +45,20 @@ const useStyles = makeStyles((theme) => ({
     width: "22px",
     height: "22px",
     color: theme.palette.error.main,
+  },
+  buttonGroup: {
+    "& .MuiButtonGroup-root": {
+      display: "flex",
+      width: "104px",
+      height: "44px",
+    },
+  },
+  filledInput: {
+    width: "32px",
+    height: "32px",
+  },
+  btnGroupBtn: {
+    height: "44px",
   },
 }));
 
@@ -57,7 +73,7 @@ const CartItem = ({ product }) => {
     >
       <TableCell component="th" scope="row">
         <Typography>
-          <div className={classes.productDetails}>
+          <Typography component={"div"} className={classes.productDetails}>
             <IconButton
               className={classes.cartDeleteBtn}
               onClick={() => {
@@ -71,12 +87,15 @@ const CartItem = ({ product }) => {
               src={product.img}
               alt={product.name}
             />
-            <p className={classes.productName}>{product.name}</p>
-          </div>
+            <Typography component={"p"} className={classes.productName}>
+              {product.name}
+            </Typography>
+          </Typography>
         </Typography>
       </TableCell>
       <TableCell align="right">
         <ButtonGroup
+          className={classes.buttonGroup}
           color="primary"
           variant="outlined"
           aria-label="outlined primary button group"
@@ -87,10 +106,12 @@ const CartItem = ({ product }) => {
             }}
             variant="text"
             disabled={product.quantity <= 1}
+            className={classes.btnGroupBtn}
           >
             {"-"}
           </Button>
           <FilledInput
+            className={classes.filledInput}
             inputProps={{ sx: { textAlign: "center" } }}
             disableUnderline={true}
             hiddenLabel={true}
@@ -104,7 +125,7 @@ const CartItem = ({ product }) => {
               dispatch(addProductToCart(product.id));
             }}
             variant="text"
-            // disabled={product.quantity >= cartQuantity}
+            className={classes.btnGroupBtn}
           >
             {"+"}
           </Button>

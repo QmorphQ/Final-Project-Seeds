@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTableContainer-root": {
       boxShadow: "none",
     },
+    "& .MuiTable-root": {
+      width: "700px",
+    },
   },
   tableTitle: {
     "& .MuiTableCell-root": {
@@ -22,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: "24px",
       paddingBottom: "24px",
     },
+  },
+  productDetails: {
+    width: "",
   },
 }));
 
@@ -34,7 +40,6 @@ const CartList = () => {
       Number(cartItem.cartQuantity) * Number(cartItem.currentPrice);
 
     return (
-
       <>
         <CartItem
           key={cartItem.id}
@@ -49,7 +54,6 @@ const CartList = () => {
           }}
         />
       </>
-
     );
   });
 
@@ -59,7 +63,9 @@ const CartList = () => {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="product-list">
           <TableHead className={classes.tableTitle}>
             <TableRow>
-              <TableCell>PRODUCT DETAILS</TableCell>
+              <TableCell className={classes.productDetails}>
+                PRODUCT DETAILS
+              </TableCell>
               <TableCell align="right">AMOUNT</TableCell>
               <TableCell align="right">PRICE</TableCell>
               <TableCell align="right">TOTAL</TableCell>

@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
@@ -105,9 +106,11 @@ const OrderSummary = () => {
             $ {totalAmount.toFixed(2)}
           </Typography>
         </Box>
-        <Button className={classes.continueBtn} variant="contained">
-          <Typography>Continue</Typography>
-        </Button>
+        <Link to={"*"} style={{ textDecoration: "none" }}>
+          <Button className={classes.continueBtn} variant="contained">
+            <Typography>Continue</Typography>
+          </Button>
+        </Link>
       </Box>
     </>
   );

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Box, Typography, Divider, Container, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector, useDispatch } from "react-redux";
@@ -93,9 +94,15 @@ const Cart = () => {
         </Box>
         <OrderSummary />
       </Box>
-      <Button className={classes.contShopBtn} variant="outlined" disableRipple>
-        <Typography>Continue Shoping</Typography>
-      </Button>
+      <Link to={"/"} style={{ textDecoration: "none" }}>
+        <Button
+          className={classes.contShopBtn}
+          variant="outlined"
+          disableRipple
+        >
+          <Typography>Continue Shoping</Typography>
+        </Button>
+      </Link>
     </>
   );
 };

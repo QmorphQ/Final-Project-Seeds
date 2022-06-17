@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "48px",
     marginLeft: "60px",
     width: "350px",
-    height: "484px",
+    height: "450px",
   },
 
   orderHeading: {
@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     paddingTop: "2px",
     paddingLeft: "34px",
-    paddingBottom: "35px",
   },
 
   continueBtn: {
@@ -52,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     height: "51px",
     marginLeft: "34px",
     backgroundColor: theme.palette.primary.main,
+    textTransform: "none",
   },
 }));
 

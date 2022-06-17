@@ -12,7 +12,7 @@ import {
 } from "../../../store/thunks/cart.thunks";
 import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
     marginBottom: "40px !important",
     marginTop: "40px !important",
@@ -30,6 +30,8 @@ const useStyles = makeStyles(() => ({
     marginTop: "50px",
     marginLeft: "40px",
     marginBottom: "147px",
+    color: theme.palette.text.secondary,
+    textTransform: "none",
   },
 }));
 
@@ -96,6 +98,10 @@ const Cart = () => {
       </Box>
       <Link to={"/"} style={{ textDecoration: "none" }}>
         <Button
+          sx={{
+            border: "1px solid rgba(112, 115, 124, 1)",
+            borderRadius: "8px",
+          }}
           className={classes.contShopBtn}
           variant="outlined"
           disableRipple

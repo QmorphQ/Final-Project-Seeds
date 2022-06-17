@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Typography, Divider, Container } from "@mui/material";
+import { Box, Typography, Divider, Container, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector, useDispatch } from "react-redux";
 import OrderSummary from "./OrderSummary.jsx";
@@ -12,8 +12,8 @@ import {
 import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
 
 
+const useStyles = makeStyles(() => ({
 
-const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
     marginBottom: "40px !important",
     marginTop: "40px !important",
@@ -25,14 +25,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
 
-  orderSummeryHeading: {
-    fontWeight: "bold !important",
-    marginLeft: "34px",
-  },
-
-  totalPrice: {
-    color: theme.palette.primary.main,
-    width: "350px",
+  contShopBtn: {
+    width: "206px",
+    height: "51px",
+    marginTop: "50px",
+    marginLeft: "40px",
+    marginBottom: "147px",
   },
 }));
 
@@ -96,23 +94,16 @@ const Cart = () => {
           <Divider />
           <Box component="main" className={classes.cartContainer}>
             <CartList />
-            {/* <Box className={classes.totalResultContainer}> */}
-            {/* <Typography
-            className={classes.orderSummeryHeading}
-            variant="h3"
-            component="h3"
-          >
-            Order Summery
 
-          </Typography> */}
-            {/* <Box className={classes.totalPrice}>{totalPrice.toFixed(2)}</Box> */}
+
           </Box>
 
         </Box>
-        {/* </Box> */}
-
         <OrderSummary />
       </Box>
+      <Button className={classes.contShopBtn} variant="outlined" disableRipple>
+        <Typography>Continue Shoping</Typography>
+      </Button>
     </>
   );
 };

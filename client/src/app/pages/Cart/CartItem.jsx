@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   buttonGroup: {
     "& .MuiButtonGroup-root": {
       display: "flex",
+      alignItems: "center",
       width: "104px",
       height: "44px",
     },
@@ -56,9 +57,8 @@ const useStyles = makeStyles((theme) => ({
   filledInput: {
     width: "32px",
     height: "32px",
-  },
-  btnGroupBtn: {
-    height: "44px",
+    borderRadius: "5px",
+    backgroundColor: theme.palette.disable.main,
   },
 }));
 

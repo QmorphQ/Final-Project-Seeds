@@ -111,3 +111,9 @@ export const EDIT_ERROR = "EDIT_ERROR";
 export const editError = () => ({
   type: EDIT_ERROR,
 });
+
+export const ORDER_AMOUNT_UPDATED = "ORDER_AMOUNT_UPDATED";
+export const orderAmountUpdated = (totalSum) => ({
+  type: ORDER_AMOUNT_UPDATED,
+  payload: totalSum,
+});

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getUserDetails } from "./store/thunks/customer.thunks";
 import {
-  downloadProductsRequestStateSelector,
+  // downloadProductsRequestStateSelector,
   isAdminStateSelector, 
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
@@ -12,7 +12,7 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
-import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
+// import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 
 import Wishlist from "./app/pages/Wishlist.jsx";
@@ -31,7 +31,7 @@ import StaticPage from "./ui/components/StaticPage/StaticPage.jsx";
 import AddProduct from "./app/components/AdminPanel/AddProduct.jsx";
 
 function App() {
-  const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
+  // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
 
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ function App() {
               <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
               <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />
               <Route path="settings" element={<RequireAuth><PersonalInfo/></RequireAuth>} />
-              <Route path="/cart" element={<Cart loading={downloadRequestState}/>}/>
+              <Route path="/cart" element={<Cart/>}/>
               <Route path="*" element={<Checkout />} />
               {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />

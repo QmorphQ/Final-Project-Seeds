@@ -1,12 +1,16 @@
 
-import axios from "axios";
-import { API } from "../../app/constants";
+import axios from 'axios';
+import { API } from '../../app/constants';
 import { adminAddProductRequested, 
          adminAddProductError, 
          adminAddProductSuccess, 
          adminDeleteProductRequested, 
          adminDeleteProductError, 
-         adminDeleteProductSuccess } from "../actions/admin.actions";
+         adminDeleteProductSuccess, 
+         adminUpdateProductRequested, 
+         adminUpdateProductError, 
+         adminUpdateProductSuccess, } from '../actions/admin.actions';
+
 
 
 
@@ -14,7 +18,7 @@ const adminAddProduct = (product) => (dispatch) => {
 
     dispatch(adminAddProductRequested()); 
 
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt');
     if (token) {
       axios
         .post(`${API}products`, product, {
@@ -37,7 +41,7 @@ const adminDeleteProduct = (productID) => (dispatch) => {
 
     dispatch(adminDeleteProductRequested()); 
 
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt');
     if (token) {
       axios
         .delete(`${API}products/${productID}`, {
@@ -55,4 +59,27 @@ const adminDeleteProduct = (productID) => (dispatch) => {
 }; 
 
 
-export { adminAddProduct, adminDeleteProduct };
+
+const adminUpdateProduct = (id, product) => (dispatch) => { 
+
+    dispatch(adminUpdateProductRequested()); 
+
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      axios
+        .put(`${API}products/${id}`, product, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        })
+        .then(() => {
+            dispatch(adminUpdateProductSuccess()); 
+        })
+        .catch(() => {
+            dispatch(adminUpdateProductError());
+        });
+    }
+}; 
+
+
+export { adminAddProduct, adminDeleteProduct, adminUpdateProduct };

@@ -19,7 +19,17 @@ import {
   editStart,
   editSuccess,
   editError,
+  orderAmountUpdated,
 } from "../actions/cart.actions";
+
+const countTotalAmountOrder = () => (dispatch, getState) => {
+  const { cart } = getState().cart;
+  const sumOrder = cart.reduce((accumulator, currentValue) => (
+     accumulator + currentValue.currentPrice * currentValue.cartQuantity
+  ), 0);
+
+  dispatch(orderAmountUpdated(sumOrder));
+};
 
 const concatCarts = (localCart, remoteCart) =>
   [...localCart, ...remoteCart].reduce((accumulator, cartItem) => {
@@ -41,9 +51,11 @@ const fetchCart = () => async (dispatch, getState) => {
           Authorization: `${token}`,
         },
       });
-
       const cartFromApi = response.data.products.map((cartProduct) => ({
         id: cartProduct.product._id,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
         cartQuantity: cartProduct.cartQuantity,
       }));
       let newCart = [...cartFromApi];
@@ -52,6 +64,9 @@ const fetchCart = () => async (dispatch, getState) => {
       }
       const cartForAPI = newCart.map((item) => ({
         product: item.id,
+        imageUrls: item.imageUrls,
+        name: item.name,
+        currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       await axios.put(
@@ -151,6 +166,9 @@ const addProductToCart = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addProductToCartSuccess(cart));
@@ -177,9 +195,19 @@ const changeProductQuantity =
     const { cart } = getState().cart;
     if (token) {
       const calculateQuantity = () => quantity;
-      const updatedCart = changeLocalCart(cart, productId, calculateQuantity);
+      const updatedCart = changeLocalCart(
+        cart,
+        productId,
+        calculateQuantity,
+        name,
+        currentPrice,
+        imageUrls
+      );
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
+        imageUrls: item.imageUrls,
+        name: item.name,
+        currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       axios
@@ -195,9 +223,10 @@ const changeProductQuantity =
         .then((response) => {
           const newCart = response.data.products.map((cartProduct) => ({
             id: cartProduct.product._id,
-            cartQuantity: cartProduct.cartQuantity,
+            imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
             currentPrice: cartProduct.product.currentPrice,
+            cartQuantity: cartProduct.cartQuantity,
           }));
           dispatch(editSuccess(newCart));
         })
@@ -231,6 +260,9 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(decreaseQuantitySuccess(cart));
@@ -263,6 +295,9 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
       .then((response) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(deleteProductFromCartSuccess(cart));
@@ -285,4 +320,5 @@ export {
   deleteProductFromCart,
   changeProductQuantity,
   changeLocalCart,
+  countTotalAmountOrder,
 };

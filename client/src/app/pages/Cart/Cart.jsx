@@ -1,9 +1,15 @@
-import { Box, Typography, Divider } from "@mui/material";
+import { useEffect } from "react";
+import { Box, Typography, Divider, Container } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import PropTypes from "prop-types";
-import { downloadRequestStates } from "../../constants/index";
-import CartList from "./CartList.jsx";
+import { useSelector, useDispatch } from "react-redux";
 import OrderSummary from "./OrderSummary.jsx";
+// import { downloadRequestStates } from "../../constants/index";
+import CartList from "./CartList.jsx";
+import {
+  countTotalAmountOrder,
+  fetchCart,
+} from "../../../store/thunks/cart.thunks";
+import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
 
 const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
@@ -29,15 +35,47 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = () => {
-  // const totalPrice = 0;
+  // const  totalSumStore = useSelector((state) => state.cart.totalSum)
+  const cart = useSelector((state) => state.cart.cart) || [];
+  // const totalSum = useSelector((state) => state.cart.totalSum);
+  const loading = useSelector((state) => state.cart.downloadRequestState);
+  const isLoggedIn = useSelector((state) => state.customer.isLoggedIn);
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
-  // if (loading !== downloadRequestStates.SUCCESS) {
-  //   return <p>Loading</p>;
-  // }
-  // if (Array.isArray(cart) && !cart.length) {
-  //   return <p> No Products in Cart</p>;
-  // }
+  // const [totalSum, setTotalSum] = useState(0);
+
+  // useEffect(() => {
+  //   const sumOrder = cart.reduce((accumulator, currentValue) => (
+  //     accumulator + currentValue.currentPrice * currentValue.cartQuantity
+  //  ), 0);
+  //   setTotalSum(sumOrder)
+  // }, [cart]);
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, [isLoggedIn]);
+  useEffect(() => {
+    dispatch(countTotalAmountOrder());
+  }, [cart]);
+
+  if (loading !== "success") {
+    return <Preloader />;
+  }
+  if (Array.isArray(cart) && !cart.length) {
+    return (
+      <Container>
+        <Typography
+          className={classes.yourCartHeading}
+          variant="h2"
+          component="h2"
+          sx={{ textAlign: "center" }}
+        >
+          No Products in Car
+        </Typography>
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -72,8 +110,8 @@ const Cart = () => {
   );
 };
 
-Cart.propTypes = {
-  loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-};
+// Cart.propTypes = {
+//   loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
+// };
 
 export default Cart;

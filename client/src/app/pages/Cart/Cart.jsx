@@ -3,7 +3,6 @@ import { Box, Typography, Divider } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
-// import ProductCard from "../../../ui/components/ProductCard/ProductCard.jsx";
 import { countTotalAmountOrder,  fetchCart } from "../../../store/thunks/cart.thunks";
 import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
@@ -37,10 +36,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = ({ loading }) => {
-  const  totalSumStore = useSelector((state) => state.cart.totalSum)
+
+  // const  totalSumStore = useSelector((state) => state.cart.totalSum)
   const cart = useSelector((state) => state.cart.cart) || [];
   const totalSum = useSelector((state) => state.cart.totalSum);
   const dispatch = useDispatch();
+
+  // const totalPrice = 0;
+
+
   const classes = useStyles();
   // const [totalSum, setTotalSum] = useState(0);
 

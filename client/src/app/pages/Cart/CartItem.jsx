@@ -1,10 +1,13 @@
 import {
   TableCell,
+  Typography,
   TableRow,
   ButtonGroup,
   Button,
   FilledInput,
+  IconButton,
 } from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
 import PropTypes from "prop-types";
 import { makeStyles } from "@mui/styles";
 import { useDispatch } from "react-redux";
@@ -15,11 +18,11 @@ import {
   deleteProductFromCart,
 } from "../../../store/thunks/cart.thunks";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   tableRow: {
     "& .MuiTableCell-root": {
-      paddingTop: "30px",
-      paddingBottom: "30px",
+      paddingTop: "20px",
+      paddingBottom: "20px",
     },
   },
   productDetails: {
@@ -33,6 +36,14 @@ const useStyles = makeStyles(() => ({
   productName: {
     textTransform: "capitalize",
   },
+  cartDeleteBtn: {
+    position: "relative",
+    left: "11px",
+    top: "-11px",
+    width: "22px",
+    height: "22px",
+    color: theme.palette.error.main,
+  },
 }));
 
 const CartItem = ({ product }) => {
@@ -45,14 +56,24 @@ const CartItem = ({ product }) => {
       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
     >
       <TableCell component="th" scope="row">
-        <div className={classes.productDetails}>
-          <img
-            className={classes.cartImage}
-            src={product.img}
-            alt={product.name}
-          />
-          <p className={classes.productName}>{product.name}</p>
-        </div>
+        <Typography>
+          <div className={classes.productDetails}>
+            <IconButton
+              className={classes.cartDeleteBtn}
+              onClick={() => {
+                dispatch(deleteProductFromCart(product.id));
+              }}
+            >
+              <CancelIcon />
+            </IconButton>
+            <img
+              className={classes.cartImage}
+              src={product.img}
+              alt={product.name}
+            />
+            <p className={classes.productName}>{product.name}</p>
+          </div>
+        </Typography>
       </TableCell>
       <TableCell align="right">
         <ButtonGroup
@@ -91,16 +112,6 @@ const CartItem = ({ product }) => {
       </TableCell>
       <TableCell align="right">${product.price}</TableCell>
       <TableCell align="right">${product.totalPrice.toFixed(2)}</TableCell>
-      <TableCell align="right">
-        <Button
-          variant="outlined"
-          onClick={() => {
-            dispatch(deleteProductFromCart(product.id));
-          }}
-        >
-          delete
-        </Button>
-      </TableCell>
     </TableRow>
   );
 };

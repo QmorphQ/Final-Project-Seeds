@@ -8,54 +8,62 @@ import {
   AccordionDetails,
   Link,
 } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import { styled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
 
 export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
- // ==========================
- const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon className='iconArrow' sx={{ fontSize: '0.9rem',color: "#70737C"  }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  flexDirection: 'row-reverse',
-  '.option-with-options': {
-    color: '#70737C',
-  },
-  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-    transform: 'rotate(90deg)',
-  },
-  '.Mui-expanded': {
-    ".iconArrow":{
-      color: '#359740',
+  // ==========================
+  const AccordionSummary = styled((props) => (
+    <MuiAccordionSummary
+      expandIcon={
+        <ArrowForwardIosSharpIcon
+          className="iconArrow"
+          sx={{ fontSize: "0.9rem", color: "#70737C" }}
+        />
+      }
+      {...props}
+    />
+  ))(({ theme }) => ({
+    flexDirection: "row-reverse",
+    ".option-with-options": {
+      color: "#70737C",
     },
-    '.option-with-options': {
-      color: '#359740',
-    }
-  },
-  '& .MuiAccordionSummary-content': {
-    marginLeft: theme.spacing(0),
-  },
-}));
- // =========================
+    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+      transform: "rotate(90deg)",
+    },
+    ".Mui-expanded": {
+      ".iconArrow": {
+        color: "#359740",
+      },
+      ".option-with-options": {
+        color: "#359740",
+      },
+    },
+    "& .MuiAccordionSummary-content": {
+      marginLeft: theme.spacing(0),
+    },
+  }));
+  // =========================
   // ============================= Render ============================
   return (
     <Box>
       {arrOfOptions.map((item, index) => (
-        <div key={ index }>
+        <div key={index}>
           <Accordion sx={{ boxShadow: "none", my: "0px", color: "#1F2533" }}>
             <AccordionSummary
-              sx={{'fontSize': '2em'}}
+              sx={{ fontSize: "2em" }}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <MenuItem disableRipple sx={{ fontWeight: "700",'&:hover': {backgroundColor: 'white'} }}>
+              <MenuItem
+                disableRipple
+                sx={{
+                  fontWeight: "700",
+                  "&:hover": { backgroundColor: "white" },
+                }}
+              >
                 <Link
-                  className='option-with-options'
-                  component={RouterLink}
-                  to={`/${item.parentId}`}
                   underline="none"
                   sx={{ pl: "16px", color: "#1F2533", fontWeight: "400" }}
                 >
@@ -66,11 +74,11 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions }) {
               </MenuItem>
             </AccordionSummary>
             {item.name.map((subItem, i) => (
-              <Box key={`${subItem}${i}`} sx={{pl: '80px'}}>
+              <Box key={`${subItem}${i}`} sx={{ pl: "80px" }}>
                 <AccordionDetails>
                   <Link
                     component={RouterLink}
-                    to={`/${item.parentId}/${subItem}`}
+                    to={`products?categories=${subItem}`}
                     key={subItem}
                     underline="none"
                     sx={{

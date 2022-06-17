@@ -58,6 +58,7 @@ const OrderSummary = () => {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart.cart)
   const totalSum = useSelector((state) => state.cart.totalSum);
+  const discount = 25;
   
 
   return (
@@ -79,7 +80,7 @@ const OrderSummary = () => {
             {cart.length} ITEMS
           </Typography>
           <Typography className={classes.totalSumm} component={"p"}>
-            $ {totalSum.toFixed()}
+            $ {totalSum.toFixed(2)}
           </Typography>
         </Box>
         <Box>
@@ -87,7 +88,7 @@ const OrderSummary = () => {
             Discount (from $500)
           </Typography>
           <Box className={classes.discountSumm}>
-            <Typography> $25 sale</Typography>
+            <Typography> $ {discount} sale</Typography>
           </Box>
         </Box>
         <Divider variant="middle" />
@@ -97,7 +98,7 @@ const OrderSummary = () => {
             Total amount
           </Typography>
           <Typography className={classes.totalSumm} component={"p"}>
-            $ 12.45
+            $ {totalSum - discount}
           </Typography>
         </Box>
         <Button className={classes.continueBtn} variant="contained">

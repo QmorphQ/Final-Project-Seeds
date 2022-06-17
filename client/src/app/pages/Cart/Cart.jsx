@@ -2,7 +2,6 @@ import { Box, Typography, Divider } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-// import ProductCard from "../../../ui/components/ProductCard/ProductCard.jsx";
 import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
 
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = ({ loading }) => {
   const totalPrice = 0;
-  const cart = useSelector((state) => state.cart.cart) || [];
+  // const cart = useSelector((state) => state.cart.cart) || [];
   const classes = useStyles();
 
   // if (loading !== downloadRequestStates.SUCCESS) {

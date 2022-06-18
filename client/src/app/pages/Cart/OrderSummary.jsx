@@ -107,7 +107,7 @@ const OrderSummary = () => {
             $ {totalAmount.toFixed(2)}
           </Typography>
         </Box>
-        <Link to={"*"} style={{ textDecoration: "none" }}>
+        <Link to={"/checkout"} style={{ textDecoration: "none" }}>
           <Button className={classes.continueBtn} variant="contained">
             <Typography>Continue</Typography>
           </Button>

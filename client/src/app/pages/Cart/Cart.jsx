@@ -60,9 +60,9 @@ const Cart = () => {
     dispatch(countTotalAmountOrder());
   }, [cart]);
 
-  if (loading !== "success") {
-    return <Preloader />;
-  }
+  // if (loading !== "success") {
+  //   return <Preloader />;
+  // }
   if (Array.isArray(cart) && !cart.length) {
     return (
       <Container>

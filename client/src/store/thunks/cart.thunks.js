@@ -64,9 +64,9 @@ const fetchCart = () => async (dispatch, getState) => {
       }
       const cartForAPI = newCart.map((item) => ({
         product: item.id,
-        imageUrls: item.imageUrls,
-        name: item.name,
-        currentPrice: item.currentPrice,
+        // imageUrls: item.imageUrls,
+        // name: item.name,
+        // currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       await axios.put(
@@ -99,8 +99,15 @@ const addCart = (cart) => (dispatch) => {
       })
       .then((response) => {
         const newCart = response.data.products.map((cartProduct) => ({
-          id: cartProduct.product._id,
-          cartQuantity: cartProduct.cartQuantity,
+        //  --------------------
+          // id: cartProduct.product._id,
+          // cartQuantity: cartProduct.cartQuantity,
+        //   -------------------
+        id: cartProduct.product._id,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
+        cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addCartSuccess(newCart));
       })

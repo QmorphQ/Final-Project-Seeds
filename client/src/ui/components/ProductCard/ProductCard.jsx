@@ -55,7 +55,8 @@ import {
   mainCategoriesSelector,
   wishlistSelector,
   isAdminStateSelector,
-  adminDeleteProductRequestSelector,
+  adminDeleteProductRequestSelector, 
+  loginStateSelector, 
 } from "../../../store/selectors/selectors";
 import {
   addProductToCart,
@@ -72,7 +73,6 @@ import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
 import {
   addProductToWishlist,
   deleteProductFromWishlist,
-  fetchWishlist,
 } from "../../../store/thunks/wishlist.thunks";
 import Spinner from "../Spinner/Spinner.jsx";
 
@@ -109,7 +109,8 @@ export const ProductCardRender = ({ data }) => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
-  const wishlist = useSelector(wishlistSelector);
+  const wishlist = useSelector(wishlistSelector); 
+  const isLogin = useSelector(loginStateSelector); 
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
 
@@ -123,11 +124,6 @@ export const ProductCardRender = ({ data }) => {
           .then(res => res.json())
           .then(result => setProductItem(result))
   }, [open]);
-
-
-  useEffect(() => {
-    dispatch(fetchWishlist());
-  }, []);
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -156,7 +152,7 @@ export const ProductCardRender = ({ data }) => {
   const filtersClasses = useFiltersStyles();
 
   const mainCategory = useSelector(mainCategoriesSelector).find((category) =>
-    categories.includes(category.name)
+    categories?.includes(category.name)
   );
 
   const localPrice = Intl.NumberFormat("en-US", {
@@ -471,22 +467,25 @@ export const ProductCardRender = ({ data }) => {
 
                   {isAdmin === false && (
                     <Box className={productPageClasses.productCardButtons}>
-                      <IconButton
-                        className={productPageClasses.productCardButton}
-                        color="primary"
-                        aria-label="add to favourite"
-                        onClick={
-                          isFavourite
-                            ? () => dispatch(deleteProductFromWishlist(_id))
-                            : () => dispatch(addProductToWishlist(_id))
-                        }
-                      >
-                        {isFavourite ? (
-                          <FavoriteIcon />
-                        ) : (
-                          <FavoriteBorderIcon />
-                        )}
-                      </IconButton>
+                      
+                      {isLogin &&
+                        <IconButton
+                          className={productPageClasses.productCardButton}
+                          color="primary"
+                          aria-label="add to favourite"
+                          onClick={
+                            isFavourite
+                              ? () => dispatch(deleteProductFromWishlist(_id))
+                              : () => dispatch(addProductToWishlist(_id))
+                          }
+                        >
+                          {isFavourite ? (
+                            <FavoriteIcon />
+                          ) : (
+                            <FavoriteBorderIcon />
+                          )}
+                        </IconButton>
+                      }
                       <Button
                         className={productPageClasses.productCardButtonBasket}
                         variant="contained"
@@ -601,8 +600,8 @@ export const ProductCardRender = ({ data }) => {
         <Card className={filtersClasses.productCard}>
           <CardHeader
             className={mainClasses.productCardHeader}
-            action={
-              <IconButton
+             action={
+              isLogin && isAdmin === false && <IconButton
                 className={mainClasses.productCardButton}
                 color="warning"
                 aria-label="add to favourite"
@@ -708,7 +707,7 @@ export const ProductCardRender = ({ data }) => {
         <CardHeader
           className={mainClasses.productCardHeader}
           action={
-            <IconButton
+            isLogin && isAdmin === false && <IconButton
               onClick={
                 isFavourite
                   ? () => dispatch(deleteProductFromWishlist(_id))

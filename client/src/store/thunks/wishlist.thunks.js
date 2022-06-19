@@ -31,8 +31,6 @@ const fetchWishlist =
         .catch(() => {
           dispatch(downloadWishlistError());
         });
-    } else {
-      console.log("GET AUTHORIZED!");
     }
   };
 
@@ -53,8 +51,6 @@ const addWishlist = (wishlist) => (dispatch) => {
       .catch(() => {
         dispatch(addWishlistError());
       });
-  } else {
-    console.log("GET AUTHORIZED!");
   }
 };
 
@@ -76,8 +72,6 @@ const addProductToWishlist = (productId) => (dispatch) => {
       .catch(() => {
         dispatch(addProductToWishlistError());
       });
-  } else {
-    console.log("GET AUTHORIZED!");
   }
 };
 
@@ -99,8 +93,6 @@ const deleteProductFromWishlist = (productId) => (dispatch) => {
       .catch(() => {
         dispatch(addProductToWishlistError());
       });
-  } else {
-    console.log("GET AUTHORIZED!");
   }
 };
 

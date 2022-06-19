@@ -4,7 +4,7 @@ export const useFiltersStyles = makeStyles(() => ({
   productCard: {
     borderRadius: "8px",
     position: "relative",
-    border: "2px solid #EFEFEF",
+    border: "1px solid #EFEFEF",
     boxShadow: "none",
     minHeight: "400px",
     maxWidth: "400px",

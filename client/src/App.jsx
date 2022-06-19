@@ -5,6 +5,7 @@ import { getUserDetails } from "./store/thunks/customer.thunks";
 import {
   // downloadProductsRequestStateSelector,
   isAdminStateSelector, 
+  loginStateSelector, 
 } from "./store/selectors/selectors";
 import Home from "./app/pages/Home.jsx";
 import Cart from "./app/pages/Cart/Cart.jsx"
@@ -32,6 +33,7 @@ import AddProduct from "./app/components/AdminPanel/AddProduct.jsx";
 
 function App() {
   // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
+  const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
 
   const dispatch = useDispatch();
@@ -59,7 +61,7 @@ function App() {
           <Route path="/" element={<AppLayout />} >
               <Route index element={<Home />} />
               <Route path="/products" element={<Filters />} />
-              <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/wishlist" element={isLogin ? <Wishlist /> : <Home />} />
               <Route path="/products/:id" element={<ProductPage />} />
               <Route path="login" element={<CheckAuth><LogIn/></CheckAuth>} />
               <Route path="sign-up" element={<CheckAuth><SignUp/></CheckAuth>} />

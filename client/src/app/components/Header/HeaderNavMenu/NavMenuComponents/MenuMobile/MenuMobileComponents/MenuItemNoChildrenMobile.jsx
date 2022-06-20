@@ -1,9 +1,11 @@
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"; 
 import { Link as RouterLink } from 'react-router-dom';
 import { Divider, MenuItem, Link } from "@mui/material";
 import Box from "@mui/material/Box";
 
 export default function MenuItemNoChildrenMobile({ arrOfOptions }) {
+
+
 // =========================== Render ===============================
   return (
     <Box>

@@ -1,11 +1,10 @@
 
 import { useState } from "react";
-// import { useSelector } from "react-redux";
+
 import { IconButton, Divider, ListItemIcon, MenuItem, Menu, Avatar } from "@mui/material";
 import { AccountCircle, Settings, Logout, Favorite, History } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-// import { loginStateSelector } from "../../../store/selectors/selectors";
 
 
 
@@ -71,24 +70,33 @@ export default function ProfileMenu () {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             <MenuItem>
-            <Avatar/> Profile
+                <Avatar/> Profile
             </MenuItem>
             <Divider />
-            {/* <Link underline="none"  to="#"> */}
+            <Link style={{ textDecoration: 'none', color: "black" }} 
+                  to="/wishlist">
                 <MenuItem >
                     <ListItemIcon>
                         <Favorite fontSize="small" />                    
                     </ListItemIcon> Favourites
                 </MenuItem>
+
             {/* </Link>     */}
             <Link  style={{ textDecoration: 'none',color: "black" }} to="/history"> 
+
+            </Link> 
+
                 <MenuItem >
                     <ListItemIcon>
                         <History fontSize="small" />
                     </ListItemIcon> My orders
                 </MenuItem>
+
              </Link>            
             <Link  style={{ textDecoration: 'none',color: "black" }} to="/settings">
+            
+            <Link  style={{ textDecoration: 'none', color: "black" }} 
+                   to="/settings">
                 <MenuItem >
                     <ListItemIcon>
                         <Settings fontSize="small" />

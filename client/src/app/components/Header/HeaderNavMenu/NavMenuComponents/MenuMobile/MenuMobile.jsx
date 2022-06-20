@@ -12,6 +12,7 @@ import SearchAppBar from "../../../HeaderSearch/SearchAppBar.jsx";
 // Auth:
 import Auth from "../../../../Forms/Auth.jsx";
 import ProfileMenu from "../../../ProfileMenu.jsx";
+import ProfileMenuAdmin from "../../../ProfileMenuAdmin.jsx";
 //------------------------
 import MenuItemNoChildrenMobile from "./MenuMobileComponents/MenuItemNoChildrenMobile.jsx";
 import MenuItemWithChildrenMobile from "./MenuMobileComponents/MenuItemWithChildrenMobile.jsx";
@@ -21,7 +22,8 @@ import MenuItemWithChildrenMobile from "./MenuMobileComponents/MenuItemWithChild
 export default function MenuMobile({
   pressetsNoChildren,
   pressetsWithChildren,
-  isLogin,
+  isLogin, 
+  isAdmin, 
 }) {
   // --------------------------------------------------------------------
   // Styles:
@@ -53,9 +55,10 @@ export default function MenuMobile({
         }}
       >
         <Grid sx={{ flexGrow: 1 }}>
-          <Grid container sx={{ flexGrow: 1 }}  item xs={12} alignItems='center' justifyContent={isLogin ? 'space-between' : "flex-end"}>
-            <Grid item xs={2}>{isLogin && (<ProfileMenu />) }</Grid>
-            <Grid item xs={10}>
+          <Grid container sx={{ flexGrow: 1, ml: 2 }} item xs={10} alignItems='center' justifyContent='space-between'>
+          {/* {isLogin ? 'space-between' : "flex-end"} */}
+            <Grid item xs={2}>{isLogin && (isAdmin ? < ProfileMenuAdmin /> : <ProfileMenu />)}</Grid>
+            <Grid item xs={8} alignItems='center' >
               <SearchAppBar />
             </Grid>
           </Grid>
@@ -82,4 +85,5 @@ MenuMobile.propTypes = {
   pressetsNoChildren: PropTypes.array,
   pressetsWithChildren: PropTypes.array,
   isLogin: PropTypes.bool,
+  isAdmin: PropTypes.bool, 
 };

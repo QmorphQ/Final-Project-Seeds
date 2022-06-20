@@ -524,9 +524,14 @@ export const ProductCardRender = ({ data }) => {
                                     boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)', 
                                     borderRadius: '10px', 
                                     p: 6,
-                                    '@media (max-width: 768px)': {
+                                    '@media (max-width: 900px)': {
                                       top: '50%',
                                       left: '50%', 
+                                      width: 330,
+                                      pt: 5, 
+                                      pb: 5, 
+                                      pl: 2, 
+                                      pr: 2, 
                                     }, 
                                 }} 
                           >

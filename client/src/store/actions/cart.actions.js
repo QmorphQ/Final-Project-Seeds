@@ -117,3 +117,11 @@ export const orderAmountUpdated = (totalSum) => ({
   type: ORDER_AMOUNT_UPDATED,
   payload: totalSum,
 });
+
+export const ORDER_PLACED_SUCCESS = "ORDER_PLACED_SUCCESS";
+export const clearProductsInCartSuccess = () => ({
+  type: ORDER_PLACED_SUCCESS,
+});
+
+
+

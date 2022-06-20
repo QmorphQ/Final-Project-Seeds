@@ -4,11 +4,11 @@ import { Box, Typography, Divider, Container, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector, useDispatch } from "react-redux";
 import OrderSummary from "./OrderSummary.jsx";
-// import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
 import {
   countTotalAmountOrder,
   fetchCart,
+  clearProductsInCart,
 } from "../../../store/thunks/cart.thunks";
 import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
 
@@ -60,9 +60,9 @@ const Cart = () => {
     dispatch(countTotalAmountOrder());
   }, [cart]);
 
-  if (loading !== "success") {
-    return <Preloader />;
-  }
+  // if (loading !== "success") {
+  //   return <Preloader />;
+  // }
   if (Array.isArray(cart) && !cart.length) {
     return (
       <Container>
@@ -109,12 +109,27 @@ const Cart = () => {
           <Typography>Continue Shoping</Typography>
         </Button>
       </Link>
+      <Button
+          onClick={() => {
+           
+            dispatch(
+              clearProductsInCart()
+            );
+          }}
+          sx={{
+            border: "1px solid rgba(112, 115, 124, 1)",
+            borderRadius: "8px",
+          }}
+          className={classes.contShopBtn}
+          variant="outlined"
+          disableRipple
+        >
+          <Typography>Clear</Typography>
+        </Button>
     </>
   );
 };
 
-// Cart.propTypes = {
-//   loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-// };
+
 
 export default Cart;

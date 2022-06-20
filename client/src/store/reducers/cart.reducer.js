@@ -18,6 +18,7 @@ import {
   DELETE_PRODUCT_FROM_CART_SUCCESS,
   DELETE_PRODUCT_FROM_CART_ERROR,
   ORDER_AMOUNT_UPDATED,
+  ORDER_PLACED_SUCCESS,
 } from "../actions/cart.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -153,6 +154,12 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
           totalSum: action.payload,
+        };
+
+    case ORDER_PLACED_SUCCESS:
+        return {
+        ...state,
+        cart: [],
         };
 
     default:

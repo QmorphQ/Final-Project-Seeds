@@ -14,6 +14,7 @@ export default function ProfileMenu () {
         localStorage.removeItem('jwt')
         window.location.reload()
     }
+    
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -94,6 +95,12 @@ export default function ProfileMenu () {
 
              </Link>            
             <Link  style={{ textDecoration: 'none',color: "black" }} to="/settings">
+                <MenuItem >
+                        <ListItemIcon>
+                            <Settings fontSize="small" />
+                        </ListItemIcon> Settings
+                </MenuItem>
+            </Link>
             
             <Link  style={{ textDecoration: 'none', color: "black" }} 
                    to="/settings">

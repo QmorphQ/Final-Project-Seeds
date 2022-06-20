@@ -11,7 +11,6 @@ import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import CheckboxWrapper from './Components/FormsUI/Checkbox';
 import { addCustomer } from '../../../store/thunks/customer.thunks';
-import { downloadRequestStates } from '../../constants/index';
 import { customersRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
 
@@ -52,12 +51,10 @@ export default function SignUp() {
     firstName: Yup.string()
       .min(2, "Too Short!")
       .max(30, "Too Long!")
-      .matches(/[a-zA-Z]/, "Firstname can only contain Latin letters.")
       .required("Required"),
     lastName: Yup.string()
       .min(2, "Too Short!")
       .max(30, "Too Long!")
-      .matches(/[a-zA-Z]/, "Lastname can only contain Latin letters.")
       .required("Required"),
     email: Yup.string().required("Required").email("Invalid email."),
     login: Yup.string()
@@ -91,10 +88,10 @@ export default function SignUp() {
 
   useEffect(() => {
     setRedirect(true)
-    if(requestState === downloadRequestStates.ERROR){
+    if(requestState === "error"){
       setRedirect(!redirect)
     }
-    if(requestState === downloadRequestStates.SUCCESS){
+    if(requestState === "success"){
       navigation("/")
     }
   },[requestState])

@@ -81,14 +81,13 @@ export default function ProfileMenu () {
                     </ListItemIcon> Favourites
                 </MenuItem>
             {/* </Link>     */}
-            {/* <Link  underline="none" to="#"> */}
+            <Link  style={{ textDecoration: 'none',color: "black" }} to="/history"> 
                 <MenuItem >
                     <ListItemIcon>
                         <History fontSize="small" />
                     </ListItemIcon> My orders
                 </MenuItem>
-            {/* </Link>  */}
-            
+             </Link>            
             <Link  style={{ textDecoration: 'none',color: "black" }} to="/settings">
                 <MenuItem >
                     <ListItemIcon>
@@ -96,14 +95,11 @@ export default function ProfileMenu () {
                     </ListItemIcon> Settings
                 </MenuItem>
             </Link> 
-
-            {/* <Link  underline="none" onClick={logout}>             */}
                 <MenuItem onClick={logout}>
                     <ListItemIcon>
                         <Logout fontSize="small"/>
                     </ListItemIcon> Logout
                 </MenuItem>
-            {/* </Link>  */}
 
         </Menu>
       </>

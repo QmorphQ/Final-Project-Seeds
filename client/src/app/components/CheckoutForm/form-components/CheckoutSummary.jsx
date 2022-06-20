@@ -54,10 +54,6 @@ const CheckoutSummary = (formData) => {
           <Typography className={classes.fieldName}>SHIPPING METHOD: </Typography>
           <Typography>{formData.formField.deliveryMethod}</Typography>
         </Box>
-        <Box className={classes.box}>
-          <Typography className={`${classes.fieldName} ${classes.sum}`}>TOTAL SUM: </Typography>
-          <Typography></Typography>
-        </Box>
       </Container>
     </>
   );

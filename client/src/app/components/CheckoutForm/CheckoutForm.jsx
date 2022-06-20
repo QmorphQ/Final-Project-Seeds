@@ -10,8 +10,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useSelector, useDispatch  } from "react-redux";
+import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { PropTypes } from "prop-types";
+import OrderSummary from "../../pages/Cart/OrderSummary.jsx"
 import {
   getCustomer
 } from "../../../store/thunks/customer.thunks";
@@ -102,9 +104,9 @@ export default function CheckoutForm() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
 
 
   const placeOrderToDB = (values, actions) =>   {
@@ -152,8 +154,11 @@ export default function CheckoutForm() {
     }
   };
 
+
+
   return (
     defaultCustomer != null && 
+    <>
     <Box
     margin={'auto'}
     width={{ xs: "100%", sm: "50%"}}
@@ -185,7 +190,9 @@ export default function CheckoutForm() {
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+            <Button>Go to the Main Page</Button>
+            </Link>
           </Box>
         </>
       ) : (
@@ -211,6 +218,10 @@ export default function CheckoutForm() {
         </Formik>
       )}
     </Box>
+    {
+      activeStep !== steps.length  &&
+      <OrderSummary visibility={"none"}/>}
+    </>
   );
 }
 
@@ -234,5 +245,8 @@ CheckoutForm.propTypes = {
     PropTypes.array,
     PropTypes.string,
     PropTypes.object,
+  ]),
+  visibility: PropTypes.oneOfType([
+    PropTypes.string,
   ]),
 };

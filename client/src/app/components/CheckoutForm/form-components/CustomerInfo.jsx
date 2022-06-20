@@ -1,5 +1,6 @@
 import { Grid, Typography, Box, IconButton } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Link } from "react-router-dom";
 import InputField from "../CheckoutFormFields/InputField.jsx";
 
 const CustomerInfo = () => (
@@ -9,10 +10,13 @@ const CustomerInfo = () => (
         height="40px"
         justifyContent="center"
         alignItems="baseline"
+        position={"relative"}
       >
+        <Link to={"/cart"} style={{ textDecoration: "none", bottom: "22%", position: "relative" }} title={"Move to Cart"}>
         <IconButton aria-label="delete" disabled color="primary">
           <ArrowBackIosIcon />
         </IconButton>
+        </Link>
         <Typography
           paddingBottom="40px"
           textAlign="center"

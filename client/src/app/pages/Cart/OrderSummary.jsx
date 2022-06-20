@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Box, Typography, Divider, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { PropTypes } from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
   orderContainer: {
@@ -55,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OrderSummary = () => {
+const OrderSummary = (props) => {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart.cart);
   const totalSum = useSelector((state) => state.cart.totalSum);
@@ -108,7 +109,7 @@ const OrderSummary = () => {
           </Typography>
         </Box>
         <Link to={"/checkout"} style={{ textDecoration: "none" }}>
-          <Button className={classes.continueBtn} variant="contained">
+          <Button sx={{ display: `${props.visibility}`}} className={classes.continueBtn} variant="contained">
             <Typography>Continue</Typography>
           </Button>
         </Link>
@@ -118,3 +119,10 @@ const OrderSummary = () => {
 };
 
 export default OrderSummary;
+
+
+OrderSummary.propTypes = {
+  visibility: PropTypes.oneOfType([
+    PropTypes.string,
+  ]),
+};

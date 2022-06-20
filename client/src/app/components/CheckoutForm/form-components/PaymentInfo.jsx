@@ -10,6 +10,8 @@ import {
   IconButton,
   Box,
   Container,
+  Grid,
+  TextField
 } from "@mui/material";
 import { useField, useFormikContext } from "formik";
 // import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -25,6 +27,25 @@ const PaymentInfo = () => {
   const [paymentData, setPaymentData] = useState([]);
 
   let defaultMethod;
+
+  const textField = (name, label, prop, method) => (
+    <TextField
+    InputLabelProps={{
+      style: {
+        top: "-10px",
+      },
+    }}
+      inputProps={{
+        style: {
+          padding: 5,
+        },
+      }}
+      name={prop}
+      label={label}
+      fullWidth
+      onChange={method}
+    />
+  );
  
   useEffect(() => {
     axios
@@ -45,7 +66,25 @@ const PaymentInfo = () => {
       case "paypal":
         return <PayPal />;
       case "cash":
-        return <Typography>You will pay after delivery</Typography>;
+        return <Typography variant="h2" component="h2">You will pay after delivery</Typography>;
+      case "card":
+        return <>
+        <Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              {textField("cardNumber", "Card Number")}
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              {textField("data", "exp date mm/yy")}
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              {textField("cvv", "cvv code")}
+            </Grid>
+            <Grid item xs={12}>
+            </Grid>
+          </Grid>
+        </Grid>
+      </>;
       default:
         return <Typography>Not Found</Typography>;
     }
@@ -108,37 +147,6 @@ const PaymentInfo = () => {
               ))}
           </RadioGroup>
         </FormControl>
-        {/* {paymentMethod === "card" && (
-          <>
-            <Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  {textField("cardNumber", "Card Number")}
-                </Grid>
-                <Grid item xs={12} lg={6}>
-                  {textField("data", "exp date mm/yy")}
-                </Grid>
-                <Grid item xs={12} lg={6}>
-                  {textField("cvv", "cvv code")}
-                </Grid>
-                <Grid item xs={12}>
-                  <ButtonLeft>
-                    <Typography>12$</Typography>
-                    <Typography
-                      position={"relative"}
-                      left="35%"
-                      justifySelf={"left"}
-                    >
-                      Continue
-                    </Typography>
-                    <ArrowForwardIcon />
-                  </ButtonLeft>
-                </Grid>
-              </Grid>
-            </Grid>
-          </>
-        )}
-        {paymentMethod === "paypal" && <PayPal />} */}
       </Container>
       {paymentMethods(defaultMethod)}
     </>

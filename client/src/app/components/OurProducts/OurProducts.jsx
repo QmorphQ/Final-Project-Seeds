@@ -120,7 +120,7 @@ const OurProducts = () => {
               variant="h2"
               component="h2"
             >
-              Our products.
+              Our products
             </Typography>
             <Box>
               <Tabs value={value} onChange={handleChange} onClick={handleClick}>

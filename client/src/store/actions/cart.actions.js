@@ -117,3 +117,13 @@ export const orderAmountUpdated = (totalSum) => ({
   type: ORDER_AMOUNT_UPDATED,
   payload: totalSum,
 });
+
+export const EMPTY_SHOPPING_CART = "EMPTY_SHOPPING_CART";
+export const clearProductsInCartSuccess = () => ({
+  type: EMPTY_SHOPPING_CART,
+});
+
+export const EMPTY_SHOPPING_CART_ERROR = "EMPTY_SHOPPING_CART_ERROR";
+export const clearProductsInCartError = () => ({
+  type: EMPTY_SHOPPING_CART_ERROR,
+});

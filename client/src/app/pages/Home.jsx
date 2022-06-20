@@ -11,6 +11,7 @@ import ProductsList from "../components/ProductsList/ProductsList.jsx";
 import fetchCategories from "../../store/thunks/catalog.thunks";
 import fetchSlides from "../../store/thunks/slides.thunks";
 import { fetchProducts } from "../../store/thunks/products.thunks";
+import { fetchWishlist } from "../../store/thunks/wishlist.thunks";
 
 const Home = () => {
 
@@ -20,6 +21,7 @@ const Home = () => {
     dispatch(fetchSlides());
     dispatch(fetchProducts(`${API}products/filter?perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`));
     dispatch(fetchCategories());
+    dispatch(fetchWishlist());
   }, []);
 
   return (

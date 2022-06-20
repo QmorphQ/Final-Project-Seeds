@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 // Import:
 // =======================================================================================
 // ------------------------------------------------------------------------------------
@@ -18,7 +19,7 @@ import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
 import { loginStateSelector, 
          cartQuantitySelector, 
          wishlistQuantitySelector, 
-        isAdminStateSelector } from "../../../store/selectors/selectors";
+        isAdminStateSelector, } from "../../../store/selectors/selectors";
 import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import FavoriteBtn from './HeaderBtns/FavoriteBtn.jsx';
@@ -28,7 +29,7 @@ import { fetchCart } from "../../../store/thunks/cart.thunks";
 // ++++++++++++++++
 // Auth Component:
 import Auth from "../Forms/Auth.jsx";
-import ProfileMenu from './ProfileMenu.jsx'; 
+import ProfileMenu from './ProfileMenu.jsx';
 import ProfileMenuAdmin from "./ProfileMenuAdmin.jsx";
 // ++++++++++++++++
 // ------------------------------------------------------------------------------------
@@ -46,18 +47,20 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
   
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const handleMobileMenuOpen = () => {
-    setIsMenuOpen(prevVal => !prevVal)
-  };
+      setIsMenuOpen(prevVal => !prevVal);
+  }; 
+  const handleClickAway = () => setIsMenuOpen(false);
 
 
   useEffect(() => {
-    if(localStorage.getItem('jwt')){
+    if(localStorage.getItem('jwt')) {
       dispatch(fetchCart());
     }
   }, [])
 
-  const handleClickAway = () => setIsMenuOpen(false);
+  
   // =============================================== Render ==============================================
   return (
     <Box sx={classes.Header}>
@@ -75,13 +78,13 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
             display={{ xs: "none", sm: "none", md: "none", lg: 'block' }}
           >
             {/* <MenuDesktop /> */}
-            <HeaderNavMenu resolution={'desktop'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
+            <HeaderNavMenu resolution={'desktop'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock} admin={isAdmin}/>
           </Box>
           <Box
             display={{ xs: "none", sm: "none", md: "flex", lg: 'none' }}
           >
             {/* <MenuTable /> */}
-            <HeaderNavMenu resolution={'table'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/>
+            <HeaderNavMenu resolution={'table'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock} admin={isAdmin}/>
           </Box>
           <Box /* Search AppBar Block */
             sx={{
@@ -94,26 +97,27 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
             </Box> 
 
 
-            {isAdmin === false ? (<Box
+            <Box
               sx={{
                 display: { xs: "flex", md: "flex" },
                 justifyContent: "space-between", width: '100%'
               }}
             >
-              {isLogin && (
+              {isLogin && isAdmin === false && (
                 <FavoriteBtn quantity={favoriteQuantity} />
               )}
-              <CartBtn quantity={cartQuantity} marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
+              
+              {isAdmin === false && <CartBtn quantity={cartQuantity} marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />} 
+
               <Box display={{ xs: "none", sm: "none", md: "flex" }} >
                 {!isLogin ? (
                   <Box sx={{ width: 'fit-content', display: "flex", flexDirection: 'column'}}>
                    <Auth />
                   </Box>
-                ) : (
-                  <ProfileMenu />
-                )}
+                ) : (isAdmin ? < ProfileMenuAdmin onClose={handleClickAway} /> 
+                             : < ProfileMenu /> )}
               </Box>
-            </Box>) : (< ProfileMenuAdmin />)} 
+            </Box>
 
              <Box  display={{ xs: "block", sm: "block", md: "none" }}>
               <IconButton
@@ -132,7 +136,12 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
         </Toolbar>
       </AppBar>
       <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        {isMenuOpen &&<ClickAwayListener onClickAway={handleClickAway}><Box>  <HeaderNavMenu login={isLogin}  resolution={'mobile'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock}/></Box></ClickAwayListener>}
+        {isMenuOpen &&
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <Box>
+            <HeaderNavMenu login={isLogin} admin={isAdmin} resolution={'mobile'} parentsListWithoutChildren={arrNoChildrenBlock} parentsListWithChildren={arrWithChildrenBlock} onClose={handleClickAway}/>
+            </Box>
+        </ClickAwayListener>}
        
       </Box>
       

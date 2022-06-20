@@ -27,6 +27,7 @@ const ShippingInfo = () => {
   
 
   useEffect(() => {
+    setFieldValue("deliveryMethod", "expressDelivery")
     axios
       .get(`${API}shipping-methods`)
       .then((shippingMethods) => setShippingData(shippingMethods.data))
@@ -51,6 +52,7 @@ const ShippingInfo = () => {
   };
 
   const handleChange = (event) => {
+    console.log(event.target.value)
     setFieldValue("deliveryMethod", event.target.value);
   };
 

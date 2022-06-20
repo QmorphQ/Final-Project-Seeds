@@ -11,7 +11,8 @@ export default function HeaderNavMenu({
   parentsListWithoutChildren,
   parentsListWithChildren,
   resolution,
-  login
+  login, 
+  admin, 
 }) {
   // ------------------------------- RENDER -----------------------------
   switch(resolution) {
@@ -20,9 +21,9 @@ export default function HeaderNavMenu({
     <MenuDesktop pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}/>
   );
   case 'mobile':
-      return(<MenuMobile pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}  isLogin={login}/>);
+      return(<MenuMobile pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}  isLogin={login} isAdmin={admin} />);
   case 'table':
-    return (<MenuTable pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren}></MenuTable>)
+    return (<MenuTable pressetsNoChildren={parentsListWithoutChildren} pressetsWithChildren={parentsListWithChildren} isAdmin={admin}></MenuTable>)
    default:
       return (<h1>TEST</h1>)
    }
@@ -38,4 +39,5 @@ HeaderNavMenu.propTypes = {
   parentsListWithChildren: PropTypes.array,
   parentsListWithoutChildren: PropTypes.array,
   login: PropTypes.bool,
+  admin: PropTypes.bool, 
 };

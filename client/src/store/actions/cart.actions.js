@@ -118,10 +118,18 @@ export const orderAmountUpdated = (totalSum) => ({
   payload: totalSum,
 });
 
-export const ORDER_PLACED_SUCCESS = "ORDER_PLACED_SUCCESS";
+export const EMPTY_SHOPPING_CART = "EMPTY_SHOPPING_CART";
 export const clearProductsInCartSuccess = () => ({
-  type: ORDER_PLACED_SUCCESS,
+  type: EMPTY_SHOPPING_CART,
 });
+
+export const EMPTY_SHOPPING_CART_ERROR = "EMPTY_SHOPPING_CART_ERROR";
+export const clearProductsInCartError = () => ({
+  type: EMPTY_SHOPPING_CART_ERROR,
+});
+
+
+
 
 
 

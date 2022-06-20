@@ -20,7 +20,8 @@ import {
   editSuccess,
   editError,
   orderAmountUpdated,
-  clearProductsInCartSuccess
+  clearProductsInCartSuccess,
+  clearProductsInCartError
 } from "../actions/cart.actions";
 
 const countTotalAmountOrder = () => (dispatch, getState) => {
@@ -336,7 +337,7 @@ const  clearProductsInCart = () => (dispatch) => {
         dispatch(clearProductsInCartSuccess());
       })
       .catch(() => {
-        dispatch(deleteProductFromCartError());
+       dispatch(clearProductsInCartError());
       });
   } else {
     

@@ -11,7 +11,7 @@ import {
   Box,
   Container,
   Grid,
-  TextField
+  TextField,
 } from "@mui/material";
 import { useField, useFormikContext } from "formik";
 // import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -30,11 +30,11 @@ const PaymentInfo = () => {
 
   const textField = (name, label, prop, method) => (
     <TextField
-    InputLabelProps={{
-      style: {
-        top: "-10px",
-      },
-    }}
+      InputLabelProps={{
+        style: {
+          top: "-10px",
+        },
+      }}
       inputProps={{
         style: {
           padding: 5,
@@ -46,8 +46,9 @@ const PaymentInfo = () => {
       onChange={method}
     />
   );
- 
+
   useEffect(() => {
+    setFieldValue("paymentMethod", "card");
     axios
       .get(`${API}payment-methods`)
       .then((paymentMethods) => setPaymentData(paymentMethods.data))
@@ -55,36 +56,40 @@ const PaymentInfo = () => {
   }, []);
 
   field.value === undefined
-  ? paymentData.forEach((item) => {
-      item.default && (defaultMethod = item.customId);
-    })
-  : (defaultMethod = field.value);
-  
+    ? paymentData.forEach((item) => {
+        item.default && (defaultMethod = item.customId);
+      })
+    : (defaultMethod = field.value);
 
   const paymentMethods = (method) => {
     switch (method) {
       case "paypal":
         return <PayPal />;
       case "cash":
-        return <Typography variant="h2" component="h2">You will pay after delivery</Typography>;
+        return (
+          <Typography variant="h2" component="h2">
+            You will pay after delivery
+          </Typography>
+        );
       case "card":
-        return <>
-        <Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              {textField("cardNumber", "Card Number")}
+        return (
+          <>
+            <Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  {textField("cardNumber", "Card Number")}
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  {textField("data", "exp date mm/yy")}
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  {textField("cvv", "cvv code")}
+                </Grid>
+                <Grid item xs={12}></Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={12} lg={6}>
-              {textField("data", "exp date mm/yy")}
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              {textField("cvv", "cvv code")}
-            </Grid>
-            <Grid item xs={12}>
-            </Grid>
-          </Grid>
-        </Grid>
-      </>;
+          </>
+        );
       default:
         return <Typography>Not Found</Typography>;
     }
@@ -93,8 +98,6 @@ const PaymentInfo = () => {
   const handleChange = (event) => {
     setFieldValue("paymentMethod", event.target.value);
   };
-
-
 
   return (
     <>
@@ -116,36 +119,42 @@ const PaymentInfo = () => {
           <FormLabel id="demo-controlled-radio-buttons-group">
             Choose payment method
           </FormLabel>
-          <RadioGroup
-            name="paymentMethod"
-            sx={{ flexDirection: "row", justifyItems: "center", width: "100%" }}
-            aria-labelledby="demo-controlled-radio-buttons-group"
-            value={defaultMethod}
-            onChange={handleChange}
-          >
-            {paymentData.length !== 0 &&
-              paymentData.map((payMethod, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={payMethod.name}
-                  control={<Radio />}
-                  label={
-                    <>
-                      {payMethod.imageUrls &&
-                        payMethod.imageUrls.map((img, idx) => (
-                          <img
-                            key={idx}
-                            src={img}
-                            width="auto"
-                            height="50px"
-                            style={{ marginRight: "5px" }}
-                          />
-                        ))}
-                    </>
-                  }
-                />
-              ))}
-          </RadioGroup>
+          {paymentData.length !== 0 && (
+            <RadioGroup
+              name="paymentMethod"
+              sx={{
+                flexDirection: "row",
+                justifyItems: "center",
+                width: "100%",
+              }}
+              aria-labelledby="demo-controlled-radio-buttons-group"
+              value={defaultMethod}
+              onChange={handleChange}
+            >
+              {paymentData.length !== 0 &&
+                paymentData.map((payMethod, index) => (
+                  <FormControlLabel
+                    key={index}
+                    value={payMethod.name}
+                    control={<Radio />}
+                    label={
+                      <>
+                        {payMethod.imageUrls &&
+                          payMethod.imageUrls.map((img, idx) => (
+                            <img
+                              key={idx}
+                              src={img}
+                              width="auto"
+                              height="50px"
+                              style={{ marginRight: "5px" }}
+                            />
+                          ))}
+                      </>
+                    }
+                  />
+                ))}
+            </RadioGroup>
+          )}
         </FormControl>
       </Container>
       {paymentMethods(defaultMethod)}

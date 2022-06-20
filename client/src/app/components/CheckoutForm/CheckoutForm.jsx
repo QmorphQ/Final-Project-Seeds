@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
   Stepper,
@@ -9,20 +9,23 @@ import {
   Typography,
   CircularProgress,
 } from "@mui/material";
-import { useSelector, useDispatch  } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { PropTypes } from "prop-types";
-import OrderSummary from "../../pages/Cart/OrderSummary.jsx"
+import OrderSummary from "../../pages/Cart/OrderSummary.jsx";
+import { getCustomer } from "../../../store/thunks/customer.thunks";
 import {
-  getCustomer
-} from "../../../store/thunks/customer.thunks";
-import { currentCustomerSelector, loginStateSelector, cartSelector } from "../../../store/selectors/selectors";
+  currentCustomerSelector,
+  loginStateSelector,
+  cartSelector,
+} from "../../../store/selectors/selectors";
 import FORM_VALIDATION from "./FormValidation.jsx";
 import PaymentInfo from "./form-components/PaymentInfo.jsx";
 import CustomerInfo from "./form-components/CustomerInfo.jsx";
 import CheckoutSummary from "./form-components/CheckoutSummary.jsx";
 import ShippingInfo from "./form-components/ShippingInfo.jsx";
+import { API } from "../../constants/index";
 
 const steps = ["1", "2", "3"];
 
@@ -40,28 +43,58 @@ const defaultData = {
   postOfficeWarehouse: "",
 };
 
-
 export default function CheckoutForm() {
-
   const currentCustomer = useSelector(currentCustomerSelector);
   const cart = useSelector(cartSelector);
+  const [products, setProducts] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [orderSummary, setOrderSummary] = useState(0);
   const [orderNumber, setOrderNumber] = useState(0);
   const isLastStep = activeStep === steps.length - 1;
   const formId = "checkoutForm";
   const dispatch = useDispatch();
-  const isLogin = useSelector(loginStateSelector); 
+  const isLogin = useSelector(loginStateSelector);
+
+  
+  const fetchProducts = () => {
+    axios
+      .get(`${API}products`)
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
 
   useEffect(() => {
     dispatch(getCustomer());
+    if (!currentCustomer) {
+      fetchProducts();
+    }
   }, []);
+
+  useEffect(() => {
+    const productsToCart = [];
+    products.forEach((product) => {
+      cart.forEach((cartItem) => {
+        if (product._id === cartItem.id) {
+          const productToCart = {
+            _id: cartItem.id,
+            product,
+            cartQuantity: cartItem.cartQuantity,
+          };
+          productsToCart.push(productToCart);
+        }
+      });
+    });
+    setCartProducts(productsToCart);
+  }, [products]);
 
   let defaultCustomer;
 
-  isLogin ? 
-  (defaultCustomer = currentCustomer)
-  : (defaultCustomer = defaultData)
+  isLogin
+    ? (defaultCustomer = currentCustomer)
+    : (defaultCustomer = defaultData);
 
   const createOrder = (order) => {
     const address = JSON.stringify({
@@ -71,9 +104,9 @@ export default function CheckoutForm() {
       postal: order.code,
       postOfficeCity: order.postOfficeCity,
       postOfficeWarehouse: order.postOfficeWarehouse,
-    })
-    const payment = JSON.stringify(order.paymentMethod)
-    const shippingDev = JSON.stringify(order.deliveryMethod)
+    });
+    const payment = JSON.stringify(order.paymentMethod);
+    const shippingDev = JSON.stringify(order.deliveryMethod);
     const interimOrder = {
       deliveryAddress: address,
       shipping: shippingDev,
@@ -90,15 +123,16 @@ export default function CheckoutForm() {
     if (order._id) {
       return {
         ...interimOrder,
-        customerId: `${order._id}`
-      }
+        customerId: `${order._id}`,
+      };
     }
 
     return {
       ...interimOrder,
-      products: JSON.stringify(cart)
-    }
-  }
+      ...cart,
+      products: cartProducts,
+    };
+  };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -108,29 +142,27 @@ export default function CheckoutForm() {
   //   setActiveStep(0);
   // };
 
-
-  const placeOrderToDB = (values, actions) =>   {
+  const placeOrderToDB = (values, actions) => {
     const newOrder = createOrder(values);
-     axios
-      .post('http://localhost:8000/api/orders', newOrder)
+    axios
+      .post("http://localhost:8000/api/orders", newOrder)
       .then((response) => {
         actions.setSubmitting(false);
         setActiveStep(activeStep + 1);
         console.log(response);
-        setOrderNumber(response.data.order.orderNo)
+        setOrderNumber(response.data.order.orderNo);
       })
       .catch(() => {
         console.log("error");
-      })
-
-    }
+      });
+  };
 
   function _handleSubmit(values, actions) {
     if (isLastStep) {
       placeOrderToDB(values, actions);
     } else {
       setActiveStep(activeStep + 1);
-      setOrderSummary(values)
+      setOrderSummary(values);
       actions.setTouched({});
       actions.setSubmitting(false);
     }
@@ -141,87 +173,87 @@ export default function CheckoutForm() {
       case 0:
         return (
           <>
-            <CustomerInfo/>
-            <ShippingInfo/>
+            <CustomerInfo />
+            <ShippingInfo />
           </>
-        ) 
+        );
       case 1:
-        return <PaymentInfo/>;
+        return <PaymentInfo />;
       case 2:
-        return <CheckoutSummary formField={orderSummary}/>;
+        return <CheckoutSummary formField={orderSummary} />;
       default:
         return <div>Not Found</div>;
     }
   };
 
-
-
   return (
-    defaultCustomer != null && 
-    <>
-    <Box
-    margin={'auto'}
-    width={{ xs: "100%", sm: "50%"}}
-    display="flex"
-    flexDirection= "column"
-    justifyContent= "space-between"
-    padding="20px"
-    >
-      <Stepper activeStep={activeStep}>
-        {steps.map((index) => 
- (
-            <Step key={index}>
-              <StepLabel
-                sx={{
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  setActiveStep(+index - 1);
-                }}
-              ></StepLabel>
-            </Step>
-          )
-        )}
-      </Stepper>
-      {activeStep === steps.length ? (
-        <>
-          <Typography variant="h2" component="h2">
-          Thank You! Your oder #{orderNumber} has been placed!
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Link to={"/"} style={{ textDecoration: "none" }}>
-            <Button>Go to the Main Page</Button>
-            </Link>
-          </Box>
-        </>
-      ) : (
-        <Formik initialValues={defaultCustomer} validationSchema={FORM_VALIDATION} onSubmit={_handleSubmit}>
-          {
-          (props) => (
-            <Form id={formId}>
-              {stepContent(activeStep, props.setFieldValue)}
-              <Box display="flex" mt="20px" justifyContent="flex-end"> 
-                {activeStep !== 0 && <Button onClick={handleBack}>Back</Button>}
-                  <Button
-                    disabled={props.isSubmitting}
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                  >
-                    {isLastStep? "Place order" : "Next"}
-                  </Button>
-                  {props.isSubmitting && <CircularProgress size={24} />}
-                </Box>
-            </Form>
+    defaultCustomer != null && (
+      <>
+        <Box
+          margin={"auto"}
+          width={{ xs: "100%", sm: "50%" }}
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
+          padding="20px"
+        >
+          <Stepper activeStep={activeStep}>
+            {steps.map((index) => (
+              <Step key={index}>
+                <StepLabel
+                  sx={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setActiveStep(+index - 1);
+                  }}
+                ></StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          {activeStep === steps.length ? (
+            <>
+              <Typography variant="h2" component="h2">
+                Thank You! Your oder #{orderNumber} has been placed!
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Box sx={{ flex: "1 1 auto" }} />
+                <Link to={"/"} style={{ textDecoration: "none" }}>
+                  <Button>Go to the Main Page</Button>
+                </Link>
+              </Box>
+            </>
+          ) : (
+            <Formik
+              initialValues={defaultCustomer}
+              validationSchema={FORM_VALIDATION}
+              onSubmit={_handleSubmit}
+            >
+              {(props) => (
+                <Form id={formId}>
+                  {stepContent(activeStep, props.setFieldValue)}
+                  <Box display="flex" mt="20px" justifyContent="flex-end">
+                    {activeStep !== 0 && (
+                      <Button onClick={handleBack}>Back</Button>
+                    )}
+                    <Button
+                      disabled={props.isSubmitting}
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                    >
+                      {isLastStep ? "Place order" : "Next"}
+                    </Button>
+                    {props.isSubmitting && <CircularProgress size={24} />}
+                  </Box>
+                </Form>
+              )}
+            </Formik>
           )}
-        </Formik>
-      )}
-    </Box>
-    {
-      activeStep !== steps.length  &&
-      <OrderSummary visibility={"none"}/>}
-    </>
+        </Box>
+        {activeStep !== steps.length && <OrderSummary visibility={"none"} />}
+      </>
+    )
   );
 }
 
@@ -246,7 +278,5 @@ CheckoutForm.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
-  visibility: PropTypes.oneOfType([
-    PropTypes.string,
-  ]),
+  visibility: PropTypes.oneOfType([PropTypes.string]),
 };

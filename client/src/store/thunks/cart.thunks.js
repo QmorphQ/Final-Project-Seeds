@@ -20,6 +20,8 @@ import {
   editSuccess,
   editError,
   orderAmountUpdated,
+  clearProductsInCartSuccess,
+  clearProductsInCartError
 } from "../actions/cart.actions";
 
 const countTotalAmountOrder = () => (dispatch, getState) => {
@@ -319,6 +321,31 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
   }
 };
 
+const  clearProductsInCart = () => (dispatch) => {
+  // dispatch(deleteProductFromCartRequest());
+  const token = localStorage.getItem("jwt");
+ 
+  if (token) {
+    axios
+    .delete(`${API}cart`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+      .then(() => {
+       
+        dispatch(clearProductsInCartSuccess());
+      })
+      .catch(() => {
+       dispatch(clearProductsInCartError());
+      });
+  } else {
+    
+    
+    dispatch(clearProductsInCartSuccess());
+  }
+};
+
 export {
   fetchCart,
   addCart,
@@ -328,4 +355,5 @@ export {
   changeProductQuantity,
   changeLocalCart,
   countTotalAmountOrder,
+  clearProductsInCart,
 };

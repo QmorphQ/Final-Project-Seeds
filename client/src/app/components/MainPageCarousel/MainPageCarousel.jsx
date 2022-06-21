@@ -18,10 +18,8 @@ const useStyles = makeStyles({
   multiLineEllipsis: {
     overflow: "hidden",
     textOverflow: "ellipsis",
-    // lineHeight: '54px',
     letterSpacing: '-0.05em',
-    color: "#1F2533"
-    // fontSize: '48px'
+    color: "#1F2533",
   }
 
 });

@@ -15,7 +15,9 @@ import {
   isRightPassword,
   getUserDetailsRequested, 
   getUserDetailsSuccess, 
-  getUserDetailsError
+  getUserDetailsError,
+  getOrdersSuccess,
+  getOrdersError,
 } from "../actions/customer.actions";
 
 
@@ -58,10 +60,8 @@ const loginCustomer = (userData) => (dispatch) => {
     .post(`${API}customers/login`, userData)
     .then((loginResult) => {
       localStorage.setItem("jwt", loginResult.data.token);
-      dispatch(loginCustomerSuccess(loginResult)); 
-
-      dispatch(getUserDetails()); 
-      
+      dispatch(loginCustomerSuccess(loginResult));
+      dispatch(getUserDetails());      
     })
     .catch(() => {
       dispatch(loginCustomerError());
@@ -132,4 +132,23 @@ const updateCustomer = (modifiedCustomer) => (dispatch) => {
     });
 };
 
-export { addCustomer, loginCustomer, updateCustomer, getCustomer, getUserDetails };
+const getOrders = () => (dispatch) =>  {
+  const token = localStorage.getItem("jwt");
+  
+   axios
+    .get(`${API}orders`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then((orders) => {
+      dispatch(getOrdersSuccess(orders.data));
+      console.log(orders.data);
+    })
+    .catch(() => {
+      dispatch(getOrdersError())
+    })
+
+  }
+
+export { addCustomer, loginCustomer, updateCustomer, getCustomer, getUserDetails, getOrders };

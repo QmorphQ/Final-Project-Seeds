@@ -16,7 +16,8 @@ import {
   getUserDetailsRequested, 
   getUserDetailsSuccess, 
   getUserDetailsError,
-  getCustomerOrders
+  getOrdersSuccess,
+  getOrdersError,
 } from "../actions/customer.actions";
 
 
@@ -141,11 +142,11 @@ const getOrders = () => (dispatch) =>  {
       },
     })
     .then((orders) => {
-      dispatch(getCustomerOrders())
-      console.log(orders);
+      dispatch(getOrdersSuccess(orders.data));
+      console.log(orders.data);
     })
     .catch(() => {
-      console.log("error");
+      dispatch(getOrdersError())
     })
 
   }

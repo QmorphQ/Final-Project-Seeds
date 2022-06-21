@@ -57,9 +57,20 @@ export const customerUpdateSuccess = (updatedCustomer) => ({
   payload: updatedCustomer
 })
 
-export const GET_CUSTOMER_ORDERS = "GET_CUSTOMER_ORDERS";
-export const getCustomerOrders = () => ({
-  type: GET_CUSTOMER_ORDERS,
+export const GET_ORDERS_REQUEST = "GET_ORDERS_REQUEST";
+export const getOrdersRequest = () => ({
+  type: GET_ORDERS_REQUEST,
+})
+
+export const GET_ORDERS_SUCCESS = "GET_ORDERS_SUCCESS";
+export const getOrdersSuccess= (orders) => ({
+  type: GET_ORDERS_SUCCESS,
+  payload: orders
+})
+
+export const GET_ORDERS_ERROR = "GET_ORDERS_ERROR";
+export const getOrdersError= () => ({
+  type: GET_ORDERS_ERROR,
 })
 
 export const UPDATE_CUSTOMER_ERROR = "UPDATE_CUSTOMER_ERROR";

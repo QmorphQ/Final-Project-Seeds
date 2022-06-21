@@ -77,6 +77,8 @@ export const currentCustomerSelector = (state) =>
 
 export const loginStateSelector = (state) => state.customer.isLoggedIn; 
 
+export const customerOrdersHistory = (state) => state.customer.getOrders; 
+
 export const isAdminStateSelector = (state) => state.customer.isAdmin;
 
 export const loginRequestSelector = (state) => state.customer.loginRequestState;

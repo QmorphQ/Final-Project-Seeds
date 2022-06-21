@@ -74,47 +74,35 @@ export default function ProfileMenu () {
                 <Avatar/> Profile
             </MenuItem>
             <Divider />
-            <Link style={{ textDecoration: 'none', color: "black" }} 
-                  to="/wishlist">
+            <Link style={{ textDecoration: 'none', color: "black" }} to="/wishlist">
                 <MenuItem >
                     <ListItemIcon>
                         <Favorite fontSize="small" />                    
                     </ListItemIcon> Favourites
                 </MenuItem>
-
-            {/* </Link>     */}
-            <Link  style={{ textDecoration: 'none',color: "black" }} to="/history"> 
-
             </Link> 
 
+            <Link style={{ textDecoration: 'none',color: "black" }} to="/history"> 
                 <MenuItem >
                     <ListItemIcon>
                         <History fontSize="small" />
                     </ListItemIcon> My orders
-                </MenuItem>
-
-             </Link>            
-            <Link  style={{ textDecoration: 'none',color: "black" }} to="/settings">
-                <MenuItem >
-                        <ListItemIcon>
-                            <Settings fontSize="small" />
-                        </ListItemIcon> Settings
-                </MenuItem>
-            </Link>
-            
-            <Link  style={{ textDecoration: 'none', color: "black" }} 
-                   to="/settings">
+                </MenuItem>    
+            </Link> 
+                  
+            <Link style={{ textDecoration: 'none', color: "black" }}  to="/settings">
                 <MenuItem >
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon> Settings
                 </MenuItem>
-            </Link> 
-                <MenuItem onClick={logout}>
-                    <ListItemIcon>
-                        <Logout fontSize="small"/>
-                    </ListItemIcon> Logout
-                </MenuItem>
+            </Link>
+
+            <MenuItem onClick={logout}>
+                <ListItemIcon>
+                    <Logout fontSize="small"/>
+                </ListItemIcon> Logout
+            </MenuItem>
 
         </Menu>
       </>

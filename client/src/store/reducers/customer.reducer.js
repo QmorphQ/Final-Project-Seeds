@@ -15,7 +15,10 @@ import {
   IS_RIGHT_PASSWORD, 
   GET_USERDETAILS_REQUESTED, 
   GET_USERDETAILS_SUCCESS, 
-  GET_USERDETAILS_ERROR
+  GET_USERDETAILS_ERROR,
+  GET_ORDERS_REQUEST,
+  GET_ORDERS_ERROR,
+  GET_ORDERS_SUCCESS
 } from "../actions/customer.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -139,6 +142,26 @@ const customerReducer = (state = initialState, action) => {
         getUserDetailsRequestState: downloadRequestStates.ERROR,
 
       };
+    
+    case GET_ORDERS_REQUEST:
+      return {
+        ...state,
+        getOrdersRequestState: downloadRequestStates.LOADING,
+      };
+
+    case GET_ORDERS_SUCCESS:
+      return {
+        ...state,
+        getOrdersRequestState: downloadRequestStates.SUCCESS,
+        getOrders:action.payload
+      };
+
+    case GET_ORDERS_ERROR:
+      return {
+        ...state,
+        getOrdersRequestState: downloadRequestStates.ERROR,
+      };
+  
 
     default:
       return state;

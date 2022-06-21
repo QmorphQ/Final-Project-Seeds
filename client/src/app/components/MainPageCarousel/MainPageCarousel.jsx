@@ -1,10 +1,9 @@
 import Carousel from "react-material-ui-carousel";
-import { 
-  // useDispatch, 
+import {  
   useSelector 
 } from "react-redux";
-import { Typography, Container, Icon, Grid, Box, CardMedia } from "@mui/material";
-import { makeStyles, styled } from "@mui/styles";
+import { Typography, Container, Grid, Box, CardMedia } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import PropTypes from "prop-types";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
@@ -14,49 +13,24 @@ import {
 } from "../../../store/selectors/selectors";
 import { downloadRequestStates } from "../../constants";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-// import fetchSlides from "../../../store/thunks/slides.thunks";
-// import { useEffect } from "react";
-
 
 const useStyles = makeStyles({
   multiLineEllipsis: {
     overflow: "hidden",
     textOverflow: "ellipsis",
-    lineHeight: '54px',
     letterSpacing: '-0.05em',
-    fontSize: '48px'
+    color: "#1F2533",
   }
-});
 
-
-const ButtonLeft = styled("button")({
-  width: "142px",
-  height: "47px",
-  border: "none",
-  fontSize: "14px",
-  color: "#FFFFFF",
-  backgroundColor: " #359740",
-  borderRadius: "10px",
-  cursor: "pointer",
-  marginRight: "15px",
-});
-const ButtonRight = styled("button")({
-  width: "142px",
-  height: "47px",
-  border: "none",
-  fontSize: "14px",
-  color: "#359740",
-  backgroundColor: " #FFFFFF",
-  borderRadius: "10px",
-  cursor: "pointer",
-  marginLeft: "15px",
 });
 
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
 
+
   return (
+    requestState === "success" &&
     <Container
       sx={{
         p: "0", zIndex: -1,
@@ -121,6 +95,7 @@ const MainPageCarousel = () => {
 function Item(props)
 {
 
+ 
   const classes = useStyles();
 
     return (
@@ -141,19 +116,20 @@ function Item(props)
       alignSelf={{ xs: "center", sm: "flex-start"}}
       >
           <Typography
+          display="flex"
           pt='10px'
           color='#E55C5C'
-          fontSize= '30px'
+          fontSize= {{xs: "32px", sm: "32px", md: "42px"}}
           fontWeight= 'bold'
-          line-height= '30'
           >
-                <Icon
-                sx={{
-                pr: '14px',
-                overflow:'visible',
-              }}>
-                <img  src={Vector}/>
-                </Icon>
+              <Box
+                component="img"
+                pr={{xs: "14px", sm: "14px", md: "25px"}}
+                overflow='visible'
+                width={{xs: "19px", sm: "19px", md: "28px"}}
+                  src={Vector}
+                >
+              </Box>
             ${props.item.currentPrice}
             </Typography>
       </Grid>
@@ -167,6 +143,7 @@ function Item(props)
             width={{xs: "90%", sm: "60%"}}
             height={{ xs: "210px", sm: "108px"}}
             fontSize={{ xs: "28px", sm: "48px"}}
+            lineHeight={{ xs: "36px", sm: "54px"}}
             textAlign={{ xs: "center", sm: "left"}}
             fontWeight= '600'
             >
@@ -177,7 +154,6 @@ function Item(props)
       mt={{ xs: '20px'}}
       xs={8} md={2}
       pr={{ xs: '10px', sm: '30px' }}
-      // pr= '30px'
       order={{ xs: 0, sm: 1 }}
       position={{ xs: 'static', sm: 'absolute' }}
       left={'72%'}
@@ -197,34 +173,56 @@ function Item(props)
       alignSelf="flex-start"
       flexDirection="row">
           <Typography 
-          width={{ sm: "560px"}}
+          width={{ sm: "55%"}}
           height={{ xs: "200px", sm: "76px"}}
           overflow={{ xs: "scroll", sm: "hidden", md: "hidden" }}
           pl={{ xs: "20px", sm: "76px"}}
           pr= "40px"
-          align= 'left'
-          fontSize= '16px'
-          line-height= '28px'
+          align='left'
+          fontSize= {{ xs: "14px", sm: "14px", md: "16px"}}
+          fontWeight='300'
+          color="#1F2533"
+          lineHeight= "28px"
           letterSpacing= '-5%'          >
             {props.item.description}
           </Typography>
       </Grid>
       <Grid item
       mt={{ xs: "10px"}}
-      ml={{ xs: "20px", sm: "76px"}}
-      alignSelf="flex-start"
-      bottom={0}
+      ml={{ xs: "6px", sm: "76px"}}
+      alignSelf= "flex-start"
       order={{ xs: 0, sm: 1 }}
       xs={6} md={2}
-      justifyContent="space-evenly"
-      flexDirection="row">
-            <ButtonLeft>
-               Add to cart
-          </ButtonLeft>
-            <ButtonRight
-            >
-               Discover
-          </ButtonRight>
+      >
+       
+       <Box
+                component="button"
+                width= "142px"
+                height= "47px"
+                border= "none"
+                fontSize= "14px"
+                color= "#FFFFFF"
+                backgroundColor= " #359740"
+                borderRadius= "10px"
+                cursor= "pointer"
+                marginRight={{xs: "12px", md: "15px"}}
+                marginBottom="6px"
+                >
+                  Add to cart
+        </Box>
+        <Box
+                component="button"
+                width= "142px"
+                height="47px"
+                border= "none"
+                fontSize= "14px"
+                color= "#359740"
+                backgroundColor= " #FFFFFF"
+                borderRadius= "10px"
+                cursor= "pointer"
+                >
+                    Discover
+        </Box>
       </Grid>
 </Grid>
 </Box>

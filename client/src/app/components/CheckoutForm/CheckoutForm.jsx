@@ -15,6 +15,7 @@ import { Formik, Form } from "formik";
 import { PropTypes } from "prop-types";
 import OrderSummary from "../../pages/Cart/OrderSummary.jsx";
 import { getCustomer } from "../../../store/thunks/customer.thunks";
+import {clearProductsInCart} from "../../../store/thunks/cart.thunks";
 import {
   currentCustomerSelector,
   loginStateSelector,
@@ -145,12 +146,13 @@ export default function CheckoutForm() {
   const placeOrderToDB = (values, actions) => {
     const newOrder = createOrder(values);
     axios
-      .post("http://localhost:8000/api/orders", newOrder)
+      .post(`${API}orders`, newOrder)
       .then((response) => {
         actions.setSubmitting(false);
         setActiveStep(activeStep + 1);
         console.log(response);
         setOrderNumber(response.data.order.orderNo);
+        dispatch(clearProductsInCart());
       })
       .catch(() => {
         console.log("error");

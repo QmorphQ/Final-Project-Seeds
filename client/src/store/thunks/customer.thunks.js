@@ -143,7 +143,6 @@ const getOrders = () => (dispatch) =>  {
     })
     .then((orders) => {
       dispatch(getOrdersSuccess(orders.data));
-      console.log(orders.data);
     })
     .catch(() => {
       dispatch(getOrdersError())

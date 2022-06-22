@@ -61,7 +61,7 @@ const Cart = () => {
           component="h2"
           sx={{ textAlign: "center" }}
         >
-          No Products in Car
+          No Products in Cart
         </Typography>
       </Container>
     );

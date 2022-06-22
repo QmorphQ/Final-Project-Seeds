@@ -14,11 +14,28 @@ const useFiltersStyles = makeStyles({
     top: "50%",
     left: "50%",
     color: "green",
-    fontSize: "40px"
+    fontSize: "40px",
+  },
+
+  center: {
+    margin: "0 auto",
+  },
+
+  filtersIcon: {
+    cursor: "pointer",
+    "@media (min-width: 780px)": {
+      display: "none",
+    },
   },
 
   drawer: {
     width: drawerWidth,
+  },
+
+  filters: {
+    "@media (max-width: 780px)": {
+      display: "none",
+    },
   },
 
   drawerPaper: {

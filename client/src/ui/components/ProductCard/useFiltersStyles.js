@@ -8,6 +8,7 @@ export const useFiltersStyles = makeStyles(() => ({
     boxShadow: "none",
     minHeight: "400px",
     maxWidth: "400px",
+    margin: "0 auto",
   },
   productCardHeader: {
     position: "absolute",
@@ -49,7 +50,7 @@ export const useFiltersStyles = makeStyles(() => ({
     padding: "0px important",
   },
   productCardButtons: {
-    display:"flex",
-    flexDirection:"row"
-  }
+    display: "flex",
+    flexDirection: "row",
+  },
 }));

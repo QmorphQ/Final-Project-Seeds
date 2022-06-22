@@ -92,10 +92,9 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
               alignItems: "center",
             }}
           >
-            <Box display={{ xs: "none", sm: "none", md: "block" }} >
-              <SearchAppBar />
+            <Box display={{ xs: "none", sm: "none", md: "block" }} sx={{mr: '30px'}} >
+              <SearchAppBar  />
             </Box> 
-
 
             <Box
               sx={{
@@ -107,7 +106,9 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
                 <FavoriteBtn quantity={favoriteQuantity} />
               )}
               
-              {isAdmin === false && <CartBtn quantity={cartQuantity} marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />} 
+              {isAdmin === false && 
+                <CartBtn quantity={cartQuantity} marginRight={ !isLogin ? '30px' : {xs: '30px', md: '0', }} />
+              } 
 
               <Box display={{ xs: "none", sm: "none", md: "flex" }} >
                 {!isLogin ? (

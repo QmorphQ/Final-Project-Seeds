@@ -9,6 +9,13 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     width: 'fit-content',
+    marginRight: '15px',
+    '@media (max-width: 900px)': {
+      marginRight: '50px',
+    },
+    '@media (max-width: 500px)': {
+      marginRight: '35px',
+    },
   },
   Icon: {
     color: "#359740",

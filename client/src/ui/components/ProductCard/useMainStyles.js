@@ -18,7 +18,7 @@ export const useMainStyles = makeStyles((theme) => ({
   },
   productCardMedia: {
     width: "294px",
-    margin: "28px auto",
+    margin: "28px",
     borderRadius: "12px",
   },
   productCardRating: {

@@ -704,6 +704,7 @@ export const ProductCardRender = ({ data }) => {
     <Grid
       item
       xs={12}
+      sm={6}
       md={6}
       lg={4}
       sx={{ display: "flex", justifyContent: "center" }}
@@ -722,7 +723,10 @@ export const ProductCardRender = ({ data }) => {
               color="warning"
               aria-label="add to favourite"
             >
-              {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              {isFavourite ? 
+              <FavoriteIcon/> 
+              : 
+              <FavoriteBorderIcon />}
             </IconButton>
           }
         />
@@ -730,7 +734,9 @@ export const ProductCardRender = ({ data }) => {
         <CardMedia
           className={mainClasses.productCardMedia}
           component="img"
-          width="294px"
+          // width="294px"
+          width={{xs: "100%", sm: "294px"}}
+          sx={{width: {xs: "calc(100% - 56px)", md: "294px"}}}
           image={`${imageUrls}`}
           alt={name}
         />

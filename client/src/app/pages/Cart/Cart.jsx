@@ -11,17 +11,13 @@ import {
   fetchCart,
 } from "../../../store/thunks/cart.thunks";
 import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
+import CartListMobile from "./CartListMobile.jsx";
 
 const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
     marginBottom: "40px !important",
     marginTop: "40px !important",
     fontWeight: "bold !important",
-  },
-
-  cartContainer: {
-    display: "flex",
-    flexDirection: "row",
   },
 
   contShopBtn: {
@@ -80,7 +76,11 @@ const Cart = () => {
 
   return (
     <>
-      <Box className={classes.cartContainer}>
+      <Box
+        className={classes.cartContainer}
+        display={{ xs: "flex", sm: "flex" }}
+        flexDirection={{ xs: "column", sm: "row" }}
+      >
         <Box>
           <Typography
             className={classes.yourCartHeading}
@@ -91,6 +91,7 @@ const Cart = () => {
           </Typography>
           <Divider />
           <Box component="main" className={classes.cartContainer}>
+            <CartListMobile />
             <CartList />
           </Box>
         </Box>

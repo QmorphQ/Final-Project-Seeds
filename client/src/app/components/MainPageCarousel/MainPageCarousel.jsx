@@ -274,7 +274,7 @@ const useStyles = makeStyles({
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
-  console.log(slideList);
+ 
 
   return (
     requestState === "success" && (

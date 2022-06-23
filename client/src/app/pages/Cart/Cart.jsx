@@ -11,10 +11,14 @@ import {
   fetchCart,
 } from "../../../store/thunks/cart.thunks";
 import Preloader from "../../../ui/components/Preloader/Preloader.jsx";
-import CartListMobile from "./CartListMobile.jsx";
+import MobileCartList from "./MobileCartList.jsx";
 
 const useStyles = makeStyles((theme) => ({
   yourCartHeading: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: "40px !important",
     marginTop: "40px !important",
     fontWeight: "bold !important",
@@ -80,19 +84,38 @@ const Cart = () => {
         className={classes.cartContainer}
         display={{ xs: "flex", sm: "flex" }}
         flexDirection={{ xs: "column", sm: "row" }}
+        justifyContent={"center"}
+        alignItems={{ xs: "center", sm: "baseline" }}
       >
         <Box>
-          <Typography
-            className={classes.yourCartHeading}
-            variant="h2"
-            component="h2"
-          >
-            Your cart.
-          </Typography>
+          <Box>
+            <Typography
+              className={classes.yourCartHeading}
+              variant="h2"
+              component="h2"
+              fontSize={{ xs: "22px", sm: "36px" }}
+              paddingLeft={{ xs: "15px", sm: 0 }}
+            >
+              Your cart.
+              <Typography
+                variant="h3"
+                component="h3"
+                fontSize={{ xs: "16px", sm: "24px" }}
+                color={"rgba(112, 115, 124, 1)"}
+                paddingRight={{ xs: "15px", sm: 0 }}
+              >
+                {cart.length} items
+              </Typography>
+            </Typography>
+          </Box>
           <Divider />
           <Box component="main" className={classes.cartContainer}>
-            <CartListMobile />
-            <CartList />
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <CartList />
+            </Box>
+            <Box sx={{ display: { xs: "flex", sm: "none" } }}>
+              <MobileCartList />
+            </Box>
           </Box>
         </Box>
         <OrderSummary />

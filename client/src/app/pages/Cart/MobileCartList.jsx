@@ -1,20 +1,16 @@
-// import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import CartItemMobile from "./CartItem.jsx";
+import MobileCartItem from "./MobileCartItem.jsx";
 
-// const useStyles = makeStyles(() => ({}));
-
-const CartListMobile = () => {
+const MobileCartList = () => {
   const cart = useSelector((state) => state.cart.cart) || [];
-  //   const classes = useStyles();
 
   const cartListMobile = cart.map((cartItem) => {
     const totalPrice =
       Number(cartItem.cartQuantity) * Number(cartItem.currentPrice);
 
     return (
-      <CartItemMobile
+      <MobileCartItem
         key={cartItem.id}
         product={{
           ...cartItem,
@@ -32,4 +28,4 @@ const CartListMobile = () => {
   return <Box>{cartListMobile}</Box>;
 };
 
-export default CartListMobile;
+export default MobileCartList;

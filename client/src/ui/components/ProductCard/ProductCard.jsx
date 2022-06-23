@@ -720,6 +720,7 @@ export const ProductCardRender = ({ data }) => {
                   : () => dispatch(addProductToWishlist(_id))
               }
               className={mainClasses.productCardButton}
+
               color="warning"
               aria-label="add to favourite"
             >
@@ -779,6 +780,7 @@ export const ProductCardRender = ({ data }) => {
           >
             {localPrice.format(currentPrice)}
           </Typography>
+          
         </CardContent>
 
         <CardActions className={mainClasses.productActionsBox}>

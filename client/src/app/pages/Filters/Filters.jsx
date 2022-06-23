@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Drawer, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ProductsListFilters from "../../components/ProductsList/ProductsListFilters.jsx";
@@ -34,6 +36,13 @@ import PriceFilter from "../../../ui/components/FiltersComponents/PriceFilter.js
 
 const Filters = () => {
   const classes = useFiltersStyles();
+  const [iconClasses, setIconClasses] = useState(classes.filtersIcon);
+  const [iconOffClasses, setIconOffClasses] = useState(
+    `${classes.filtersIcon} ${classes.isClosed}`
+  );
+  const [filtersClasses, setFiltersClasses] = useState(classes.filters);
+  console.log(iconClasses)
+  console.log(iconOffClasses)
 
   const productsQuantity = useSelector(productsQuantitySelector);
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
@@ -61,7 +70,7 @@ const Filters = () => {
     searchParams.forEach((value, key) => {
       newParams[key] = value;
     });
-    initialParams = newParams;
+    initialParams = { ...newParams, ...defaultParams };
   } else {
     initialParams = defaultParams;
   }
@@ -134,6 +143,24 @@ const Filters = () => {
   }, [queryParams]);
 
   useEffect(() => {
+    let verifiedParams = {};
+    searchParams.forEach((value, key) => {
+      verifiedParams[key] = value;
+    });
+
+    if (!verifiedParams.startPage) {
+      verifiedParams = { ...verifiedParams, ...defaultParams };
+    }
+
+    if (Object.keys(verifiedParams).length > 0) {
+      dispatch(fetchFilteredProducts(verifiedParams));
+    }
+
+    dispatch(setQueryParams(verifiedParams));
+    setSearchParams(new URLSearchParams(verifiedParams));
+  }, [searchParams]);
+
+  useEffect(() => {
     if (selectedCategory.length !== 0) {
       dispatch(
         setQueryParams({ ...queryParams, categories: selectedCategory })
@@ -167,17 +194,43 @@ const Filters = () => {
     }
   }, [maturationCheckBoxState]);
 
+  const toggleFilters = () => {
+    if (filtersClasses === classes.filters) {
+      setFiltersClasses(`${classes.filters}${classes.isOpen}`);
+    } else {
+      setFiltersClasses(classes.filters);
+    }
+
+    if (iconClasses === classes.filtersIcon) {
+      setIconClasses(classes.isClosed);
+      setIconOffClasses(classes.filtersIcon);
+    } else {
+      setIconClasses(classes.filtersIcon);
+      setIconOffClasses(classes.isClosed);
+    }
+  };
+
   return (
     <>
       <Grid container>
-        <Grid item xs={0} md={4}>
-          <Drawer
+        <Grid item xs={0} md={4} className={classes.center}>
+          <Box
             className={classes.drawer}
             variant="permanent"
             classes={{ paper: classes.drawerPaper }}
             anchor="left"
           >
-            <Stack spacing={4}>
+            <FilterAltIcon
+              color="primary"
+              className={iconClasses}
+              onClick={toggleFilters}
+            />
+            <FilterAltOffIcon
+              color="primary"
+              className={iconOffClasses}
+              onClick={toggleFilters}
+            />
+            <Stack spacing={4} className={filtersClasses}>
               <Typography variant="h5" className={classes.title}>
                 FILTERS
               </Typography>
@@ -193,7 +246,7 @@ const Filters = () => {
               <MaturationFilter />
             </Stack>
             {/* links/list section */}
-          </Drawer>
+          </Box>
         </Grid>
         <Grid item xs={12} md={8}>
           <InfiniteScroll

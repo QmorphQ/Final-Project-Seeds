@@ -176,7 +176,8 @@ const AddToCartModal = ({
                             _id,
                             productAmount,
                             name,
-                            currentPrice,
+                            // currentPrice,
+                            totalPrice / productAmount,
                             imageUrls
                           )
                         );

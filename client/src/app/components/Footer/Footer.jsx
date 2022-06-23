@@ -15,7 +15,10 @@ export default function Footer() {
       </Box>
       <Box
         className={FooterClasses.BoxMain}
-        sx={{ paddingBottom: { xs: "12px", sm: "12px", md: "23px" } }}
+        sx={{
+          paddingBottom: { xs: "12px", sm: "12px", md: "23px" },
+          fontSize: { xs: "12px", sm: "14px" },
+        }}
       >
         <Box
           className={FooterClasses.BoxLink}

@@ -1,5 +1,6 @@
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
@@ -10,9 +11,9 @@ import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import CheckboxWrapper from './Components/FormsUI/Checkbox';
 import { addCustomer } from '../../../store/thunks/customer.thunks';
-import { downloadRequestStates } from '../../constants/index';
 import { customersRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
+
 
 const style = makeStyles({
   ItemBlock: {
@@ -31,7 +32,6 @@ const style = makeStyles({
 });
 
 export default function SignUp() {
-  
     const requestState = useSelector(customersRequestSelector);
     const navigation = useNavigate()
     const styles = style();
@@ -51,12 +51,10 @@ export default function SignUp() {
     firstName: Yup.string()
       .min(2, "Too Short!")
       .max(30, "Too Long!")
-      .matches(/[a-zA-Z]/, "Firstname can only contain Latin letters.")
       .required("Required"),
     lastName: Yup.string()
       .min(2, "Too Short!")
       .max(30, "Too Long!")
-      .matches(/[a-zA-Z]/, "Lastname can only contain Latin letters.")
       .required("Required"),
     email: Yup.string().required("Required").email("Invalid email."),
     login: Yup.string()
@@ -79,20 +77,30 @@ export default function SignUp() {
     navigation(-1);
   };
 
+  const [redirect, setRedirect] = useState(true);
+  
   const handleSubmit = (values) => {
     const valuesToPost = { ...values };
     delete valuesToPost.passwordConfirm;
     dispatch(addCustomer(valuesToPost));
-    handleClose();
   };
 
-  // console.log(localStorage.getItem("jwt"));
+
+  useEffect(() => {
+    setRedirect(true)
+    if(requestState === "error"){
+      setRedirect(!redirect)
+    }
+    if(requestState === "success"){
+      navigation("/")
+    }
+  },[requestState])
+
 
   return (
     <>
       <Box
         className={styles.BlockCenter}
-        onClose={handleClose}
         sx={{
           border: `1px solid green`,
           p: 3,
@@ -151,13 +159,13 @@ export default function SignUp() {
               </Grid>
 
               <Grid item xs={12}>
-                <ButtonWrapper onClick={handleClose}>Sign Up</ButtonWrapper>
+                <ButtonWrapper>Sign Up</ButtonWrapper>
               </Grid>
             </Grid>
           </Form>
         </Formik>
       </Box>
-      {requestState === downloadRequestStates.ERROR && (
+      {redirect ? false : (
         <ErrorHandler
           errorMessage={"User with this email or login are already exists"}
         />
@@ -165,3 +173,4 @@ export default function SignUp() {
     </>
   );
 }
+

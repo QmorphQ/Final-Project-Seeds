@@ -4,10 +4,11 @@ export const useFiltersStyles = makeStyles(() => ({
   productCard: {
     borderRadius: "8px",
     position: "relative",
-    border: "2px solid #EFEFEF",
+    border: "1px solid #EFEFEF",
     boxShadow: "none",
     minHeight: "400px",
     maxWidth: "400px",
+    margin: "0 auto",
   },
   productCardHeader: {
     position: "absolute",
@@ -49,7 +50,7 @@ export const useFiltersStyles = makeStyles(() => ({
     padding: "0px important",
   },
   productCardButtons: {
-    display:"flex",
-    flexDirection:"row"
-  }
+    display: "flex",
+    flexDirection: "row",
+  },
 }));

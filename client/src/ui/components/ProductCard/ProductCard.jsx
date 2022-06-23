@@ -35,8 +35,6 @@ import Carousel from "react-material-ui-carousel";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-// import CheckBoxIcon from '@mui/icons-material/CheckBox';
-
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"; 
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'; 
 import SyncAltOutlinedIcon from '@mui/icons-material/SyncAltOutlined';
@@ -57,7 +55,8 @@ import {
   mainCategoriesSelector,
   wishlistSelector,
   isAdminStateSelector,
-  adminDeleteProductRequestSelector,
+  adminDeleteProductRequestSelector, 
+  loginStateSelector, 
 } from "../../../store/selectors/selectors";
 import {
   addProductToCart,
@@ -71,11 +70,9 @@ import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
-import { imgURLs } from "./ProductMedia";
 import {
   addProductToWishlist,
   deleteProductFromWishlist,
-  fetchWishlist,
 } from "../../../store/thunks/wishlist.thunks";
 import Spinner from "../Spinner/Spinner.jsx";
 
@@ -86,11 +83,15 @@ export const ProductCardRender = ({ data }) => {
     imageUrls,
     isProductPage,
     isFiltersPage,
+    packageDimensions,
     categories,
     quantity,
     isBasket,
     discountPrice,
     itemNo,
+    itemWeight,
+    ASIN,
+    itemAbout,
     _id,
     cartQuantity,
   } = data;
@@ -108,7 +109,8 @@ export const ProductCardRender = ({ data }) => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
-  const wishlist = useSelector(wishlistSelector);
+  const wishlist = useSelector(wishlistSelector); 
+  const isLogin = useSelector(loginStateSelector); 
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
 
@@ -123,11 +125,6 @@ export const ProductCardRender = ({ data }) => {
           .then(result => setProductItem(result))
   }, [open]);
 
-
-  useEffect(() => {
-    dispatch(fetchWishlist());
-  }, []);
-
   useEffect(() => {
     dispatch(fetchCart());
   }, []);
@@ -137,10 +134,6 @@ export const ProductCardRender = ({ data }) => {
       toggleIsFavourite(!!wishlist.products.find((item) => item._id === _id));
     }
   }, [wishlist]);
-
-  const media = imgURLs.filter((item) => +item.itemNo === +itemNo);
-  // console.log(JSON.stringify(data));
-  // console.log(JSON.stringify(imgURLs));
 
   useEffect(() => {
     // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
@@ -159,7 +152,7 @@ export const ProductCardRender = ({ data }) => {
   const filtersClasses = useFiltersStyles();
 
   const mainCategory = useSelector(mainCategoriesSelector).find((category) =>
-    categories.includes(category.name)
+    categories?.includes(category.name)
   );
 
   const localPrice = Intl.NumberFormat("en-US", {
@@ -283,7 +276,7 @@ export const ProductCardRender = ({ data }) => {
                     marginTop: "22px",
                   },
                 }}
-                IndicatorIcon={media[0].url.map((url, i) => (
+                IndicatorIcon={imageUrls.map((url, i) => (
                   <CardMedia
                     key={i}
                     sx={{ width: "67px" }}
@@ -302,7 +295,7 @@ export const ProductCardRender = ({ data }) => {
                   },
                 }}
               >
-                {media[0].url.map((item, i) => (
+                {imageUrls.map((item, i) => (
                   <CardMedia
                     key={i}
                     className={productPageClasses.productCardMedia}
@@ -370,7 +363,7 @@ export const ProductCardRender = ({ data }) => {
                           Package Dimensions
                         </TableCell>
                         <TableCell align="right">
-                          {media[0].packageDimensions}
+                          {packageDimensions}
                         </TableCell>
                       </TableRow>
                       <TableRow
@@ -382,7 +375,7 @@ export const ProductCardRender = ({ data }) => {
                           Item Weight
                         </TableCell>
                         <TableCell align="right">
-                          {media[0].itemWeight}
+                          {itemWeight}
                         </TableCell>
                       </TableRow>
                       <TableRow
@@ -393,7 +386,7 @@ export const ProductCardRender = ({ data }) => {
                         <TableCell component="th" scope="row">
                           ASIN
                         </TableCell>
-                        <TableCell align="right">{media[0].ASIN}</TableCell>
+                        <TableCell align="right">{ASIN}</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -474,22 +467,25 @@ export const ProductCardRender = ({ data }) => {
 
                   {isAdmin === false && (
                     <Box className={productPageClasses.productCardButtons}>
-                      <IconButton
-                        className={productPageClasses.productCardButton}
-                        color="primary"
-                        aria-label="add to favourite"
-                        onClick={
-                          isFavourite
-                            ? () => dispatch(deleteProductFromWishlist(_id))
-                            : () => dispatch(addProductToWishlist(_id))
-                        }
-                      >
-                        {isFavourite ? (
-                          <FavoriteIcon />
-                        ) : (
-                          <FavoriteBorderIcon />
-                        )}
-                      </IconButton>
+                      
+                      {isLogin &&
+                        <IconButton
+                          className={productPageClasses.productCardButton}
+                          color="primary"
+                          aria-label="add to favourite"
+                          onClick={
+                            isFavourite
+                              ? () => dispatch(deleteProductFromWishlist(_id))
+                              : () => dispatch(addProductToWishlist(_id))
+                          }
+                        >
+                          {isFavourite ? (
+                            <FavoriteIcon />
+                          ) : (
+                            <FavoriteBorderIcon />
+                          )}
+                        </IconButton>
+                      }
                       <Button
                         className={productPageClasses.productCardButtonBasket}
                         variant="contained"
@@ -528,9 +524,14 @@ export const ProductCardRender = ({ data }) => {
                                     boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)', 
                                     borderRadius: '10px', 
                                     p: 6,
-                                    '@media (max-width: 768px)': {
+                                    '@media (max-width: 900px)': {
                                       top: '50%',
                                       left: '50%', 
+                                      width: 330,
+                                      pt: 5, 
+                                      pb: 5, 
+                                      pl: 2, 
+                                      pr: 2, 
                                     }, 
                                 }} 
                           >
@@ -586,7 +587,7 @@ export const ProductCardRender = ({ data }) => {
               variant="body1"
               color="text.primary"
             >
-              {media[0].itemAbout.map((item, i) => (
+              {itemAbout.map((item, i) => (
                 <ListItem key={i}>
                   <Typography>{item}</Typography>
                 </ListItem>
@@ -604,8 +605,8 @@ export const ProductCardRender = ({ data }) => {
         <Card className={filtersClasses.productCard}>
           <CardHeader
             className={mainClasses.productCardHeader}
-            action={
-              <IconButton
+             action={
+              isLogin && isAdmin === false && <IconButton
                 className={mainClasses.productCardButton}
                 color="warning"
                 aria-label="add to favourite"
@@ -703,6 +704,7 @@ export const ProductCardRender = ({ data }) => {
     <Grid
       item
       xs={12}
+      sm={6}
       md={6}
       lg={4}
       sx={{ display: "flex", justifyContent: "center" }}
@@ -711,17 +713,21 @@ export const ProductCardRender = ({ data }) => {
         <CardHeader
           className={mainClasses.productCardHeader}
           action={
-            <IconButton
+            isLogin && isAdmin === false && <IconButton
               onClick={
                 isFavourite
                   ? () => dispatch(deleteProductFromWishlist(_id))
                   : () => dispatch(addProductToWishlist(_id))
               }
               className={mainClasses.productCardButton}
+
               color="warning"
               aria-label="add to favourite"
             >
-              {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              {isFavourite ? 
+              <FavoriteIcon/> 
+              : 
+              <FavoriteBorderIcon />}
             </IconButton>
           }
         />
@@ -729,7 +735,9 @@ export const ProductCardRender = ({ data }) => {
         <CardMedia
           className={mainClasses.productCardMedia}
           component="img"
-          width="294px"
+          // width="294px"
+          width={{xs: "100%", sm: "294px"}}
+          sx={{width: {xs: "calc(100% - 56px)", md: "294px"}}}
           image={`${imageUrls}`}
           alt={name}
         />
@@ -772,6 +780,7 @@ export const ProductCardRender = ({ data }) => {
           >
             {localPrice.format(currentPrice)}
           </Typography>
+          
         </CardContent>
 
         <CardActions className={mainClasses.productActionsBox}>

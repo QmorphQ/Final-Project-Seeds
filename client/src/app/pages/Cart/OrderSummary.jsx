@@ -58,6 +58,7 @@ const OrderSummary = () => {
   const classes = useStyles();
   const cart = useSelector((state) => state.cart.cart);
   const totalSum = useSelector((state) => state.cart.totalSum);
+
   let discount = 0;
   if (totalSum >= 500) {
     discount = (totalSum / 100) * 20;
@@ -106,7 +107,7 @@ const OrderSummary = () => {
             $ {totalAmount.toFixed(2)}
           </Typography>
         </Box>
-        <Link to={"*"} style={{ textDecoration: "none" }}>
+        <Link to={"/checkout"} style={{ textDecoration: "none" }}>
           <Button className={classes.continueBtn} variant="contained">
             <Typography>Continue</Typography>
           </Button>

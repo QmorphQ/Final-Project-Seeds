@@ -4,7 +4,6 @@ import { Box, Typography, Divider, Container, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useSelector, useDispatch } from "react-redux";
 import OrderSummary from "./OrderSummary.jsx";
-// import { downloadRequestStates } from "../../constants/index";
 import CartList from "./CartList.jsx";
 import {
   countTotalAmountOrder,
@@ -36,23 +35,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Cart = () => {
-  // const  totalSumStore = useSelector((state) => state.cart.totalSum)
   const cart = useSelector((state) => state.cart.cart) || [];
-  // const totalSum = useSelector((state) => state.cart.totalSum);
   const loading = useSelector((state) => state.cart.downloadRequestState);
   const isLoggedIn = useSelector((state) => state.customer.isLoggedIn);
   const dispatch = useDispatch();
 
   const classes = useStyles();
 
-  // const [totalSum, setTotalSum] = useState(0);
-
-  // useEffect(() => {
-  //   const sumOrder = cart.reduce((accumulator, currentValue) => (
-  //     accumulator + currentValue.currentPrice * currentValue.cartQuantity
-  //  ), 0);
-  //   setTotalSum(sumOrder)
-  // }, [cart]);
   useEffect(() => {
     dispatch(fetchCart());
   }, [isLoggedIn]);
@@ -72,7 +61,7 @@ const Cart = () => {
           component="h2"
           sx={{ textAlign: "center" }}
         >
-          No Products in Car
+          No Products in Cart
         </Typography>
       </Container>
     );
@@ -137,8 +126,5 @@ const Cart = () => {
   );
 };
 
-// Cart.propTypes = {
-//   loading: PropTypes.oneOf(Object.values(downloadRequestStates)).isRequired,
-// };
 
 export default Cart;

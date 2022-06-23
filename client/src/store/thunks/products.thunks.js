@@ -25,7 +25,6 @@ const fetchProducts =
     axios
       .get(uri)
       .then((products) => {
-        console.log(products);
         dispatch(downloadAllProductsSuccess(products.data.products));
         dispatch(downloadFilteredProductsSuccess(products.data.products));
         return products;
@@ -84,8 +83,7 @@ const rateProduct = (id, updatedProduct) => (dispatch) => {
       dispatch(uploadProductRatingSuccess(product));
       return product;
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       dispatch(uploadProductRatingError());
     });
 };

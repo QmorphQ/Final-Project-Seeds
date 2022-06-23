@@ -1,5 +1,6 @@
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from "@mui/styles";
@@ -11,7 +12,6 @@ import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
 import { loginRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
-import { downloadRequestStates } from '../../constants/index';
 
 
 
@@ -52,20 +52,26 @@ export default function LogIn() {
         .required('Required')
     })
 
+    const [redirect, setRedirect] = useState(true)
+
+    useEffect(() => {
+      setRedirect(true)
+      if(requestState === "error"){
+        setRedirect(!redirect)
+      }
+      if(requestState === "success"){
+        navigation("/")
+      }
+    },[requestState])
 
 
-    // const handleClickOpen = () =>{
-    //   setOpen(true)
-    // }
 
     const handleClose = () =>{
-      navigation(-1)
+      navigation("/")
     }
 
     const handleSubmit = values => {
-      dispatch(loginCustomer(values))
-      // console.log(values)
-      handleClose()
+      dispatch(loginCustomer(values)) 
     }
 
     return (
@@ -103,7 +109,7 @@ export default function LogIn() {
                       </Grid> 
                                 
                       <Grid item xs={12}>
-                        <ButtonWrapper onClick={handleClose}>
+                        <ButtonWrapper>
                           Log In
                         </ButtonWrapper>
                       </Grid>
@@ -111,7 +117,7 @@ export default function LogIn() {
                   </Form>
                 </Formik>
             </Box>
-            {requestState === downloadRequestStates.ERROR && (
+            { redirect ? false : (
         <ErrorHandler errorMessage={"Incorrect email or password."} />)}      
     </>);
 }

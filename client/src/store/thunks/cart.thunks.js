@@ -20,6 +20,8 @@ import {
   editSuccess,
   editError,
   orderAmountUpdated,
+  clearProductsInCartSuccess,
+  clearProductsInCartError
 } from "../actions/cart.actions";
 
 const countTotalAmountOrder = () => (dispatch, getState) => {
@@ -64,9 +66,9 @@ const fetchCart = () => async (dispatch, getState) => {
       }
       const cartForAPI = newCart.map((item) => ({
         product: item.id,
-        imageUrls: item.imageUrls,
-        name: item.name,
-        currentPrice: item.currentPrice,
+        // imageUrls: item.imageUrls,
+        // name: item.name,
+        // currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       await axios.put(
@@ -99,8 +101,15 @@ const addCart = (cart) => (dispatch) => {
       })
       .then((response) => {
         const newCart = response.data.products.map((cartProduct) => ({
-          id: cartProduct.product._id,
-          cartQuantity: cartProduct.cartQuantity,
+        //  --------------------
+          // id: cartProduct.product._id,
+          // cartQuantity: cartProduct.cartQuantity,
+        //   -------------------
+        id: cartProduct.product._id,
+        imageUrls: cartProduct.product.imageUrls,
+        name: cartProduct.product.name,
+        currentPrice: cartProduct.product.currentPrice,
+        cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addCartSuccess(newCart));
       })
@@ -312,6 +321,31 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
   }
 };
 
+const  clearProductsInCart = () => (dispatch) => {
+  // dispatch(deleteProductFromCartRequest());
+  const token = localStorage.getItem("jwt");
+ 
+  if (token) {
+    axios
+    .delete(`${API}cart`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+      .then(() => {
+       
+        dispatch(clearProductsInCartSuccess());
+      })
+      .catch(() => {
+       dispatch(clearProductsInCartError());
+      });
+  } else {
+    
+    
+    dispatch(clearProductsInCartSuccess());
+  }
+};
+
 export {
   fetchCart,
   addCart,
@@ -321,4 +355,5 @@ export {
   changeProductQuantity,
   changeLocalCart,
   countTotalAmountOrder,
+  clearProductsInCart,
 };

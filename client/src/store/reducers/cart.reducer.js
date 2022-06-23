@@ -18,6 +18,8 @@ import {
   DELETE_PRODUCT_FROM_CART_SUCCESS,
   DELETE_PRODUCT_FROM_CART_ERROR,
   ORDER_AMOUNT_UPDATED,
+  EMPTY_SHOPPING_CART,
+  EMPTY_SHOPPING_CART_ERROR,
 } from "../actions/cart.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -28,7 +30,7 @@ const initialState = {
   editCartState: downloadRequestStates.IDLE,
   decreaseQuantityState: downloadRequestStates.IDLE,
   deleteProductFromCartState: downloadRequestStates.IDLE,
-  downloadOrderAmountUpdated: downloadRequestStates.IDLE,
+  clearShoppingCartState: "IDLE",
   cart: [],
   totalSum: 0,
 };
@@ -45,6 +47,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         downloadRequestState: downloadRequestStates.SUCCESS,
+        clearShoppingCartState: "IDLE",
         cart: action.payload,
       };
 
@@ -64,6 +67,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         addCartRequestState: downloadRequestStates.SUCCESS,
+        clearShoppingCartState: "IDLE",
         cart: action.payload,
       };
 
@@ -83,6 +87,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         addProductToCartRequestState: downloadRequestStates.SUCCESS,
+        clearShoppingCartState: "IDLE",
         cart: action.payload,
       };
 
@@ -140,6 +145,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteProductFromCartState: downloadRequestStates.SUCCESS,
+        clearShoppingCartState: "IDLE",
         cart: action.payload,
       };
 
@@ -154,6 +160,21 @@ const cartReducer = (state = initialState, action) => {
         ...state,
           totalSum: action.payload,
         };
+
+    case EMPTY_SHOPPING_CART:
+        return {
+        ...state,
+        cart: [],
+        clearShoppingCartState: downloadRequestStates.SUCCESS,
+        };
+
+    case EMPTY_SHOPPING_CART_ERROR:
+        return {
+        ...state,
+        cart: [],
+        clearShoppingCartState: downloadRequestStates.ERROR,
+        };
+  
 
     default:
       return state;

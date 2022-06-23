@@ -624,7 +624,6 @@ export const ProductCardRender = ({ data }) => {
           <CardMedia
             className={filtersClasses.productCardMedia}
             component="img"
-            width="250px"
             image={`${imageUrls}`}
             alt={name}
           />
@@ -735,9 +734,6 @@ export const ProductCardRender = ({ data }) => {
         <CardMedia
           className={mainClasses.productCardMedia}
           component="img"
-          // width="294px"
-          width={{xs: "100%", sm: "294px"}}
-          sx={{width: {xs: "calc(100% - 56px)", md: "294px"}}}
           image={`${imageUrls}`}
           alt={name}
         />

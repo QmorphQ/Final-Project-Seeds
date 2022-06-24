@@ -53,7 +53,6 @@ import { API } from "../../../app/constants/index";
 import {
   cartSelector,
   mainCategoriesSelector,
-  wishlistSelector,
   isAdminStateSelector,
   adminDeleteProductRequestSelector,
   loginStateSelector,
@@ -70,11 +69,9 @@ import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
-import {
-  addProductToWishlist,
-  deleteProductFromWishlist,
-} from "../../../store/thunks/wishlist.thunks";
 import Spinner from "../Spinner/Spinner.jsx";
+import { useRating } from "./useRating.jsx";
+import { useWishlist } from "./useWishlist.jsx";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -97,7 +94,6 @@ export const ProductCardRender = ({ data }) => {
   } = data;  
 
 
-  const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
@@ -111,7 +107,6 @@ export const ProductCardRender = ({ data }) => {
   const dispatch = useDispatch(); 
   const navigation = useNavigate();
 
-  const wishlist = useSelector(wishlistSelector);
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
@@ -126,20 +121,12 @@ export const ProductCardRender = ({ data }) => {
           .then(result => setProductItem(result))
   }, [open]); 
 
-
   useEffect(() => {
     dispatch(fetchCart());
     window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
-    if (wishlist) {
-      toggleIsFavourite(!!wishlist.products.find((item) => item._id === _id));
-    }
-  }, [wishlist]);
-
-  useEffect(() => {
-    // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
     setTotalPrice((prevProductAmount) =>
       prevProductAmount <= discontStart
         ? productAmount * currentPrice
@@ -171,6 +158,9 @@ export const ProductCardRender = ({ data }) => {
     }, 3000);
   };
 
+  const [ratingValue, rateProduct] = useRating(data);
+  const [isFavourite, toggleInWishlist] = useWishlist(_id);
+ 
   if (isBasket) {
     return (
       <Card>
@@ -471,11 +461,7 @@ export const ProductCardRender = ({ data }) => {
                           className={productPageClasses.productCardButton}
                           color="primary"
                           aria-label="add to favourite"
-                          onClick={
-                            isFavourite
-                              ? () => dispatch(deleteProductFromWishlist(_id))
-                              : () => dispatch(addProductToWishlist(_id))
-                          }
+                          onClick={toggleInWishlist}
                         >
                           {isFavourite ? (
                             <FavoriteIcon />
@@ -612,21 +598,14 @@ export const ProductCardRender = ({ data }) => {
           <CardHeader
             className={mainClasses.productCardHeader}
             action={
-              isLogin &&
-              isAdmin === false && (
-                <IconButton
-                  className={mainClasses.productCardButton}
-                  color="warning"
-                  aria-label="add to favourite"
-                  onClick={
-                    isFavourite
-                      ? () => dispatch(deleteProductFromWishlist(_id))
-                      : () => dispatch(addProductToWishlist(_id))
-                  }
-                >
-                  {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </IconButton>
-              )
+              <IconButton
+                className={mainClasses.productCardButton}
+                color="warning"
+                aria-label="add to favourite"
+                onClick={toggleInWishlist}
+              >
+                {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
             }
           />
 
@@ -640,9 +619,9 @@ export const ProductCardRender = ({ data }) => {
           <Rating
             className={mainClasses.productCardRating}
             name="half-rating"
-            defaultValue={2.5}
+            value={ratingValue}
             precision={0.5}
-            onChange={(e) => e}
+            onChange={(e) => {rateProduct(e)}}
           />
 
           <CardContent className={mainClasses.productCardContent}>
@@ -724,11 +703,7 @@ export const ProductCardRender = ({ data }) => {
             isLogin &&
             isAdmin === false && (
               <IconButton
-                onClick={
-                  isFavourite
-                    ? () => dispatch(deleteProductFromWishlist(_id))
-                    : () => dispatch(addProductToWishlist(_id))
-                }
+                onClick={toggleInWishlist}
                 className={mainClasses.productCardButton}
                 color="warning"
                 aria-label="add to favourite"
@@ -749,9 +724,9 @@ export const ProductCardRender = ({ data }) => {
         <Rating
           className={mainClasses.productCardRating}
           name="half-rating"
-          defaultValue={2.5}
           precision={0.5}
-          onChange={(e) => e}
+          value={ratingValue}
+          onChange={(e) => {rateProduct(e)}}
         />
 
         <CardContent className={mainClasses.productCardContent}>

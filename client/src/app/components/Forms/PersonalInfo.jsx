@@ -35,12 +35,6 @@ function PersonalInfo() {
   }, []);
 
 
-  // const updateCurrentCustomer = () => {
-  //   dispatch(updateCustomer())
-  // }
-
-  //  console.log(open);
-
   const INITIAL_FORM_STATE = {
     firstName: currentCustomer?.firstName,
     lastName: currentCustomer?.lastName,

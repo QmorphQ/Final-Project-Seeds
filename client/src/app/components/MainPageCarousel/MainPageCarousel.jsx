@@ -144,45 +144,7 @@ function Item(props) {
   // });
 
 
-//   const data = {
-//     "enabled": true,
-//     "imageUrls": [
-//         "https://res.cloudinary.com/danbeavers/image/upload/v1643484123/9125PQypA4S._AC_SL1500__ektwec.jpg"
-//     ],
-//     "quantity": 12,
-//     "_id": "61f6c1ef481e16304cbbbd7a",
-//     "name": "seedra 70 corn seeds for indoor and outdoor planting - home garden - gmo-free and heirloom seeds - 1 pack",
-//     "currentPrice": 10,
-//     "categories": "vegetables-mono",
-//     "description": "SEEDRA Corn - Bodacious Hybrid - contains 70 seeds in 1 Pack and professional instructions",
-//     "currentRating": 4.5,
-//     "itemNo": "601020",
-//     "date": "2022-01-30T16:50:55.902Z",
-//     "__v": 0,
-//     "discountPrice": 7,
-//     "origin": "english",
-//     "maturation": "late",
-//     "faq": [
-//         {
-//             "question": "Can they be grown on hydraponic systems?",
-//             "answer": "I have heat mats and artificial light. I planted them in all purpose of potting soil. Moist not wet. Placed them on heat mat. If not available, somewhere where it's 72 degrees. Add natural light, but i used artificial light."
-//         },
-//         {
-//             "question": "For seller: are this seeds organic? It does matter if they are organic, seeds can hold pesticides from the plant they grow from.",
-//             "answer": "Yes, this seeds 100% organic. Usually the don't hold any pesticides from the soil"
-//         }
-//     ],
-//     "itemWeight": "0.317 ounces",
-//     "packageDimensions": "5.43 x 3.5 x 0.35 inches",
-//     "ASIN": "B0968P124N",
-//     "itemAbout": [
-//         "SEEDRA Corn - Bodacious Hybrid - contains 70 seeds in 1 Pack and professional instructions",
-//         "Be Sure Of Our Quality - the freshest batches of this season. Non-GMO, Heirloom - our seeds were tested and have the best germination ratings. Your easy growing experience is our guarantee",
-//         "Corn Common Culinary Uses: salads, stir-fries, pastas, dips, succotash, pudding, tacos, soups, pizzas, and more",
-//         "Proudly Sourced in the USA - our garden seeds are grown, harvested, and packaged in the USA. We support local farmers and are happy to produce this American-made product",
-//         "SEEDRA Customer Service - please contact us directly through Amazon with any questions or concerns about our products. We care about each customer and do our best to provide you with 100% satisfaction"
-//     ]
-// }
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>

@@ -24,7 +24,7 @@ import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import FavoriteBtn from './HeaderBtns/FavoriteBtn.jsx';
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
-
+import { fetchWishlist } from "../../../store/thunks/wishlist.thunks";
 import { fetchCart } from "../../../store/thunks/cart.thunks";
 // ++++++++++++++++
 // Auth Component:
@@ -60,6 +60,9 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath}) => {
     }
   }, [])
 
+  useEffect(() => {
+    dispatch(fetchWishlist)
+  }, [])
   
   // =============================================== Render ==============================================
   return (

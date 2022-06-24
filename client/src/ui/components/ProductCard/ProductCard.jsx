@@ -66,9 +66,7 @@ import {
 } from "../../../store/thunks/cart.thunks"; 
 
 import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
-import { adminDeleteProductIdle } from "../../../store/actions/admin.actions"; 
-
-import { API } from "../../../app/constants/index";
+import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";

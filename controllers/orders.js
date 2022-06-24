@@ -44,7 +44,7 @@ exports.placeOrder = async (req, res, next) => {
     if (cartProducts.length > 0) {
       order.products = _.cloneDeep(cartProducts);
     } else {
-      order.products = JSON.parse(req.body.products);
+      order.products = req.body.products; // JSON.parse is not needed
     }
 
     order.totalSum = order.products.reduce(
@@ -97,12 +97,12 @@ exports.placeOrder = async (req, res, next) => {
       newOrder
         .save()
         .then(async order => {
-          const mailResult = await sendMail(
-            subscriberMail,
-            letterSubject,
-            letterHtml,
-            res
-          );
+          // const mailResult = await sendMail(
+          //   subscriberMail,
+          //   letterSubject,
+          //   letterHtml,
+          //   res
+          // );
 
           for (item of order.products){
             const id = item.product._id;
@@ -111,7 +111,7 @@ exports.placeOrder = async (req, res, next) => {
             await Product.findOneAndUpdate({ _id: id }, { quantity: productQuantity - item.product.quantity }, { new: true })
           }
 
-          res.json({ order, mailResult });
+          res.json({ order });
         })
         .catch(err =>
           res.status(400).json({
@@ -204,14 +204,14 @@ exports.updateOrder = (req, res, next) => {
       )
         .populate("customerId")
         .then(async order => {
-          const mailResult = await sendMail(
-            subscriberMail,
-            letterSubject,
-            letterHtml,
-            res
-          );
+          // const mailResult = await sendMail(
+          //   subscriberMail,
+          //   letterSubject,
+          //   letterHtml,
+          //   res
+          // );
 
-          res.json({ order, mailResult });
+          res.json({ order });
         })
         .catch(err =>
           res.status(400).json({
@@ -261,14 +261,14 @@ exports.cancelOrder = (req, res, next) => {
       )
         .populate("customerId")
         .then(async order => {
-          const mailResult = await sendMail(
-            subscriberMail,
-            letterSubject,
-            letterHtml,
-            res
-          );
+          // const mailResult = await sendMail(
+          //   subscriberMail,
+          //   letterSubject,
+          //   letterHtml,
+          //   res
+          // );
 
-          res.json({ order, mailResult });
+          res.json({ order });
         })
         .catch(err =>
           res.status(400).json({

@@ -1,28 +1,18 @@
-/* eslint-disable  */
 import React from 'react';
 import { makeStyles } from "@mui/styles";
-import { Typography, Container, Grid } from '@mui/material';
+import { Typography } from '@mui/material';
 import Tab from "../Tab/Tab.jsx"; 
 import Tabs from "../Tabs/Tabs.jsx"; 
 import Icon from "../Icon/Icon.jsx"; 
 
+/* eslint-disable  */
 const useStyles = makeStyles(() => ({
-        ourProductsContainer: {
-            display: "flex",
-            flexDirection: "column",
+        ourProducts: {
+            maxWidth: "1110px",   
         },
-
         ourProductHeading: {
             marginBottom: "40px !important",
             fontWeight: "bold !important",
-        },
-
-        ourProductTabsContainer: {
-            display: "flex",
-            justifyContent: "center"
-        },
-        ourProductTabs: {
-            marginBottom: "40px !important",
         }
     
 }))
@@ -76,17 +66,19 @@ const categoriies = [
 
     return (
         <>
-            <Container className={classes.ourProducts}>
-                <Grid className={classes.ourProductsContainer}>
-                    <Typography className={classes.ourProductHeading} variant="h3" component="h3">
+        <main>
+            <section className={classes.ourProducts}>
+                <div>
+                    <Typography className={classes.ourProductHeading} variant="h1" component="h2">
                         Our products.
                     </Typography>
-                    <div className={classes.ourProductTabsContainer}>
-                        <Tabs className={classes.ourProductTabs} value={value} onChange={handleChange}>{categoriesTabs}</Tabs>
+                    <div>
+                        <Tabs value={value} onChange={handleChange}>{categoriesTabs}</Tabs>
                     </div>
 
-                </Grid>
-            </Container>
+                </div>
+            </section>
+        </main>
         </>
     )
 }

@@ -17,9 +17,17 @@ const createCustomTheme = (theme) => {
       warning: {
         main: "rgba(255, 207, 85, 1)",
       },
+      disable: {
+        main: "rgba(53, 151, 64, 0.08)",
+        contrastText: "rgba(79, 160, 131, 1)",
+      },
       error: {
         main: "rgba(229, 92, 92, 1)",
         contrastText: "rgba(255, 255, 255, 1)",
+      },
+      info: {
+        main: "rgba(239, 239, 239, 1)",
+        primary: "rgba(53, 151, 64, 0,08)"
       },
       text: {
         primary: "rgba(31, 37, 51, 1)",
@@ -33,6 +41,9 @@ const createCustomTheme = (theme) => {
         ...theme.palette.action,
         hover: "rgba(53, 151, 64, 0.4)",
         hoverOpacity: 0.4,
+        disabledBackground: "rgba(53, 151, 64, 0.08)",
+        disabled: "rgba(79, 160, 131, 1)",
+        active: "rgba(79, 160, 131, 1)",
       },
     },
     typography: {
@@ -45,10 +56,14 @@ const createCustomTheme = (theme) => {
       h2: {
         ...theme.typography.h2,
         fontFamily: "'Lexend', sans-serif",
+        fontSize: "36px",
+        fontWeight: "bold"
       },
       h3: {
         ...theme.typography.h3,
         fontFamily: "'Lexend', sans-serif",
+        fontSize: "16px",
+        lineHeight: "26px"
       },
       h4: {
         ...theme.typography.h4,
@@ -89,6 +104,20 @@ const createCustomTheme = (theme) => {
       overline: {
         ...theme.typography.overline,
         fontFamily: "'Lexend', sans-serif",
+      },
+    },
+    mixins: {
+      ...theme.mixins,
+      wrapper: {
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: "1110px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+      },
+      "@media (max-width: 480px)": {
+        paddingLeft: "16px",
+        paddingRight: "16px",
       },
     },
   });

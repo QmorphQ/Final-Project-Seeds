@@ -1,34 +1,38 @@
 import { Box } from "@mui/material";
-import TabsSection from "../../ui/components/TabsSection/TabsSection.jsx"
-import HeaderMobile from "../../ui/components/Header/HeaderMobile.jsx";
-import HeaderDesktop from "../../ui/components/Header/HeaderDesktop.jsx";
-import FooterDesktop from "../../ui/components/ Footer/FooterDesktop.jsx";
-import FooterMobile from "../../ui/components/ Footer/FooterMobile.jsx";
-import ProductsList from "../../ui/components/ProductsList/ProductsList.jsx";
+import { useEffect } from "react";
+import { 
+  useDispatch, 
+  // useSelector 
+} from "react-redux";
+import OurProducts from "../components/OurProducts/OurProducts.jsx";
+import { API, PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../constants";
+import MainPageCarousel from "../components/MainPageCarousel/MainPageCarousel.jsx";
+import ProductsList from "../components/ProductsList/ProductsList.jsx";
+import fetchCategories from "../../store/thunks/catalog.thunks";
+import fetchSlides from "../../store/thunks/slides.thunks";
+import { fetchProducts } from "../../store/thunks/products.thunks";
+import { fetchWishlist } from "../../store/thunks/wishlist.thunks";
 
-/* eslint-disable  */
-const Home = ({loading, productList}) => {
+const Home = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchSlides());
+    dispatch(fetchProducts(`${API}products/filter?perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`));
+    dispatch(fetchCategories());
+    dispatch(fetchWishlist());
+  }, []);
+
   return (
     <>
-
-      <Box display={{ xs: "block", sm: "block", md: "none" }}>
-        <HeaderMobile />
+      <Box component="main">
+        <MainPageCarousel />
+        <OurProducts />
+        <ProductsList />
       </Box>
-      <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <HeaderDesktop />
-     </Box>
-
-     <TabsSection loading={loading} productList={productList} />
-     <ProductsList products={productList} loading={loading} />
-       
-     <Box display={{ xs: "block", sm: "block", md: "none" }} >
-        <FooterMobile />
-     </Box>
-     <Box display={{ xs: "none", sm: "none", md: "block" }}>
-        <FooterDesktop  />
-     </Box>
     </>
-  )
-}
+  );
+};
 
 export default Home;

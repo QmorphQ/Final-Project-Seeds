@@ -5,35 +5,38 @@ const PaymentMethodSchema = new Schema(
   {
     customId: {
       type: String,
-      required: true
+      required: true,
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
     description: {
-      type: String
+      type: String,
     },
     enabled: {
       type: Boolean,
       required: true,
-      default: true
+      default: true,
     },
     default: {
       type: Boolean,
       required: true,
-      default: false
+      default: false,
     },
-    imageUrl: {
-      type: String
-    },
+    imageUrls: [
+      {
+        type: String,
+        required: true
+      },
+    ],
     paymentProcessor: {
-      type: Schema.Types.Mixed
+      type: Schema.Types.Mixed,
     },
     date: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   { strict: false }
 );

@@ -6,6 +6,7 @@
 2. **Molchanova Daria** - Project Manager;
 3. **Bondarenko Serhiy** - Developer;
 4. **Anton Ogniev** - Developer;
+4. **Ogniev Anton**
 5. **Rakhil Igor** - Developer;
 6. **Koshelivskiy Alexey** - Developer;
 7. **Motsnyi Yurii** - Developer;

@@ -25,6 +25,7 @@ const shippingMethods = require("./routes/shippingMethods");
 const paymentMethods = require("./routes/paymentMethods");
 const partners = require("./routes/partners");
 const mainRoute = require("./routes/index");
+const searchKeys = require("./routes/searchKeys");
 
 const app = express();
 
@@ -68,7 +69,9 @@ app.use("/api/comments", comments);
 app.use("/api/shipping-methods", shippingMethods);
 app.use("/api/payment-methods", paymentMethods);
 app.use("/api/partners", partners);
+app.use("/api/searchKeys", searchKeys);
 app.use("/", mainRoute);
+
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
@@ -80,6 +83,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => console.log(`Server running on port ${port} 🚀`));

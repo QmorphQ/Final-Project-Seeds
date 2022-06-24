@@ -5,26 +5,36 @@ import {
   filterProductsByCategory,
 } from "./thunks/products.thunks";
 
-import { loginCustomer } from "./thunks/customer.thunk";
+import { loginCustomer } from "./thunks/customer.thunks";
 
 import {
-  downloadRequestStateSelector,
   productsSelector,
   customersSelector,
   slidesSelector,
+  allCategoriesSelector,
+  mainCategoriesSelector,
 } from "./selectors/selectors";
 import fetchSlides from "./thunks/slides.thunks";
+import fetchCategories from "./thunks/catalog.thunks";
 
 function TestStore() {
-  const downloadRequestState = useSelector(downloadRequestStateSelector);
+  const allCategories = useSelector(allCategoriesSelector);
+  const mainCategories = useSelector(mainCategoriesSelector);
+  const downloadRequestState = useSelector('');
   const productList = useSelector(productsSelector);
   const slideList = useSelector(slidesSelector);
   const customerInfo = useSelector(customersSelector);
 
+  console.log(allCategories);
+  console.log(mainCategories);
   console.log(customerInfo);
   console.log(slideList);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
 
   useEffect(() => {
     dispatch(fetchProducts());

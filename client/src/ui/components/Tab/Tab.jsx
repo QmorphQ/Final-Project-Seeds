@@ -4,12 +4,9 @@ const StyledTab = styled((props) => (
     <MUITab {...props} />
 ))(
     ({theme}) => `
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-right: 12px;
     color: ${theme.palette.text.primary};
-    border: 2px solid ${theme.palette.grey["300"]};
+    border: 1px solid ${theme.palette.grey["300"]};
+    margin: 10px 0; 
     box-sizing: border-box;
     border-radius: 8px;
 

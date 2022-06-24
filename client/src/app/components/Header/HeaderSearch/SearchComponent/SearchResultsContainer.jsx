@@ -14,6 +14,10 @@ import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   searchContainer: { 
+    position: "absolute",
+    zIndex: "99999",
+    right: "0",
+    top: "150%",
     padding: '30px', 
     width: '384px',
     boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.2)', 
@@ -21,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     '@media (max-width: 900px)': {
       padding: '10px', 
       width: '334px',
+      right: "-40px",
     },
   }, 
   searchOption: {

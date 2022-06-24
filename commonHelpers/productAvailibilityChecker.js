@@ -14,7 +14,7 @@ module.exports = async orderProducts => {
           orderedQuantity,
           realQuantity,
           diff: realQuantity - orderedQuantity,
-          available: realQuantity >= orderedQuantity
+          available: true
         });
 
         return result;

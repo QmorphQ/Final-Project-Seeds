@@ -1,13 +1,13 @@
 import { Container, Grid, Box, Typography } from "@mui/material";
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"; 
+
+import { PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../../../app/constants"; 
+
 import ProductCard from "../ProductCard/ProductCard.jsx";
-import { PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../../../app/constants";
 import ProductCardLoader from "../ProductCard/ProductCardLoader.jsx";
 
-// const userData = { /* UNUSED DATA!!! *//
-//   loginOrEmail: "valeron",
-//   password: "justdrink",
-// };
+
+
 
 const ProductsListSection = ({ data, loading, isLoading, productsNumber }) => {
 

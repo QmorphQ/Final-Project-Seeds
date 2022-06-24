@@ -4,7 +4,7 @@ export const useMainStyles = makeStyles((theme) => ({
   productCard: {
     borderRadius: "8px",
     position: "relative",
-    border: `2px solid ${theme.palette.grey["300"]}`,
+    border: `1px solid ${theme.palette.grey["300"]}`,
     boxShadow: "none",
     minHeight: "512px",
     maxWidth: "350px"
@@ -17,8 +17,8 @@ export const useMainStyles = makeStyles((theme) => ({
     border: `1px solid ${theme.palette.grey["300"]}`,
   },
   productCardMedia: {
-    width: "294px",
-    margin: "28px auto",
+    width: "calc(100% - 56px)",
+    margin: "28px",
     borderRadius: "12px",
   },
   productCardRating: {

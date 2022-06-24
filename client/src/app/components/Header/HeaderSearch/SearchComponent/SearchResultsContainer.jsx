@@ -13,19 +13,33 @@ import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  searchContainer: {
-    width: 600,
-    [theme.breakpoints.down("xs")]: {
-      width: "fit-content",
+  searchContainer: { 
+    position: "absolute",
+    zIndex: "99999",
+    right: "0",
+    top: "150%",
+    padding: '30px', 
+    width: '384px',
+    boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.2)', 
+    border: '1px solid #efefef', 
+    '@media (max-width: 900px)': {
+      padding: '10px', 
+      width: '334px',
+      right: "-40px",
     },
-  },
+  }, 
   searchOption: {
-    height: 50,
-    [theme.breakpoints.down("xs")]: {
-      width: "200px",
-      height: 20,
+    height: 90, 
+    boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)', 
+    width: '300px', 
+    '&:hover': { 
+      boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.3)', 
+    }, 
+    '@media (max-width: 600px)': {
+      height: 60,
     },
-  },
+  }, 
+
   searchImage: {
     height: 70,
     width: 70,
@@ -54,14 +68,18 @@ const useStyles = makeStyles((theme) => ({
 const pressets = {
   styles: {
     optionCard: {
+      margin: '5px 0', 
       padding: "10px",
       display: "flex",
       alignItems: "center",
-      flexDirection: "row",
-      justifyContent: "space-between",
+      flexFlow: "row wrap",
+      justifyContent: "flex-start",
       backgroundColor: "rgba(0, 0, 0, 0.01)",
-      boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
       height: "60px",
+      '@media (max-width: 900px)': {
+        padding: '5px',
+      },
+      
     },
   },
 };
@@ -89,15 +107,19 @@ function RenderUnit({ imgUrl, name, price, itemNo }) {
             gutterBottom
             variant="caption"
             component="div"
+            sx={{ textDecoration: 'underline', 
+                  textDecorationColor: 'white' }}
           >
-            Name: {name.match(/^.+?(?=seeds)/i)}
+            {name.match(/^.+?(?=seeds)/i)}
           </Typography>
           <Typography
+            sx={{ textDecoration: 'underline',
+                  textDecorationColor: 'white' }}
             className={classes.searchPrice}
             variant="body1"
-            color="text.primary"
+            // color="text.primary"
           >
-            Price: {price} $
+            {price} $
           </Typography>
         </CardContent>
       </Card>
@@ -120,6 +142,8 @@ RenderUnit.propTypes = {
   itemNo: PropTypes.string,
 };
 
+
+
 export default function SearchResultContainer({
   products = 0,
   active,
@@ -136,12 +160,14 @@ export default function SearchResultContainer({
       className={classes.searchContainer}
       id="search-container"
       sx={{
-        boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
         position: "absolute",
         zIndex: "99999",
         backgroundColor: "white",
         right: "0",
         top: "150%",
+        '@media (max-width: 900px)': {
+          right: "-40px",
+        },
         borderRadius: "5px",
         width: ((activeContainer, oneCardFromProps) => {
           if (activeContainer) {
@@ -158,7 +184,7 @@ export default function SearchResultContainer({
     >
       <Grid spacing={1} container>
         {productsToRender.map((prod, i) => (
-          <Grid sm={oneCard ? 12 : 6} item key={prod.itemNo + i}>
+          <Grid sm={12} item key={prod.itemNo + i} >
             <RenderUnit
               imgUrl={prod.imageUrls[0]}
               name={prod.name}

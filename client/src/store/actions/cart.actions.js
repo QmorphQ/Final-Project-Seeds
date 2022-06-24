@@ -111,3 +111,19 @@ export const EDIT_ERROR = "EDIT_ERROR";
 export const editError = () => ({
   type: EDIT_ERROR,
 });
+
+export const ORDER_AMOUNT_UPDATED = "ORDER_AMOUNT_UPDATED";
+export const orderAmountUpdated = (totalSum) => ({
+  type: ORDER_AMOUNT_UPDATED,
+  payload: totalSum,
+});
+
+export const EMPTY_SHOPPING_CART = "EMPTY_SHOPPING_CART";
+export const clearProductsInCartSuccess = () => ({
+  type: EMPTY_SHOPPING_CART,
+});
+
+export const EMPTY_SHOPPING_CART_ERROR = "EMPTY_SHOPPING_CART_ERROR";
+export const clearProductsInCartError = () => ({
+  type: EMPTY_SHOPPING_CART_ERROR,
+});

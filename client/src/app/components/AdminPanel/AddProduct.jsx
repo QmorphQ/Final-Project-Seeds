@@ -9,11 +9,14 @@ import { MenuItem, TextField, Button, CardMedia, IconButton } from '@mui/materia
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'; 
 import AddIcon from '@mui/icons-material/Add';
 
+import useStylesAddProduct from './useStylesAddProduct';
+
 import { productCategories } from '../../constants'; 
 
 import { adminAddProductRequestSelector } from '../../../store/selectors/selectors';
-import { adminAddProductIdle } from '../../../store/actions/admin.actions';
+import { adminAddProductIdle } from '../../../store/actions/admin.actions'; 
 import { adminAddProduct, adminUpdateProduct } from '../../../store/thunks/admin.thunks'; 
+
 
 
 
@@ -53,13 +56,24 @@ const validationSchema = yup.object({
         .string()
         .required('required') 
         .max(4, 'too long value')
-        .matches(/[0-9]/, 'value is not valid, please, enter a decimal number'),
+        .matches(/[0-9]/, 'value is not valid, please, enter a decimal number'), 
+
+    itemWeight: yup
+        .string()
+        .required('required'),
+
+    ASIN: yup 
+        .string()
+        .required('required')
+        .max(10, 'too long value'),
 });
 
   
 
 
 const AddProduct = ({ product, onClose }) => {
+
+    useStylesAddProduct(); 
 
     const isProductAdded = useSelector(adminAddProductRequestSelector);
     const dispatch = useDispatch();
@@ -91,6 +105,8 @@ const AddProduct = ({ product, onClose }) => {
             packageDimensions: product?.packageDimensions || '', 
             currentRating: product?.currentRating || '', 
             quantity: product?.quantity || '', 
+            itemWeight: product?.itemWeight || '', 
+            ASIN: product?.ASIN || '', 
             imageUrls0: '', 
             imageUrls1: '',
             imageUrls2: '',
@@ -115,14 +131,21 @@ const AddProduct = ({ product, onClose }) => {
                               discountPrice: Number(values.discountPrice), 
                               packageDimensions: values.packageDimensions, 
                               currentRating: Number(values.currentRating), 
-                              quantity: Number(values.quantity) };
+                              quantity: Number(values.quantity), 
+                              itemWeight: values.itemWeight, 
+                              ASIN: values.ASIN.toUpperCase() };
 
             if (product) { 
 
                 const resultImgList = [...new Set([...newAddedImg, ...restAfterDeleteImg])]; 
 
                 dispatch(adminUpdateProduct(product._id, { ...payload, imageUrls: resultImgList }));
-                onClose(); 
+                 
+                onClose();
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 200); 
 
             } else { 
                 
@@ -153,10 +176,8 @@ const AddProduct = ({ product, onClose }) => {
                                 name='name'
                                 id='outlined-basic' 
                                 label='name' 
-                                variant='outlined' 
-                                
-                                sx={{ width: 350, 
-                                      m: '10px' }}
+                                variant='outlined'
+                                className='product-input'                              
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
                                 error={formik.touched.name && Boolean(formik.errors.name)}
@@ -164,13 +185,23 @@ const AddProduct = ({ product, onClose }) => {
                             />  
 
                             <TextField 
+                                name='ASIN'
+                                id='outlined-basic' 
+                                label='ASIN' 
+                                variant='outlined'
+                                className='product-input'                              
+                                value={formik.values.ASIN.toUpperCase()}
+                                onChange={formik.handleChange}
+                                error={formik.touched.ASIN && Boolean(formik.errors.ASIN)}
+                                helperText={formik.touched.ASIN && formik.errors.ASIN}
+                            />  
+
+                            <TextField 
                                 name='description'
                                 id='outlined-basic' 
                                 label='description' 
                                 variant='outlined' 
-                                
-                                sx={{ width: 350, 
-                                      m: '10px' }}
+                                className='product-input'                              
                                 value={formik.values.description}
                                 onChange={formik.handleChange}
                                 error={formik.touched.description && Boolean(formik.errors.description)}
@@ -181,8 +212,7 @@ const AddProduct = ({ product, onClose }) => {
                                 id='outlined-select-currency'
                                 name='categories'
                                 select
-                                sx={{ width: 350, 
-                                      m: '10px' }}
+                                className='product-input'                               
                                 label='categories'
                                 value={formik.values.categories}
                                 onChange={formik.handleChange}
@@ -206,8 +236,7 @@ const AddProduct = ({ product, onClose }) => {
                                 id='outlined-basic' 
                                 label='current price' 
                                 variant='outlined' 
-                                sx={{ width: 350, 
-                                      m: '10px' }}
+                                className='product-input'                                
                                 value={formik.values.currentPrice}
                                 onChange={formik.handleChange}
                                 error={formik.touched.currentPrice && Boolean(formik.errors.currentPrice)}
@@ -219,8 +248,7 @@ const AddProduct = ({ product, onClose }) => {
                                 id='outlined-basic' 
                                 label='discount price (optional)' 
                                 variant='outlined' 
-                                sx={{ width: 350, 
-                                      m: '10px' }}
+                                className='product-input'                                
                                 value={formik.values.discountPrice} 
                                 onChange={formik.handleChange}
                                 error={formik.touched.discountPrice && Boolean(formik.errors.discountPrice)}
@@ -232,15 +260,13 @@ const AddProduct = ({ product, onClose }) => {
                                 id='outlined-basic' 
                                 label='current rating (optional)' 
                                 variant='outlined' 
-                                sx={{ width: 350, 
-                                      m: '10px' }}
+                                className='product-input' 
                                 value={formik.values.currentRating} 
                                 onChange={formik.handleChange}
                                 error={formik.touched.currentRating && Boolean(formik.errors.currentRating)}
                                 helperText={formik.touched.currentRating && formik.errors.currentRating}
                             /> 
                         </div>
-
 
                         <div style={{ margin: '3% 0',
                                       display: 'flex', 
@@ -251,8 +277,7 @@ const AddProduct = ({ product, onClose }) => {
                                 id='outlined-basic' 
                                 label='quantity' 
                                 variant='outlined' 
-                                sx={{ width: 350, 
-                                      m: '10px' }}
+                                className='product-input' 
                                 value={formik.values.quantity} 
                                 onChange={formik.handleChange}
                                 error={formik.touched.quantity && Boolean(formik.errors.quantity)}
@@ -264,17 +289,26 @@ const AddProduct = ({ product, onClose }) => {
                                 id='outlined-basic' 
                                 label='package dimensions' 
                                 variant='outlined' 
-                                sx={{ width: 350, 
-                                      m: '10px' }}
-                                value={formik.values.packageDimensions} 
+                                className='product-input' 
+                                value={formik.values.packageDimensions}
                                 onChange={formik.handleChange}
                                 error={formik.touched.packageDimensions && Boolean(formik.errors.packageDimensions)}
                                 helperText={formik.touched.packageDimensions && formik.errors.packageDimensions}
                             /> 
 
-                            <div style={{ display: 'flex', 
-                                          flexFlow: 'row wrap', 
-                                          margin: '30px 0'}}>
+                            <TextField 
+                                name='itemWeight'
+                                id='outlined-basic' 
+                                label='item weight, ounces' 
+                                variant='outlined' 
+                                className='product-input' 
+                                value={formik.values.itemWeight} 
+                                onChange={formik.handleChange}
+                                error={formik.touched.itemWeight && Boolean(formik.errors.itemWeight)}
+                                helperText={formik.touched.itemWeight && formik.errors.itemWeight}
+                            />          
+
+                            <div className='img-mini'>
 
                             {product && product.imageUrls.map((item, index) => 
                                 <div key={`${index}`} 
@@ -308,15 +342,19 @@ const AddProduct = ({ product, onClose }) => {
                             {fieldsList.map((field) => (
                                 <div key={field} 
                                      style={{ display: 'flex', 
-                                              flexFlow: 'row nowrap', }}>
+                                              flexFlow: 'row', }}>
 
                                     <TextField 
                                         name={`imageUrls${field}`}
                                         id='outlined-basic' 
                                         label={ product ? `add new image URL` : `image URL (optional)` }
                                         variant='outlined' 
+                                        
                                         sx={{ width: 350, 
-                                              m: '10px 5px 10px 10px' }}
+                                              m: '10px 5px 10px 10px', 
+                                              '@media (max-width: 900px)': {
+                                                width: '300px', 
+                                              }, }}
                                         value={formik.values[`imageUrls${field}`]} 
                                         onChange={formik.handleChange}
                                     /> 
@@ -324,6 +362,11 @@ const AddProduct = ({ product, onClose }) => {
                                     <IconButton 
                                         disableRipple={true}
                                         onClick={handleAddField}
+                                        sx={{ color: '#50a257', 
+                                              '@media (max-width: 900px)': {
+                                                 position: 'relative', 
+                                                 right: '45px'
+                                              }, }}
                                     >
                                         <AddIcon 
                                             sx={{ color: '#50a257' }} 
@@ -399,5 +442,5 @@ export default AddProduct;
 
 AddProduct.propTypes = {
     product: PropTypes.object, 
-    onClose: PropTypes.func, 
+    onClose: PropTypes.func,
 };

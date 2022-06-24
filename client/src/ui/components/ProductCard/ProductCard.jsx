@@ -25,8 +25,8 @@ import {
   TableCell,
   ListItem,
   List,
-  Link, 
-  Modal, 
+  Link,
+  Modal,
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -35,9 +35,9 @@ import Carousel from "react-material-ui-carousel";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"; 
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'; 
-import SyncAltOutlinedIcon from '@mui/icons-material/SyncAltOutlined';
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -46,29 +46,29 @@ import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
-import Icon from "../Icon/Icon.jsx"; 
+import Icon from "../Icon/Icon.jsx";
 
-import { API } from '../../../app/constants/index'; 
+import { API } from "../../../app/constants/index";
 
 import {
   cartSelector,
   mainCategoriesSelector,
   isAdminStateSelector,
   adminDeleteProductRequestSelector,
+  loginStateSelector,
 } from "../../../store/selectors/selectors";
 import {
   addProductToCart,
   fetchCart,
   decreaseProductQuantity,
   changeProductQuantity,
-} from "../../../store/thunks/cart.thunks";
-import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
+} from "../../../store/thunks/cart.thunks"; 
 
+import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
 import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
-
 import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
@@ -91,36 +91,39 @@ export const ProductCardRender = ({ data }) => {
     itemAbout,
     _id,
     cartQuantity,
-  } = data;
+  } = data;  
+
 
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
   const [discontStart] = useState(10);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); 
+  
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false); 
+  const handleClose = () => setOpen(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const navigation = useNavigate();
 
+  const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
 
-  const isProductDeleted = useSelector(adminDeleteProductRequestSelector); 
-
+  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);  
+  
   const [productItem, setProductItem] = useState(); 
-
 
   useEffect(() => {
       fetch(`${API}products/${itemNo}`)
           .then(res => res.json())
           .then(result => setProductItem(result))
-  }, [open]);
+  }, [open]); 
 
   useEffect(() => {
     dispatch(fetchCart());
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -139,7 +142,7 @@ export const ProductCardRender = ({ data }) => {
   const filtersClasses = useFiltersStyles();
 
   const mainCategory = useSelector(mainCategoriesSelector).find((category) =>
-    categories.includes(category.name)
+    categories?.includes(category.name)
   );
 
   const localPrice = Intl.NumberFormat("en-US", {
@@ -151,7 +154,7 @@ export const ProductCardRender = ({ data }) => {
   const reloadAfterDelete = () => {
     setTimeout(() => {
       dispatch(adminDeleteProductIdle());
-      navigation(-1);
+      navigation('/');
     }, 3000);
   };
 
@@ -328,11 +331,11 @@ export const ProductCardRender = ({ data }) => {
                   <Chip
                     color="primary"
                     className={productPageClasses.productCardAvailable}
-                    label={mainCategory.name.toUpperCase()}
+                    label={mainCategory?.name.toUpperCase()}
                     icon={
                       <Icon
                         className={productPageClasses.buttonIcon}
-                        icon={Icon.icons[mainCategory.icon]}
+                        icon={Icon.icons[mainCategory?.icon]}
                       />
                     }
                     variant="outlined"
@@ -352,9 +355,7 @@ export const ProductCardRender = ({ data }) => {
                         <TableCell component="th" scope="row">
                           Package Dimensions
                         </TableCell>
-                        <TableCell align="right">
-                          {packageDimensions}
-                        </TableCell>
+                        <TableCell align="right">{packageDimensions}</TableCell>
                       </TableRow>
                       <TableRow
                         sx={{
@@ -364,9 +365,7 @@ export const ProductCardRender = ({ data }) => {
                         <TableCell component="th" scope="row">
                           Item Weight
                         </TableCell>
-                        <TableCell align="right">
-                          {itemWeight}
-                        </TableCell>
+                        <TableCell align="right">{itemWeight}</TableCell>
                       </TableRow>
                       <TableRow
                         sx={{
@@ -457,18 +456,20 @@ export const ProductCardRender = ({ data }) => {
 
                   {isAdmin === false && (
                     <Box className={productPageClasses.productCardButtons}>
-                      <IconButton
-                        className={productPageClasses.productCardButton}
-                        color="primary"
-                        aria-label="add to favourite"
-                        onClick={toggleInWishlist}
-                      >
-                        {isFavourite ? (
-                          <FavoriteIcon />
-                        ) : (
-                          <FavoriteBorderIcon />
-                        )}
-                      </IconButton>
+                      {isLogin && (
+                        <IconButton
+                          className={productPageClasses.productCardButton}
+                          color="primary"
+                          aria-label="add to favourite"
+                          onClick={toggleInWishlist}
+                        >
+                          {isFavourite ? (
+                            <FavoriteIcon />
+                          ) : (
+                            <FavoriteBorderIcon />
+                          )}
+                        </IconButton>
+                      )}
                       <Button
                         className={productPageClasses.productCardButtonBasket}
                         variant="contained"
@@ -478,75 +479,88 @@ export const ProductCardRender = ({ data }) => {
                       >
                         Add to card
                       </Button>
+                    </Box>
+                  )}
 
-                    </Box> 
-                  )}  
-
-                  {isAdmin &&
-                  <div>
-                       
-                      <IconButton onClick={handleOpen} >
-                          <SyncAltOutlinedIcon sx={{ fontSize: '26px',  
-                                                     color: '#FF6D6D' }} />
+                  {isAdmin && (
+                    <div>
+                      <IconButton onClick={handleOpen}>
+                        <SyncAltOutlinedIcon
+                          sx={{ fontSize: "26px", color: "#FF6D6D" }}
+                        />
                       </IconButton>
 
                       <Modal
-                          open={open}
-                          onClose={handleClose}
-                          aria-labelledby='modal-modal-title'
-                          aria-describedby='modal-modal-description'
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
                       >
-                          <Box sx={{ position: 'absolute',  
-                                    overflow: 'scroll',
-                                    top: '50%',
-                                    left: '75%',
-                                    transform: 'translate(-50%, -50%)',
-                                    width: 370, 
-                                    height: 400, 
-                                    bgcolor: 'white',
-                                    boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)', 
-                                    borderRadius: '10px', 
-                                    p: 6,
-                                    '@media (max-width: 768px)': {
-                                      top: '50%',
-                                      left: '50%', 
-                                    }, 
-                                }} 
-                          >
-                              <Typography id='modal-modal-title' 
-                                          variant='h6' 
-                                          component='h2'
-                                          sx={{ mb: '30px', 
-                                                ml: '10px', 
-                                                fontSize: 16 }}>
-                                  What do you want to update: 
-                              </Typography>
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            overflow: "scroll",
+                            top: "50%",
+                            left: "75%",
+                            transform: "translate(-50%, -50%)",
+                            width: 370,
+                            height: 400,
+                            bgcolor: "white",
+                            boxShadow: "0px 4px 16px rgba(43, 52, 69, 0.1)",
+                            borderRadius: "10px",
+                            p: 6,
+                            "@media (max-width: 900px)": {
+                              top: "50%",
+                              left: "50%",
+                              width: 330,
+                              pt: 5,
+                              pb: 5,
+                              pl: 2,
+                              pr: 2,
+                            },
+                          }}
+                        >
+                          <Typography
+                            id="modal-modal-title"
+                            variant="h6"
+                            component="h2"
+                            sx={{ mb: "30px", ml: "10px", fontSize: 16 }}
+                          > 
+                            What do you want to update: 
+                          </Typography>
 
-                              <AddProduct product={productItem} 
-                                          onClose={handleClose}/>
+                          <AddProduct product={productItem} 
+                                      onClose={handleClose} />
 
                           </Box>
                       </Modal>
 
-                      {isProductDeleted === 'idle' && 
-                      <IconButton onClick={() => {
-                                              dispatch(adminDeleteProduct(_id)); 
-                                              reloadAfterDelete(); 
-                                              }} >
-                        < DeleteOutlinedIcon sx={{ fontSize: '26px',  
-                                                   color: '#FF6D6D' }} 
-                        />
-                      </IconButton>} 
+                      {isProductDeleted === "idle" && (
+                        <IconButton
+                          onClick={() => {
+                            dispatch(adminDeleteProduct(_id));
+                            reloadAfterDelete();
+                          }}
+                        >
+                          <DeleteOutlinedIcon
+                            sx={{ fontSize: "26px", color: "#FF6D6D" }}
+                          />
+                        </IconButton>
+                      )}
 
-                      {isProductDeleted === 'success' && 
-                      <span style={{ margin: '10px 0 5px 30px', 
-                                     color: '#FF6D6D', 
-                                     fontFamily: "'Lexend', sans-serif", }}>
-                                            product has been deleted successfully
-                      </span>}
-                  </div>}
-
-
+                      {isProductDeleted === "success" && (
+                        <span
+                          style={{
+                            margin: "10px 0 5px 30px",
+                            color: "#FF6D6D",
+                            fontFamily: "'Lexend', sans-serif",
+                          }}
+                        >
+                          product has been deleted successfully
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </Box>
               </CardActions>
             </Grid>
@@ -598,7 +612,6 @@ export const ProductCardRender = ({ data }) => {
           <CardMedia
             className={filtersClasses.productCardMedia}
             component="img"
-            width="250px"
             image={`${imageUrls}`}
             alt={name}
           />
@@ -678,6 +691,7 @@ export const ProductCardRender = ({ data }) => {
     <Grid
       item
       xs={12}
+      sm={6}
       md={6}
       lg={4}
       sx={{ display: "flex", justifyContent: "center" }}
@@ -686,21 +700,23 @@ export const ProductCardRender = ({ data }) => {
         <CardHeader
           className={mainClasses.productCardHeader}
           action={
-            <IconButton
-              onClick={toggleInWishlist}
-              className={mainClasses.productCardButton}
-              color="warning"
-              aria-label="add to favourite"
-            >
-              {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
+            isLogin &&
+            isAdmin === false && (
+              <IconButton
+                onClick={toggleInWishlist}
+                className={mainClasses.productCardButton}
+                color="warning"
+                aria-label="add to favourite"
+              >
+                {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+            )
           }
         />
 
         <CardMedia
           className={mainClasses.productCardMedia}
           component="img"
-          width="294px"
           image={`${imageUrls}`}
           alt={name}
         />
@@ -774,13 +790,13 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
-const ProductCard = ({ product, loading }) => (
+const ProductCard = ({ product, loading }) =>(
   <RenderComponent
     loading={loading}
     data={product}
     renderSuccess={ProductCardRender}
     loadingFallback={Spinner}
-    renderError={<p>Error</p>}
+    renderError={<span>Error</span>}
   />
 );
 
@@ -799,7 +815,7 @@ ProductCard.propTypes = {
     _id: PropTypes.string,
     cartQuantity: PropTypes.number,
   }),
-  loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any;
+  loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any; 
 };
 ProductCardRender.propTypes = {
   data: PropTypes.object,

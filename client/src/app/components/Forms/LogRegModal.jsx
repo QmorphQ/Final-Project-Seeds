@@ -12,7 +12,7 @@ import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
 import { loginRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
-import { downloadRequestStates } from '../../constants/index';
+
 
 
 const style = makeStyles({
@@ -56,13 +56,14 @@ export default function LogIn() {
 
     useEffect(() => {
       setRedirect(true)
-      if(requestState === downloadRequestStates.ERROR){
+      if(requestState === "error"){
         setRedirect(!redirect)
       }
-      if(requestState === downloadRequestStates.SUCCESS){
+      if(requestState === "success"){
         navigation("/")
       }
     },[requestState])
+
 
 
     const handleClose = () =>{

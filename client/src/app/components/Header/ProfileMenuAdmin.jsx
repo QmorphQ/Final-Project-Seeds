@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
 import { IconButton, Divider, ListItemIcon, MenuItem, Menu } from "@mui/material";
 import { AccountCircle, Settings, Logout } from "@mui/icons-material";
@@ -8,7 +9,7 @@ import { Link } from "react-router-dom";
 
 
 
-export default function ProfileMenuAdmin () { 
+const ProfileMenuAdmin = ({ onClose }) => { 
 
     const [anchorEl, setAnchorEl] = useState(null); 
 
@@ -27,12 +28,12 @@ export default function ProfileMenuAdmin () {
 
     const handleClose = () => {
       setAnchorEl(null);
-    };
+    }; 
     
-    return(
+    return (
         <>
             <IconButton
-                sx={{fontSize: '28px', color: '#FF6D6D', ml: 3}} 
+                sx={{fontSize: '28px', color: '#FF6D6D'}} 
                 size="large"
                 edge="end"
                 aria-label="account of current user"
@@ -80,10 +81,13 @@ export default function ProfileMenuAdmin () {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
             
-                <Link  style={{ textDecoration: 'none',color: "black" }} to="/add-product">
+                <Link  style={{ textDecoration: 'none', color: "black" }} 
+                       to="/add-product" 
+                       onClick={() => onClose()} >
                     <MenuItem >
                         <ListItemIcon>
-                            <Settings fontSize="small" sx={{color: '#FF6D6D'}} />
+                            <Settings fontSize="small" 
+                                      sx={{color: '#FF6D6D'}} />
                         </ListItemIcon> Add Product
                     </MenuItem>
                 </Link> 
@@ -100,3 +104,10 @@ export default function ProfileMenuAdmin () {
       </>
     )
 }
+
+export default ProfileMenuAdmin; 
+
+
+ProfileMenuAdmin.propTypes = {
+    onClose: PropTypes.func, 
+};

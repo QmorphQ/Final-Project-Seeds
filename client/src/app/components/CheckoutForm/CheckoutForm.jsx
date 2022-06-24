@@ -1,98 +1,102 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import axios from "axios";
 import {
   Stepper,
   Step,
   StepLabel,
   Button,
   Box,
-  Grid,
   Typography,
-  Container,
+  CircularProgress,
 } from "@mui/material";
-import { useForm } from "react-hooks-helper";
+import { useSelector, useDispatch  } from "react-redux";
+import { Formik, Form } from "formik";
 import { PropTypes } from "prop-types";
-import DeliveryInfo from "./form-components/DeliveryInfo.jsx";
+import {
+  getCustomer
+} from "../../../store/thunks/customer.thunks";
+import { currentCustomerSelector, loginStateSelector, cartSelector } from "../../../store/selectors/selectors";
+import FORM_VALIDATION from "./FormValidation.jsx";
 import PaymentInfo from "./form-components/PaymentInfo.jsx";
 import CustomerInfo from "./form-components/CustomerInfo.jsx";
 import CheckoutSummary from "./form-components/CheckoutSummary.jsx";
+import ShippingInfo from "./form-components/ShippingInfo.jsx";
 
 const steps = ["1", "2", "3"];
 
 const defaultData = {
-  firstName: "Anton",
-  lastName: "Ogniev",
-  email: "anton@icloud.com",
-  telephone: "+38 095 514 3233",
-  street: "Hegenheimerstrasse",
-  house: "79",
-  flat: "130",
-  postalCode: "4055",
-  city: "Basel",
-  deliveryMethod: "home",
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  addressLine: "",
+  house: "",
+  flat: "",
+  code: "",
+  city: "",
   postOfficeCity: "",
   postOfficeWarehouse: "",
-  paymentMethod: "card",
 };
 
-export default function CheckoutForm() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [formData, setForm] = useForm(defaultData);
 
-  const createOrder = () => {
-    const newOrder = {
-      customerId: "5d99ce196d40fb1b747bc5f5",
-      deliveryAddress: {
-        country: "Ukraine",
-        city: formData.city,
-        address: `${formData.street} ${formData.house}, f.${formData.flat}`,
-        postal: formData.postalCode,
-      },
-      shipping: "Kiev 50UAH",
-      paymentInfo: formData.paymentMethod,
+export default function CheckoutForm() {
+
+  const currentCustomer = useSelector(currentCustomerSelector);
+  const cart = useSelector(cartSelector);
+  const [activeStep, setActiveStep] = useState(0);
+  const [orderSummary, setOrderSummary] = useState(0);
+  const [orderNumber, setOrderNumber] = useState(0);
+  const isLastStep = activeStep === steps.length - 1;
+  const formId = "checkoutForm";
+  const dispatch = useDispatch();
+  const isLogin = useSelector(loginStateSelector); 
+
+  useEffect(() => {
+    dispatch(getCustomer());
+  }, []);
+
+  let defaultCustomer;
+
+  isLogin ? 
+  (defaultCustomer = currentCustomer)
+  : (defaultCustomer = defaultData)
+
+  const createOrder = (order) => {
+    const address = JSON.stringify({
+      country: "Ukraine",
+      city: order.city,
+      address: `${order.addressLine} ${order.house}, ${order.flat}`,
+      postal: order.code,
+      postOfficeCity: order.postOfficeCity,
+      postOfficeWarehouse: order.postOfficeWarehouse,
+    })
+    const payment = JSON.stringify(order.paymentMethod)
+    const shippingDev = JSON.stringify(order.deliveryMethod)
+    const interimOrder = {
+      deliveryAddress: address,
+      shipping: shippingDev,
+      paymentInfo: payment,
+      canceled: false,
       status: "not shipped",
-      email: formData.email,
-      mobile: formData.telephone,
+      email: order.email,
+      mobile: order.phone,
       letterSubject: "Thank you for order! You are welcome!",
       letterHtml: `<h1>Your order №XXXXXXXX is placed. </h1>
     <p>Looking forward to see you again soon. In case of any questions - we are happy to help!</p>
-    <p>Sincerely, your WMF team.</p>`,
+    <p>Sincerely, your SEEDRA team.</p>`,
     };
+    if (order._id) {
+      return {
+        ...interimOrder,
+        customerId: `${order._id}`
+      }
+    }
 
     return {
-      ...newOrder,
-      products: "cart.products",
-    };
-  };
-
-  const submitNewOrder = () => {
-    const newOrder = createOrder();
-    console.log(newOrder);
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const props = { formData, setForm };
-
-  const StepContent = ({ step }) => {
-    switch (step) {
-      case 0:
-        return (
-          <>
-            <CustomerInfo {...props} />
-            <DeliveryInfo {...props} />
-          </>
-        );
-      case 1:
-        return <PaymentInfo {...props} />;
-      case 2:
-        return <CheckoutSummary {...props} />;
-      default:
-        return <></>;
+      ...interimOrder,
+      products: JSON.stringify(cart)
     }
-  };
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  }
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -102,27 +106,82 @@ export default function CheckoutForm() {
     setActiveStep(0);
   };
 
+
+  const placeOrderToDB = (values, actions) =>   {
+    const newOrder = createOrder(values);
+     axios
+      .post('http://localhost:8000/api/orders', newOrder)
+      .then((response) => {
+        actions.setSubmitting(false);
+        setActiveStep(activeStep + 1);
+        console.log(response);
+        setOrderNumber(response.data.order.orderNo)
+      })
+      .catch(() => {
+        console.log("error");
+      })
+
+    }
+
+  function _handleSubmit(values, actions) {
+    if (isLastStep) {
+      placeOrderToDB(values, actions);
+    } else {
+      setActiveStep(activeStep + 1);
+      setOrderSummary(values)
+      actions.setTouched({});
+      actions.setSubmitting(false);
+    }
+  }
+
+  const stepContent = (step) => {
+    switch (step) {
+      case 0:
+        return (
+          <>
+            <CustomerInfo/>
+            <ShippingInfo/>
+          </>
+        ) 
+      case 1:
+        return <PaymentInfo/>;
+      case 2:
+        return <CheckoutSummary formField={orderSummary}/>;
+      default:
+        return <div>Not Found</div>;
+    }
+  };
+
   return (
-    <Container
-      sx={{
-        width: "50%",
-        height: "85vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
+    defaultCustomer != null && 
+    <Box
+    margin={'auto'}
+    width={{ xs: "100%", sm: "50%"}}
+    display="flex"
+    flexDirection= "column"
+    justifyContent= "space-between"
+    padding="20px"
     >
       <Stepper activeStep={activeStep}>
-        {steps.map((index) => (
-          <Step key={index}>
-            <StepLabel></StepLabel>
-          </Step>
-        ))}
+        {steps.map((index) => 
+ (
+            <Step key={index}>
+              <StepLabel
+                sx={{
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setActiveStep(+index - 1);
+                }}
+              ></StepLabel>
+            </Step>
+          )
+        )}
       </Stepper>
       {activeStep === steps.length ? (
         <>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+          <Typography variant="h2" component="h2">
+          Thank You! Your oder #{orderNumber} has been placed!
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
@@ -130,37 +189,28 @@ export default function CheckoutForm() {
           </Box>
         </>
       ) : (
-        <>
-          <>
-            <Grid container spacing={2} direction="column">
-              <Grid item xs={12} sm={4} md={4}>
-                <StepContent step={activeStep} />
-              </Grid>
-            </Grid>
-          </>
-          <Box sx={{ display: "flex", flexDirection: "row", pb: "20px" }}>
-            {activeStep !== 0 && (
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-            )}
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button
-              onClick={
-                activeStep === steps.length - 1 ? submitNewOrder : handleNext
-              }
-            >
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
-          </Box>
-        </>
+        <Formik initialValues={defaultCustomer} validationSchema={FORM_VALIDATION} onSubmit={_handleSubmit}>
+          {
+          (props) => (
+            <Form id={formId}>
+              {stepContent(activeStep, props.setFieldValue)}
+              <Box display="flex" mt="20px" justifyContent="flex-end"> 
+                {activeStep !== 0 && <Button onClick={handleBack}>Back</Button>}
+                  <Button
+                    disabled={props.isSubmitting}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    {isLastStep? "Place order" : "Next"}
+                  </Button>
+                  {props.isSubmitting && <CircularProgress size={24} />}
+                </Box>
+            </Form>
+          )}
+        </Formik>
       )}
-    </Container>
+    </Box>
   );
 }
 
@@ -171,6 +221,16 @@ CheckoutForm.propTypes = {
     PropTypes.object,
   ]),
   step: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.string,
+    PropTypes.object,
+  ]),
+  isSubmitting: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.string,
+    PropTypes.object,
+  ]),
+  setFieldValue: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.string,
     PropTypes.object,

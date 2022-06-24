@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import Tab from "../../../ui/components/Tab/Tab.jsx";
 import Tabs from "../../../ui/components/Tabs/Tabs.jsx";
 import Icon from "../../../ui/components/Icon/Icon.jsx";
-import { downloadRequestStates, PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../../constants";
+import {
+  downloadRequestStates,
+  PRODUCTS_NUMBER_ON_MAIN_PAGE,
+} from "../../constants";
 import {
   downloadCategoriesRequestStateSelector,
   mainCategoriesSelector,
@@ -84,19 +87,30 @@ const OurProducts = () => {
     );
 
   const handleClick = (event) => {
-    if(event.target.dataset.category === "all") {
-      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`));
+    if (event.target.dataset.category === "all") {
+      dispatch(
+        fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`)
+      );
     } else if (event.target.dataset.category === "bundles") {
-      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${categories.map(category => category.name).reduce((acc, curr) => `${acc}${curr}-mix,`)}`));
+      dispatch(
+        fetchFilteredProducts(
+          `perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${categories
+            .map((category) => category.name)
+            .reduce((acc, curr) => `${acc}${curr}-mix,`)}`
+        )
+      );
     } else {
-      dispatch(fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${event.target.dataset.category},${event.target.dataset.category}-mono,${event.target.dataset.category}-mix`));
+      dispatch(
+        fetchFilteredProducts(
+          `perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${event.target.dataset.category},${event.target.dataset.category}-mono,${event.target.dataset.category}-mix`
+        )
+      );
     }
   };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
 
   const categoriesTabs = categories.map((category) => (
     <Tab
@@ -120,10 +134,15 @@ const OurProducts = () => {
               variant="h2"
               component="h2"
             >
-              Our products.
+              Our products
             </Typography>
             <Box>
-              <Tabs value={value} onChange={handleChange} onClick={handleClick}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                onClick={handleClick}
+                variant="scrollable"
+              >
                 {categoriesTabs}
               </Tabs>
             </Box>

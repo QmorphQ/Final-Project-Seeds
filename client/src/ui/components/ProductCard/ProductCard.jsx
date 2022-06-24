@@ -63,10 +63,12 @@ import {
   fetchCart,
   decreaseProductQuantity,
   changeProductQuantity,
-} from "../../../store/thunks/cart.thunks";
-import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
+} from "../../../store/thunks/cart.thunks"; 
 
-import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
+import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
+import { adminDeleteProductIdle } from "../../../store/actions/admin.actions"; 
+
+import { API } from "../../../app/constants/index";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
 import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
@@ -94,7 +96,8 @@ export const ProductCardRender = ({ data }) => {
     itemAbout,
     _id,
     cartQuantity,
-  } = data;
+  } = data;  
+
 
   const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
@@ -102,11 +105,12 @@ export const ProductCardRender = ({ data }) => {
   const [totalPrice, setTotalPrice] = useState(currentPrice);
   const [discontStart] = useState(10);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); 
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const navigation = useNavigate();
 
   const wishlist = useSelector(wishlistSelector);
@@ -114,18 +118,20 @@ export const ProductCardRender = ({ data }) => {
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
 
-  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);
-
-  const [productItem, setProductItem] = useState();
+  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);  
+  
+  const [productItem, setProductItem] = useState(); 
 
   useEffect(() => {
-    fetch(`${API}products/${itemNo}`)
-      .then((res) => res.json())
-      .then((result) => setProductItem(result));
-  }, [open]);
+      fetch(`${API}products/${itemNo}`)
+          .then(res => res.json())
+          .then(result => setProductItem(result))
+  }, [open]); 
+
 
   useEffect(() => {
     dispatch(fetchCart());
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -163,7 +169,7 @@ export const ProductCardRender = ({ data }) => {
   const reloadAfterDelete = () => {
     setTimeout(() => {
       dispatch(adminDeleteProductIdle());
-      navigation(-1);
+      navigation('/');
     }, 3000);
   };
 
@@ -337,11 +343,11 @@ export const ProductCardRender = ({ data }) => {
                   <Chip
                     color="primary"
                     className={productPageClasses.productCardAvailable}
-                    label={mainCategory.name.toUpperCase()}
+                    label={mainCategory?.name.toUpperCase()}
                     icon={
                       <Icon
                         className={productPageClasses.buttonIcon}
-                        icon={Icon.icons[mainCategory.icon]}
+                        icon={Icon.icons[mainCategory?.icon]}
                       />
                     }
                     variant="outlined"
@@ -535,15 +541,14 @@ export const ProductCardRender = ({ data }) => {
                             variant="h6"
                             component="h2"
                             sx={{ mb: "30px", ml: "10px", fontSize: 16 }}
-                          >
-                            What do you want to update:
+                          > 
+                            What do you want to update: 
                           </Typography>
 
-                          <AddProduct
-                            product={productItem}
-                            onClose={handleClose}
-                          />
-                        </Box>
+                          <AddProduct product={productItem} 
+                                      onClose={handleClose} />
+
+                          </Box>
                       </Modal>
 
                       {isProductDeleted === "idle" && (
@@ -816,13 +821,13 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
-const ProductCard = ({ product, loading }) => (
+const ProductCard = ({ product, loading }) =>(
   <RenderComponent
     loading={loading}
     data={product}
     renderSuccess={ProductCardRender}
     loadingFallback={Spinner}
-    renderError={<p>Error</p>}
+    renderError={<span>Error</span>}
   />
 );
 
@@ -841,7 +846,7 @@ ProductCard.propTypes = {
     _id: PropTypes.string,
     cartQuantity: PropTypes.number,
   }),
-  loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any;
+  loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any; 
 };
 ProductCardRender.propTypes = {
   data: PropTypes.object,

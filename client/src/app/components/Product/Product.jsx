@@ -23,7 +23,7 @@ const Product = () => {
       loading={loading}
       data={{...data, isProductPage: true}}
       renderSuccess={ProductCardRender}
-      loadingFallback={<p><Spinner /></p>}
+      loadingFallback={<span><Spinner /></span>}
       renderError={error}
     />
   )

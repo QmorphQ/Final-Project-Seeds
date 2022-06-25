@@ -48,8 +48,6 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 
-import { API } from "../../../app/constants/index";
-
 import {
   cartSelector,
   mainCategoriesSelector,
@@ -111,15 +109,8 @@ export const ProductCardRender = ({ data }) => {
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
 
-  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);  
-  
-  const [productItem, setProductItem] = useState(); 
+  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);
 
-  useEffect(() => {
-      fetch(`${API}products/${itemNo}`)
-          .then(res => res.json())
-          .then(result => setProductItem(result))
-  }, [open]); 
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -529,7 +520,7 @@ export const ProductCardRender = ({ data }) => {
                             What do you want to update: 
                           </Typography>
 
-                          <AddProduct product={productItem} 
+                          <AddProduct product={data} 
                                       onClose={handleClose} />
 
                           </Box>

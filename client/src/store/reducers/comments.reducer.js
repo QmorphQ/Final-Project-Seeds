@@ -11,16 +11,6 @@ import {
     EDIT_PRODUCT_COMMENT_REQUESTED,
     EDIT_PRODUCT_COMMENT_SUCCESS,
     EDIT_PRODUCT_COMMENT_ERROR,
-    // DOWNLOAD_FILTERED_PRODUCTS_REQUESTED,
-    // DOWNLOAD_FILTERED_PRODUCTS_SUCCESS,
-    // DOWNLOAD_FILTERED_PRODUCTS_ERROR,
-    // FILTER_BY_CATEGORY,
-    // ADD_PRODUCT_REQUESTED,
-    // ADD_PRODUCT_SUCCESS,
-    // ADD_PRODUCT_ERROR,
-    // UPLOAD_PRODUCT_RATING_REQUESTED,
-    // UPLOAD_PRODUCT_RATING_SUCCESS,
-    // UPLOAD_PRODUCT_RATING_ERROR,
   } from "../actions/comments.actions";
   import { downloadRequestStates } from "../../app/constants";
   
@@ -35,10 +25,6 @@ import {
 
     editCommentRequestState: downloadRequestStates.IDLE,
     editedComent: {},
-    // downloadCustomerCommentsRequestState: downloadRequestStates.IDLE,
-    // addProductRequestState: downloadRequestStates.IDLE,
-    // selectedCategories: "all",
-    // filteredProducts: [],
   };
   
   const commentsReducer = (state = initialState, action) => {
@@ -73,6 +59,7 @@ import {
           ...state,
           addCommentRequestState: downloadRequestStates.SUCCESS,
           editedComent: action.payload.data,
+          comments: [...state.comments, action.payload.data],
         };
   
       case ADD_COMMENT_ERROR:
@@ -119,57 +106,6 @@ import {
           ...state,
           editCommentRequestState: downloadRequestStates.ERROR,
         };
-  
-  
-    //   case DOWNLOAD_FILTERED_PRODUCTS_REQUESTED:
-    //     return {
-    //       ...state,
-    //       downloadFilteredRequestState: downloadRequestStates.LOADING,
-    //     };
-  
-    //   case DOWNLOAD_FILTERED_PRODUCTS_SUCCESS:
-    //     return {
-    //       ...state,
-    //       downloadFilteredRequestState: downloadRequestStates.SUCCESS,
-    //       filteredProducts: action.payload,
-    //     };
-  
-    //   case DOWNLOAD_FILTERED_PRODUCTS_ERROR:
-    //     return {
-    //       ...state,
-    //       downloadFilteredRequestState: downloadRequestStates.ERROR,
-    //     };
-  
-    //   case FILTER_BY_CATEGORY:
-    //     return {
-    //       ...state,
-    //       selectedCategories: action.payload,
-    //     };
-  
-    //   case UPLOAD_PRODUCT_RATING_REQUESTED:
-    //     return {
-    //       ...state,
-    //       uploadRatingRequestState: downloadRequestStates.LOADING,
-    //     };
-  
-    //   case UPLOAD_PRODUCT_RATING_SUCCESS:
-    //     return {
-    //       ...state,
-    //       uploadRatingRequestState: downloadRequestStates.SUCCESS,
-    //       productList: [
-    //         ...state.productList.filter(
-    //           (product) => product.itemNo !== action.payload.data.itemNo
-    //         ),
-    //         action.payload.data,
-    //       ] /* MVP - added state.product */,
-    //     };
-  
-    //   case UPLOAD_PRODUCT_RATING_ERROR:
-    //     return {
-    //       ...state,
-    //       uploadRatingRequestState: downloadRequestStates.ERROR,
-    //     };
-  
       default:
         return state;
     }

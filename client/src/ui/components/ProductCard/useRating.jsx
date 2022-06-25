@@ -4,11 +4,8 @@ import { currentCustomerSelector, downloadAllCommentsSelector } from "../../../s
 import { addComment, editComment, fetchProductComments } from "../../../store/thunks/comments.thunks";
 
 export const useRating = (data) => {
-
     const [ratingValue, setRatingValue] = useState(0);
-
     const dispatch = useDispatch();
-
     const comments = useSelector(downloadAllCommentsSelector);
     const customer = useSelector(currentCustomerSelector);
   
@@ -26,7 +23,6 @@ export const useRating = (data) => {
     useEffect(() => {
         dispatch(fetchProductComments(data._id));
     }, []);  
-
     useEffect(() => {
       setRatingValue(rating());
     }, [comments]);
@@ -37,7 +33,8 @@ export const useRating = (data) => {
   
       productRateComments.filter(comment => comment.customerId !== customer._id).length === productRateComments.length ? 
       dispatch(addComment({customerId: customer._id, product: data, content: "rate only", date: Date.now(), rate: +e.target.value})) :
-      dispatch(editComment(comments.find(comment => comment.customerId === customer._id)._id, {rate: +e.target.value}));
+      dispatch(editComment(productRateComments.find(comment => comment.customerId === customer._id)._id, {rate: +e.target.value}));
+      console.log(comments.filter(comment => comment.product._id === data._id).map(comment => comment.rate));
       setRatingValue(rating());
     }
 

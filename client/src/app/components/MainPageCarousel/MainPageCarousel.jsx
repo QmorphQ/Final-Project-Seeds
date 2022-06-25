@@ -1,7 +1,3 @@
-
-// import axios, { Axios } from "axios";
-// import { API } from "../../../app/constants/index";
-// import { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -44,26 +40,7 @@ const useStyles = makeStyles({
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
-
-
-//   useEffect(() => {
-//  const sld = [
-//    {itemNo: "954601"},
-//    {itemNo: "351153"},
-//    {itemNo: "219571"}
-//  ];
-// const sldNew = sld.map((item) => {
-//   axios
-//   .get(`${API}/products/${item.itemNo}`)
-//   .then((response) => {
-//     console.log(response);
-//     return response.data
-//     });
-// });
-
-//   }, []);
   
-
   return (
     requestState === "success" && (
       <Container
@@ -181,7 +158,7 @@ function Item(props) {
                 width={{ xs: "19px", sm: "19px", md: "28px" }}
                 src={Vector}
               ></Box>
-              ${props.item.currentPrice}
+              ${props.item.discountPrice}
             </Typography>
             <Typography
               component="span"
@@ -192,7 +169,7 @@ function Item(props) {
               pl={{ xs: "12px", sm: "12px", md: "21px" }}
               style={{ textDecoration: "line-through" }}
             >
-              ${(props.item.currentPrice * 1.1).toFixed(2)}
+              ${props.item.currentPrice}
             </Typography>
           </Box>
         </Grid>
@@ -306,8 +283,7 @@ function Item(props) {
             backgroundColor="#FFFFFF"
             borderRadius="10px"
             sx={{ cursor: "pointer"}}
-            onClick={() => navigate( `/products/${props.item.itemNo}`)}
-            // onClick={() => navigate(`/products/699319`)}
+            onClick={() => navigate( props.item.itemNo ? `/products/${props.item.itemNo}` : "/will-not-match" )}
           >
             Discover
           </Box>

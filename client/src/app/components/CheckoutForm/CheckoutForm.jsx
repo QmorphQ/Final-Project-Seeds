@@ -246,7 +246,7 @@ export default function CheckoutForm() {
                     >
                       {isLastStep ? "Place order" : "Next"}
                     </Button>
-                    {props.isSubmitting && <CircularProgress size={24} />}
+                    {props.isSubmitting && <CircularProgress size={26} />}
                   </Box>
                 </Form>
               )}

@@ -174,7 +174,7 @@ const AddToCartModal = ({
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(
+                        quantity > 0 && dispatch(
                           changeProductQuantity(
                             _id,
                             productAmount,

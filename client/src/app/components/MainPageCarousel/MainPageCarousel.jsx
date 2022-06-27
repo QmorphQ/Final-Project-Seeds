@@ -1,19 +1,23 @@
 import Carousel from "react-material-ui-carousel";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Typography, Container, Grid, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import PropTypes from "prop-types";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
 import {
-  // cartSelector, 
+  cartSelector, 
   downloadSlidesRequestStateSelector,
   slidesSelector,
 } from "../../../store/selectors/selectors";
 import { downloadRequestStates } from "../../constants";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-// import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
+import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunks";
+import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
+import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
+
 
 
 const useStyles = makeStyles({
@@ -40,6 +44,9 @@ const useStyles = makeStyles({
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
+  // const itemAddToCart = useSelector((state) => state.mainPageCarousel.itemAddToCart);
+  // console.log(itemAddToCart);
+  
   
   return (
     requestState === "success" && (
@@ -111,15 +118,43 @@ const MainPageCarousel = () => {
 function Item(props) {
   const classes = useStyles();
   const navigate = useNavigate();
-  // const cart = useSelector(cartSelector);
-  // const [isOnModal, toggleIsOnModal] = useState(false);
-  // const [totalPrice, setTotalPrice] = useState(props.item.currentPrice);
-  // const localPrice = Intl.NumberFormat("en-US", {
-  //   style: "currency",
-  //   currency: "USD",
-  //   currencyDisplay: "symbol",
-  // });
+  const dispatch = useDispatch();
+  const cart = useSelector(cartSelector);
+  const openModalWindow = useSelector((state) => state.mainPageCarousel.openModalWindow);
+  const itemAddToCart = useSelector((state) => state.mainPageCarousel.itemAddToCart);
+  console.log(itemAddToCart);
+  const [isOnModal, toggleIsOnModal] = useState(true);
+  console.log(isOnModal);
 
+
+
+  
+  
+ 
+  const [discountStart] = useState(0);
+
+  const [totalPrice, setTotalPrice] = useState(1);
+  const localPrice = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    currencyDisplay: "symbol",
+  });
+
+  useEffect(() => {
+    
+    toggleIsOnModal(!isOnModal);
+    setTotalPrice(itemAddToCart.discountPrice)
+  }, [openModalWindow]);
+
+  console.log(isOnModal);
+
+  useEffect(() => {
+if (!isOnModal) {
+  dispatch(sentItemToCart())
+  console.log("диспатч закрыта модал");
+}
+   
+  }, [isOnModal]);
 
 
 
@@ -256,23 +291,58 @@ function Item(props) {
             sx={{ cursor: "pointer"}}
             marginRight={{ xs: "12px", md: "15px" }}
             marginBottom="6px"
+            onClick={() => {
+              dispatch(fetchItemAddToCart(props.item.itemNo));
+            }}
             // onClick={() => {
             //   toggleIsOnModal(true);
             // }}
           >
             Add to cart
+           
             {/* <AddToCartModal
-              data={props.item}
-              discontStart={10}
+              data={itemAddToCart}
+              discontStart={discountStart}
               localPrice={localPrice}
               totalPrice={totalPrice}
               setTotalPrice={setTotalPrice}
               isOnModal={isOnModal}
               toggleIsOnModal={toggleIsOnModal}
               cart={cart}
-              _id={props.item._id}
+              _id={itemAddToCart._id}
             /> */}
+
           </Box>
+
+ {/* <AddToCartModal
+              data={itemAddToCart}
+              discontStart={discountStart}
+              localPrice={localPrice}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+              isOnModal={isOnModal}
+              toggleIsOnModal={toggleIsOnModal}
+              cart={cart}
+              _id={itemAddToCart._id}
+            /> */}
+
+
+
+{
+openModalWindow && 
+<AddToCartModal
+data={itemAddToCart}
+discontStart={discountStart}
+localPrice={localPrice}
+totalPrice={totalPrice}
+setTotalPrice={setTotalPrice}
+isOnModal={true}
+toggleIsOnModal={toggleIsOnModal}
+cart={cart}
+_id={itemAddToCart._id}
+/>
+}
+         
           <Box className={classes.discoverButton}
             component="button"
             width="142px"

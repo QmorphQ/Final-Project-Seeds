@@ -32,6 +32,7 @@ const AddToCartModal = ({
 }) => {
   const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
   
+  console.log(totalPrice);
 
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
@@ -174,7 +175,7 @@ const AddToCartModal = ({
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(
+                        quantity > 0 && dispatch(
                           changeProductQuantity(
                             _id,
                             productAmount,

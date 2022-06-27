@@ -11,7 +11,6 @@ export const fetchItemAddToCart = (itemNo) => (dispatch) => {
     axios
       .get(`${API}products/${itemNo}`)
       .then((res) => {
-          console.log(res.data);
           dispatch(receivedItemAddToCart(res.data));
         throw new Error("received error!");
       })

@@ -70,6 +70,7 @@ import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
 import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
+import { fetchProductComments } from "../../../store/thunks/comments.thunks";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -570,7 +571,7 @@ export const ProductCardRender = ({ data }) => {
               variant="body1"
               color="text.primary"
             >
-              {itemAbout.map((item, i) => (
+              {itemAbout?.map((item, i) => (
                 <ListItem key={i}>
                   <Typography>{item}</Typography>
                 </ListItem>
@@ -611,7 +612,7 @@ export const ProductCardRender = ({ data }) => {
             className={mainClasses.productCardRating}
             name="half-rating"
             value={ratingValue}
-            precision={0.5}
+            precision={1}
             onChange={(e) => {rateProduct(e)}}
           />
 
@@ -715,7 +716,7 @@ export const ProductCardRender = ({ data }) => {
         <Rating
           className={mainClasses.productCardRating}
           name="half-rating"
-          precision={0.5}
+          precision={1}
           value={ratingValue}
           onChange={(e) => {rateProduct(e)}}
         />
@@ -781,15 +782,19 @@ export const ProductCardRender = ({ data }) => {
   );
 };
 
-const ProductCard = ({ product, loading }) =>(
-  <RenderComponent
+const ProductCard = ({ product, loading }) =>{
+  const dispatch = useDispatch();
+  useEffect(() => {
+    product?._id && dispatch(fetchProductComments(product._id));
+  }, []);
+  return (<RenderComponent
     loading={loading}
     data={product}
     renderSuccess={ProductCardRender}
     loadingFallback={Spinner}
     renderError={<span>Error</span>}
-  />
-);
+  />)
+};
 
 ProductCard.propTypes = {
   product: PropTypes.shape({

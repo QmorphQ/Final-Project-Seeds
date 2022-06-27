@@ -32,7 +32,6 @@ const AddToCartModal = ({
 }) => {
   const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
   
-  console.log(totalPrice);
 
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();

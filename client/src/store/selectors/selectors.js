@@ -57,6 +57,12 @@ export const productsSelector = (state) => {
   return selectedProducts;
 };
 
+export const productSelector = (state) =>
+  state.products.product;
+
+  export const downloadProductRequestStateSelector = (state) =>
+  state.products.downloadProductRequestState;
+
 export const downloadFilteredProductsRequestStateSelector = (state) =>
   state.products.downloadFilteredRequestState;
 
@@ -156,4 +162,7 @@ export const downloadAllCommentsSelector = (state) =>
 
 export const downloadProductCommentsSelector = (state) =>
   state.comments.productComments;
+
+export const downloadProductCommentsRequestStateSelector = (state) =>
+  state.comments.downloadProductCommentsRequestState;
 

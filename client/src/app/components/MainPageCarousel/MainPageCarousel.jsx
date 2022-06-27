@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
 import {
-  cartSelector, 
+  cartSelector,
   downloadSlidesRequestStateSelector,
   slidesSelector,
 } from "../../../store/selectors/selectors";
@@ -18,8 +18,6 @@ import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunk
 import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
 import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
 
-
-
 const useStyles = makeStyles({
   multiLineEllipsis: {
     overflow: "hidden",
@@ -28,17 +26,17 @@ const useStyles = makeStyles({
     color: "#1F2533",
   },
   addToCartButton: {
-      background: "#359740",
-      '&:hover': {
-         background: "#2BB159",
-      },
+    background: "#359740",
+    "&:hover": {
+      background: "#2BB159",
     },
-    discoverButton: {
-      background: "#FFFFFF",
-      '&:hover': {
-         background: "rgba(53, 151, 64, 0.08);",
-      },
+  },
+  discoverButton: {
+    background: "#FFFFFF",
+    "&:hover": {
+      background: "rgba(53, 151, 64, 0.08);",
     },
+  },
 });
 
 const MainPageCarousel = () => {
@@ -46,8 +44,7 @@ const MainPageCarousel = () => {
   const slideList = useSelector(slidesSelector);
   // const itemAddToCart = useSelector((state) => state.mainPageCarousel.itemAddToCart);
   // console.log(itemAddToCart);
-  
-  
+
   return (
     requestState === "success" && (
       <Container
@@ -120,19 +117,14 @@ function Item(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector(cartSelector);
-  const openModalWindow = useSelector((state) => state.mainPageCarousel.openModalWindow);
-  const itemAddToCart = useSelector((state) => state.mainPageCarousel.itemAddToCart);
-  console.log(itemAddToCart);
+  const openModalWindow = useSelector(
+    (state) => state.mainPageCarousel.openModalWindow
+  );
+  const itemAddToCart = useSelector(
+    (state) => state.mainPageCarousel.itemAddToCart
+  );
   const [isOnModal, toggleIsOnModal] = useState(true);
-  console.log(isOnModal);
-
-
-
-  
-  
- 
   const [discountStart] = useState(0);
-
   const [totalPrice, setTotalPrice] = useState(1);
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -141,22 +133,15 @@ function Item(props) {
   });
 
   useEffect(() => {
-    
     toggleIsOnModal(!isOnModal);
-    setTotalPrice(itemAddToCart.discountPrice)
+    setTotalPrice(itemAddToCart.discountPrice);
   }, [openModalWindow]);
 
-  console.log(isOnModal);
-
   useEffect(() => {
-if (!isOnModal) {
-  dispatch(sentItemToCart())
-  console.log("диспатч закрыта модал");
-}
-   
+    if (!isOnModal) {
+      dispatch(sentItemToCart());
+    }
   }, [isOnModal]);
-
-
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -279,71 +264,40 @@ if (!isOnModal) {
           xs={6}
           md={2}
         >
-          <Box className={classes.addToCartButton}
+          <Box
+            className={classes.addToCartButton}
             component="button"
             width="142px"
             height="47px"
             border="none"
             fontSize="14px"
             color="#FFFFFF"
-            // backgroundColor="#359740"
             borderRadius="10px"
-            sx={{ cursor: "pointer"}}
+            sx={{ cursor: "pointer" }}
             marginRight={{ xs: "12px", md: "15px" }}
             marginBottom="6px"
             onClick={() => {
               dispatch(fetchItemAddToCart(props.item.itemNo));
             }}
-            // onClick={() => {
-            //   toggleIsOnModal(true);
-            // }}
           >
             Add to cart
-           
-            {/* <AddToCartModal
-              data={itemAddToCart}
-              discontStart={discountStart}
-              localPrice={localPrice}
-              totalPrice={totalPrice}
-              setTotalPrice={setTotalPrice}
-              isOnModal={isOnModal}
-              toggleIsOnModal={toggleIsOnModal}
-              cart={cart}
-              _id={itemAddToCart._id}
-            /> */}
-
           </Box>
-
- {/* <AddToCartModal
+          {openModalWindow && (
+            <AddToCartModal
               data={itemAddToCart}
               discontStart={discountStart}
               localPrice={localPrice}
               totalPrice={totalPrice}
               setTotalPrice={setTotalPrice}
-              isOnModal={isOnModal}
+              isOnModal={true}
               toggleIsOnModal={toggleIsOnModal}
               cart={cart}
               _id={itemAddToCart._id}
-            /> */}
+            />
+          )}
 
-
-
-{
-openModalWindow && 
-<AddToCartModal
-data={itemAddToCart}
-discontStart={discountStart}
-localPrice={localPrice}
-totalPrice={totalPrice}
-setTotalPrice={setTotalPrice}
-isOnModal={true}
-toggleIsOnModal={toggleIsOnModal}
-cart={cart}
-_id={itemAddToCart._id}
-/>
-}
-         
-          <Box className={classes.discoverButton}
+          <Box
+            className={classes.discoverButton}
             component="button"
             width="142px"
             height="47px"
@@ -352,8 +306,14 @@ _id={itemAddToCart._id}
             color="#359740"
             backgroundColor="#FFFFFF"
             borderRadius="10px"
-            sx={{ cursor: "pointer"}}
-            onClick={() => navigate( props.item.itemNo ? `/products/${props.item.itemNo}` : "/will-not-match" )}
+            sx={{ cursor: "pointer" }}
+            onClick={() =>
+              navigate(
+                props.item.itemNo
+                  ? `/products/${props.item.itemNo}`
+                  : "/will-not-match"
+              )
+            }
           >
             Discover
           </Box>

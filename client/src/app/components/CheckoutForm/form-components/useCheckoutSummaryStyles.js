@@ -2,10 +2,10 @@ import { makeStyles } from "@mui/styles";
 
 const useCheckoutSummaryStyles = makeStyles({
   container: {
-    padding: "20px",
+    padding: "5px",
     border: "solid 1px #359740",
     borderRadius: "5px",
-    width: "90%",
+    width: "100%",
   },
 
   box: {

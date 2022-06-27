@@ -67,7 +67,9 @@ const PaymentInfo = () => {
         return <PayPal />;
       case "cash":
         return (
-          <Typography variant="h2" component="h2">
+          <Typography 
+          textAlign="center"
+          sx={{ typography: { sm: 'h2', xs: 'h3' } }}>
             You will pay after delivery
           </Typography>
         );
@@ -109,8 +111,7 @@ const PaymentInfo = () => {
           <Typography
             paddingBottom="40px"
             textAlign="center"
-            variant="h2"
-            component="h3"
+            sx={{ typography: { sm: 'h2', xs: 'h5' } }}
           >
             Payment info
           </Typography>

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-around",
     marginTop: "48px",
-    height: "450px",
+    // height: "450px",
   },
 
   orderHeading: {
@@ -72,7 +72,8 @@ const OrderSummary = (props) => {
         sx={{
           border: "1px solid rgba(239, 239, 239, 1)",
           borderRadius: "12px",
-          marginLeft: { xs: 0, sm: "60px" },
+          marginLeft: { xs: "30px", sm: "60px" },
+          height: { xs: "auto", sm: "450px" },
         }}
         className={classes.orderContainer}
       >

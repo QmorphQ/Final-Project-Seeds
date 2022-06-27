@@ -20,14 +20,14 @@ const CustomerInfo = () => (
         <Typography
           paddingBottom="40px"
           textAlign="center"
-          variant="h2"
-          component="h3"
+          sx={{ typography: { sm: 'h2', xs: 'h5' } }} 
         >
           Checkout
         </Typography>
       </Box>
       <Grid>
-        <Typography variant="h3" component="h3">
+        <Typography
+          sx={{ typography: { sm: 'h3', xs: 'h6' } }} >
           Personal info
         </Typography>
         <Grid container spacing={2}>

@@ -20,8 +20,7 @@ const CheckoutSummary = (formData) => {
       <Typography
         paddingBottom="40px"
         textAlign="center"
-        variant="h2"
-        component="h3"
+        sx={{ typography: { sm: 'h2', xs: 'h5' } }} 
       >
         Check your data
       </Typography>

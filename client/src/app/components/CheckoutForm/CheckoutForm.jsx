@@ -191,15 +191,29 @@ export default function CheckoutForm() {
   return (
     defaultCustomer != null && (
       <>
+      <Box
+      display="flex"
+      flexDirection={{ xs: "column", sm: "row" }}
+      width={{ xs: "100%", sm: "100%" }}
+      position={"relative"}
+      minHeight={"30em"}
+      >
         <Box
           margin={"auto"}
-          width={{ xs: "100%", sm: "50%" }}
+          width={{ xs: "100%", sm: "45%" }}
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
           padding="20px"
+          sx={{ order: { sm: '1', xs: '2' } }}
         >
-          <Stepper activeStep={activeStep}>
+          <Box
+          position={{ xs: "absolute", sm: "absolute" }}
+          top={"0"}
+          width={{ xs: "100%", sm: "48%" }}
+          marginLeft={{ xs: "auto", sm: "-15px" }}
+          >
+          <Stepper activeStep={activeStep} >
             {steps.map((index) => (
               <Step key={index}>
                 <StepLabel
@@ -213,9 +227,12 @@ export default function CheckoutForm() {
               </Step>
             ))}
           </Stepper>
+          </Box>
           {activeStep === steps.length ? (
             <>
-              <Typography variant="h2" component="h2">
+              <Typography
+              textAlign="center"
+              sx={{ typography: { sm: 'h2', xs: 'h5' } }} > 
                 Thank You! Your oder #{orderNumber} has been placed!
               </Typography>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -246,14 +263,21 @@ export default function CheckoutForm() {
                     >
                       {isLastStep ? "Place order" : "Next"}
                     </Button>
-                    {props.isSubmitting && <CircularProgress size={26} />}
+                    {props.isSubmitting && <CircularProgress  size={26} />}
                   </Box>
                 </Form>
               )}
             </Formik>
           )}
         </Box>
-        {activeStep !== steps.length && <OrderSummary visibility={"none"} />}
+        {activeStep !== steps.length && 
+        <Box
+        width={{ xs: "100%", sm: "30%" }}
+        sx={{ order: { sm: '2', xs: '1' } }}
+        >
+        <OrderSummary  visibility={"none"} />
+        </Box>}
+        </Box>
       </>
     )
   );

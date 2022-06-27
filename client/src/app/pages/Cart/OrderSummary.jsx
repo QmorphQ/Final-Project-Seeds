@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-around",
     marginTop: "48px",
-    width: "350px",
     height: "450px",
   },
 

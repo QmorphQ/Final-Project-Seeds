@@ -14,8 +14,9 @@ import useStylesAddProduct from './useStylesAddProduct';
 import { productCategories } from '../../constants'; 
 
 import { adminAddProductRequestSelector } from '../../../store/selectors/selectors';
-import { adminAddProductIdle } from '../../../store/actions/admin.actions';
+import { adminAddProductIdle } from '../../../store/actions/admin.actions'; 
 import { adminAddProduct, adminUpdateProduct } from '../../../store/thunks/admin.thunks'; 
+
 
 
 
@@ -55,7 +56,16 @@ const validationSchema = yup.object({
         .string()
         .required('required') 
         .max(4, 'too long value')
-        .matches(/[0-9]/, 'value is not valid, please, enter a decimal number'),
+        .matches(/[0-9]/, 'value is not valid, please, enter a decimal number'), 
+
+    itemWeight: yup
+        .string()
+        .required('required'),
+
+    ASIN: yup 
+        .string()
+        .required('required')
+        .max(10, 'too long value'),
 });
 
   
@@ -95,6 +105,8 @@ const AddProduct = ({ product, onClose }) => {
             packageDimensions: product?.packageDimensions || '', 
             currentRating: product?.currentRating || '', 
             quantity: product?.quantity || '', 
+            itemWeight: product?.itemWeight || '', 
+            ASIN: product?.ASIN || '', 
             imageUrls0: '', 
             imageUrls1: '',
             imageUrls2: '',
@@ -119,14 +131,21 @@ const AddProduct = ({ product, onClose }) => {
                               discountPrice: Number(values.discountPrice), 
                               packageDimensions: values.packageDimensions, 
                               currentRating: Number(values.currentRating), 
-                              quantity: Number(values.quantity) };
+                              quantity: Number(values.quantity), 
+                              itemWeight: values.itemWeight, 
+                              ASIN: values.ASIN.toUpperCase() };
 
             if (product) { 
 
                 const resultImgList = [...new Set([...newAddedImg, ...restAfterDeleteImg])]; 
 
                 dispatch(adminUpdateProduct(product._id, { ...payload, imageUrls: resultImgList }));
-                onClose(); 
+                 
+                onClose();
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 200); 
 
             } else { 
                 
@@ -163,6 +182,18 @@ const AddProduct = ({ product, onClose }) => {
                                 onChange={formik.handleChange}
                                 error={formik.touched.name && Boolean(formik.errors.name)}
                                 helperText={formik.touched.name && formik.errors.name}
+                            />  
+
+                            <TextField 
+                                name='ASIN'
+                                id='outlined-basic' 
+                                label='ASIN' 
+                                variant='outlined'
+                                className='product-input'                              
+                                value={formik.values.ASIN.toUpperCase()}
+                                onChange={formik.handleChange}
+                                error={formik.touched.ASIN && Boolean(formik.errors.ASIN)}
+                                helperText={formik.touched.ASIN && formik.errors.ASIN}
                             />  
 
                             <TextField 
@@ -259,11 +290,23 @@ const AddProduct = ({ product, onClose }) => {
                                 label='package dimensions' 
                                 variant='outlined' 
                                 className='product-input' 
-                                value={formik.values.packageDimensions} 
+                                value={formik.values.packageDimensions}
                                 onChange={formik.handleChange}
                                 error={formik.touched.packageDimensions && Boolean(formik.errors.packageDimensions)}
                                 helperText={formik.touched.packageDimensions && formik.errors.packageDimensions}
                             /> 
+
+                            <TextField 
+                                name='itemWeight'
+                                id='outlined-basic' 
+                                label='item weight, ounces' 
+                                variant='outlined' 
+                                className='product-input' 
+                                value={formik.values.itemWeight} 
+                                onChange={formik.handleChange}
+                                error={formik.touched.itemWeight && Boolean(formik.errors.itemWeight)}
+                                helperText={formik.touched.itemWeight && formik.errors.itemWeight}
+                            />          
 
                             <div className='img-mini'>
 
@@ -399,5 +442,5 @@ export default AddProduct;
 
 AddProduct.propTypes = {
     product: PropTypes.object, 
-    onClose: PropTypes.func, 
+    onClose: PropTypes.func,
 };

@@ -15,6 +15,9 @@ import {
   uploadProductRatingRequested,
   uploadProductRatingError,
   uploadProductRatingSuccess,
+  downloadProductByIdSuccess,
+  downloadProductByIdRequested,
+  downloadProductByIdError,
 } from "../actions/products.actions";
 
 const fetchProducts =
@@ -92,10 +95,25 @@ const filterProductsByCategory = (category) => (dispatch) => {
   dispatch(filterByCategory(category));
 };
 
+const fetchProductById = (id) => (dispatch) => {
+  dispatch(downloadProductByIdRequested());
+
+  axios
+    .get(`${API}products/${id}`)
+    .then((product) => {
+      dispatch(downloadProductByIdSuccess(product));
+      return product;
+    })
+    .catch(() => {
+      dispatch(downloadProductByIdError());
+    });
+};
+
 export {
   filterProductsByCategory,
   fetchProducts,
   fetchFilteredProducts,
   addProduct,
   rateProduct,
+  fetchProductById,
 };

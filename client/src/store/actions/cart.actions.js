@@ -96,6 +96,12 @@ export const cartLoadError = () => ({
   type: CART_LOAD_ERROR,
 });
 
+export const READY_FOR_EDIT_START = "READY_FOR_EDIT_START";
+export const readyForEditStart = () => ({
+  type: READY_FOR_EDIT_START,
+});
+
+
 export const EDIT_START = "EDIT_START";
 export const editStart = () => ({
   type: EDIT_START,

@@ -27,7 +27,7 @@ export const LinearProgressReview = ({ data }) => {
             <Star />
             <LinearProgress 
                 className={classes.ratingLinearProgress} 
-                variant="determinate" 
+                variant={"determinate"}
                 value={rateComments.filter(item => Math.round(item.rate) === ratingKey).length * 100 / rateComments.length} 
             />
             <Typography className={classes.votesQuantity} variant="subtitle1">{rateComments.filter(item => Math.round(item.rate) === ratingKey).length}</Typography>

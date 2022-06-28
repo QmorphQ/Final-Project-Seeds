@@ -54,6 +54,7 @@ import {
   isAdminStateSelector,
   adminDeleteProductRequestSelector,
   loginStateSelector,
+  downloadCategoriesRequestStateSelector,
 } from "../../../store/selectors/selectors";
 import {
   addProductToCart,
@@ -71,6 +72,7 @@ import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
 import { fetchProductComments } from "../../../store/thunks/comments.thunks";
+import { downloadRequestStates } from "../../../app/constants/index";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -152,6 +154,8 @@ export const ProductCardRender = ({ data }) => {
 
   const [ratingValue, rateProduct] = useRating(data);
   const [isFavourite, toggleInWishlist] = useWishlist(_id);
+
+  const downloadCategoriesState = useSelector(downloadCategoriesRequestStateSelector);
  
   if (isBasket) {
     return (
@@ -325,10 +329,10 @@ export const ProductCardRender = ({ data }) => {
                     className={productPageClasses.productCardAvailable}
                     label={mainCategory?.name.toUpperCase()}
                     icon={
-                      <Icon
+                      downloadCategoriesState === downloadRequestStates.SUCCESS ? <Icon
                         className={productPageClasses.buttonIcon}
                         icon={Icon.icons[mainCategory?.icon]}
-                      />
+                      /> : <Spinner />
                     }
                     variant="outlined"
                   />

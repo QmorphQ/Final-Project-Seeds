@@ -6,6 +6,7 @@ import RenderComponent from "../../hoc/RenderComponent.jsx";
 import { useFetch } from "../../hoc/useFetch.jsx";
 import { API } from "../../constants/index";
 import fetchCategories from "../../../store/thunks/catalog.thunks";
+import fetchSlides from "../../../store/thunks/slides.thunks";
 import Spinner from "../../../ui/components/Spinner/Spinner.jsx";
 
 
@@ -16,6 +17,7 @@ const Product = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
+    dispatch(fetchSlides()); 
   }, []);
 
   return (

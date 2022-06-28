@@ -40,7 +40,7 @@ const CustomerReviews = (props) => {
             variant="h2"
             component="h2"
             >
-            Customer Reviews.
+            Customer Reviews
         </Typography>
 
         <Box className={classes.reviewsRaitingContainer} 
@@ -52,6 +52,9 @@ const CustomerReviews = (props) => {
                 height: 318,
                 borderRadius: 6,
                 },
+                '@media (max-width: 415px)': {
+                    width: 330,
+                  },
             }}>
 
             <Paper variant="outlined">

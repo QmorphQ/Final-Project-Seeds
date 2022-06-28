@@ -94,6 +94,9 @@ export const customersRequestSelector = (state) =>
 
 export const isRightPasswordSelector = (state) => state.customer.isRightPassword;
 
+export const getCustomerRequestStateSelector = (state) =>
+  state.customer.getCurrentCustomerRequestState;
+
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
 /**

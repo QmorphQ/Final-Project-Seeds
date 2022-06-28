@@ -145,12 +145,7 @@ const BuiltInActions = ({ product }) => {
                         <Button
                             color={onSlide ? 'error' : 'success'} 
                             variant='contained'
-                            className={classes.addProductToSlideModalLabelButton}
-                            sx={{ fontSize: '13px', 
-                                  backgroundColor: '#50a257',
-                                  '&:hover': {
-                                      backgroundColor: '#50a257'}, 
-                                }}
+                            className={classes.addProductToSlideModalLabelButton} 
                             onClick={handleAddDelToCarousel}
                         >
                             {onSlide ? `Del From Carousel` : `Add To Carousel`} 

@@ -21,14 +21,16 @@ import {
   editError,
   orderAmountUpdated,
   clearProductsInCartSuccess,
-  clearProductsInCartError
+  clearProductsInCartError,
 } from "../actions/cart.actions";
 
 const countTotalAmountOrder = () => (dispatch, getState) => {
   const { cart } = getState().cart;
-  const sumOrder = cart.reduce((accumulator, currentValue) => (
-     accumulator + currentValue.currentPrice * currentValue.cartQuantity
-  ), 0);
+  const sumOrder = cart.reduce(
+    (accumulator, currentValue) =>
+      accumulator + currentValue.currentPrice * currentValue.cartQuantity,
+    0
+  );
 
   dispatch(orderAmountUpdated(sumOrder));
 };
@@ -53,13 +55,16 @@ const fetchCart = () => async (dispatch, getState) => {
           Authorization: `${token}`,
         },
       });
-      const cartFromApi = response.data.products.map((cartProduct) => ({
-        id: cartProduct.product._id,
-        imageUrls: cartProduct.product.imageUrls,
-        name: cartProduct.product.name,
-        currentPrice: cartProduct.product.currentPrice,
-        cartQuantity: cartProduct.cartQuantity,
-      }));
+      let cartFromApi;
+      response.data === null
+        ? (cartFromApi = [])
+        : (cartFromApi = response.data.products.map((cartProduct) => ({
+            id: cartProduct.product._id,
+            imageUrls: cartProduct.product.imageUrls,
+            name: cartProduct.product.name,
+            currentPrice: cartProduct.product.currentPrice,
+            cartQuantity: cartProduct.cartQuantity,
+          })));
       let newCart = [...cartFromApi];
       if (Array.isArray(cart) && cart.length > 0) {
         newCart = concatCarts(cart, cartFromApi);
@@ -101,15 +106,15 @@ const addCart = (cart) => (dispatch) => {
       })
       .then((response) => {
         const newCart = response.data.products.map((cartProduct) => ({
-        //  --------------------
+          //  --------------------
           // id: cartProduct.product._id,
           // cartQuantity: cartProduct.cartQuantity,
-        //   -------------------
-        id: cartProduct.product._id,
-        imageUrls: cartProduct.product.imageUrls,
-        name: cartProduct.product.name,
-        currentPrice: cartProduct.product.currentPrice,
-        cartQuantity: cartProduct.cartQuantity,
+          //   -------------------
+          id: cartProduct.product._id,
+          imageUrls: cartProduct.product.imageUrls,
+          name: cartProduct.product.name,
+          currentPrice: cartProduct.product.currentPrice,
+          cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addCartSuccess(newCart));
       })
@@ -214,9 +219,9 @@ const changeProductQuantity =
       );
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
-        imageUrls: item.imageUrls,
-        name: item.name,
-        currentPrice: item.currentPrice,
+        // imageUrls: item.imageUrls,
+        // name: item.name,
+        // currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       axios
@@ -321,27 +326,24 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
   }
 };
 
-const  clearProductsInCart = () => (dispatch) => {
+const clearProductsInCart = () => (dispatch) => {
   // dispatch(deleteProductFromCartRequest());
   const token = localStorage.getItem("jwt");
- 
+
   if (token) {
     axios
-    .delete(`${API}cart`, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    })
+      .delete(`${API}cart`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
       .then(() => {
-       
         dispatch(clearProductsInCartSuccess());
       })
       .catch(() => {
-       dispatch(clearProductsInCartError());
+        dispatch(clearProductsInCartError());
       });
   } else {
-    
-    
     dispatch(clearProductsInCartSuccess());
   }
 };

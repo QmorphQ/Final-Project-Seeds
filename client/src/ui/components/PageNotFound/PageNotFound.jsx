@@ -33,7 +33,7 @@ function PageNotFound() {
 
         <Grid item xs={12}>
           <Typography align="center">
-            <Link href="#">Return to home page</Link>
+            <Link href="/">Return to home page</Link>
           </Typography>
         </Grid>
 

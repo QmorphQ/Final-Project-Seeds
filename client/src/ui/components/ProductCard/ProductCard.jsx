@@ -63,6 +63,7 @@ import BuiltInActions from "../../../app/components/AdminPanel/BuiltInActions/Bu
 import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
+import { fetchProductComments } from "../../../store/thunks/comments.thunks";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -518,7 +519,7 @@ export const ProductCardRender = ({ data }) => {
             className={mainClasses.productCardRating}
             name="half-rating"
             value={ratingValue}
-            precision={0.5}
+            precision={1}
             onChange={(e) => {rateProduct(e)}}
           />
 
@@ -622,12 +623,13 @@ export const ProductCardRender = ({ data }) => {
         <Rating
           className={mainClasses.productCardRating}
           name="half-rating"
-          precision={0.5}
+          precision={1}
           value={ratingValue}
           onChange={(e) => {rateProduct(e)}}
         />
 
-        <CardContent className={mainClasses.productCardContent}>
+   
+        <CardContent className={mainClasses.productCardContent} sx={{padding: "0px"}}>
           <Link
             style={{
               color: "inherit",
@@ -649,6 +651,8 @@ export const ProductCardRender = ({ data }) => {
               {name}
             </Typography>
           </Link>
+
+          <Box sx={{display: "flex", flexGrow: "1", justifyContent: "space-between"}}>
           <Typography
             className={mainClasses.productCardPrice}
             component="span"
@@ -657,9 +661,7 @@ export const ProductCardRender = ({ data }) => {
           >
             {localPrice.format(currentPrice)}
           </Typography>
-        </CardContent>
-
-        <CardActions className={mainClasses.productActionsBox}>
+          <CardActions className={mainClasses.productActionsBox}>
           <IconButton
             className={mainClasses.productCardButtonBasket}
             aria-label="add to basket"
@@ -683,20 +685,52 @@ export const ProductCardRender = ({ data }) => {
             />
           </IconButton>
         </CardActions>
+          </Box>
+          
+        </CardContent>
+
+        {/* <CardActions className={mainClasses.productActionsBox}>
+          <IconButton
+            className={mainClasses.productCardButtonBasket}
+            aria-label="add to basket"
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              toggleIsOnModal(true);
+            }}
+          >
+            <ShoppingCartOutlinedIcon />
+            <AddToCartModal
+              data={data}
+              discontStart={discontStart}
+              localPrice={localPrice}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+              isOnModal={isOnModal}
+              toggleIsOnModal={toggleIsOnModal}
+              cart={cart}
+              _id={_id}
+            />
+          </IconButton>
+        </CardActions> */}
       </Card>
     </Grid>
   );
 };
 
-const ProductCard = ({ product, loading }) =>(
-  <RenderComponent
+const ProductCard = ({ product, loading }) =>{
+  const dispatch = useDispatch();
+  useEffect(() => {
+    product?._id && dispatch(fetchProductComments(product._id));
+  }, []);
+  return (<RenderComponent
     loading={loading}
     data={product}
     renderSuccess={ProductCardRender}
     loadingFallback={Spinner}
     renderError={<span>Error</span>}
-  />
-);
+  />)
+};
 
 ProductCard.propTypes = {
   product: PropTypes.shape({

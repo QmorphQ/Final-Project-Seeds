@@ -27,13 +27,12 @@ const ShippingInfo = () => {
   
 
   useEffect(() => {
+    setFieldValue("deliveryMethod", "expressDelivery")
     axios
       .get(`${API}shipping-methods`)
       .then((shippingMethods) => setShippingData(shippingMethods.data))
       .catch(() => console.log("Some problem with shipping methods fetching"));
   }, []);
-
-  console.log(field.value );
 
   field.value === undefined
     ? shippingData.forEach((item) => {

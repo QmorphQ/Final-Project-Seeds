@@ -141,11 +141,19 @@ function Item(props) {
     }
   }, [openModalWindow]);
 
+  // useEffect(() => {
+  //   if (!isOnModal && openModalWindow ) {
+  //    console.log("нужно закрыть");
+  //   }
+  // }, [isOnModal]);
+
   useEffect(() => {
     if (editCartState === "success") {
       dispatch(sentItemToCart());
     }
   }, [editCartState]);
+
+ 
 
   return (
     <Box sx={{ flexGrow: 1 }}>

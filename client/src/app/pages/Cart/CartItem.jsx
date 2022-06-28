@@ -66,6 +66,8 @@ const CartItem = ({ product }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  console.log(product);
+
   return (
     <TableRow
       className={classes.tableRow}
@@ -117,7 +119,8 @@ const CartItem = ({ product }) => {
             hiddenLabel={true}
             value={product.cartQuantity}
             onChange={(e) =>
-              dispatch(changeProductQuantity(product.id, +e.target.value))
+             
+              dispatch(changeProductQuantity(product.id, +e.target.value, product.name, product.currentPrice, product.imageUrls, +e.target.value))
             }
           />
           <Button

@@ -20,6 +20,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { useModalStyles } from "./useModalStyles";
 import { changeProductQuantity } from "../../../store/thunks/cart.thunks";
+import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
 
 const AddToCartModal = ({
   data,
@@ -43,7 +44,7 @@ const AddToCartModal = ({
     );
   }, [productAmount, discontStart]);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   useEffect(() => {
     setOpen(isOnModal);
   }, [isOnModal]);
@@ -51,10 +52,13 @@ const AddToCartModal = ({
   useEffect(() => {
     if (!open) {
       toggleIsOnModal(false);
+      dispatch(sentItemToCart());
     }
   }, [open]);
 
   const modalClasses = useModalStyles();
+
+
 
   return (
    

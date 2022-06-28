@@ -12,7 +12,7 @@ export const fetchItemAddToCart = (itemNo) => (dispatch) => {
     .get(`${API}products/${itemNo}`)
     .then((res) => {
       dispatch(receivedItemAddToCart(res.data));
-      throw new Error("received error!");
+     
     })
     .catch((err) => {
       dispatch(receivedFailureItemAddToCart(err.message));

@@ -26,7 +26,6 @@ import {
   ListItem,
   List,
   Link,
-  Modal,
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -36,8 +35,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -52,7 +49,6 @@ import {
   cartSelector,
   mainCategoriesSelector,
   isAdminStateSelector,
-  adminDeleteProductRequestSelector,
   loginStateSelector,
 } from "../../../store/selectors/selectors";
 import {
@@ -60,13 +56,10 @@ import {
   fetchCart,
   decreaseProductQuantity,
   changeProductQuantity,
-} from "../../../store/thunks/cart.thunks"; 
-
-import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
-import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
+} from "../../../store/thunks/cart.thunks";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
-import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
+import BuiltInActions from "../../../app/components/AdminPanel/BuiltInActions/BuiltInActions.jsx"; 
 import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
@@ -98,25 +91,21 @@ export const ProductCardRender = ({ data }) => {
   const [totalPrice, setTotalPrice] = useState(currentPrice);
   const [discontStart] = useState(10);
 
-  const [open, setOpen] = useState(false); 
-  
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const dispatch = useDispatch(); 
-  const navigation = useNavigate();
 
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
 
-  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);
-
 
   useEffect(() => {
     dispatch(fetchCart());
     window.scrollTo(0, 0);
-  }, []);
+  }, []); 
+
+
+
+  
 
   useEffect(() => {
     setTotalPrice((prevProductAmount) =>
@@ -143,12 +132,6 @@ export const ProductCardRender = ({ data }) => {
     currencyDisplay: "symbol",
   });
 
-  const reloadAfterDelete = () => {
-    setTimeout(() => {
-      dispatch(adminDeleteProductIdle());
-      navigation('/');
-    }, 3000);
-  };
 
   const [ratingValue, rateProduct] = useRating(data);
   const [isFavourite, toggleInWishlist] = useWishlist(_id);
@@ -474,85 +457,8 @@ export const ProductCardRender = ({ data }) => {
                     </Box>
                   )}
 
-                  {isAdmin && (
-                    <div>
-                      <IconButton onClick={handleOpen}>
-                        <SyncAltOutlinedIcon
-                          sx={{ fontSize: "26px", color: "#FF6D6D" }}
-                        />
-                      </IconButton>
-
-                      <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box
-                          sx={{
-                            position: "absolute",
-                            overflow: "scroll",
-                            top: "50%",
-                            left: "75%",
-                            transform: "translate(-50%, -50%)",
-                            width: 370,
-                            height: 400,
-                            bgcolor: "white",
-                            boxShadow: "0px 4px 16px rgba(43, 52, 69, 0.1)",
-                            borderRadius: "10px",
-                            p: 6,
-                            "@media (max-width: 900px)": {
-                              top: "50%",
-                              left: "50%",
-                              width: 330,
-                              pt: 5,
-                              pb: 5,
-                              pl: 2,
-                              pr: 2,
-                            },
-                          }}
-                        >
-                          <Typography
-                            id="modal-modal-title"
-                            variant="h6"
-                            component="h2"
-                            sx={{ mb: "30px", ml: "10px", fontSize: 16 }}
-                          > 
-                            What do you want to update: 
-                          </Typography>
-
-                          <AddProduct product={data} 
-                                      onClose={handleClose} />
-
-                          </Box>
-                      </Modal>
-
-                      {isProductDeleted === "idle" && (
-                        <IconButton
-                          onClick={() => {
-                            dispatch(adminDeleteProduct(_id));
-                            reloadAfterDelete();
-                          }}
-                        >
-                          <DeleteOutlinedIcon
-                            sx={{ fontSize: "26px", color: "#FF6D6D" }}
-                          />
-                        </IconButton>
-                      )}
-
-                      {isProductDeleted === "success" && (
-                        <span
-                          style={{
-                            margin: "10px 0 5px 30px",
-                            color: "#FF6D6D",
-                            fontFamily: "'Lexend', sans-serif",
-                          }}
-                        >
-                          product has been deleted successfully
-                        </span>
-                      )}
-                    </div>
-                  )}
+                  {isAdmin && <BuiltInActions product={data}/>}
+                    
                 </Box>
               </CardActions>
             </Grid>
@@ -564,7 +470,7 @@ export const ProductCardRender = ({ data }) => {
               variant="h2"
               color="text.primary"
             >
-              Product information.
+              Product information
             </Typography>
             <List
               className={productPageClasses.productCardAboutHeader}
@@ -572,7 +478,8 @@ export const ProductCardRender = ({ data }) => {
               color="text.primary"
             >
               {itemAbout?.map((item, i) => (
-                <ListItem key={i}>
+                <ListItem key={i} 
+                          sx={{ padding: '8px 0' }}>
                   <Typography>{item}</Typography>
                 </ListItem>
               ))}

@@ -1,25 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Typography, Paper, Divider } from '@mui/material';
-import { downloadProductCommentsSelector, downloadProductRequestStateSelector, productSelector } from '../../../store/selectors/selectors';
+import { Box, Typography, Paper, Divider, Rating } from '@mui/material';
+import { downloadProductCommentsSelector, getCustomerRequestStateSelector, productSelector } from '../../../store/selectors/selectors';
 import Spinner from '../../../ui/components/Spinner/Spinner.jsx';
 import RenderComponent from '../../hoc/RenderComponent.jsx';
 import { getCustomer } from '../../../store/thunks/customer.thunks';
 import { useRating } from '../../../ui/components/ProductCard/useRating.jsx';
 import { useStyles } from "./styles";
 import { LinearProgressReview } from "./LinearProgressRewiew.jsx";
-import { RatingBar } from "./RatingBar.jsx";
 
 const CustomerReviewsRender = () => {
 
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getCustomer());
-    }, []);
-
     const product = useSelector(productSelector);
-    const [ratingValue] = useRating(product);
+    const [ratingValue, rateProduct] = useRating(product);
     const productComments = useSelector(downloadProductCommentsSelector);
 
     const classes = useStyles();
@@ -63,7 +56,13 @@ const CustomerReviewsRender = () => {
                             >
                                 {productComments.length} reviews
                             </Typography>
-                            <RatingBar />
+                            <Rating 
+                                className={classes.customerRating}
+                                name="half-rating" value={ratingValue} precision={1}
+                                onChange={e => {
+                                    rateProduct(e);
+                                }}
+                            />
                         </Box>
                     </Box>
                     <Divider variant="middle"/>
@@ -72,7 +71,7 @@ const CustomerReviewsRender = () => {
                             <RenderComponent 
                                 key={index}
                                 loading={"success"}
-                                data={{ rateNumber: index + 1 }}
+                                data={{ ratingKey: index + 1, ratingValue }}
                                 renderSuccess={LinearProgressReview}
                                 loadingFallback={<span><Spinner /></span>}
                                 renderError={"error"}
@@ -90,22 +89,23 @@ const CustomerReviewsRender = () => {
 const CustomerReviews = () => {
     
     const productComments = useSelector(downloadProductCommentsSelector);
+    const loadingCustomer = useSelector(getCustomerRequestStateSelector);
 
     const dispatch = useDispatch();
     useEffect(() => {
       dispatch(getCustomer());
     }, []);
 
-    const loading = useSelector(downloadProductRequestStateSelector);
-
     return (
-        <RenderComponent
-        loading={loading}
-        data={{productComments}}
-        renderSuccess={CustomerReviewsRender}
-        loadingFallback={<span><Spinner /></span>}
-        renderError={"error"}
-        />
+        <>
+            <RenderComponent
+                loading={loadingCustomer}
+                data={{productComments}}
+                renderSuccess={CustomerReviewsRender}
+                loadingFallback={<span><Spinner /></span>}
+                renderError={"error"}
+            />
+        </>
     )
 }
   

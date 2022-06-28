@@ -209,4 +209,8 @@ AddToCartModal.propTypes = {
   _id: PropTypes.string.isRequired, // !!! MVP: number---> string
 };
 
+AddToCartModal.defaultProps = {
+  totalPrice: 1,
+};
+
 export default AddToCartModal;

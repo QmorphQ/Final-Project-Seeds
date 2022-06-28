@@ -12,6 +12,7 @@ import {
   downloadSlidesRequestStateSelector,
   slidesSelector,
 } from "../../../store/selectors/selectors";
+import { readyForEditStart } from "../../../store/actions/cart.actions";
 import { downloadRequestStates } from "../../constants";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunks";
@@ -42,8 +43,6 @@ const useStyles = makeStyles({
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
-  // const itemAddToCart = useSelector((state) => state.mainPageCarousel.itemAddToCart);
-  // console.log(itemAddToCart);
 
   return (
     requestState === "success" && (
@@ -123,9 +122,11 @@ function Item(props) {
   const itemAddToCart = useSelector(
     (state) => state.mainPageCarousel.itemAddToCart
   );
-  const [isOnModal, toggleIsOnModal] = useState(true);
+  const editCartState = useSelector((state) => state.cart.editCartState);
+
+  const [isOnModal, toggleIsOnModal] = useState(false);
   const [discountStart] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(itemAddToCart.discountPrice);
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -134,14 +135,17 @@ function Item(props) {
 
   useEffect(() => {
     toggleIsOnModal(!isOnModal);
-    setTotalPrice(itemAddToCart.discountPrice);
+    if (!isOnModal) {
+      dispatch(sentItemToCart());
+      dispatch(readyForEditStart());
+    }
   }, [openModalWindow]);
 
   useEffect(() => {
-    if (!isOnModal) {
+    if (editCartState === "success") {
       dispatch(sentItemToCart());
     }
-  }, [isOnModal]);
+  }, [editCartState]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -295,7 +299,6 @@ function Item(props) {
               _id={itemAddToCart._id}
             />
           )}
-
           <Box
             className={classes.discoverButton}
             component="button"

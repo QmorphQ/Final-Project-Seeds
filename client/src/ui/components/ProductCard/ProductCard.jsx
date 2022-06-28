@@ -721,7 +721,8 @@ export const ProductCardRender = ({ data }) => {
           onChange={(e) => {rateProduct(e)}}
         />
 
-        <CardContent className={mainClasses.productCardContent}>
+   
+        <CardContent className={mainClasses.productCardContent} sx={{padding: "0px"}}>
           <Link
             style={{
               color: "inherit",
@@ -743,6 +744,8 @@ export const ProductCardRender = ({ data }) => {
               {name}
             </Typography>
           </Link>
+
+          <Box sx={{display: "flex", flexGrow: "1", justifyContent: "space-between"}}>
           <Typography
             className={mainClasses.productCardPrice}
             component="span"
@@ -751,9 +754,7 @@ export const ProductCardRender = ({ data }) => {
           >
             {localPrice.format(currentPrice)}
           </Typography>
-        </CardContent>
-
-        <CardActions className={mainClasses.productActionsBox}>
+          <CardActions className={mainClasses.productActionsBox}>
           <IconButton
             className={mainClasses.productCardButtonBasket}
             aria-label="add to basket"
@@ -777,6 +778,34 @@ export const ProductCardRender = ({ data }) => {
             />
           </IconButton>
         </CardActions>
+          </Box>
+          
+        </CardContent>
+
+        {/* <CardActions className={mainClasses.productActionsBox}>
+          <IconButton
+            className={mainClasses.productCardButtonBasket}
+            aria-label="add to basket"
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              toggleIsOnModal(true);
+            }}
+          >
+            <ShoppingCartOutlinedIcon />
+            <AddToCartModal
+              data={data}
+              discontStart={discontStart}
+              localPrice={localPrice}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+              isOnModal={isOnModal}
+              toggleIsOnModal={toggleIsOnModal}
+              cart={cart}
+              _id={_id}
+            />
+          </IconButton>
+        </CardActions> */}
       </Card>
     </Grid>
   );

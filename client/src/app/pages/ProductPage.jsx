@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Product from "../components/Product/Product.jsx";
 import CustomerReviews from "../components/CustomerReviews/CustomerReviews.jsx";
 import { fetchProductById } from "../../store/thunks/products.thunks";

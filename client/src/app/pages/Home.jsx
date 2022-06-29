@@ -12,8 +12,6 @@ import fetchCategories from "../../store/thunks/catalog.thunks";
 import fetchSlides from "../../store/thunks/slides.thunks";
 import { fetchProducts } from "../../store/thunks/products.thunks";
 import { fetchWishlist } from "../../store/thunks/wishlist.thunks";
-// React Components:
-import Comments from "../components/Comments/Comments.jsx";
 // ========================================
 
 const Home = () => {
@@ -33,7 +31,6 @@ const Home = () => {
         <MainPageCarousel />
         <OurProducts />
         <ProductsList />
-        <Comments />
       </Box>
     </>
   );

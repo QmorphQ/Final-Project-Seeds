@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {ProductCardRender} from "../../../ui/components/ProductCard/ProductCard.jsx"
 import RenderComponent from "../../hoc/RenderComponent.jsx";
 import fetchCategories from "../../../store/thunks/catalog.thunks";
+import fetchSlides from "../../../store/thunks/slides.thunks";
 import Spinner from "../../../ui/components/Spinner/Spinner.jsx";
 import { downloadProductRequestStateSelector, productSelector } from "../../../store/selectors/selectors";
 
@@ -15,6 +16,7 @@ const Product = () => {
 
   useEffect(() => {
     dispatch(fetchCategories());
+    dispatch(fetchSlides()); 
   }, []);
 
   return (

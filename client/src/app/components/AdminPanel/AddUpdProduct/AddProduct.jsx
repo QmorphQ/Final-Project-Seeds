@@ -11,11 +11,13 @@ import AddIcon from '@mui/icons-material/Add';
 
 import useStylesAddProduct from './useStylesAddProduct';
 
-import { productCategories } from '../../constants'; 
+import { productCategories } from '../../../constants'; 
 
-import { adminAddProductRequestSelector } from '../../../store/selectors/selectors';
-import { adminAddProductIdle } from '../../../store/actions/admin.actions'; 
-import { adminAddProduct, adminUpdateProduct } from '../../../store/thunks/admin.thunks'; 
+import { adminAddProductRequestSelector } from '../../../../store/selectors/selectors';
+import { adminAddProductIdle } from '../../../../store/actions/admin.actions'; 
+import { adminAddProduct, 
+         adminUpdateProduct, 
+         adminUpdateSlider, } from '../../../../store/thunks/admin.thunks'; 
 
 
 
@@ -71,7 +73,7 @@ const validationSchema = yup.object({
   
 
 
-const AddProduct = ({ product, onClose }) => {
+const AddProduct = ({ product, onClose, match }) => {
 
     useStylesAddProduct(); 
 
@@ -137,15 +139,19 @@ const AddProduct = ({ product, onClose }) => {
 
             if (product) { 
 
-                const resultImgList = [...new Set([...newAddedImg, ...restAfterDeleteImg])]; 
+                const resultImgList = [...new Set([...restAfterDeleteImg, ...newAddedImg])]; 
 
-                dispatch(adminUpdateProduct(product._id, { ...payload, imageUrls: resultImgList }));
+                dispatch(adminUpdateProduct(product._id, { ...payload, imageUrls: resultImgList })); 
+                if (match) {
+                    dispatch(adminUpdateSlider({ customId: match.customId,
+                                                 currentPrice: Number(values.currentPrice), 
+                                                 discountPrice: Number(values.discountPrice) })); 
+                }
                  
-                onClose();
-                
+                onClose(); 
                 setTimeout(() => {
                     window.location.reload();
-                }, 200); 
+                }, 500); 
 
             } else { 
                 
@@ -380,19 +386,25 @@ const AddProduct = ({ product, onClose }) => {
                         </div>
                     </div>
 
-                    <div style={{ margin: '30px 10px 10%',  
-                                  display: 'flex', 
-                                  flexDirection: 'row' }}>
-                        <Button 
-                            size='large' 
+                    <div style={product 
+                                ? { margin: '30px 10px 0',  
+                                    display: 'flex', 
+                                    flexDirection: 'row', 
+                                    justifyContent: 'center' } 
+                                : { margin: '30px 10px 10%',  
+                                    display: 'flex', 
+                                    flexDirection: 'row', 
+                                    justifyContent: 'flex-start' } }>
+                        <Button  
                             color='success' 
                             variant='contained' 
                             type='submit'
                             sx={{
-                                width: 220, 
+                                width: 200, 
                                 backgroundColor: '#50a257', 
                                 boxShadow: 1, 
                                 color: 'white', 
+                                margin: '30px 0 0 0', 
                                 ':hover': {
                                     backgroundColor: '#50a257',
                                 }
@@ -442,5 +454,6 @@ export default AddProduct;
 
 AddProduct.propTypes = {
     product: PropTypes.object, 
-    onClose: PropTypes.func,
+    onClose: PropTypes.func, 
+    match: PropTypes.any, 
 };

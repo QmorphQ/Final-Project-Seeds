@@ -28,7 +28,7 @@ import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
 import { cleanUpLoginState } from "./store/actions/customer.actions";
 import StaticPage from "./ui/components/StaticPage/StaticPage.jsx";
-import AddProduct from "./app/components/AdminPanel/AddProduct.jsx";
+import AddProduct from "./app/components/AdminPanel/AddUpdProduct/AddProduct.jsx";
 
 function App() {
   // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);

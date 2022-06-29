@@ -55,7 +55,16 @@ export default function OrdersHistory() {
                   </Grid>
                 </Typography>
             )}
-            <Typography style={{paddingTop:15}}  subtitle2={'h2'}>Total: {order?.totalSum}$</Typography>
+             <Typography style={{ padding: '10px 20px'}} variant="h6">
+                <Grid  container alignItems="center" justifyContent="space-between" direction='row'>           
+                  <Grid item style={{ display:'inline-block'}}>
+                   {order?.status}
+                  </Grid>
+                  <Grid item style={{ display:'inline-block'}}>
+                    Total: {order?.totalSum}$
+                  </Grid>               
+                </Grid>
+              </Typography>
           </Grid>
 
           )}

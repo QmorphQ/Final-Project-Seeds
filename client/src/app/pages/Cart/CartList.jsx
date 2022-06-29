@@ -38,6 +38,7 @@ const CartList = () => {
   const cartList = cart.map((cartItem) => {
     const totalPrice =
       Number(cartItem.cartQuantity) * Number(cartItem.currentPrice);
+      console.log(cartItem);
 
     return (
       <CartItem

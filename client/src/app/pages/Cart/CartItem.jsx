@@ -66,7 +66,7 @@ const CartItem = ({ product }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-
+  console.log(product);
 
   return (
     <TableRow

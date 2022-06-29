@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { useSelector } from "react-redux";
 import { API } from "../../app/constants";
 import {
   downloadCartSuccess,
@@ -23,7 +24,13 @@ import {
   clearProductsInCartSuccess,
   clearProductsInCartError,
 } from "../actions/cart.actions";
+// import {
+//   slidesSelector,
+// } from "../selectors/selectors";
 
+// const slideList = useSelector(slidesSelector);
+// const result = slideList.map(item => item._id);
+// console.log(result);
 const countTotalAmountOrder = () => (dispatch, getState) => {
   const { cart } = getState().cart;
   const sumOrder = cart.reduce(
@@ -62,7 +69,11 @@ const fetchCart = () => async (dispatch, getState) => {
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            currentPrice: cartProduct.product.currentPrice,
+            currentPrice: (cartProduct.cartQuantity > 10) 
+            ?  
+            cartProduct.product.discountPrice
+            :
+            cartProduct.product.currentPrice,
             cartQuantity: cartProduct.cartQuantity,
           })));
       let newCart = [...cartFromApi];
@@ -113,7 +124,12 @@ const addCart = (cart) => (dispatch) => {
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
-          currentPrice: cartProduct.product.currentPrice,
+          // currentPrice: cartProduct.product.currentPrice,
+          currentPrice: (cartProduct.cartQuantity > 10) 
+          ?  
+          cartProduct.product.discountPrice
+          :
+          cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addCartSuccess(newCart));
@@ -182,7 +198,12 @@ const addProductToCart = (productId) => (dispatch, getState) => {
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
-          currentPrice: cartProduct.product.currentPrice,
+          // currentPrice: cartProduct.product.currentPrice,
+          currentPrice: (cartProduct.cartQuantity > 10) 
+          ?  
+          cartProduct.product.discountPrice
+          :
+          cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(addProductToCartSuccess(cart));
@@ -239,7 +260,12 @@ const changeProductQuantity =
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            currentPrice: cartProduct.product.currentPrice,
+            // currentPrice: cartProduct.product.currentPrice,
+            currentPrice: (cartProduct.cartQuantity > 10) 
+            ?  
+            cartProduct.product.discountPrice
+            :
+            cartProduct.product.currentPrice,
             cartQuantity: cartProduct.cartQuantity,
           }));
           dispatch(editSuccess(newCart));
@@ -277,7 +303,12 @@ const decreaseProductQuantity = (productId) => (dispatch, getState) => {
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
-          currentPrice: cartProduct.product.currentPrice,
+          // currentPrice: cartProduct.product.currentPrice,
+          currentPrice: (cartProduct.cartQuantity > 10) 
+          ?  
+          cartProduct.product.discountPrice
+          :
+          cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(decreaseQuantitySuccess(cart));
@@ -312,7 +343,12 @@ const deleteProductFromCart = (productId) => (dispatch, getState) => {
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
-          currentPrice: cartProduct.product.currentPrice,
+          // currentPrice: cartProduct.product.currentPrice,
+          currentPrice: (cartProduct.cartQuantity > 10) 
+          ?  
+          cartProduct.product.discountPrice
+          :
+          cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
         }));
         dispatch(deleteProductFromCartSuccess(cart));

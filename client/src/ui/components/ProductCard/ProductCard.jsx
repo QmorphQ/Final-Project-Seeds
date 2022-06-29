@@ -91,6 +91,7 @@ export const ProductCardRender = ({ data }) => {
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
+
   const [discontStart] = useState(10);
 
   const dispatch = useDispatch(); 
@@ -116,6 +117,8 @@ export const ProductCardRender = ({ data }) => {
         : productAmount * discountPrice
     );
   }, [productAmount, discontStart]);
+
+ 
 
   const navigate = useNavigate();
 

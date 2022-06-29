@@ -16,13 +16,13 @@ const mainPageCarousel = (state = initialState, action) => {
     case REQUESTED__ITEM_ADD_TO_CART:
       return {
         ...state,
-        loading: false,
+        loading: "loading",
       };
 
     case RECEIVED_ITEM_ADD_TO_CART:
       return {
         itemAddToCart: action.payload,
-        loading: false,
+        loading: "success",
         openModalWindow: true,
         error: null,
       };

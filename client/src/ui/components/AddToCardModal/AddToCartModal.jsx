@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
   Modal,
@@ -20,6 +20,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { useModalStyles } from "./useModalStyles";
 import { changeProductQuantity } from "../../../store/thunks/cart.thunks";
+import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
 
 const AddToCartModal = ({
   data,
@@ -32,7 +33,9 @@ const AddToCartModal = ({
 }) => {
   const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
   
-
+  const openModalWindow = useSelector(
+    (state) => state.mainPageCarousel.openModalWindow
+  );
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -43,7 +46,7 @@ const AddToCartModal = ({
     );
   }, [productAmount, discontStart]);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   useEffect(() => {
     setOpen(isOnModal);
   }, [isOnModal]);
@@ -51,10 +54,13 @@ const AddToCartModal = ({
   useEffect(() => {
     if (!open) {
       toggleIsOnModal(false);
+      dispatch(sentItemToCart());
     }
   }, [open]);
 
   const modalClasses = useModalStyles();
+
+
 
   return (
    
@@ -150,7 +156,7 @@ const AddToCartModal = ({
 
                   <Box className={modalClasses.productCardButtons}>
                     <Box>
-                      {productAmount > discontStart && (
+                      {(productAmount > discontStart && openModalWindow === false) && (
                         <Typography
                           className={modalClasses.productCardOldPrice}
                           component="div"

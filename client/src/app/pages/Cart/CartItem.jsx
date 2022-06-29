@@ -66,7 +66,7 @@ const CartItem = ({ product }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  console.log(product);
+
 
   return (
     <TableRow
@@ -149,6 +149,8 @@ CartItem.propTypes = {
     cartQuantity: PropTypes.number,
     price: PropTypes.number,
     totalPrice: PropTypes.number,
+    currentPrice: PropTypes.number,
+    imageUrls:PropTypes.array,
   }),
 };
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
   Modal,
@@ -33,7 +33,9 @@ const AddToCartModal = ({
 }) => {
   const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
   
-
+  const openModalWindow = useSelector(
+    (state) => state.mainPageCarousel.openModalWindow
+  );
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -154,7 +156,7 @@ const AddToCartModal = ({
 
                   <Box className={modalClasses.productCardButtons}>
                     <Box>
-                      {productAmount > discontStart && (
+                      {(productAmount > discontStart && openModalWindow === false) && (
                         <Typography
                           className={modalClasses.productCardOldPrice}
                           component="div"

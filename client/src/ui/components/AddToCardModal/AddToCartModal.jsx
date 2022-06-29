@@ -174,12 +174,11 @@ const AddToCartModal = ({
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        dispatch(
+                        quantity > 0 && dispatch(
                           changeProductQuantity(
                             _id,
                             productAmount,
                             name,
-                            // currentPrice,
                             totalPrice / productAmount,
                             imageUrls
                           )
@@ -208,6 +207,10 @@ AddToCartModal.propTypes = {
   isOnModal: PropTypes.bool.isRequired,
   toggleIsOnModal: PropTypes.func.isRequired,
   _id: PropTypes.string.isRequired, // !!! MVP: number---> string
+};
+
+AddToCartModal.defaultProps = {
+  totalPrice: 1,
 };
 
 export default AddToCartModal;

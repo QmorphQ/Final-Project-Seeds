@@ -13,7 +13,7 @@ import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
 // import TestCartPage from './app/pages/TestCartPage.jsx';
-// import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
+import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 import Wishlist from "./app/pages/Wishlist.jsx";
 // import { fetchWishlist } from "./store/thunks/wishlist.thunks";
@@ -28,7 +28,7 @@ import Checkout from "./app/pages/Checkout.jsx"
 import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
 import { cleanUpLoginState } from "./store/actions/customer.actions";
 import StaticPage from "./ui/components/StaticPage/StaticPage.jsx";
-import AddProduct from "./app/components/AdminPanel/AddProduct.jsx";
+import AddProduct from "./app/components/AdminPanel/AddUpdProduct/AddProduct.jsx";
 
 function App() {
   // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -72,6 +72,7 @@ function App() {
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />
               <Route path="/privacy-policy" element={<StaticPage page={"privacy-policy"} />} />
+              <Route path="/*" element={<PageNotFound/>}/>
       </Route>
       </Routes>
 

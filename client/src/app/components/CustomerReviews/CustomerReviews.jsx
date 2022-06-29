@@ -1,104 +1,99 @@
-import { Box, Paper, Typography, Divider, Rating, LinearProgress } from '@mui/material';
-import PropTypes from "prop-types";
-import Star from "../../../ui/components/Icon/icons/Star.jsx";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Box, Typography, Paper, Divider, Rating } from '@mui/material';
+import { downloadProductCommentsSelector, downloadProductRequestStateSelector, getCustomerRequestStateSelector, productSelector } from '../../../store/selectors/selectors';
+import Spinner from '../../../ui/components/Spinner/Spinner.jsx';
+import RenderComponent from '../../hoc/RenderComponent.jsx';
+import { getCustomer } from '../../../store/thunks/customer.thunks';
+import { useRating } from '../../../ui/components/ProductCard/useRating.jsx';
 import { useStyles } from "./styles";
+import { LinearProgressReview } from "./LinearProgressRewiew.jsx";
+import { downloadRequestStates } from '../../constants';
 
-/**
- * scores - object with numbers
- */
+const CustomerReviews = () => {
 
-const CustomerReviews = (props) => {
+    const product = useSelector(productSelector);
+    const [ratingValue, rateProduct] = useRating(product);
+    const productComments = useSelector(downloadProductCommentsSelector);
+    const loadingCustomer = useSelector(getCustomerRequestStateSelector);
+    const loadProductStateSelector = useSelector(downloadProductRequestStateSelector);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCustomer());
+      }, []);
+
     const classes = useStyles();
-    const {total, scores} = props;
-
-    const scoresTotal = Object.entries(scores).reduce((sum, currentValue) => {
-        const [key, value] = currentValue;
-        return sum + Number(key) * Number(value);
-    }, 0);
-
-    const average = scoresTotal / total;
-
-    const ratings = Object.entries(scores).map(item => {
-        const [key, value] = item;
-        const progressInPercents = Number(value) * 100 / Number(total);
-        return (
-            <Box key={key} className={classes.ratingWrapper}>
-            <Typography className={classes.ratingNumber} variant="subtitle1">{key}</Typography>
-            <Star />
-            <LinearProgress className={classes.ratingLinearProgress} variant="determinate" value={progressInPercents} />
-            <Typography className={classes.votesQuantity} variant="subtitle1">{value}</Typography>
-        </Box>
-        )
-    })
     
     return (
-    <>
-    <Box component="section" className={classes.customerReviewsContainer}>
-
-        <Typography
-            className={classes.reviewsHeading}
-            variant="h2"
-            component="h2"
-            >
-            Customer Reviews.
-        </Typography>
-
-        <Box className={classes.reviewsRaitingContainer} 
-            sx={{
-                display: 'flex',
-                '& > :not(style)': {
-                m: 1,
-                width: 350,
-                height: 318,
-                borderRadius: 6,
-                },
-            }}>
-
-            <Paper variant="outlined">
-                <Box className={classes.totalRatingContainer}>
-                    <Typography
-                    className={classes.reviewsRatingHeading}
-                    variant="h2"
-                    component="h2"
-                    >
-                    {average}
-                    </Typography>
-                    <Box className={classes.reviewsQuantityContainer}>
+        <>
+        <Box component="section" className={classes.customerReviewsContainer}>
+    
+            <Typography
+                className={classes.reviewsHeading}
+                variant="h2"
+                component="h2"
+                >
+                Customer Reviews.
+            </Typography>
+    
+            <Box className={classes.reviewsRaitingContainer} 
+                sx={{
+                    display: 'flex',
+                    '& > :not(style)': {
+                    m: 1,
+                    width: 350,
+                    height: 318,
+                    borderRadius: 6,
+                    },
+                }}>
+    
+                <Paper variant="outlined">
+                    <Box className={classes.totalRatingContainer}>
                         <Typography
-                        className={classes.reviewsQuantity}
-                        variant="subtitle1"
+                        className={classes.reviewsRatingHeading}
+                        variant="h2"
+                        component="h2"
                         >
-                            {total} reviews
+                        {ratingValue.toPrecision(2)}
                         </Typography>
-                        <Rating 
-                            className={classes.customerRating}
-                            name="half-rating" readOnly defaultValue={average}  precision={0.5}
-                            onChange={e => e}
-                        />
+                        <Box className={classes.reviewsQuantityContainer}>
+                            <Typography
+                            className={classes.reviewsQuantity}
+                            variant="subtitle1"
+                            >
+                                {productComments.length > 0 ? `${productComments.length} reviews` : `Loading...`}
+                            </Typography>
+                            <Rating 
+                                defaultValue={0}
+                                readOnly={loadingCustomer !== downloadRequestStates.SUCCESS}
+                                className={classes.customerRating}
+                                name="half-rating" value={ratingValue} precision={1}
+                                onChange={e => {
+                                    rateProduct(e);
+                                }}
+                            />
+                        </Box>
                     </Box>
-                </Box>
-                <Divider variant="middle"/>
-                <Box className={classes.ratingNumbersContainer}>
-                    {ratings}
-                </Box>
-
-            </Paper>
+                    <Divider variant="middle"/>
+                    <Box className={classes.ratingNumbersContainer}>
+                        {[...Array(5)].map((item, index) => (
+                            <RenderComponent 
+                                key={index}
+                                loading={loadProductStateSelector}
+                                data={{ ratingKey: index + 1, ratingValue }}
+                                renderSuccess={LinearProgressReview}
+                                loadingFallback={<span style={{marginLeft: "5px"}}><Spinner /></span>}
+                                renderError={"error"}
+                            />
+                        ))}
+                    </Box>
+                </Paper>
+            </Box>
         </Box>
-    </Box>
-    </>
+        </>
     )
 }
-
-CustomerReviews.propTypes = {
-    total: PropTypes.number.isRequired,
-    scores: PropTypes.shape({
-        5: PropTypes.number,
-        4: PropTypes.number,
-        3: PropTypes.number,
-        2: PropTypes.number,
-        1: PropTypes.number
-    }).isRequired
-}
   
-
 export default CustomerReviews;

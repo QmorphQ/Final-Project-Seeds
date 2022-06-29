@@ -9,7 +9,16 @@ import { adminAddProductRequested,
          adminDeleteProductSuccess, 
          adminUpdateProductRequested, 
          adminUpdateProductError, 
-         adminUpdateProductSuccess, } from '../actions/admin.actions';
+         adminUpdateProductSuccess,
+         adminAddToSliderRequested, 
+         adminAddToSliderSuccess, 
+         adminAddToSliderError, 
+         adminDelFromSliderRequested, 
+         adminDelFromSliderSuccess, 
+         adminDelFromSliderError,
+         adminUpdateSliderRequested, 
+         adminUpdateSliderSuccess, 
+         adminUpdateSliderError, } from '../actions/admin.actions';
 
 
 
@@ -82,4 +91,78 @@ const adminUpdateProduct = (id, product) => (dispatch) => {
 }; 
 
 
-export { adminAddProduct, adminDeleteProduct, adminUpdateProduct };
+
+const adminAddProductToSlider = (slide) => (dispatch) => { 
+
+    dispatch(adminAddToSliderRequested()); 
+
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      axios
+        .post(`${API}slides`, slide, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        })
+        .then(() => {
+            dispatch(adminAddToSliderSuccess()); 
+        })
+        .catch(() => {
+            dispatch(adminAddToSliderError());
+        });
+    }
+};  
+
+
+
+const adminDelProductFromSlider = (slideID) => (dispatch) => { 
+
+    dispatch(adminDelFromSliderRequested()); 
+
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      axios
+        .delete(`${API}slides/${slideID}`, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        })
+        .then(() => {
+            dispatch(adminDelFromSliderSuccess()); 
+        })
+        .catch(() => {
+            dispatch(adminDelFromSliderError());
+        });
+    }
+}; 
+
+
+
+const adminUpdateSlider = (slide) => (dispatch) => { 
+
+    dispatch(adminUpdateSliderRequested()); 
+
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      axios
+        .put(`${API}slides/${slide.customId}`, slide, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        })
+        .then(() => {
+            dispatch(adminUpdateSliderSuccess()); 
+        })
+        .catch(() => {
+            dispatch(adminUpdateSliderError());
+        });
+    }
+}; 
+
+
+export { adminAddProduct, 
+         adminDeleteProduct, 
+         adminUpdateProduct, 
+         adminAddProductToSlider, 
+         adminDelProductFromSlider, 
+         adminUpdateSlider, };

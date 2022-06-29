@@ -3,9 +3,15 @@
         "browser": true,
         "es2021": true
     },
+
     "settings": {
         "react": {
             "version": "detect"
+        }, 
+        "import/resolver": {
+          "node": {
+            "moduleDirectory": ["node_modules", "src/"]
+          }
         }
     },
     "extends": [

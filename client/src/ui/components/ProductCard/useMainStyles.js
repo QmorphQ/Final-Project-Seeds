@@ -6,7 +6,7 @@ export const useMainStyles = makeStyles((theme) => ({
     position: "relative",
     border: `1px solid ${theme.palette.grey["300"]}`,
     boxShadow: "none",
-    minHeight: "512px",
+    // minHeight: "512px",
     maxWidth: "350px"
   },
   productCardHeader: {
@@ -25,8 +25,8 @@ export const useMainStyles = makeStyles((theme) => ({
     margin: "0px 28px",
   },
   productCardContent: {
-    margin: "10px 28px",
-    padding: "0",
+    margin: "10px 28px 0px",
+    // padding: "0px",
   },
   productCardName: {
     margin: "0px",
@@ -40,9 +40,10 @@ export const useMainStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   productCardButtonBasket: {
-    position: "absolute",
-    bottom: "28px",
-    right: "28px",
+    // position: "absolute",
+    position: "relative",
+    // bottom: "28px",
+    // right: "28px",
     borderRadius: "8px",
     width: "48px",
     height: "48px",

@@ -1,24 +1,23 @@
-
-// import axios, { Axios } from "axios";
-// import { API } from "../../../app/constants/index";
-// import { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Typography, Container, Grid, Box } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import PropTypes from "prop-types";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
 import {
-  // cartSelector, 
+  cartSelector,
   downloadSlidesRequestStateSelector,
   slidesSelector,
 } from "../../../store/selectors/selectors";
+import { readyForEditStart } from "../../../store/actions/cart.actions";
 import { downloadRequestStates } from "../../constants";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-// import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
-
+import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunks";
+import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
+import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
 
 const useStyles = makeStyles({
   multiLineEllipsis: {
@@ -28,41 +27,22 @@ const useStyles = makeStyles({
     color: "#1F2533",
   },
   addToCartButton: {
-      background: "#359740",
-      '&:hover': {
-         background: "#2BB159",
-      },
+    background: "#359740",
+    "&:hover": {
+      background: "#2BB159",
     },
-    discoverButton: {
-      background: "#FFFFFF",
-      '&:hover': {
-         background: "rgba(53, 151, 64, 0.08);",
-      },
+  },
+  discoverButton: {
+    background: "#FFFFFF",
+    "&:hover": {
+      background: "rgba(53, 151, 64, 0.08);",
     },
+  },
 });
 
 const MainPageCarousel = () => {
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
-
-
-//   useEffect(() => {
-//  const sld = [
-//    {itemNo: "954601"},
-//    {itemNo: "351153"},
-//    {itemNo: "219571"}
-//  ];
-// const sldNew = sld.map((item) => {
-//   axios
-//   .get(`${API}/products/${item.itemNo}`)
-//   .then((response) => {
-//     console.log(response);
-//     return response.data
-//     });
-// });
-
-//   }, []);
-  
 
   return (
     requestState === "success" && (
@@ -134,17 +114,38 @@ const MainPageCarousel = () => {
 function Item(props) {
   const classes = useStyles();
   const navigate = useNavigate();
-  // const cart = useSelector(cartSelector);
-  // const [isOnModal, toggleIsOnModal] = useState(false);
-  // const [totalPrice, setTotalPrice] = useState(props.item.currentPrice);
-  // const localPrice = Intl.NumberFormat("en-US", {
-  //   style: "currency",
-  //   currency: "USD",
-  //   currencyDisplay: "symbol",
-  // });
+  const dispatch = useDispatch();
+  const cart = useSelector(cartSelector);
+  const openModalWindow = useSelector(
+    (state) => state.mainPageCarousel.openModalWindow
+  );
+  const itemAddToCart = useSelector(
+    (state) => state.mainPageCarousel.itemAddToCart
+  );
+  const editCartState = useSelector((state) => state.cart.editCartState);
 
+  const [isOnModal, toggleIsOnModal] = useState(false);
+  const [discountStart] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(itemAddToCart.discountPrice);
+  const localPrice = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    currencyDisplay: "symbol",
+  });
 
+  useEffect(() => {
+    toggleIsOnModal(!isOnModal);
+    if (!isOnModal) {
+      dispatch(sentItemToCart());
+      dispatch(readyForEditStart());
+    }
+  }, [openModalWindow]);
 
+  useEffect(() => {
+    if (editCartState === "success") {
+      dispatch(sentItemToCart());
+    }
+  }, [editCartState]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -181,7 +182,7 @@ function Item(props) {
                 width={{ xs: "19px", sm: "19px", md: "28px" }}
                 src={Vector}
               ></Box>
-              ${props.item.currentPrice}
+              ${props.item.discountPrice}
             </Typography>
             <Typography
               component="span"
@@ -192,7 +193,7 @@ function Item(props) {
               pl={{ xs: "12px", sm: "12px", md: "21px" }}
               style={{ textDecoration: "line-through" }}
             >
-              ${(props.item.currentPrice * 1.1).toFixed(2)}
+              ${props.item.currentPrice}
             </Typography>
           </Box>
         </Grid>
@@ -267,36 +268,39 @@ function Item(props) {
           xs={6}
           md={2}
         >
-          <Box className={classes.addToCartButton}
+          <Box
+            className={classes.addToCartButton}
             component="button"
             width="142px"
             height="47px"
             border="none"
             fontSize="14px"
             color="#FFFFFF"
-            // backgroundColor="#359740"
             borderRadius="10px"
-            sx={{ cursor: "pointer"}}
+            sx={{ cursor: "pointer" }}
             marginRight={{ xs: "12px", md: "15px" }}
             marginBottom="6px"
-            // onClick={() => {
-            //   toggleIsOnModal(true);
-            // }}
+            onClick={() => {
+              dispatch(fetchItemAddToCart(props.item.itemNo));
+            }}
           >
             Add to cart
-            {/* <AddToCartModal
-              data={props.item}
-              discontStart={10}
+          </Box>
+          {openModalWindow && (
+            <AddToCartModal
+              data={itemAddToCart}
+              discontStart={discountStart}
               localPrice={localPrice}
               totalPrice={totalPrice}
               setTotalPrice={setTotalPrice}
-              isOnModal={isOnModal}
+              isOnModal={true}
               toggleIsOnModal={toggleIsOnModal}
               cart={cart}
-              _id={props.item._id}
-            /> */}
-          </Box>
-          <Box className={classes.discoverButton}
+              _id={itemAddToCart._id}
+            />
+          )}
+          <Box
+            className={classes.discoverButton}
             component="button"
             width="142px"
             height="47px"
@@ -305,9 +309,14 @@ function Item(props) {
             color="#359740"
             backgroundColor="#FFFFFF"
             borderRadius="10px"
-            sx={{ cursor: "pointer"}}
-            onClick={() => navigate( `/products/${props.item.itemNo}`)}
-            // onClick={() => navigate(`/products/699319`)}
+            sx={{ cursor: "pointer" }}
+            onClick={() =>
+              navigate(
+                props.item.itemNo
+                  ? `/products/${props.item.itemNo}`
+                  : "/will-not-match"
+              )
+            }
           >
             Discover
           </Box>

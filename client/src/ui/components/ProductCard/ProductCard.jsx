@@ -26,7 +26,6 @@ import {
   ListItem,
   List,
   Link,
-  Modal,
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -36,8 +35,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -48,33 +45,27 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 
-import { API } from "../../../app/constants/index";
-
 import {
   cartSelector,
   mainCategoriesSelector,
-  wishlistSelector,
   isAdminStateSelector,
-  adminDeleteProductRequestSelector,
   loginStateSelector,
+  downloadCategoriesRequestStateSelector,
 } from "../../../store/selectors/selectors";
 import {
   addProductToCart,
   fetchCart,
   decreaseProductQuantity,
   changeProductQuantity,
-} from "../../../store/thunks/cart.thunks"; 
-
-import { adminDeleteProduct } from "../../../store/thunks/admin.thunks";
-import { adminDeleteProductIdle } from "../../../store/actions/admin.actions";
+} from "../../../store/thunks/cart.thunks";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
-import AddProduct from "../../../app/components/AdminPanel/AddProduct.jsx";
-import {
-  addProductToWishlist,
-  deleteProductFromWishlist,
-} from "../../../store/thunks/wishlist.thunks";
+import BuiltInActions from "../../../app/components/AdminPanel/BuiltInActions/BuiltInActions.jsx"; 
 import Spinner from "../Spinner/Spinner.jsx";
+import { useRating } from "./useRating.jsx";
+import { useWishlist } from "./useWishlist.jsx";
+import { fetchProductComments } from "../../../store/thunks/comments.thunks";
+import { downloadRequestStates } from "../../../app/constants/index";
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -97,49 +88,28 @@ export const ProductCardRender = ({ data }) => {
   } = data;  
 
 
-  const [isFavourite, toggleIsFavourite] = useState(false);
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
   const [discontStart] = useState(10);
 
-  const [open, setOpen] = useState(false); 
-  
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const dispatch = useDispatch(); 
-  const navigation = useNavigate();
 
-  const wishlist = useSelector(wishlistSelector);
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
-
-  const isProductDeleted = useSelector(adminDeleteProductRequestSelector);  
-  
-  const [productItem, setProductItem] = useState(); 
-
-  useEffect(() => {
-      fetch(`${API}products/${itemNo}`)
-          .then(res => res.json())
-          .then(result => setProductItem(result))
-  }, [open]); 
 
 
   useEffect(() => {
     dispatch(fetchCart());
     window.scrollTo(0, 0);
-  }, []);
+  }, []); 
+
+
+
+  
 
   useEffect(() => {
-    if (wishlist) {
-      toggleIsFavourite(!!wishlist.products.find((item) => item._id === _id));
-    }
-  }, [wishlist]);
-
-  useEffect(() => {
-    // productAmount <= discontStart ? setTotalPrice(productAmount*currentPrice) : setTotalPrice(productAmount*discountPrice) // MVP change
     setTotalPrice((prevProductAmount) =>
       prevProductAmount <= discontStart
         ? productAmount * currentPrice
@@ -164,13 +134,12 @@ export const ProductCardRender = ({ data }) => {
     currencyDisplay: "symbol",
   });
 
-  const reloadAfterDelete = () => {
-    setTimeout(() => {
-      dispatch(adminDeleteProductIdle());
-      navigation('/');
-    }, 3000);
-  };
 
+  const [ratingValue, rateProduct] = useRating(data);
+  const [isFavourite, toggleInWishlist] = useWishlist(_id);
+
+  const downloadCategoriesState = useSelector(downloadCategoriesRequestStateSelector);
+ 
   if (isBasket) {
     return (
       <Card>
@@ -343,10 +312,10 @@ export const ProductCardRender = ({ data }) => {
                     className={productPageClasses.productCardAvailable}
                     label={mainCategory?.name.toUpperCase()}
                     icon={
-                      <Icon
+                      downloadCategoriesState === downloadRequestStates.SUCCESS ? <Icon
                         className={productPageClasses.buttonIcon}
                         icon={Icon.icons[mainCategory?.icon]}
-                      />
+                      /> : <Spinner />
                     }
                     variant="outlined"
                   />
@@ -471,11 +440,7 @@ export const ProductCardRender = ({ data }) => {
                           className={productPageClasses.productCardButton}
                           color="primary"
                           aria-label="add to favourite"
-                          onClick={
-                            isFavourite
-                              ? () => dispatch(deleteProductFromWishlist(_id))
-                              : () => dispatch(addProductToWishlist(_id))
-                          }
+                          onClick={toggleInWishlist}
                         >
                           {isFavourite ? (
                             <FavoriteIcon />
@@ -496,85 +461,8 @@ export const ProductCardRender = ({ data }) => {
                     </Box>
                   )}
 
-                  {isAdmin && (
-                    <div>
-                      <IconButton onClick={handleOpen}>
-                        <SyncAltOutlinedIcon
-                          sx={{ fontSize: "26px", color: "#FF6D6D" }}
-                        />
-                      </IconButton>
-
-                      <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box
-                          sx={{
-                            position: "absolute",
-                            overflow: "scroll",
-                            top: "50%",
-                            left: "75%",
-                            transform: "translate(-50%, -50%)",
-                            width: 370,
-                            height: 400,
-                            bgcolor: "white",
-                            boxShadow: "0px 4px 16px rgba(43, 52, 69, 0.1)",
-                            borderRadius: "10px",
-                            p: 6,
-                            "@media (max-width: 900px)": {
-                              top: "50%",
-                              left: "50%",
-                              width: 330,
-                              pt: 5,
-                              pb: 5,
-                              pl: 2,
-                              pr: 2,
-                            },
-                          }}
-                        >
-                          <Typography
-                            id="modal-modal-title"
-                            variant="h6"
-                            component="h2"
-                            sx={{ mb: "30px", ml: "10px", fontSize: 16 }}
-                          > 
-                            What do you want to update: 
-                          </Typography>
-
-                          <AddProduct product={productItem} 
-                                      onClose={handleClose} />
-
-                          </Box>
-                      </Modal>
-
-                      {isProductDeleted === "idle" && (
-                        <IconButton
-                          onClick={() => {
-                            dispatch(adminDeleteProduct(_id));
-                            reloadAfterDelete();
-                          }}
-                        >
-                          <DeleteOutlinedIcon
-                            sx={{ fontSize: "26px", color: "#FF6D6D" }}
-                          />
-                        </IconButton>
-                      )}
-
-                      {isProductDeleted === "success" && (
-                        <span
-                          style={{
-                            margin: "10px 0 5px 30px",
-                            color: "#FF6D6D",
-                            fontFamily: "'Lexend', sans-serif",
-                          }}
-                        >
-                          product has been deleted successfully
-                        </span>
-                      )}
-                    </div>
-                  )}
+                  {isAdmin && <BuiltInActions product={data}/>}
+                    
                 </Box>
               </CardActions>
             </Grid>
@@ -586,15 +474,16 @@ export const ProductCardRender = ({ data }) => {
               variant="h2"
               color="text.primary"
             >
-              Product information.
+              Product information
             </Typography>
             <List
               className={productPageClasses.productCardAboutHeader}
               variant="body1"
               color="text.primary"
             >
-              {itemAbout.map((item, i) => (
-                <ListItem key={i}>
+              {itemAbout?.map((item, i) => (
+                <ListItem key={i} 
+                          sx={{ padding: '8px 0' }}>
                   <Typography>{item}</Typography>
                 </ListItem>
               ))}
@@ -612,21 +501,14 @@ export const ProductCardRender = ({ data }) => {
           <CardHeader
             className={mainClasses.productCardHeader}
             action={
-              isLogin &&
-              isAdmin === false && (
-                <IconButton
-                  className={mainClasses.productCardButton}
-                  color="warning"
-                  aria-label="add to favourite"
-                  onClick={
-                    isFavourite
-                      ? () => dispatch(deleteProductFromWishlist(_id))
-                      : () => dispatch(addProductToWishlist(_id))
-                  }
-                >
-                  {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                </IconButton>
-              )
+              <IconButton
+                className={mainClasses.productCardButton}
+                color="warning"
+                aria-label="add to favourite"
+                onClick={toggleInWishlist}
+              >
+                {isFavourite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
             }
           />
 
@@ -640,9 +522,9 @@ export const ProductCardRender = ({ data }) => {
           <Rating
             className={mainClasses.productCardRating}
             name="half-rating"
-            defaultValue={2.5}
-            precision={0.5}
-            onChange={(e) => e}
+            value={ratingValue}
+            precision={1}
+            onChange={(e) => {rateProduct(e)}}
           />
 
           <CardContent className={mainClasses.productCardContent}>
@@ -724,11 +606,7 @@ export const ProductCardRender = ({ data }) => {
             isLogin &&
             isAdmin === false && (
               <IconButton
-                onClick={
-                  isFavourite
-                    ? () => dispatch(deleteProductFromWishlist(_id))
-                    : () => dispatch(addProductToWishlist(_id))
-                }
+                onClick={toggleInWishlist}
                 className={mainClasses.productCardButton}
                 color="warning"
                 aria-label="add to favourite"
@@ -749,12 +627,13 @@ export const ProductCardRender = ({ data }) => {
         <Rating
           className={mainClasses.productCardRating}
           name="half-rating"
-          defaultValue={2.5}
-          precision={0.5}
-          onChange={(e) => e}
+          precision={1}
+          value={ratingValue}
+          onChange={(e) => {rateProduct(e)}}
         />
 
-        <CardContent className={mainClasses.productCardContent}>
+   
+        <CardContent className={mainClasses.productCardContent} sx={{padding: "0px"}}>
           <Link
             style={{
               color: "inherit",
@@ -776,6 +655,8 @@ export const ProductCardRender = ({ data }) => {
               {name}
             </Typography>
           </Link>
+
+          <Box sx={{display: "flex", flexGrow: "1", justifyContent: "space-between"}}>
           <Typography
             className={mainClasses.productCardPrice}
             component="span"
@@ -784,9 +665,7 @@ export const ProductCardRender = ({ data }) => {
           >
             {localPrice.format(currentPrice)}
           </Typography>
-        </CardContent>
-
-        <CardActions className={mainClasses.productActionsBox}>
+          <CardActions className={mainClasses.productActionsBox}>
           <IconButton
             className={mainClasses.productCardButtonBasket}
             aria-label="add to basket"
@@ -810,20 +689,52 @@ export const ProductCardRender = ({ data }) => {
             />
           </IconButton>
         </CardActions>
+          </Box>
+          
+        </CardContent>
+
+        {/* <CardActions className={mainClasses.productActionsBox}>
+          <IconButton
+            className={mainClasses.productCardButtonBasket}
+            aria-label="add to basket"
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              toggleIsOnModal(true);
+            }}
+          >
+            <ShoppingCartOutlinedIcon />
+            <AddToCartModal
+              data={data}
+              discontStart={discontStart}
+              localPrice={localPrice}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+              isOnModal={isOnModal}
+              toggleIsOnModal={toggleIsOnModal}
+              cart={cart}
+              _id={_id}
+            />
+          </IconButton>
+        </CardActions> */}
       </Card>
     </Grid>
   );
 };
 
-const ProductCard = ({ product, loading }) =>(
-  <RenderComponent
+const ProductCard = ({ product, loading }) =>{
+  const dispatch = useDispatch();
+  useEffect(() => {
+    product?._id && dispatch(fetchProductComments(product._id));
+  }, []);
+  return (<RenderComponent
     loading={loading}
     data={product}
     renderSuccess={ProductCardRender}
     loadingFallback={Spinner}
     renderError={<span>Error</span>}
-  />
-);
+  />)
+};
 
 ProductCard.propTypes = {
   product: PropTypes.shape({

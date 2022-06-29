@@ -20,6 +20,7 @@ import {
   ORDER_AMOUNT_UPDATED,
   EMPTY_SHOPPING_CART,
   EMPTY_SHOPPING_CART_ERROR,
+  READY_FOR_EDIT_START,
 } from "../actions/cart.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -96,6 +97,12 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         addProductToCartRequestState: downloadRequestStates.ERROR,
       };
+
+      case READY_FOR_EDIT_START:
+        return {
+          ...state,
+          editCartState: downloadRequestStates.IDLE,
+        };
 
     case EDIT_START:
       return {

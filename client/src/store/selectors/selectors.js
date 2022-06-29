@@ -57,6 +57,12 @@ export const productsSelector = (state) => {
   return selectedProducts;
 };
 
+export const productSelector = (state) =>
+  state.products.product;
+
+  export const downloadProductRequestStateSelector = (state) =>
+  state.products.downloadProductRequestState;
+
 export const downloadFilteredProductsRequestStateSelector = (state) =>
   state.products.downloadFilteredRequestState;
 
@@ -87,6 +93,9 @@ export const customersRequestSelector = (state) =>
   state.customer.addRequestState;
 
 export const isRightPasswordSelector = (state) => state.customer.isRightPassword;
+
+export const getCustomerRequestStateSelector = (state) =>
+  state.customer.getCurrentCustomerRequestState;
 
 // ======================= Cart ===========================
 export const cartSelector = (state) => state.cart.cart;
@@ -147,4 +156,16 @@ export const wishlistQuantitySelector = (state) => state.wishlist.wishlist?.prod
 export const adminAddProductRequestSelector = (state) => state.admin.adminAddProductRequestState; 
 
 export const adminDeleteProductRequestSelector = (state) => state.admin.adminDeleteProductRequestState;
+
+
+// ====================== Comments ==========================
+
+export const downloadAllCommentsSelector = (state) =>
+  state.comments.comments;
+
+export const downloadProductCommentsSelector = (state) =>
+  state.comments.productComments;
+
+export const downloadProductCommentsRequestStateSelector = (state) =>
+  state.comments.downloadProductCommentsRequestState;
 

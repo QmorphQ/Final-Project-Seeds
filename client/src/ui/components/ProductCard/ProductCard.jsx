@@ -105,10 +105,6 @@ export const ProductCardRender = ({ data }) => {
     window.scrollTo(0, 0);
   }, []); 
 
-
-
-  
-
   useEffect(() => {
     setTotalPrice((prevProductAmount) =>
       prevProductAmount <= discontStart
@@ -136,6 +132,11 @@ export const ProductCardRender = ({ data }) => {
 
 
   const [ratingValue, rateProduct] = useRating(data);
+
+  useEffect(() => {
+    data._id && dispatch(fetchProductComments(data._id));
+  }, [ratingValue, data._id]);
+
   const [isFavourite, toggleInWishlist] = useWishlist(_id);
 
   const downloadCategoriesState = useSelector(downloadCategoriesRequestStateSelector);

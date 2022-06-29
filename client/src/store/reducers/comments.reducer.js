@@ -80,7 +80,7 @@ import {
           ...state,
           downloadProductCommentsRequestState: downloadRequestStates.SUCCESS,
           productComments: action.payload,
-          comments: [...state.comments, ...action.payload],
+          comments: [...state.comments.filter(comment => comment.product._id !== action.payload[0].product._id), ...action.payload],
         };
   
       case DOWNLOAD_PRODUCT_COMMENTS_ERROR:

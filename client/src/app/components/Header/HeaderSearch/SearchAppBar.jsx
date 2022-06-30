@@ -109,7 +109,7 @@ export default function SearchAppBar() {
 
   const getAllProducts = async () => {
     axios
-      .get(`http://localhost:8000/api/products`)
+      .get(`${API}products`)
       .then((r) => {
         setFetchedProducts(r.data);
       })

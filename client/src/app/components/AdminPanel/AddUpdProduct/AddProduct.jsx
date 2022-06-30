@@ -28,8 +28,8 @@ const validationSchema = yup.object({
         .string()
         .required('required'), 
 
-    description: yup
-        .string()
+    itemAbout: yup
+        .mixed()
         .required('required'),
 
     categories: yup
@@ -78,7 +78,7 @@ const AddProduct = ({ product, onClose, match }) => {
     useStylesAddProduct(); 
 
     const isProductAdded = useSelector(adminAddProductRequestSelector);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); 
 
     const [restAfterDeleteImg, setRestAfterDeleteImg] = useState(product?.imageUrls)
     const [fieldsList, setFieldsList] = useState([0]);
@@ -100,7 +100,7 @@ const AddProduct = ({ product, onClose, match }) => {
     const formik = useFormik({
         initialValues: {
             name: product?.name || '', 
-            description: product?.description || '', 
+            itemAbout: product?.itemAbout || '',
             categories: product?.categories || '', 
             currentPrice: product?.currentPrice || '', 
             discountPrice: product?.discountPrice || '', 
@@ -126,16 +126,19 @@ const AddProduct = ({ product, onClose, match }) => {
                                  values.imageUrls3,
                                  values.imageUrls4].filter(item => item !== ''); 
  
-            const payload = { name: values.name, 
-                              description: values.description, 
-                              categories: values.categories, 
-                              currentPrice: Number(values.currentPrice), 
-                              discountPrice: Number(values.discountPrice), 
-                              packageDimensions: values.packageDimensions, 
-                              currentRating: Number(values.currentRating), 
-                              quantity: Number(values.quantity), 
-                              itemWeight: values.itemWeight, 
-                              ASIN: values.ASIN.toUpperCase() };
+            const payload = { 
+                name: values.name, 
+                itemAbout: typeof values.itemAbout === 'string' 
+                                  ? values.itemAbout.split(/[.]/gm) 
+                                  : values.itemAbout,
+                categories: values.categories, 
+                currentPrice: Number(values.currentPrice), 
+                discountPrice: Number(values.discountPrice), 
+                packageDimensions: values.packageDimensions, 
+                currentRating: Number(values.currentRating), 
+                quantity: Number(values.quantity), 
+                itemWeight: values.itemWeight, 
+                ASIN: values.ASIN.toUpperCase() };
 
             if (product) { 
 
@@ -203,15 +206,15 @@ const AddProduct = ({ product, onClose, match }) => {
                             />  
 
                             <TextField 
-                                name='description'
+                                name='itemAbout'
                                 id='outlined-basic' 
-                                label='description' 
+                                label='about' 
                                 variant='outlined' 
                                 className='product-input'                              
-                                value={formik.values.description}
+                                value={formik.values.itemAbout}
                                 onChange={formik.handleChange}
-                                error={formik.touched.description && Boolean(formik.errors.description)}
-                                helperText={formik.touched.description && formik.errors.description}
+                                error={formik.touched.itemAbout && Boolean(formik.errors.itemAbout)}
+                                helperText={formik.touched.itemAbout && formik.errors.itemAbout}
                             /> 
 
                             <TextField
@@ -325,6 +328,7 @@ const AddProduct = ({ product, onClose, match }) => {
                                         component='img' 
                                         image={item}
                                         sx={{ width: '67px', 
+                                              height: '67px', 
                                               m: '10px', 
                                               borderRadius: '12px', }} 
                                     /> 

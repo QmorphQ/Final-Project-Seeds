@@ -123,6 +123,7 @@ function Item(props) {
     (state) => state.mainPageCarousel.itemAddToCart
   );
   const editCartState = useSelector((state) => state.cart.editCartState);
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
 
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [discountStart] = useState(10);
@@ -141,19 +142,11 @@ function Item(props) {
     }
   }, [openModalWindow]);
 
-  // useEffect(() => {
-  //   if (!isOnModal && openModalWindow ) {
-  //    console.log("нужно закрыть");
-  //   }
-  // }, [isOnModal]);
-
   useEffect(() => {
     if (editCartState === "success") {
       dispatch(sentItemToCart());
     }
   }, [editCartState]);
-
- 
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -305,6 +298,7 @@ function Item(props) {
               toggleIsOnModal={toggleIsOnModal}
               cart={cart}
               _id={itemAddToCart._id}
+              slidesItemId={slidesItemId}
             />
           )}
           <Box

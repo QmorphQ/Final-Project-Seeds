@@ -32,15 +32,16 @@ const AddToCartModal = ({
   toggleIsOnModal,
 }) => {
   const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
-  
-  const openModalWindow = useSelector(
-    (state) => state.mainPageCarousel.openModalWindow
-  );
+
+  // const openModalWindow = useSelector(
+  //   (state) => state.mainPageCarousel.openModalWindow
+  // );
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
     setTotalPrice((prevProductAmount) =>
-      prevProductAmount <= discontStart
+      (prevProductAmount <= discontStart || !slidesItemId.includes(_id))
         ? productAmount * currentPrice
         : productAmount * discountPrice
     );
@@ -60,11 +61,7 @@ const AddToCartModal = ({
 
   const modalClasses = useModalStyles();
 
-
-
   return (
-   
-    
     <Modal
       open={open}
       onClose={() => {
@@ -156,7 +153,7 @@ const AddToCartModal = ({
 
                   <Box className={modalClasses.productCardButtons}>
                     <Box>
-                      {(productAmount > discontStart && openModalWindow === false) && (
+                      {(productAmount > discontStart || slidesItemId.includes(_id)) && (
                         <Typography
                           className={modalClasses.productCardOldPrice}
                           component="div"
@@ -180,15 +177,19 @@ const AddToCartModal = ({
                       variant="contained"
                       onClick={() => {
                         setOpen(false);
-                        quantity > 0 && dispatch(
-                          changeProductQuantity(
-                            _id,
-                            productAmount,
-                            name,
-                            totalPrice / productAmount,
-                            imageUrls
-                          )
-                        );
+                        quantity > 0 &&
+                          dispatch(
+                            changeProductQuantity(
+                              _id,
+                              productAmount,
+                              name,
+                              totalPrice / productAmount,
+                              imageUrls,
+                              currentPrice,
+                              discountPrice,
+                              slidesItemId
+                            )
+                          );
                       }}
                     >
                       Add to card

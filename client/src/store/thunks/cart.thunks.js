@@ -51,7 +51,7 @@ const concatCarts = (localCart, remoteCart) =>
     return accumulator;
   }, []);
 
-const fetchCart = () => async (dispatch, getState) => {
+const fetchCart = (slidesItemId) => async (dispatch, getState) => {
   const token = localStorage.getItem("jwt");
   dispatch(downloadCartRequested());
   const { cart } = getState().cart;
@@ -69,12 +69,14 @@ const fetchCart = () => async (dispatch, getState) => {
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            currentPrice: (cartProduct.cartQuantity > 10) 
-            ?  
-            cartProduct.product.discountPrice
-            :
-            cartProduct.product.currentPrice,
+            currentPrice:
+              cartProduct.cartQuantity > 10 ||
+              slidesItemId?.includes(cartProduct.product._id)
+                ? cartProduct.product.discountPrice
+                : cartProduct.product.currentPrice,
             cartQuantity: cartProduct.cartQuantity,
+            startingPrice: cartProduct.product.currentPrice,
+            discountPrice: cartProduct.product.discountPrice,
           })));
       let newCart = [...cartFromApi];
       if (Array.isArray(cart) && cart.length > 0) {
@@ -105,7 +107,7 @@ const fetchCart = () => async (dispatch, getState) => {
   }
 };
 
-const addCart = (cart) => (dispatch) => {
+const addCart = (cart, slidesItemId) => (dispatch) => {
   dispatch(addCartRequested());
   const token = localStorage.getItem("jwt");
   if (token) {
@@ -125,12 +127,14 @@ const addCart = (cart) => (dispatch) => {
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
           // currentPrice: cartProduct.product.currentPrice,
-          currentPrice: (cartProduct.cartQuantity > 10) 
-          ?  
-          cartProduct.product.discountPrice
-          :
-          cartProduct.product.currentPrice,
+          currentPrice:
+            cartProduct.cartQuantity > 10 ||
+            slidesItemId.includes(cartProduct.product._id)
+              ? cartProduct.product.discountPrice
+              : cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
+          startingPrice: cartProduct.product.currentPrice,
+          discountPrice: cartProduct.product.discountPrice,
         }));
         dispatch(addCartSuccess(newCart));
       })
@@ -148,7 +152,10 @@ const changeLocalCart = (
   calculateCartQuantity,
   name,
   currentPrice,
-  imageUrls
+  imageUrls,
+  startingPrice,
+  discountPrice,
+  slidesItemId
 ) => {
   let cartCopy;
   if (!cart) {
@@ -157,13 +164,20 @@ const changeLocalCart = (
     cartCopy = [...cart];
   }
   const product = cartCopy.find((cartItem) => productId === cartItem.id);
+
   if (product) {
     const newProduct = {
       ...product,
       imageUrls,
       name,
-      currentPrice,
+      currentPrice:
+        calculateCartQuantity() > 10 || slidesItemId?.includes(productId)
+          ? // currentPrice: (calculateCartQuantity() > 10)
+            discountPrice
+          : startingPrice,
       cartQuantity: calculateCartQuantity(product.cartQuantity),
+      startingPrice,
+      discountPrice,
     };
     const productIndex = cartCopy.findIndex(
       (cartItem) => productId === cartItem.id
@@ -171,18 +185,25 @@ const changeLocalCart = (
     cartCopy.splice(productIndex, 1, newProduct);
     return cartCopy;
   }
+
   const newProduct = {
     id: productId,
     imageUrls,
     name,
-    currentPrice,
+    currentPrice:
+      calculateCartQuantity() > 10 || slidesItemId?.includes(productId)
+        ? // currentPrice: (calculateCartQuantity() > 10)
+          discountPrice
+        : startingPrice,
     cartQuantity: calculateCartQuantity(),
+    startingPrice,
+    discountPrice,
   };
   const newCart = [...cartCopy, newProduct];
   return newCart;
 };
 
-const addProductToCart = (productId) => (dispatch, getState) => {
+const addProductToCart = (productId, slidesItemId) => (dispatch, getState) => {
   dispatch(addProductToCartRequested());
   const token = localStorage.getItem("jwt");
 
@@ -199,12 +220,14 @@ const addProductToCart = (productId) => (dispatch, getState) => {
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
           // currentPrice: cartProduct.product.currentPrice,
-          currentPrice: (cartProduct.cartQuantity > 10) 
-          ?  
-          cartProduct.product.discountPrice
-          :
-          cartProduct.product.currentPrice,
+          currentPrice:
+            cartProduct.cartQuantity > 10 ||
+            slidesItemId?.includes(cartProduct.product._id)
+              ? cartProduct.product.discountPrice
+              : cartProduct.product.currentPrice,
           cartQuantity: cartProduct.cartQuantity,
+          startingPrice: cartProduct.product.currentPrice,
+          discountPrice: cartProduct.product.discountPrice,
         }));
         dispatch(addProductToCartSuccess(cart));
       })
@@ -215,7 +238,15 @@ const addProductToCart = (productId) => (dispatch, getState) => {
     const { cart } = getState().cart;
     const updatedCart = cart.map((cartItem) =>
       cartItem.id === productId
-        ? { ...cartItem, cartQuantity: cartItem.cartQuantity + 1 }
+        ? {
+            ...cartItem,
+            currentPrice:
+              cartItem.cartQuantity + 1 > 10 ||
+              slidesItemId?.includes(productId)
+                ? cartItem.discountPrice
+                : cartItem.startingPrice,
+            cartQuantity: cartItem.cartQuantity + 1,
+          }
         : cartItem
     );
     dispatch(addProductToCartSuccess(updatedCart));
@@ -223,7 +254,16 @@ const addProductToCart = (productId) => (dispatch, getState) => {
 };
 
 const changeProductQuantity =
-  (productId, quantity, name, currentPrice, imageUrls) =>
+  (
+    productId,
+    quantity,
+    name,
+    currentPrice,
+    imageUrls,
+    startingPrice,
+    discountPrice,
+    slidesItemId
+  ) =>
   (dispatch, getState) => {
     dispatch(editStart());
     const token = localStorage.getItem("jwt");
@@ -236,7 +276,9 @@ const changeProductQuantity =
         calculateQuantity,
         name,
         currentPrice,
-        imageUrls
+        imageUrls,
+        startingPrice,
+        discountPrice
       );
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
@@ -261,12 +303,13 @@ const changeProductQuantity =
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
             // currentPrice: cartProduct.product.currentPrice,
-            currentPrice: (cartProduct.cartQuantity > 10) 
-            ?  
-            cartProduct.product.discountPrice
-            :
-            cartProduct.product.currentPrice,
+            currentPrice:
+              cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
+                ? cartProduct.product.discountPrice
+                : cartProduct.product.currentPrice,
             cartQuantity: cartProduct.cartQuantity,
+            startingPrice: cartProduct.product.currentPrice,
+            discountPrice: cartProduct.product.discountPrice,
           }));
           dispatch(editSuccess(newCart));
         })
@@ -281,87 +324,102 @@ const changeProductQuantity =
         calculateQuantity,
         name,
         currentPrice,
-        imageUrls
+        imageUrls,
+        startingPrice,
+        discountPrice,
+        slidesItemId
       );
-      console.log(updatedCart);
+
       dispatch(editSuccess(updatedCart));
     }
   };
 
-const decreaseProductQuantity = (productId) => (dispatch, getState) => {
-  dispatch(decreaseQuantityRequested());
-  const token = localStorage.getItem("jwt");
-  if (token) {
-    axios
-      .delete(`${API}cart/product/${productId}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
-      .then((response) => {
-        const cart = response.data.products.map((cartProduct) => ({
-          id: cartProduct.product._id,
-          imageUrls: cartProduct.product.imageUrls,
-          name: cartProduct.product.name,
-          // currentPrice: cartProduct.product.currentPrice,
-          currentPrice: (cartProduct.cartQuantity > 10) 
-          ?  
-          cartProduct.product.discountPrice
-          :
-          cartProduct.product.currentPrice,
-          cartQuantity: cartProduct.cartQuantity,
-        }));
-        dispatch(decreaseQuantitySuccess(cart));
-      })
-      .catch(() => {
-        dispatch(decreaseQuantityError());
-      });
-  } else {
-    const { cart } = getState().cart;
-    const updatedCart = cart.map((cartItem) =>
-      cartItem.id === productId
-        ? { ...cartItem, cartQuantity: cartItem.cartQuantity - 1 }
-        : cartItem
-    );
+const decreaseProductQuantity =
+  (productId, slidesItemId) => (dispatch, getState) => {
+    dispatch(decreaseQuantityRequested());
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      axios
+        .delete(`${API}cart/product/${productId}`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((response) => {
+          const cart = response.data.products.map((cartProduct) => ({
+            id: cartProduct.product._id,
+            imageUrls: cartProduct.product.imageUrls,
+            name: cartProduct.product.name,
+            // currentPrice: cartProduct.product.currentPrice,
+            currentPrice:
+              cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
+                ? cartProduct.product.discountPrice
+                : cartProduct.product.currentPrice,
+            cartQuantity: cartProduct.cartQuantity,
+            startingPrice: cartProduct.product.currentPrice,
+            discountPrice: cartProduct.product.discountPrice,
+          }));
+          dispatch(decreaseQuantitySuccess(cart));
+        })
+        .catch(() => {
+          dispatch(decreaseQuantityError());
+        });
+    } else {
+      const { cart } = getState().cart;
+      const updatedCart = cart.map((cartItem) =>
+        cartItem.id === productId
+          ? {
+              ...cartItem,
+              currentPrice:
+                cartItem.cartQuantity - 1 > 10 ||
+                slidesItemId.includes(cartItem.id)
+                  ? cartItem.discountPrice
+                  : cartItem.startingPrice,
+              cartQuantity: cartItem.cartQuantity - 1,
+            }
+          : cartItem
+      );
 
-    dispatch(decreaseQuantitySuccess(updatedCart));
-  }
-};
+      dispatch(decreaseQuantitySuccess(updatedCart));
+    }
+  };
 
-const deleteProductFromCart = (productId) => (dispatch, getState) => {
-  dispatch(deleteProductFromCartRequest());
-  const token = localStorage.getItem("jwt");
-  if (token) {
-    axios
-      .delete(`${API}cart/${productId}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
-      .then((response) => {
-        const cart = response.data.products.map((cartProduct) => ({
-          id: cartProduct.product._id,
-          imageUrls: cartProduct.product.imageUrls,
-          name: cartProduct.product.name,
-          // currentPrice: cartProduct.product.currentPrice,
-          currentPrice: (cartProduct.cartQuantity > 10) 
-          ?  
-          cartProduct.product.discountPrice
-          :
-          cartProduct.product.currentPrice,
-          cartQuantity: cartProduct.cartQuantity,
-        }));
-        dispatch(deleteProductFromCartSuccess(cart));
-      })
-      .catch(() => {
-        dispatch(deleteProductFromCartError());
-      });
-  } else {
-    const { cart } = getState().cart;
-    const updatedCart = cart.filter((product) => product.id !== productId);
-    dispatch(deleteProductFromCartSuccess(updatedCart));
-  }
-};
+const deleteProductFromCart =
+  (productId, slidesItemId) => (dispatch, getState) => {
+    dispatch(deleteProductFromCartRequest());
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      axios
+        .delete(`${API}cart/${productId}`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((response) => {
+          const cart = response.data.products.map((cartProduct) => ({
+            id: cartProduct.product._id,
+            imageUrls: cartProduct.product.imageUrls,
+            name: cartProduct.product.name,
+            // currentPrice: cartProduct.product.currentPrice,
+            currentPrice:
+              cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
+                ? cartProduct.product.discountPrice
+                : cartProduct.product.currentPrice,
+            cartQuantity: cartProduct.cartQuantity,
+            startingPrice: cartProduct.product.currentPrice,
+            discountPrice: cartProduct.product.discountPrice,
+          }));
+          dispatch(deleteProductFromCartSuccess(cart));
+        })
+        .catch(() => {
+          dispatch(deleteProductFromCartError());
+        });
+    } else {
+      const { cart } = getState().cart;
+      const updatedCart = cart.filter((product) => product.id !== productId);
+      dispatch(deleteProductFromCartSuccess(updatedCart));
+    }
+  };
 
 const clearProductsInCart = () => (dispatch) => {
   // dispatch(deleteProductFromCartRequest());

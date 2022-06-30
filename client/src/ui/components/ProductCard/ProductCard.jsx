@@ -45,12 +45,14 @@ import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
 
+
 import {
   cartSelector,
   mainCategoriesSelector,
   isAdminStateSelector,
   loginStateSelector,
   downloadCategoriesRequestStateSelector,
+  slidesSelector,
 } from "../../../store/selectors/selectors";
 import {
   addProductToCart,
@@ -87,7 +89,7 @@ export const ProductCardRender = ({ data }) => {
     cartQuantity,
   } = data;  
 
-  console.log(data);
+ 
 
 
   const [isOnModal, toggleIsOnModal] = useState(false);
@@ -102,9 +104,12 @@ export const ProductCardRender = ({ data }) => {
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
 
+const slideList = useSelector(slidesSelector);
+const slidesItemId = slideList.map(item => item.productId);
+
 
   useEffect(() => {
-    dispatch(fetchCart());
+    dispatch(fetchCart(slidesItemId));
     window.scrollTo(0, 0);
   }, []); 
 
@@ -173,7 +178,7 @@ export const ProductCardRender = ({ data }) => {
           >
             <Button
               onClick={() => {
-                dispatch(decreaseProductQuantity(_id));
+                dispatch(decreaseProductQuantity(_id, slidesItemId));
               }}
               variant="text"
               disabled={cartQuantity <= 1}
@@ -194,7 +199,7 @@ export const ProductCardRender = ({ data }) => {
             />
             <Button
               onClick={() => {
-                dispatch(addProductToCart(_id));
+                dispatch(addProductToCart(_id, slidesItemId));
               }}
               variant="text"
               disabled={cartQuantity >= quantity}
@@ -458,7 +463,7 @@ export const ProductCardRender = ({ data }) => {
                         className={productPageClasses.productCardButtonBasket}
                         variant="contained"
                         onClick={() =>
-                          dispatch(addProductToCart(_id, productAmount))
+                          dispatch(addProductToCart(_id, productAmount, slidesItemId))
                         }
                       >
                         Add to card

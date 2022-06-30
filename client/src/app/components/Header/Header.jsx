@@ -45,6 +45,8 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
   const isAdmin = useSelector(isAdminStateSelector);
   const favoriteQuantity = useSelector(wishlistQuantitySelector) ?? 0;
   const cartQuantity = useSelector(cartQuantitySelector) ?? 0;
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
+
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -61,7 +63,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
 
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
-      dispatch(fetchCart());
+      dispatch(fetchCart(slidesItemId));
     }
   }, []);
 

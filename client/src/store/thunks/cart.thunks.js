@@ -257,6 +257,7 @@ const changeProductQuantity =
         currentPrice,
         imageUrls
       );
+      console.log(updatedCart);
       dispatch(editSuccess(updatedCart));
     }
   };

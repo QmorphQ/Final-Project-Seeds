@@ -125,7 +125,7 @@ function Item(props) {
   const editCartState = useSelector((state) => state.cart.editCartState);
 
   const [isOnModal, toggleIsOnModal] = useState(false);
-  const [discountStart] = useState(0);
+  const [discountStart] = useState(10);
   const [totalPrice, setTotalPrice] = useState(itemAddToCart.discountPrice);
   const localPrice = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -141,11 +141,19 @@ function Item(props) {
     }
   }, [openModalWindow]);
 
+  // useEffect(() => {
+  //   if (!isOnModal && openModalWindow ) {
+  //    console.log("нужно закрыть");
+  //   }
+  // }, [isOnModal]);
+
   useEffect(() => {
     if (editCartState === "success") {
       dispatch(sentItemToCart());
     }
   }, [editCartState]);
+
+ 
 
   return (
     <Box sx={{ flexGrow: 1 }}>

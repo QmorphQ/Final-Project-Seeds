@@ -74,7 +74,8 @@ const useStylesBuiltInActions = makeStyles((theme) => ({
         '@media (max-width: 900px)': {
             width: '300px',
             padding: '20px',
-            height: '90vh', 
+            top: '45%',
+            height: '75vh', 
         },
     }, 
 

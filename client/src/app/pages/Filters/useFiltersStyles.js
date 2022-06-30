@@ -9,10 +9,9 @@ const useFiltersStyles = makeStyles({
   },
 
   loader: {
-    position: "absolute",
+    position: "relative",
     width: "200px",
-    top: "50%",
-    left: "50%",
+    left: "30%",
     color: "green",
     fontSize: "40px",
   },
@@ -76,16 +75,17 @@ const useFiltersStyles = makeStyles({
   },
 
   superCategoryTitle: {
+    fontFamily: "'Lexend', sans-serif",
     fontWeight: "300",
     cursor: "pointer",
   },
 
   subCategoriesTitle: {
-    fontWeight: "700",
+    fontFamily: "'Lexend', sans-serif",
     margin: "10px",
     paddingLeft: "20px",
     cursor: "pointer",
-    fontSize: "20px",
+    fontSize: "16px",
   },
 
   expandIcon: {

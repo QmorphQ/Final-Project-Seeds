@@ -51,10 +51,12 @@ export default function SignUp() {
     firstName: Yup.string()
       .min(2, "Too Short!")
       .max(30, "Too Long!")
-      .required("Required"),
+      .required("Required")
+      .matches(/[a-zA-Z]/, "Firstname can only contain Latin letters."),
     lastName: Yup.string()
       .min(2, "Too Short!")
       .max(30, "Too Long!")
+      .matches(/[a-zA-Z]/, "Firstname can only contain Latin letters.")
       .required("Required"),
     email: Yup.string().required("Required").email("Invalid email."),
     login: Yup.string()

@@ -12,6 +12,7 @@ import {
   updateCustomer,
 } from "../../../store/thunks/customer.thunks";
 import { currentCustomerSelector, isRightPasswordSelector } from "../../../store/selectors/selectors";
+import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 
 function PersonalInfo() {
   const currentCustomer = useSelector(currentCustomerSelector);
@@ -26,13 +27,23 @@ function PersonalInfo() {
   const reopen = () => {
     setOpen(!open);
   };
+  const [password, setPassword] = useState(true)
 
   console.log(currentCustomer);
   console.log(isRightPassword);
+  
 
   useEffect(() => {
     dispatch(getCustomer());
   }, []);
+
+
+  useEffect(() => {
+    if (isRightPassword === false) {
+      setPassword(false);
+    }
+  }, [isRightPassword])
+  
 
 
   const INITIAL_FORM_STATE = {
@@ -74,9 +85,14 @@ function PersonalInfo() {
     house: Yup.number().integer().typeError("Please enter the correct number"),
     city: Yup.string(),
     password: Yup.string()
-      .min(8, "Password is 8 chars minimum.")
-      .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
-    // newPassword: Yup.string().oneOf([Yup.ref("password")]),
+      .min(7, "Password is 7 chars minimum.")
+      .max(30, "30 is max chars.")
+      .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")
+      .typeError(isRightPassword === false ? "Error" : true),
+    newPassword: Yup.string()
+      .min(7, "Password is 7 chars minimum.")
+      .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")
+      .max(30, "30 is max chars."),
   });
 
   return (
@@ -161,13 +177,6 @@ function PersonalInfo() {
                     type="password"
                   />
                 </Grid>
-                {/* <Grid item xs={12}>
-                              <Textfield
-                              name="passwordConfirm"
-                              label="Confirm new password*"
-                              type='password'
-                              />
-                      </Grid>  */}
                 <Grid sx={{ mb: 3, mt: 2 }} item xs={12}>
                   <Grid sx={{ mb: 3 }} item xs={12}>
                     <ButtonWrapper onClick={handleSubmit}>
@@ -180,6 +189,7 @@ function PersonalInfo() {
           </Formik>
         )}
       </Container>
+      {password ? false : <ErrorHandler errorMessage={"Incorrect Current password."}/>}
     </Grid>
   );
 }

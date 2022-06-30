@@ -10,7 +10,7 @@ import classes from "../Header/HeaderStyles.jsx";
 import Textfield from './Components/FormsUI/Textfield';
 import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
-import { loginRequestSelector } from '../../../store/selectors/selectors';
+import { isRightPasswordSelector, loginRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
 
 
@@ -36,6 +36,8 @@ export default function LogIn() {
     const requestState = useSelector(loginRequestSelector);
     const navigation = useNavigate()
     const styles = style();
+    const isRightPassword = useSelector(isRightPasswordSelector)
+    console.log( isRightPassword);
     const dispatch = useDispatch()
     const INITIAL_FORM_STATE = {
         loginOrEmail: '',
@@ -45,6 +47,7 @@ export default function LogIn() {
     const FORM_VALIDATION = Yup.object().shape({
         loginOrEmail: Yup.string()
         .required('Required')
+        .matches(/[a-zA-Z]/, "Firstname can only contain Latin letters.")
         .email('Invalid email.'),
         password: Yup.string()
         .min(8, 'Password is 8 chars minimum.')

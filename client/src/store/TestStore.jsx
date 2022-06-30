@@ -9,7 +9,6 @@ import { loginCustomer } from "./thunks/customer.thunks";
 
 import {
   productsSelector,
-  customersSelector,
   slidesSelector,
   allCategoriesSelector,
   mainCategoriesSelector,
@@ -23,11 +22,9 @@ function TestStore() {
   const downloadRequestState = useSelector('');
   const productList = useSelector(productsSelector);
   const slideList = useSelector(slidesSelector);
-  const customerInfo = useSelector(customersSelector);
 
   console.log(allCategories);
   console.log(mainCategories);
-  console.log(customerInfo);
   console.log(slideList);
 
   const dispatch = useDispatch();

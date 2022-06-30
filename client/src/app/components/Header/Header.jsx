@@ -141,7 +141,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
                 ) : isAdmin ? (
                   <ProfileMenuAdmin onClose={handleClickAway} />
                 ) : (
-                  <ProfileMenu />
+                  <ProfileMenu onClose={handleClickAway} />
                 )}
               </Box>
             </Box>

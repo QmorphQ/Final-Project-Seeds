@@ -74,7 +74,8 @@ const editComment = (id, comment) => (dispatch) => {
       dispatch(editProductCommentsSuccess(addedComment));
       return addedComment;
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e);
       dispatch(editProductCommentsError());
     });
 };

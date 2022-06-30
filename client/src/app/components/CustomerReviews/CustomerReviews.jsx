@@ -9,6 +9,7 @@ import { useStyles } from "./styles";
 import { LinearProgressReview } from "./LinearProgressRewiew.jsx";
 import { downloadRequestStates } from '../../constants';
 import { useRating } from './useRating.jsx';
+import { fetchProductComments } from '../../../store/thunks/comments.thunks';
 
 const CustomerReviews = () => {
 
@@ -16,7 +17,7 @@ const CustomerReviews = () => {
     const customer = useSelector(currentCustomerSelector);
     const loadingCustomer = useSelector(getCustomerRequestStateSelector);
     const loadProductState = useSelector(downloadProductRequestStateSelector);
-    const ratingProductComments = useSelector(downloadProductCommentsSelector).filter(comment => comment.content === "rate only");
+    const ratingProductComments = useSelector(downloadProductCommentsSelector)?.filter(comment => comment.content === "rate only");
 
     const dispatch = useDispatch();
 
@@ -25,6 +26,10 @@ const CustomerReviews = () => {
       }, []);
     
     const [finalRating, ratingComments, rateProduct] = useRating(product, customer, ratingProductComments);
+    
+    useEffect(() => {
+        product._id && dispatch(fetchProductComments(product._id));
+    }, [ratingComments, product._id]);
 
     const classes = useStyles();
     

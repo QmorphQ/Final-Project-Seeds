@@ -37,19 +37,24 @@ const addCustomer = (customer) => (dispatch) => {
 
 const getUserDetails = () => (dispatch) => {
 
-  dispatch(getUserDetailsRequested()); 
+  const token = localStorage.getItem("jwt"); 
+
+  if (token) {
+  dispatch(getUserDetailsRequested());  
+
   axios
-    .get(`${API}customers/customer`, {
-      headers: {
-        Authorization: `${localStorage.getItem("jwt")}`, 
-      },
-    })
-    .then((userDetails) => {
-        dispatch(getUserDetailsSuccess(userDetails.data.isAdmin));
-    })
-    .catch(() => {
-      dispatch(getUserDetailsError());
-    });
+      .get(`${API}customers/customer`, {
+        headers: {
+          Authorization: `${token}`, 
+        },
+      })
+      .then((userDetails) => {
+          dispatch(getUserDetailsSuccess(userDetails.data.isAdmin));
+      })
+      .catch(() => {
+        dispatch(getUserDetailsError());
+      });
+  }
 };
 
 
@@ -71,19 +76,23 @@ const loginCustomer = (userData) => (dispatch) => {
 
 const getCustomer = () => (dispatch) => {
   const token = localStorage.getItem("jwt");
-  dispatch(getCustomerRequest());
+
+  if (token) {
+  dispatch(getCustomerRequest()); 
+  
   axios
-    .get(`${API}customers/customer`, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    })
-    .then((currentCustomer) => {
-      dispatch(getCustomerSuccess(currentCustomer.data));
-    })
-    .catch(() => {
-      dispatch(customerUpdateError());
-    });
+      .get(`${API}customers/customer`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((currentCustomer) => {
+        dispatch(getCustomerSuccess(currentCustomer.data));
+      })
+      .catch(() => {
+        dispatch(customerUpdateError());
+      });
+  }
 };
 
 const updateCustomer = (modifiedCustomer) => (dispatch) => {

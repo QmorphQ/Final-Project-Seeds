@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   searchContainer: { 
     position: "absolute",
-    zIndex: "99999",
+    zIndex: "99",
     right: "0",
     top: "150%",
     padding: '30px', 

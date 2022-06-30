@@ -11,6 +11,7 @@ import Vector from '../../MainPageCarousel/carouselImg/Vector.svg';
 import { adminDeleteProduct,
          adminDelProductFromSlider, 
          adminAddProductToSlider, } from '../../../../store/thunks/admin.thunks';
+import { adminAddProductIdle } from '../../../../store/actions/admin.actions'; 
 import { slidesSelector } from '../../../../store/selectors/selectors';
 
 import AddProduct from '../AddUpdProduct/AddProduct.jsx';
@@ -26,6 +27,8 @@ const BuiltInActions = ({ product }) => {
 
     const classes = useStylesBuiltInActions(); 
 
+    
+
     const slideList = useSelector(slidesSelector); 
     const matchedProdSlide = slideList.find(i => i.itemNo === product.itemNo); 
 
@@ -40,7 +43,11 @@ const BuiltInActions = ({ product }) => {
  
 
     const [open, setOpen] = useState(false); 
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => { 
+        dispatch(adminAddProductIdle());
+        setOpen(true);
+    } 
+
     const handleClose = () => setOpen(false); 
 
     const [openSliderModal, setOpenSliderModal] = useState(false); 
@@ -69,14 +76,15 @@ const BuiltInActions = ({ product }) => {
                                                  currentPrice: product.currentPrice,
                                                  discountPrice: product.discountPrice,
                                                  categories: product.categories,
-                                                 description: product.description,
+                                                 description: product.itemAbout[0],
                                                  imageUrl: product.imageUrls[0],
                                                  itemNo: product.itemNo, 
+                                                 productId: product._id, 
                                                 })); 
 
         setTimeout(() => {
             navigation('/'); 
-        }, 200);
+        }, 500);
     }
 
 
@@ -108,7 +116,7 @@ const BuiltInActions = ({ product }) => {
                         <div className={classes.addProductToSlideModalMockData}> 
 
                             <span className={classes.addProductToSlideModalMockDataName}>{product.name.substring(0, 70)} . . .</span>
-                            <span className={classes.addProductToSlideModalMockDataDesc}>{product.description}</span> 
+                            <span className={classes.addProductToSlideModalMockDataDesc}>{product.itemAbout.join().substring(0, 170)} . . .</span> 
 
                             <div className={classes.addProductToSlideModalMockDataPrices}>
                                 <Box

@@ -9,6 +9,7 @@ const initialState = {
   openModalWindow: false,
   itemAddToCart: {},
   loading: false,
+  
 };
 
 const mainPageCarousel = (state = initialState, action) => {

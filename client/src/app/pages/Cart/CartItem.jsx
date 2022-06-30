@@ -62,11 +62,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CartItem = ({ product }) => {
+const CartItem = ({ product, slidesItemId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-
+  console.log(slidesItemId);
 
   return (
     <TableRow
@@ -79,7 +79,7 @@ const CartItem = ({ product }) => {
             <IconButton
               className={classes.cartDeleteBtn}
               onClick={() => {
-                dispatch(deleteProductFromCart(product.id));
+                dispatch(deleteProductFromCart(product.id, slidesItemId));
               }}
             >
               <CancelIcon />
@@ -104,7 +104,8 @@ const CartItem = ({ product }) => {
         >
           <Button
             onClick={() => {
-              dispatch(decreaseProductQuantity(product.id));
+              // dispatch(decreaseProductQuantity(product.id, decreaseProductQuantity, slidesItemId));
+              dispatch(decreaseProductQuantity(product.id, slidesItemId));
             }}
             variant="text"
             disabled={product.quantity <= 1}
@@ -120,12 +121,12 @@ const CartItem = ({ product }) => {
             value={product.cartQuantity}
             onChange={(e) =>
              
-              dispatch(changeProductQuantity(product.id, +e.target.value, product.name, product.currentPrice, product.imageUrls, +e.target.value))
+              dispatch(changeProductQuantity(product.id, +e.target.value, product.name, product.currentPrice, product.imageUrls, product.startingPrice, product.discountPrice, slidesItemId))
             }
           />
           <Button
             onClick={() => {
-              dispatch(addProductToCart(product.id));
+              dispatch(addProductToCart(product.id, slidesItemId));
             }}
             variant="text"
             className={classes.btnGroupBtn}
@@ -150,8 +151,12 @@ CartItem.propTypes = {
     price: PropTypes.number,
     totalPrice: PropTypes.number,
     currentPrice: PropTypes.number,
-    imageUrls:PropTypes.array,
+    imageUrls: PropTypes.array,
+    startingPrice: PropTypes.number, 
+    discountPrice: PropTypes.number,
+    
   }),
+  slidesItemId: PropTypes.array,
 };
 
 export default CartItem;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 // ------------------------------------------
-import { makeStyles } from "@material-ui/core"; // !!! <-------------- MUI CORE
+import { makeStyles } from "@mui/styles";
 // ------------------------------------------
 import Container from "@mui/material/Container";
 import { Card } from "@mui/material";
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   searchContainer: { 
     position: "absolute",
-    zIndex: "99999",
+    zIndex: "100",
     right: "0",
     top: "150%",
     padding: '30px', 
@@ -30,13 +30,11 @@ const useStyles = makeStyles((theme) => ({
   }, 
   searchOption: {
     height: 90, 
+    zIndex: "200",
     boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)', 
     width: '300px', 
     '&:hover': { 
       boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.3)', 
-    }, 
-    '@media (max-width: 600px)': {
-      height: 60,
     },
   }, 
 
@@ -161,7 +159,7 @@ export default function SearchResultContainer({
       id="search-container"
       sx={{
         position: "absolute",
-        zIndex: "99999",
+        zIndex: "100",
         backgroundColor: "white",
         right: "0",
         top: "150%",

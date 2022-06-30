@@ -34,11 +34,12 @@ function App() {
   // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCart());
+    dispatch(fetchCart(slidesItemId));
   }, []);
 
   useEffect(() => {

@@ -24,6 +24,7 @@ export default function MenuMobile({
   pressetsWithChildren,
   isLogin, 
   isAdmin, 
+  onClose, 
 }) {
   // --------------------------------------------------------------------
   // Styles:
@@ -64,7 +65,7 @@ export default function MenuMobile({
           </Grid>
           <Grid item xs={12}>
             <MenuList>
-              <MenuItemNoChildrenMobile arrOfOptions={pressetsNoChildren} />
+              <MenuItemNoChildrenMobile arrOfOptions={pressetsNoChildren} onClose={onClose} />
 
               {/* {cardsList} */}
               <MenuItemWithChildrenMobile arrOfOptions={pressetsWithChildren} />
@@ -86,4 +87,5 @@ MenuMobile.propTypes = {
   pressetsWithChildren: PropTypes.array,
   isLogin: PropTypes.bool,
   isAdmin: PropTypes.bool, 
+  onClose: PropTypes.func, 
 };

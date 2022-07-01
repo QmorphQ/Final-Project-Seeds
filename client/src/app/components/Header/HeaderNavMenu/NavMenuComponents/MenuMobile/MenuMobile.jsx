@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // MUI Components:
 import { Box, Paper, MenuList, Grid } from "@mui/material";
 // !!!------------------------------------------
-import { makeStyles } from "@material-ui/core"; // !!! <-------------- MUI CORE
+import { makeStyles } from "@mui/styles";
 // !!!------------------------------------------
 // React Components:
 import SearchAppBar from "../../../HeaderSearch/SearchAppBar.jsx";

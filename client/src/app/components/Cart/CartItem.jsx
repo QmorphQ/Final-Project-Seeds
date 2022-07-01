@@ -66,8 +66,6 @@ const CartItem = ({ product, slidesItemId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  console.log(slidesItemId);
-
   return (
     <TableRow
       className={classes.tableRow}
@@ -120,8 +118,18 @@ const CartItem = ({ product, slidesItemId }) => {
             hiddenLabel={true}
             value={product.cartQuantity}
             onChange={(e) =>
-             
-              dispatch(changeProductQuantity(product.id, +e.target.value, product.name, product.currentPrice, product.imageUrls, product.startingPrice, product.discountPrice, slidesItemId))
+              dispatch(
+                changeProductQuantity(
+                  product.id,
+                  +e.target.value,
+                  product.name,
+                  product.currentPrice,
+                  product.imageUrls,
+                  product.startingPrice,
+                  product.discountPrice,
+                  slidesItemId
+                )
+              )
             }
           />
           <Button
@@ -152,9 +160,8 @@ CartItem.propTypes = {
     totalPrice: PropTypes.number,
     currentPrice: PropTypes.number,
     imageUrls: PropTypes.array,
-    startingPrice: PropTypes.number, 
+    startingPrice: PropTypes.number,
     discountPrice: PropTypes.number,
-    
   }),
   slidesItemId: PropTypes.array,
 };

@@ -81,17 +81,18 @@ const pressets = {
     },
   },
 };
-function RenderUnit({ imgUrl, name, price, itemNo }) {
+function RenderUnit({ imgUrl, name, price, itemNo, onClose }) {
   const classes = useStyles();
 
   const navigate = useNavigate();
 
-  const goToProduct = () => {
+  const goToProduct = (e) => {
     navigate(`products/${itemNo}`);
+    onClose(e); 
   };
 
   return (
-    <Link data-link="search" onClick={goToProduct} className={classes.link}>
+    <Link data-link="search" onClick={e => goToProduct(e)} className={classes.link}>
       <Card className={classes.searchOption} sx={pressets.styles.optionCard}>
         <CardMedia
           className={classes.searchImage}
@@ -138,6 +139,7 @@ RenderUnit.propTypes = {
   price: PropTypes.number,
   style: PropTypes.object,
   itemNo: PropTypes.string,
+  onClose: PropTypes.func, 
 };
 
 
@@ -146,6 +148,7 @@ export default function SearchResultContainer({
   products = 0,
   active,
   oneCard,
+  onClose
 }) {
   const classes = useStyles();
   const [productsToRender, setProductsToRender] = useState([]);
@@ -188,6 +191,7 @@ export default function SearchResultContainer({
               name={prod.name}
               price={prod.currentPrice}
               itemNo={prod.itemNo}
+              onClose={onClose}
             />
           </Grid>
         ))}
@@ -200,4 +204,5 @@ SearchResultContainer.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
   active: PropTypes.bool,
   oneCard: PropTypes.bool,
+  onClose: PropTypes.func, 
 };

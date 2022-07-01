@@ -12,7 +12,7 @@ const ProductPage = () => {
  
   useEffect(() => {
     dispatch(fetchProductById(id));
-  }, []);
+  }, [id]);
 
   return (
     <>

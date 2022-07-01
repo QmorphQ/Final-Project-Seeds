@@ -60,7 +60,7 @@ export default function MenuMobile({
           {/* {isLogin ? 'space-between' : "flex-end"} */}
             <Grid item xs={2}>{isLogin && (isAdmin ? < ProfileMenuAdmin /> : <ProfileMenu />)}</Grid>
             <Grid item xs={8} alignItems='center' >
-              <SearchAppBar />
+              <SearchAppBar onClose={onClose}/>
             </Grid>
           </Grid>
           <Grid item xs={12}>

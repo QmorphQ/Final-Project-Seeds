@@ -27,26 +27,14 @@ const AddToCartModal = ({
   discontStart,
   localPrice,
   totalPrice,
-  setTotalPrice,
+  // setTotalPrice,
   isOnModal,
   toggleIsOnModal,
 }) => {
   const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
-
-  // const openModalWindow = useSelector(
-  //   (state) => state.mainPageCarousel.openModalWindow
-  // );
   const slidesItemId = useSelector((state) => state.slides.slidesItemId);
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
-  useEffect(() => {
-    setTotalPrice((prevProductAmount) =>
-      (prevProductAmount <= discontStart || !slidesItemId.includes(_id))
-        ? productAmount * currentPrice
-        : productAmount * discountPrice
-    );
-  }, [productAmount, discontStart]);
-
   const [open, setOpen] = useState(true);
   useEffect(() => {
     setOpen(isOnModal);
@@ -153,7 +141,8 @@ const AddToCartModal = ({
 
                   <Box className={modalClasses.productCardButtons}>
                     <Box>
-                      {(productAmount > discontStart || slidesItemId.includes(_id)) && (
+                      {(productAmount > discontStart ||
+                        slidesItemId.includes(_id)) && (
                         <Typography
                           className={modalClasses.productCardOldPrice}
                           component="div"
@@ -163,14 +152,35 @@ const AddToCartModal = ({
                           {localPrice.format(productAmount * +currentPrice)}
                         </Typography>
                       )}
-                      <Typography
+
+                      {productAmount > discontStart ||
+                      slidesItemId.includes(_id) ? (
+                        <Typography
+                          className={modalClasses.productCardPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
+                          {localPrice.format(productAmount * discountPrice)}
+                        </Typography>
+                      ) : (
+                        <Typography
+                          className={modalClasses.productCardPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
+                          {localPrice.format(productAmount * currentPrice)}
+                        </Typography>
+                      )}
+                      {/* <Typography
                         className={modalClasses.productCardPrice}
                         component="div"
                         variant="h5"
                         color="text.primary"
                       >
                         {localPrice.format(totalPrice)}
-                      </Typography>
+                      </Typography> */}
                     </Box>
                     <Button
                       className={modalClasses.productCardButtonBasket}

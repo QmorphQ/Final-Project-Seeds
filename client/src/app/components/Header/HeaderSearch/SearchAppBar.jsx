@@ -225,7 +225,7 @@ export default function SearchAppBar() {
           onChange={inputHandler}
         />
         {loading ? <Spinner left={"70%"} top={"22%"} /> : false}
-        {
+        {products.length !== 0 &&
           <SearchResultContainer
             active={activeSearchContainer}
             products={products}

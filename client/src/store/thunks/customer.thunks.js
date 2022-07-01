@@ -12,12 +12,13 @@ import {
   customerUpdateRequest,
   getCustomerSuccess,
   customerUpdateSuccess,
-  isRightPassword,
   getUserDetailsRequested, 
   getUserDetailsSuccess, 
   getUserDetailsError,
   getOrdersSuccess,
   getOrdersError,
+  isRightPasswordError,
+  isRightPasswordSuccess,
 } from "../actions/customer.actions";
 
 
@@ -106,9 +107,9 @@ const updateCustomer = (modifiedCustomer) => (dispatch) => {
       )
       .then((updatedPassword) => {
         if (updatedPassword.data.password === "Password does not match") {
-          dispatch(isRightPassword(false));
+          dispatch(isRightPasswordError());
         } else {
-          dispatch(isRightPassword(true));
+          dispatch(isRightPasswordSuccess());
         }
       })
       .catch(() => console.log("Some error on password change"));

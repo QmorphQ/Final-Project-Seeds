@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Grid, Typography, IconButton, Container } from "@mui/material";
 import Textfield from "./Components/FormsUI/Textfield";
@@ -11,44 +10,45 @@ import {
   getCustomer,
   updateCustomer,
 } from "../../../store/thunks/customer.thunks";
-import { currentCustomerSelector, isRightPasswordSelector } from "../../../store/selectors/selectors";
+import { currentCustomerSelector, isRightPasswordSelector, UpdateCurrentCustomerSelector } from "../../../store/selectors/selectors";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 import { cleanUpIsRightPassword } from "../../../store/actions/customer.actions";
 
 function PersonalInfo() {
   const currentCustomer = useSelector(currentCustomerSelector);
   const rightPassword = useSelector(isRightPasswordSelector);
+  const updateCurrentCustomer = useSelector(UpdateCurrentCustomerSelector)
   const dispatch = useDispatch();
-  const navigation = useNavigate();
-  const handleSubmit = (values) => {
-    dispatch(updateCustomer(values));
-    navigation("/settings");
-  };
   const [open, setOpen] = useState(false);
   const reopen = () => {
     setOpen(!open);
   };
   const [password, setPassword] = useState(true)
-
-  console.log(password);
-  console.log(rightPassword);
   
   useEffect(() => {
     dispatch(getCustomer());
   }, []);
 
   useEffect(() => { 
-    if (rightPassword === false) {
-      setPassword(!password);
+    if (rightPassword === 'error') {
+      setPassword(false);
     } 
   }, [rightPassword])
 
   useEffect(() => {
-    if (password === false && rightPassword === false) {
+    if (password === false && rightPassword === 'error') {
       dispatch(cleanUpIsRightPassword());
-      setPassword(!password);
     }
-  },[password])
+  }, [password])
+  
+  const handleSubmit = (values) => {
+    dispatch(updateCustomer(values));
+    if (password === false && rightPassword === 'idle') {
+      setPassword(!open);
+    }
+  };
+
+  console.log(updateCurrentCustomer);
   
 
   const INITIAL_FORM_STATE = {
@@ -193,7 +193,7 @@ function PersonalInfo() {
           </Formik>
         )}
       </Container>
-      {password ? false : <ErrorHandler errorMessage={"Incorrect Current password."}/>}
+      {password ? false : <ErrorHandler  errorMessage={"Incorrect Current password."}/>}
     </Grid>
   );
 }

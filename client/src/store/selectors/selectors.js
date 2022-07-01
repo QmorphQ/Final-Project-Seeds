@@ -81,6 +81,9 @@ export const newCustomerSelector = (state) => state.customer.newCustomer;
 export const currentCustomerSelector = (state) =>
   state.customer.currentCustomer;
 
+export const UpdateCurrentCustomerSelector = (state) =>
+  state.customer.updateCustomerRequestState;
+
 export const loginStateSelector = (state) => state.customer.isLoggedIn; 
 
 export const customerOrdersHistory = (state) => state.customer.getOrders; 

@@ -85,12 +85,15 @@ export default function SignUp() {
     const valuesToPost = { ...values };
     delete valuesToPost.passwordConfirm;
     dispatch(addCustomer(valuesToPost));
+    if (redirect === false && requestState === 'idle') {
+      setRedirect(!redirect);
+    }
   };
 
   
   useEffect(() => {
     if(requestState === "error"){
-      setRedirect(!redirect)
+      setRedirect(false)
     }
     if(requestState === "success"){
       navigation("/")

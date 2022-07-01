@@ -37,7 +37,6 @@ export default function LogIn() {
     const navigation = useNavigate()
     const styles = style();
     const isRightPassword = useSelector(isRightPasswordSelector)
-    console.log( isRightPassword);
     const dispatch = useDispatch()
     const INITIAL_FORM_STATE = {
         loginOrEmail: '',
@@ -58,12 +57,14 @@ export default function LogIn() {
     const [redirect, setRedirect] = useState(true)
     useEffect(() => {   
       if(requestState === "error"){
-        setRedirect(!redirect)
+        setRedirect(false)
       }
       if(requestState === "success"){
         navigation("/")
       }
-    },[requestState])
+    }, [requestState])
+    console.log( isRightPassword);
+    console.log(redirect);
 
     useEffect(() => {
       if (redirect === false && requestState === "error") {
@@ -77,6 +78,9 @@ export default function LogIn() {
 
     const handleSubmit = values => {
       dispatch(loginCustomer(values)) 
+      if (redirect === false && isRightPassword === 'idle') {
+        setRedirect(!redirect);
+      }
     }
 
     return (

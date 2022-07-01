@@ -66,7 +66,6 @@ export default function OrdersHistory() {
                 </Grid>
               </Typography>
           </Grid>
-
           )}
       </Grid>
     )

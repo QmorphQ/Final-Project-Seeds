@@ -75,7 +75,7 @@ function App() {
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />
               <Route path="/privacy-policy" element={<StaticPage page={"privacy-policy"} />} />
-              <Route path="/*" element={setTimeout(() => {<PageNotFound/>}, 0)}/>
+              <Route path="/*" element={<PageNotFound/>} />
       </Route>
       </Routes>
 

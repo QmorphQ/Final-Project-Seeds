@@ -13,10 +13,11 @@ import {
 } from "../../../store/thunks/customer.thunks";
 import { currentCustomerSelector, isRightPasswordSelector } from "../../../store/selectors/selectors";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
+import { cleanUpIsRightPassword } from "../../../store/actions/customer.actions";
 
 function PersonalInfo() {
   const currentCustomer = useSelector(currentCustomerSelector);
-  const isRightPassword = useSelector(isRightPasswordSelector);
+  const rightPassword = useSelector(isRightPasswordSelector);
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const handleSubmit = (values) => {
@@ -29,22 +30,26 @@ function PersonalInfo() {
   };
   const [password, setPassword] = useState(true)
 
-  console.log(currentCustomer);
-  console.log(isRightPassword);
+  console.log(password);
+  console.log(rightPassword);
   
-
   useEffect(() => {
     dispatch(getCustomer());
   }, []);
 
+  useEffect(() => { 
+    if (rightPassword === false) {
+      setPassword(!password);
+    } 
+  }, [rightPassword])
 
   useEffect(() => {
-    if (isRightPassword === false) {
-      setPassword(false);
+    if (password === false && rightPassword === false) {
+      dispatch(cleanUpIsRightPassword());
+      setPassword(!password);
     }
-  }, [isRightPassword])
+  },[password])
   
-
 
   const INITIAL_FORM_STATE = {
     firstName: currentCustomer?.firstName,
@@ -87,8 +92,7 @@ function PersonalInfo() {
     password: Yup.string()
       .min(7, "Password is 7 chars minimum.")
       .max(30, "30 is max chars.")
-      .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")
-      .typeError(isRightPassword === false ? "Error" : true),
+      .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
     newPassword: Yup.string()
       .min(7, "Password is 7 chars minimum.")
       .matches(/[a-zA-Z]/, "Password can only contain Latin letters.")

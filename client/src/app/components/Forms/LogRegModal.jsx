@@ -12,7 +12,7 @@ import ButtonWrapper from './Components/FormsUI/Submit/ButtonWrapper';
 import { loginCustomer } from '../../../store/thunks/customer.thunks';
 import { isRightPasswordSelector, loginRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
-
+import { cleanUpLoginState } from '../../../store/actions/customer.actions';
 
 
 const style = makeStyles({
@@ -56,9 +56,7 @@ export default function LogIn() {
     })
 
     const [redirect, setRedirect] = useState(true)
-
-    useEffect(() => {
-      setRedirect(true)
+    useEffect(() => {   
       if(requestState === "error"){
         setRedirect(!redirect)
       }
@@ -67,7 +65,11 @@ export default function LogIn() {
       }
     },[requestState])
 
-
+    useEffect(() => {
+      if (redirect === false && requestState === "error") {
+        dispatch(cleanUpLoginState());
+      }
+    },[redirect])
 
     const handleClose = () =>{
       navigation("/")

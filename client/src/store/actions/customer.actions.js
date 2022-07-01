@@ -14,6 +14,11 @@ export const addCustomerError = () => ({
   type: ADD_CUSTOMER_ERROR,
 });
 
+export const CLEAN_UP_ADD_CUSTOMER_STATE = "CLEAN_UP_ADD_CUSTOMER_STATE";
+export const cleanUpAddCustomerState = () => ({
+  type: CLEAN_UP_ADD_CUSTOMER_STATE,
+})
+
 export const LOGIN_CUSTOMER_REQUESTED = "LOGIN_CUSTOMER_REQUESTED";
 export const loginCustomerRequested = () => ({
   type: LOGIN_CUSTOMER_REQUESTED,
@@ -87,6 +92,11 @@ export const IS_RIGHT_PASSWORD = "IS_RIGHT_PASSWORD";
 export const isRightPassword = (isRight) => ({
   type: IS_RIGHT_PASSWORD,
   payload: isRight
+})
+
+export const CLEAN_UP_IS_RIGHT_PASSWORD = "CLEAN_UP_IS_RIGHT_PASSWORD";
+export const cleanUpIsRightPassword = () => ({
+  type: CLEAN_UP_IS_RIGHT_PASSWORD,
 })
 
 export const GET_USERDETAILS_REQUESTED = "GET_USERDETAILS_REQUESTED";

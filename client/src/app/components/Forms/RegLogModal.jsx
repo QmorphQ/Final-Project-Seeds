@@ -13,6 +13,7 @@ import CheckboxWrapper from './Components/FormsUI/Checkbox';
 import { addCustomer } from '../../../store/thunks/customer.thunks';
 import { customersRequestSelector } from '../../../store/selectors/selectors';
 import ErrorHandler from '../ErrorHandler/ErrorHandler.jsx';
+import { cleanUpAddCustomerState } from "../../../store/actions/customer.actions";
 
 
 const style = makeStyles({
@@ -33,8 +34,10 @@ const style = makeStyles({
 
 export default function SignUp() {
     const requestState = useSelector(customersRequestSelector);
+    const dispatch = useDispatch();
     const navigation = useNavigate()
     const styles = style();
+    
     const INITIAL_FORM_STATE = {
         firstName: '',
         lastName: '',
@@ -43,9 +46,6 @@ export default function SignUp() {
         password: '',
         termsOfService: '',
     };
-
-
-  const dispatch = useDispatch();
 
   const FORM_VALIDATION = Yup.object().shape({
     firstName: Yup.string()
@@ -87,16 +87,21 @@ export default function SignUp() {
     dispatch(addCustomer(valuesToPost));
   };
 
-
+  
   useEffect(() => {
-    setRedirect(true)
     if(requestState === "error"){
       setRedirect(!redirect)
     }
     if(requestState === "success"){
       navigation("/")
     }
-  },[requestState])
+  }, [requestState])
+  
+  useEffect(() => {
+    if (redirect === false && requestState === "error") {
+      dispatch(cleanUpAddCustomerState());
+    }
+  },[redirect])
 
 
   return (

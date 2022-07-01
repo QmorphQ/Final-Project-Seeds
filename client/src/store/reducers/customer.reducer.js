@@ -18,7 +18,9 @@ import {
   GET_USERDETAILS_ERROR,
   GET_ORDERS_REQUEST,
   GET_ORDERS_ERROR,
-  GET_ORDERS_SUCCESS
+  GET_ORDERS_SUCCESS,
+  CLEAN_UP_ADD_CUSTOMER_STATE,
+  CLEAN_UP_IS_RIGHT_PASSWORD
 } from "../actions/customer.actions";
 import { downloadRequestStates } from "../../app/constants";
 
@@ -56,6 +58,12 @@ const customerReducer = (state = initialState, action) => {
         ...state,
         addRequestState: downloadRequestStates.ERROR,
       };
+    
+    case CLEAN_UP_ADD_CUSTOMER_STATE:
+      return {
+        ...state,
+        addRequestState: downloadRequestStates.IDLE,
+      };
 
     case LOGIN_CUSTOMER_REQUESTED:
       return {
@@ -76,7 +84,6 @@ const customerReducer = (state = initialState, action) => {
         loginRequestState: downloadRequestStates.ERROR,
       };
 
-
     case GET_CUSTOMER_REQUEST:
       return {
         ...state,
@@ -89,22 +96,26 @@ const customerReducer = (state = initialState, action) => {
         getCurrentCustomerRequestState: downloadRequestStates.SUCCESS,
         currentCustomer: action.payload,
       };
+    
     case GET_CUSTOMER_ERROR:
       return {
         ...state,
         getCurrentCustomerRequestState: downloadRequestStates.ERROR,
       };
+    
     case UPDATE_CUSTOMER_REQUEST:
       return {
         ...state,
         updateCustomerRequestState: downloadRequestStates.LOADING,
       };
+    
     case UPDATE_CUSTOMER_SUCCESS:
       return {
         ...state,
         updateCustomerRequestState: downloadRequestStates.SUCCESS,
         updatedCustomer: action.payload,
       };
+    
     case UPDATE_CUSTOMER_ERROR:
       return {
         ...state,
@@ -122,6 +133,12 @@ const customerReducer = (state = initialState, action) => {
         ...state,
         isRightPassword: action.payload,
       };
+    
+    case CLEAN_UP_IS_RIGHT_PASSWORD:
+      return {
+        ...state,
+        isRightPassword: initialState.isRightPassword,
+      };    
 
     case GET_USERDETAILS_REQUESTED:
       return {

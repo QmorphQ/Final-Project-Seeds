@@ -173,37 +173,41 @@ const AddToCartModal = ({
                           {localPrice.format(productAmount * currentPrice)}
                         </Typography>
                       )}
-                      {/* <Typography
-                        className={modalClasses.productCardPrice}
-                        component="div"
-                        variant="h5"
-                        color="text.primary"
-                      >
-                        {localPrice.format(totalPrice)}
-                      </Typography> */}
                     </Box>
-                    <Button
-                      className={modalClasses.productCardButtonBasket}
-                      variant="contained"
-                      onClick={() => {
-                        setOpen(false);
-                        quantity > 0 &&
-                          dispatch(
-                            changeProductQuantity(
-                              _id,
-                              productAmount,
-                              name,
-                              totalPrice / productAmount,
-                              imageUrls,
-                              currentPrice,
-                              discountPrice,
-                              slidesItemId
-                            )
-                          );
-                      }}
-                    >
-                      Add to card
-                    </Button>
+                    {quantity <= 0 ? (
+                      <Button
+                        className={modalClasses.productCardButtonBasket}
+                        variant="contained"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        Out of stock
+                      </Button>
+                    ) : (
+                      <Button
+                        className={modalClasses.productCardButtonBasket}
+                        variant="contained"
+                        onClick={() => {
+                          setOpen(false);
+                          quantity > 0 &&
+                            dispatch(
+                              changeProductQuantity(
+                                _id,
+                                productAmount,
+                                name,
+                                totalPrice / productAmount,
+                                imageUrls,
+                                currentPrice,
+                                discountPrice,
+                                slidesItemId
+                              )
+                            );
+                        }}
+                      >
+                        Add to card
+                      </Button>
+                    )}
                   </Box>
                 </Box>
               </CardActions>

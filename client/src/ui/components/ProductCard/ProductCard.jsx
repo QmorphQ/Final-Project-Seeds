@@ -30,11 +30,11 @@ import {
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-material-ui-carousel";
-
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
 
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -44,7 +44,7 @@ import { useProductPageStyles } from "./useProductPageStyles";
 import { useBasketStyles } from "./useBasketStyles";
 import { useFiltersStyles } from "./useFiltersStyles";
 import Icon from "../Icon/Icon.jsx";
-
+import Vector from "../../../app/components/MainPageCarousel/carouselImg/Vector.svg";
 
 import {
   cartSelector,
@@ -62,11 +62,12 @@ import {
 } from "../../../store/thunks/cart.thunks";
 
 import AddToCartModal from "../AddToCardModal/AddToCartModal.jsx";
-import BuiltInActions from "../../../app/components/AdminPanel/BuiltInActions/BuiltInActions.jsx"; 
+import BuiltInActions from "../../../app/components/AdminPanel/BuiltInActions/BuiltInActions.jsx";
 import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
 import { fetchProductComments } from "../../../store/thunks/comments.thunks";
+import fetchSlides from "../../../store/thunks/slides.thunks";
 import { downloadRequestStates } from "../../../app/constants/index";
 
 export const ProductCardRender = ({ data }) => {
@@ -87,45 +88,32 @@ export const ProductCardRender = ({ data }) => {
     itemAbout,
     _id,
     cartQuantity,
-  } = data;  
-
- 
-
+  } = data;
 
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [productAmount, setProductAmount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(currentPrice);
-
   const [discontStart] = useState(10);
-
-  const dispatch = useDispatch(); 
-
+  const dispatch = useDispatch();
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
-
-const slideList = useSelector(slidesSelector);
-const slidesItemId = slideList.map(item => item.productId);
-
+  const slideList = useSelector(slidesSelector);
+  const slidesItemId = slideList.map((item) => item.productId);
 
   useEffect(() => {
+    dispatch(fetchSlides());
     dispatch(fetchCart(slidesItemId));
     window.scrollTo(0, 0);
-  }, []); 
+  }, []);
 
-
-
-  
-
-  useEffect(() => {
-    setTotalPrice((prevProductAmount) =>
-      prevProductAmount <= discontStart
-        ? productAmount * currentPrice
-        : productAmount * discountPrice
-    );
-  }, [productAmount, discontStart]);
-
- 
+  // useEffect(() => {
+  //   setTotalPrice((prevProductAmount) =>
+  //     prevProductAmount <= discontStart
+  //       ? productAmount * currentPrice
+  //       : productAmount * discountPrice
+  //   );
+  // }, [productAmount, discontStart]);
 
   const navigate = useNavigate();
 
@@ -144,12 +132,13 @@ const slidesItemId = slideList.map(item => item.productId);
     currencyDisplay: "symbol",
   });
 
-
   const [ratingValue, rateProduct] = useRating(data);
   const [isFavourite, toggleInWishlist] = useWishlist(_id);
 
-  const downloadCategoriesState = useSelector(downloadCategoriesRequestStateSelector);
- 
+  const downloadCategoriesState = useSelector(
+    downloadCategoriesRequestStateSelector
+  );
+
   if (isBasket) {
     return (
       <Card>
@@ -290,7 +279,6 @@ const slidesItemId = slideList.map(item => item.productId);
                 ))}
               </Carousel>
             </Grid>
-
             <Grid item xs={12} md={7} lg={7}>
               <CardContent className={productPageClasses.productCardContent}>
                 <Typography
@@ -322,10 +310,15 @@ const slidesItemId = slideList.map(item => item.productId);
                     className={productPageClasses.productCardAvailable}
                     label={mainCategory?.name.toUpperCase()}
                     icon={
-                      downloadCategoriesState === downloadRequestStates.SUCCESS ? <Icon
-                        className={productPageClasses.buttonIcon}
-                        icon={Icon.icons[mainCategory?.icon]}
-                      /> : <Spinner />
+                      downloadCategoriesState ===
+                      downloadRequestStates.SUCCESS ? (
+                        <Icon
+                          className={productPageClasses.buttonIcon}
+                          icon={Icon.icons[mainCategory?.icon]}
+                        />
+                      ) : (
+                        <Spinner />
+                      )
                     }
                     variant="outlined"
                   />
@@ -423,14 +416,72 @@ const slidesItemId = slideList.map(item => item.productId);
                 </Box>
                 <Box className={productPageClasses.productCardActionBtns}>
                   <Box>
-                    {productAmount > discontStart && (
+
+
+    {/* ---------------------------------                 */}
+    {slidesItemId.includes(_id) && (
+              <Box
+                component="img"
+                pl={{ xs: "0vw", sm: "0px" }}
+                pr={"2px"}
+                overflow="visible"
+                width={{ xs: "12px", sm: "12px", md: "12px" }}
+                src={Vector}
+              ></Box>
+            )}
+{slidesItemId.includes(_id) ?
+
+(<Typography
+              className={productPageClasses.productCardPrice}
+              component="div"
+              variant="h5"
+              color="text.primary"
+            >
+              {localPrice.format(productAmount * +discountPrice)}
+            </Typography>
+        
+      )
+            
+:
+(<Typography
+              className={productPageClasses.productCardPrice}
+              component="div"
+              variant="h5"
+              color="text.primary"
+            >
+              {localPrice.format(productAmount * +currentPrice)}
+            </Typography>)
+    
+  }
+
+
+     {/* {slidesItemId.includes(_id) ? (
+     <Typography
+     className={productPageClasses.productCardOldPrice}
+     component="div"
+     variant="h5"
+     color="text.primary"
+   >
+     {localPrice.format(productAmount * +currentPrice)}
+   </Typography>
+            ) : (
+              <Typography
+              className={productPageClasses.productCardPrice}
+              component="div"
+              variant="h5"
+              color="text.primary"
+            >
+              {localPrice.format(currentPrice)}
+            </Typography>
+            )} */}
+                    {/* {productAmount > discontStart && (
                       <Typography
                         className={productPageClasses.productCardOldPrice}
                         component="div"
                         variant="h5"
                         color="text.primary"
                       >
-                        {localPrice.format(productAmount * +currentPrice)}
+                        {localPrice.format(productAmount * +discountPrice)}
                       </Typography>
                     )}
                     <Typography
@@ -439,8 +490,13 @@ const slidesItemId = slideList.map(item => item.productId);
                       variant="h5"
                       color="text.primary"
                     >
-                      {localPrice.format(totalPrice)}
-                    </Typography>
+                     
+                        {localPrice.format(currentPrice)}
+
+                    
+                    </Typography> */}
+{/* ----------------------------------- */}
+
                   </Box>
 
                   {isAdmin === false && (
@@ -463,16 +519,34 @@ const slidesItemId = slideList.map(item => item.productId);
                         className={productPageClasses.productCardButtonBasket}
                         variant="contained"
                         onClick={() =>
-                          dispatch(addProductToCart(_id, productAmount, slidesItemId))
+                          // dispatch(
+                          //   addProductToCart(_id, productAmount, slidesItemId)
+                          // )
+                          quantity > 0 &&
+                          dispatch(
+                            changeProductQuantity(
+                              _id,
+                              productAmount,
+                              name,
+                              totalPrice / productAmount,
+                              imageUrls,
+                              currentPrice,
+                              discountPrice,
+                              slidesItemId
+                            )
+                          )
                         }
                       >
                         Add to card
                       </Button>
                     </Box>
                   )}
+                  {/* ----------------------------------------- */}
 
-                  {isAdmin && <BuiltInActions product={data}/>}
-                    
+                  {/* это выше будет страничка продукта */}
+
+                  {/* ---------------------------------- */}
+                  {isAdmin && <BuiltInActions product={data} />}
                 </Box>
               </CardActions>
             </Grid>
@@ -492,8 +566,7 @@ const slidesItemId = slideList.map(item => item.productId);
               color="text.primary"
             >
               {itemAbout?.map((item, i) => (
-                <ListItem key={i} 
-                          sx={{ padding: '8px 0' }}>
+                <ListItem key={i} sx={{ padding: "8px 0" }}>
                   <Typography>{item}</Typography>
                 </ListItem>
               ))}
@@ -534,7 +607,9 @@ const slidesItemId = slideList.map(item => item.productId);
             name="half-rating"
             value={ratingValue}
             precision={1}
-            onChange={(e) => {rateProduct(e)}}
+            onChange={(e) => {
+              rateProduct(e);
+            }}
           />
 
           <CardContent className={mainClasses.productCardContent}>
@@ -561,39 +636,71 @@ const slidesItemId = slideList.map(item => item.productId);
                 {name}
               </Typography>
             </Link>
-            <Typography
-              className={mainClasses.productCardPrice}
-              component="span"
-              variant="h6"
-              color="text.primary"
-            >
-              {localPrice.format(currentPrice)}
-            </Typography>
+            {slidesItemId.includes(_id) && (
+              <Box
+                component="img"
+                pl={{ xs: "0vw", sm: "0px" }}
+                pr={"2px"}
+                overflow="visible"
+                width={{ xs: "12px", sm: "12px", md: "12px" }}
+                src={Vector}
+              ></Box>
+            )}
+            {slidesItemId.includes(_id) ? (
+              <Typography
+                className={mainClasses.productCardPrice}
+                component="span"
+                variant="h6"
+                color="text.primary"
+              >
+                {localPrice.format(discountPrice)}
+                {/* 
+{localPrice.format(currentPrice)} */}
+              </Typography>
+            ) : (
+              <Typography
+                className={mainClasses.productCardPrice}
+                component="span"
+                variant="h6"
+                color="text.primary"
+              >
+                {localPrice.format(currentPrice)}
+              </Typography>
+            )}
           </CardContent>
-
           <CardActions className={mainClasses.productActionsBox}>
-            <IconButton
-              className={filtersClasses.productCardButtonBasket}
-              aria-label="add to basket"
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                toggleIsOnModal(true);
-              }}
-            >
-              <ShoppingCartOutlinedIcon />
-              <AddToCartModal
-                data={data}
-                discontStart={discontStart}
-                localPrice={localPrice}
-                totalPrice={totalPrice}
-                setTotalPrice={setTotalPrice}
-                isOnModal={isOnModal}
-                toggleIsOnModal={toggleIsOnModal}
-                cart={cart}
-                _id={_id}
+            {quantity <= 0 ? (
+              <ProductionQuantityLimitsOutlinedIcon
+                className={filtersClasses.productCardButtonBurger}
+                aria-label="not available"
+                color="primary"
+                variant="contained"
               />
-            </IconButton>
+            ) : (
+              <IconButton
+                className={filtersClasses.productCardButtonBasket}
+                aria-label="add to basket"
+                color="primary"
+                variant="contained"
+                onClick={() => {
+                  toggleIsOnModal(true);
+                }}
+              >
+                <ShoppingCartOutlinedIcon />
+                <AddToCartModal
+                  data={data}
+                  discontStart={discontStart}
+                  localPrice={localPrice}
+                  totalPrice={totalPrice}
+                  setTotalPrice={setTotalPrice}
+                  isOnModal={isOnModal}
+                  toggleIsOnModal={toggleIsOnModal}
+                  cart={cart}
+                  _id={_id}
+                  slidesItemId={slidesItemId}
+                />
+              </IconButton>
+            )}
           </CardActions>
         </Card>
       </Grid>
@@ -639,11 +746,15 @@ const slidesItemId = slideList.map(item => item.productId);
           name="half-rating"
           precision={1}
           value={ratingValue}
-          onChange={(e) => {rateProduct(e)}}
+          onChange={(e) => {
+            rateProduct(e);
+          }}
         />
 
-   
-        <CardContent className={mainClasses.productCardContent} sx={{padding: "0px"}}>
+        <CardContent
+          className={mainClasses.productCardContent}
+          sx={{ padding: "0px" }}
+        >
           <Link
             style={{
               color: "inherit",
@@ -666,84 +777,100 @@ const slidesItemId = slideList.map(item => item.productId);
             </Typography>
           </Link>
 
-          <Box sx={{display: "flex", flexGrow: "1", justifyContent: "space-between"}}>
-          <Typography
-            className={mainClasses.productCardPrice}
-            component="span"
-            variant="h5"
-            color="text.primary"
-          >
-            {localPrice.format(currentPrice)}
-          </Typography>
-          <CardActions className={mainClasses.productActionsBox}>
-          <IconButton
-            className={mainClasses.productCardButtonBasket}
-            aria-label="add to basket"
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              toggleIsOnModal(true);
+          <Box
+            sx={{
+              display: "flex",
+              flexGrow: "1",
+              justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
-            <ShoppingCartOutlinedIcon />
-            <AddToCartModal
-              data={data}
-              discontStart={discontStart}
-              localPrice={localPrice}
-              totalPrice={totalPrice}
-              setTotalPrice={setTotalPrice}
-              isOnModal={isOnModal}
-              toggleIsOnModal={toggleIsOnModal}
-              cart={cart}
-              _id={_id}
-            />
-          </IconButton>
-        </CardActions>
+            <Box>
+              {slidesItemId.includes(_id) && (
+                <Box
+                  component="img"
+                  pl={{ xs: "0vw", sm: "0px" }}
+                  pr={"2px"}
+                  overflow="visible"
+                  width={{ xs: "12px", sm: "12px", md: "12px" }}
+                  src={Vector}
+                ></Box>
+              )}
+              {slidesItemId.includes(_id) ? (
+                <Typography
+                  className={mainClasses.productCardPrice}
+                  component="span"
+                  variant="h6"
+                  color="text.primary"
+                >
+                  {localPrice.format(discountPrice)}
+                </Typography>
+              ) : (
+                <Typography
+                  className={mainClasses.productCardPrice}
+                  component="span"
+                  variant="h6"
+                  color="text.primary"
+                >
+                  {localPrice.format(currentPrice)}
+                </Typography>
+              )}
+            </Box>
+            <CardActions className={mainClasses.productActionsBox}>
+              {quantity <= 0 ? (
+                <ProductionQuantityLimitsOutlinedIcon
+                  className={filtersClasses.productCardButtonBurger}
+                  aria-label="not available"
+                  color="primary"
+                  variant="contained"
+                />
+              ) : (
+                <IconButton
+                  className={mainClasses.productCardButtonBasket}
+                  aria-label="add to basket"
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    toggleIsOnModal(true);
+                  }}
+                >
+                  <ShoppingCartOutlinedIcon />
+                  <AddToCartModal
+                    data={data}
+                    discontStart={discontStart}
+                    localPrice={localPrice}
+                    totalPrice={totalPrice}
+                    setTotalPrice={setTotalPrice}
+                    isOnModal={isOnModal}
+                    toggleIsOnModal={toggleIsOnModal}
+                    cart={cart}
+                    _id={_id}
+                    slidesItemId={slidesItemId}
+                  />
+                </IconButton>
+              )}
+            </CardActions>
           </Box>
-          
         </CardContent>
-
-        {/* <CardActions className={mainClasses.productActionsBox}>
-          <IconButton
-            className={mainClasses.productCardButtonBasket}
-            aria-label="add to basket"
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              toggleIsOnModal(true);
-            }}
-          >
-            <ShoppingCartOutlinedIcon />
-            <AddToCartModal
-              data={data}
-              discontStart={discontStart}
-              localPrice={localPrice}
-              totalPrice={totalPrice}
-              setTotalPrice={setTotalPrice}
-              isOnModal={isOnModal}
-              toggleIsOnModal={toggleIsOnModal}
-              cart={cart}
-              _id={_id}
-            />
-          </IconButton>
-        </CardActions> */}
       </Card>
     </Grid>
   );
 };
 
-const ProductCard = ({ product, loading }) =>{
+const ProductCard = ({ product, loading }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     product?._id && dispatch(fetchProductComments(product._id));
   }, []);
-  return (<RenderComponent
-    loading={loading}
-    data={product}
-    renderSuccess={ProductCardRender}
-    loadingFallback={Spinner}
-    renderError={<span>Error</span>}
-  />)
+  return (
+    <RenderComponent
+      loading={loading}
+      data={product}
+      renderSuccess={ProductCardRender}
+      loadingFallback={Spinner}
+      renderError={<span>Error</span>}
+    />
+  );
 };
 
 ProductCard.propTypes = {
@@ -761,7 +888,7 @@ ProductCard.propTypes = {
     _id: PropTypes.string,
     cartQuantity: PropTypes.number,
   }),
-  loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any; 
+  loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any;
 };
 ProductCardRender.propTypes = {
   data: PropTypes.object,

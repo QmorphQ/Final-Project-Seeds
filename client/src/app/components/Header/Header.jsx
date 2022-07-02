@@ -26,7 +26,7 @@ import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import FavoriteBtn from "./HeaderBtns/FavoriteBtn.jsx";
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
-
+import { fetchWishlist } from "../../../store/thunks/wishlist.thunks";
 import { fetchCart } from "../../../store/thunks/cart.thunks";
 // ++++++++++++++++
 // Auth Component:
@@ -67,6 +67,10 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchWishlist)
+  }, [])
+  
   // =============================================== Render ==============================================
   return (
     <Box sx={classes.Header}>
@@ -108,7 +112,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
               display={{ xs: "none", sm: "none", md: "block" }}
               sx={{ mr: "30px" }}
             >
-              <SearchAppBar />
+              <SearchAppBar onClose={handleClickAway}/>
             </Box>
 
             <Box

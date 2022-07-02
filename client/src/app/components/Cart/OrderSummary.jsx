@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "space-around",
     marginTop: "48px",
-    // height: "450px",
+    height: "450px",
+    marginRight: "30px",
   },
 
   orderHeading: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     width: "286px",
     height: "51px",
     marginLeft: "34px",
+    marginRight: "30px",
     backgroundColor: theme.palette.primary.main,
     textTransform: "none",
   },
@@ -109,7 +111,11 @@ const OrderSummary = (props) => {
           </Typography>
         </Box>
         <Link to={"/checkout"} style={{ textDecoration: "none" }}>
-          <Button sx={{ display: `${props.visibility}`}} className={classes.continueBtn} variant="contained">
+          <Button
+            sx={{ display: `${props.visibility}` }}
+            className={classes.continueBtn}
+            variant="contained"
+          >
             <Typography>Continue</Typography>
           </Button>
         </Link>
@@ -120,9 +126,6 @@ const OrderSummary = (props) => {
 
 export default OrderSummary;
 
-
 OrderSummary.propTypes = {
-  visibility: PropTypes.oneOfType([
-    PropTypes.string,
-  ]),
+  visibility: PropTypes.oneOfType([PropTypes.string]),
 };

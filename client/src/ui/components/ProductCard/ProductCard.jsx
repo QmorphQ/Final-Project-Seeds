@@ -27,7 +27,6 @@ import {
   List,
   Link,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-material-ui-carousel";

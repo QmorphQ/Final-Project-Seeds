@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 // MUI Components:
 import { Box, Paper, MenuList, Grid } from "@mui/material";
 // !!!------------------------------------------
-import { makeStyles } from "@material-ui/core"; // !!! <-------------- MUI CORE
+import { makeStyles } from "@mui/styles";
 // !!!------------------------------------------
 // React Components:
 import SearchAppBar from "../../../HeaderSearch/SearchAppBar.jsx";
@@ -60,7 +60,7 @@ export default function MenuMobile({
           {/* {isLogin ? 'space-between' : "flex-end"} */}
             <Grid item xs={2}>{isLogin && (isAdmin ? < ProfileMenuAdmin /> : <ProfileMenu />)}</Grid>
             <Grid item xs={8} alignItems='center' >
-              <SearchAppBar />
+              <SearchAppBar onClose={onClose}/>
             </Grid>
           </Grid>
           <Grid item xs={12}>

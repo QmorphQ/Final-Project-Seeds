@@ -34,6 +34,8 @@ function App() {
   // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
+
+  
   const slidesItemId = useSelector((state) => state.slides.slidesItemId);
 
   const dispatch = useDispatch();
@@ -73,7 +75,7 @@ function App() {
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />
               <Route path="/privacy-policy" element={<StaticPage page={"privacy-policy"} />} />
-              <Route path="/*" element={<PageNotFound/>}/>
+              <Route path="/*" element={<PageNotFound/>} />
       </Route>
       </Routes>
 

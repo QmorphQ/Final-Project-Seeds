@@ -55,9 +55,10 @@ export const useFiltersStyles = makeStyles(() => ({
     bottom: "33px",
     right: "15px",
     borderRadius: "8px",
-    width: "46px",
-    height: "46px",
+    width: "24px",
+    height: "24px",
     border: "1px solid #EFEFEF",
+    padding: "8px"
     // padding: "0px important",
   },
   productCardButtons: {

@@ -35,6 +35,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
 
 import CheckIcon from "@mui/icons-material/Check";
 
@@ -416,14 +417,72 @@ export const ProductCardRender = ({ data }) => {
                 </Box>
                 <Box className={productPageClasses.productCardActionBtns}>
                   <Box>
-                    {productAmount > discontStart && (
+
+
+    {/* ---------------------------------                 */}
+    {slidesItemId.includes(_id) && (
+              <Box
+                component="img"
+                pl={{ xs: "0vw", sm: "0px" }}
+                pr={"2px"}
+                overflow="visible"
+                width={{ xs: "12px", sm: "12px", md: "12px" }}
+                src={Vector}
+              ></Box>
+            )}
+{slidesItemId.includes(_id) ?
+
+(<Typography
+              className={productPageClasses.productCardPrice}
+              component="div"
+              variant="h5"
+              color="text.primary"
+            >
+              {localPrice.format(productAmount * +discountPrice)}
+            </Typography>
+        
+      )
+            
+:
+(<Typography
+              className={productPageClasses.productCardPrice}
+              component="div"
+              variant="h5"
+              color="text.primary"
+            >
+              {localPrice.format(productAmount * +currentPrice)}
+            </Typography>)
+    
+  }
+
+
+     {/* {slidesItemId.includes(_id) ? (
+     <Typography
+     className={productPageClasses.productCardOldPrice}
+     component="div"
+     variant="h5"
+     color="text.primary"
+   >
+     {localPrice.format(productAmount * +currentPrice)}
+   </Typography>
+            ) : (
+              <Typography
+              className={productPageClasses.productCardPrice}
+              component="div"
+              variant="h5"
+              color="text.primary"
+            >
+              {localPrice.format(currentPrice)}
+            </Typography>
+            )} */}
+                    {/* {productAmount > discontStart && (
                       <Typography
                         className={productPageClasses.productCardOldPrice}
                         component="div"
                         variant="h5"
                         color="text.primary"
                       >
-                        {localPrice.format(productAmount * +currentPrice)}
+                        {localPrice.format(productAmount * +discountPrice)}
                       </Typography>
                     )}
                     <Typography
@@ -432,12 +491,13 @@ export const ProductCardRender = ({ data }) => {
                       variant="h5"
                       color="text.primary"
                     >
-                      {slidesItemId.includes(_id)
-                        ? localPrice.format(discountPrice)
-                        : localPrice.format(currentPrice)}
+                     
+                        {localPrice.format(currentPrice)}
 
-                      {/* {localPrice.format(totalPrice)} */}
-                    </Typography>
+                    
+                    </Typography> */}
+{/* ----------------------------------- */}
+
                   </Box>
 
                   {isAdmin === false && (
@@ -460,8 +520,21 @@ export const ProductCardRender = ({ data }) => {
                         className={productPageClasses.productCardButtonBasket}
                         variant="contained"
                         onClick={() =>
+                          // dispatch(
+                          //   addProductToCart(_id, productAmount, slidesItemId)
+                          // )
+                          quantity > 0 &&
                           dispatch(
-                            addProductToCart(_id, productAmount, slidesItemId)
+                            changeProductQuantity(
+                              _id,
+                              productAmount,
+                              name,
+                              totalPrice / productAmount,
+                              imageUrls,
+                              currentPrice,
+                              discountPrice,
+                              slidesItemId
+                            )
                           )
                         }
                       >
@@ -598,7 +671,7 @@ export const ProductCardRender = ({ data }) => {
           </CardContent>
           <CardActions className={mainClasses.productActionsBox}>
             {quantity <= 0 ? (
-              <MenuIcon
+              <ProductionQuantityLimitsOutlinedIcon
                 className={filtersClasses.productCardButtonBurger}
                 aria-label="not available"
                 color="primary"
@@ -746,7 +819,7 @@ export const ProductCardRender = ({ data }) => {
             </Box>
             <CardActions className={mainClasses.productActionsBox}>
               {quantity <= 0 ? (
-                <MenuIcon
+                <ProductionQuantityLimitsOutlinedIcon
                   className={filtersClasses.productCardButtonBurger}
                   aria-label="not available"
                   color="primary"

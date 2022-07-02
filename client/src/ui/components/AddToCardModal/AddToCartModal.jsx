@@ -101,14 +101,14 @@ const AddToCartModal = ({
                 </Stack>
               </CardContent>
               <CardActions className={modalClasses.productActionsBox}>
-                <Box className={modalClasses.productCardActionBtns}>
+              <Box className={modalClasses.productCardActionBtns}>
                   <ButtonGroup
                     className={modalClasses.amountInputGroup}
                     color="primary"
                     variant="outlined"
                     aria-label="outlined primary button group"
                   >
-                    <Button
+                   <Button
                       onClick={() => {
                         setProductAmount(
                           (prevProductAmount) => +prevProductAmount - 1

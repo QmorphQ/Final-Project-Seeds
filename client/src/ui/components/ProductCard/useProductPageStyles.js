@@ -66,9 +66,13 @@ export const useProductPageStyles = makeStyles((theme) => ({
     border: "1px solid rgba(239, 239, 239, 1)",
     borderRadius: "11px",
   },
-  buttonIcon: {
-    marginRight:"12px"
+  chipLabel: {
+    width: '130px', 
+    marginRight: '8px', 
+    '@media (max-width: 900px)': {
+      marginRight: '4px',
   },
+  }, 
   productCardButtonBasket: {
     margin:"16px 27px 16px 16px",
     textTransform: "capitalize"

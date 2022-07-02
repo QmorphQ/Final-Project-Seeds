@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 
 import PropTypes from 'prop-types'; 
 import { useState, useEffect } from 'react';
@@ -64,7 +65,11 @@ const BuiltInActions = ({ product }) => {
     } 
 
     const [openAd, setOpenAd] = useState(false); 
-    const handleOpenAd = () => setOpenAd(true);
+    const handleOpenAd = () => setOpenAd(true); 
+
+    const [openZeroQuantityModal, setOpenZeroQuantityModal] = useState(false); 
+    const handleOpenZeroQuantityModal = () => setOpenZeroQuantityModal(true);
+    const handleCloseZeroQuantityModal = () => setOpenZeroQuantityModal(false);
 
 
     const handleAddDelToCarousel = () => { 
@@ -94,14 +99,38 @@ const BuiltInActions = ({ product }) => {
 
 
         {/* ---------- ADD TO SLIDER ---------- */} 
-
-        <IconButton onClick={handleOpenSlider}
+        
+        <IconButton onClick={product.quantity > 0 
+                                ? handleOpenSlider 
+                                : ( onSlide 
+                                        ? handleOpenSlider  
+                                        : handleOpenZeroQuantityModal )}
                     disableRipple >
         
             <span className={classes.actionsButton}>
                 {onSlide ? `DEL FROM CAROUSEL` : `ADD TO CAROUSEL`}
             </span>
         </IconButton>
+
+        <Modal
+            open={openZeroQuantityModal}
+            onClose={handleCloseZeroQuantityModal}
+            aria-labelledby='modal-modal-title'
+            aria-describedby='modal-modal-description'
+        >  
+            <Box className={classes.zeroQuantityModalGeneral}> 
+                <Typography 
+                    component='span'
+                    className={classes.addProductToSlideModalLabel}
+                >
+                        You cannot add this product to the carousel, the product is unavailable now. Please use `UPDATE PRODUCT` option first and add quantity before next try to add this product to the carousel
+                </Typography>
+            </Box>
+        </Modal>
+
+
+
+
 
         <Modal
             open={openSliderModal}
@@ -150,14 +179,16 @@ const BuiltInActions = ({ product }) => {
                                 {onSlide ? `You're about to delete slide from the carousel, confirm?` : `You're about to add new slide on the carousel, confirm?`}
                         </Typography> 
 
-                        <Button
-                            color={onSlide ? 'error' : 'success'} 
-                            variant='contained'
-                            className={classes.addProductToSlideModalLabelButton} 
-                            onClick={handleAddDelToCarousel}
-                        >
-                            {onSlide ? `Del From Carousel` : `Add To Carousel`} 
-                        </Button>
+                        
+                            <Button
+                                color={onSlide ? 'error' : 'success'} 
+                                variant='contained'
+                                className={classes.addProductToSlideModalLabelButton} 
+                                onClick={handleAddDelToCarousel}
+                            >
+                                {onSlide ? `Del From Carousel` : `Add To Carousel`} 
+                            </Button>
+
                     </div>
 
                 </div>

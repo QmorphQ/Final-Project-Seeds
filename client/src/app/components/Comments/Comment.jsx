@@ -1,5 +1,7 @@
-import PropTypes from 'prop-types';
-
+// Imports:
+// Libraries:
+import PropTypes from "prop-types";
+// React Components:
 import {
   Box,
   Typography,
@@ -10,23 +12,14 @@ import {
   Rating,
   Card,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
+// Styles:
 import "./SwiperCSS.css";
+import { red } from "@mui/material/colors";
+// Others:
+// =======================================================
 
+// =======================================================
 export default function Comment(props) {
-  const classes = {
-    root: {
-      maxWidth: "100%",
-      position: "relative",
-      margin: "0 auto",
-      height: "100%",
-    },
-    header: {
-      display: "flex",
-      alignItems: "center",
-    },
-  };
-
   return (
     <Card
       className="comment-card"
@@ -34,27 +27,23 @@ export default function Comment(props) {
         maxWidth: 300,
         borderRadius: "12px",
         maxHeight: "400px",
-        overflow: "auto"
+        overflow: "auto",
       }}
     >
-      <Paper square elevation={0} className={classes.header}>
+      <Paper square elevation={0} className={"comment-header"}>
         <CardHeader
           avatar={
             <Avatar
               sx={{ bgcolor: red[500] }}
               aria-label="recipe"
-              /* eslint-disable-next-line no-undef,react/prop-types */
               src={props.imgPath}
             />
           }
           sx={{ color: "text.disabled" }}
-          /* eslint-disable-next-line no-undef,react/prop-types */
           title={props.title}
-          /* eslint-disable-next-line no-undef,react/prop-types */
           subheader={props.subheader}
         />
       </Paper>
-
       <Box pl={2}>
         <Rating
           name="half-rating-read"
@@ -63,19 +52,19 @@ export default function Comment(props) {
           readOnly
         />
       </Box>
-
       <CardContent>
         <Typography variant="body2" color="text.disabled">
-          {/* eslint-disable-next-line react/prop-types */}
-         
-            {props.text}
-        
+          {props.text}
         </Typography>
       </CardContent>
     </Card>
   );
 }
+// =======================================================
 
 Comment.propTypes = {
- text: PropTypes.string
-}
+  text: PropTypes.string,
+  title: PropTypes.string,
+  imgPath: PropTypes.string,
+  subheader: PropTypes.string,
+};

@@ -1,23 +1,27 @@
+// Imports:
+// Libraries:
 import PropTypes from "prop-types";
-import { Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {  Pagination, Autoplay, Navigation, Scrollbar, A11y } from "swiper";
+import { Pagination, Autoplay } from "swiper";
+// React Components:
+import { Box } from "@mui/material";
 import Comment from "./Comment.jsx";
-import examples from "./examples";
-import styles from "./CommentsStyles";
+// Styles:
 import "./SwiperCSS.css";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
+import "swiper/css/autoplay";
+// Others:
+import examples from "./examples";
+// =======================================================
 
-
+// =======================================================
 export default function Comments({ dataToRender }) {
   return (
-    <Box sx={styles.comments} component={"section"} className="comments">
-      <h2  className="comments-title">What people say about our products</h2>
+    <Box component="section" className="comments">
+      <h2 className="comments-title">What people say about our products</h2>
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+        modules={[Pagination, Autoplay]}
         pagination={{
           clickable: true,
         }}
@@ -29,9 +33,7 @@ export default function Comments({ dataToRender }) {
           waitForTransition: true,
           disableOnInteraction: false,
         }}
-        
         className="swiper-container"
-        
         slidesPerView={1}
         spaceBetween={5}
         breakpoints={{
@@ -43,24 +45,23 @@ export default function Comments({ dataToRender }) {
           720: {
             width: 600,
             slidesPerView: 2,
-            spaceBetween: 30
+            spaceBetween: 30,
           },
-          980:{
+          980: {
             width: 800,
             slidesPerView: 3,
-            spaceBetween: 10
+            spaceBetween: 10,
           },
           1200: {
             width: 1000,
             slidesPerView: 3,
-            spaceBetween: 50
+            spaceBetween: 50,
           },
           1600: {
             width: 1300,
             slidesPerView: 4,
-            spaceBetween: 50
-          }
-          
+            spaceBetween: 50,
+          },
         }}
       >
         {dataToRender.map((el, i) => (
@@ -70,6 +71,7 @@ export default function Comments({ dataToRender }) {
     </Box>
   );
 }
+// =======================================================
 
 Comments.defaultProps = {
   dataToRender: examples,

@@ -63,8 +63,6 @@ export default function LogIn() {
         navigation("/")
       }
     }, [requestState])
-    console.log( isRightPassword);
-    console.log(redirect);
 
     useEffect(() => {
       if (redirect === false && requestState === "error") {

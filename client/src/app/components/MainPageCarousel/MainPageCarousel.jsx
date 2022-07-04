@@ -124,7 +124,6 @@ function Item(props) {
   );
   const editCartState = useSelector((state) => state.cart.editCartState);
   const slidesItemId = useSelector((state) => state.slides.slidesItemId);
-
   const [isOnModal, toggleIsOnModal] = useState(false);
   const [discountStart] = useState(10);
   const [totalPrice, setTotalPrice] = useState(itemAddToCart.discountPrice);

@@ -101,7 +101,6 @@ export const ProductCardRender = ({ data }) => {
   const slidesItemId = slideList.map((item) => item.productId);
   const addedToCart = useSelector((state) => state.cart.editCartState);
 
-
   useEffect(() => {
     dispatch(fetchSlides());
     dispatch(fetchCart(slidesItemId));
@@ -289,12 +288,17 @@ export const ProductCardRender = ({ data }) => {
                   <Chip
                     label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
                     className={productPageClasses.chipLabel}
-                    sx={ quantity > 0 
-                      ? { backgroundColor: 'rgba(53, 151, 64, 0.1)', 
-                          color: 'rgb(53, 151, 64)', } 
-                      : { backgroundColor: 'rgba(254, 109, 109, 0.1)', 
-                          color: 'rgb(254, 109, 109)' }
-                      }
+                    sx={
+                      quantity > 0
+                        ? {
+                            backgroundColor: "rgba(53, 151, 64, 0.1)",
+                            color: "rgb(53, 151, 64)",
+                          }
+                        : {
+                            backgroundColor: "rgba(254, 109, 109, 0.1)",
+                            color: "rgb(254, 109, 109)",
+                          }
+                    }
                   />
                   <Chip
                     color="primary"
@@ -418,15 +422,26 @@ export const ProductCardRender = ({ data }) => {
                         src={Vector}
                       ></Box>
                     )}
-                    {slidesItemId.includes(_id) ? (
-                      <Typography
-                        className={productPageClasses.productCardPrice}
-                        component="div"
-                        variant="h5"
-                        color="text.primary"
-                      >
-                        {localPrice.format(productAmount * +discountPrice)}
-                      </Typography>
+                    {slidesItemId.includes(_id) ||
+                    productAmount > discontStart ? (
+                      <>
+                        <Typography
+                          className={productPageClasses.productCardPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
+                          {localPrice.format(productAmount * +discountPrice)}
+                        </Typography>
+                        <Typography
+                          className={productPageClasses.productCardOldPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
+                          {localPrice.format(productAmount * +currentPrice)}
+                        </Typography>
+                      </>
                     ) : (
                       <Typography
                         className={productPageClasses.productCardPrice}
@@ -492,27 +507,6 @@ export const ProductCardRender = ({ data }) => {
                           Out of Stock
                         </Typography>
                       )}
-                      {/* <Button
-                        className={productPageClasses.productCardButtonBasket}
-                        variant="contained"
-                        onClick={() =>
-                        quantity > 0 &&
-                          dispatch(
-                            changeProductQuantity(
-                              _id,
-                              productAmount,
-                              name,
-                              totalPrice / productAmount,
-                              imageUrls,
-                              currentPrice,
-                              discountPrice,
-                              slidesItemId
-                            )
-                          )
-                        }
-                      >
-                        Add to card
-                      </Button> */}
                       {addedToCart === "success" && (
                         <Alert
                           onClick={() => {

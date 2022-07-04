@@ -34,6 +34,13 @@
         "react"
     ],
     "rules": {
+        "import/no-unresolved": [
+            2,
+            {
+                "caseSensitive": false,
+                "ignore": ["swiper/css", "swiper/react"]
+            }
+        ],
         "no-underscore-dangle": "off",
         "default-param-last": "off",
         "import/prefer-default-export": "off",

@@ -16,8 +16,6 @@ import {
   Button,
   FilledInput,
 } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
 import { useModalStyles } from "./useModalStyles";
 import { changeProductQuantity } from "../../../store/thunks/cart.thunks";
 import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
@@ -87,16 +85,15 @@ const AddToCartModal = ({
                 </Typography>
 
                 <Stack direction="row" spacing={1}>
-                  <Chip
-                    color="disable"
+                <Chip
                     label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
-                    icon={
-                      quantity > 0 ? (
-                        <CheckIcon className={modalClasses.buttonIcon} />
-                      ) : (
-                        <CloseIcon className={modalClasses.buttonIcon} />
-                      )
-                    }
+                    className={modalClasses.chipLabel}
+                    sx={ quantity > 0 
+                      ? { backgroundColor: 'rgba(53, 151, 64, 0.1)', 
+                          color: 'rgb(53, 151, 64)', } 
+                      : { backgroundColor: 'rgba(254, 109, 109, 0.1)', 
+                          color: 'rgb(254, 109, 109)' }
+                      }
                   />
                 </Stack>
               </CardContent>

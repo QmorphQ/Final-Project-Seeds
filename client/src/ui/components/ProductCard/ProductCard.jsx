@@ -31,13 +31,10 @@ import {
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Carousel from "react-material-ui-carousel";
-import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ProductionQuantityLimitsOutlinedIcon from "@mui/icons-material/ProductionQuantityLimitsOutlined";
-
-import CheckIcon from "@mui/icons-material/Check";
 
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
@@ -103,6 +100,7 @@ export const ProductCardRender = ({ data }) => {
   const slideList = useSelector(slidesSelector);
   const slidesItemId = slideList.map((item) => item.productId);
   const addedToCart = useSelector((state) => state.cart.editCartState);
+
 
   useEffect(() => {
     dispatch(fetchSlides());
@@ -289,15 +287,14 @@ export const ProductCardRender = ({ data }) => {
                   spacing={1}
                 >
                   <Chip
-                    color="disable"
                     label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
-                    icon={
-                      quantity > 0 ? (
-                        <CheckIcon className={productPageClasses.buttonIcon} />
-                      ) : (
-                        <CloseIcon className={productPageClasses.buttonIcon} />
-                      )
-                    }
+                    className={productPageClasses.chipLabel}
+                    sx={ quantity > 0 
+                      ? { backgroundColor: 'rgba(53, 151, 64, 0.1)', 
+                          color: 'rgb(53, 151, 64)', } 
+                      : { backgroundColor: 'rgba(254, 109, 109, 0.1)', 
+                          color: 'rgb(254, 109, 109)' }
+                      }
                   />
                   <Chip
                     color="primary"

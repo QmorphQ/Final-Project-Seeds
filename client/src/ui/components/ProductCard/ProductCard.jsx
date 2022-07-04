@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Alert,
   Button,
   Card,
   CardActions,
@@ -33,7 +34,7 @@ import Carousel from "react-material-ui-carousel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
+import ProductionQuantityLimitsOutlinedIcon from "@mui/icons-material/ProductionQuantityLimitsOutlined";
 
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
@@ -51,6 +52,7 @@ import {
   downloadCategoriesRequestStateSelector,
   slidesSelector,
 } from "../../../store/selectors/selectors";
+import { addedProductToCart } from "../../../store/actions/cart.actions";
 import {
   addProductToCart,
   fetchCart,
@@ -96,24 +98,18 @@ export const ProductCardRender = ({ data }) => {
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
   const slideList = useSelector(slidesSelector);
-  const slidesItemId = slideList.map((item) => item.productId); 
+  const slidesItemId = slideList.map((item) => item.productId);
+  const addedToCart = useSelector((state) => state.cart.editCartState);
+
 
   useEffect(() => {
     dispatch(fetchSlides());
     dispatch(fetchCart(slidesItemId));
+    dispatch(addedProductToCart());
     window.scrollTo(0, 0);
   }, []);
 
-  // useEffect(() => {
-  //   setTotalPrice((prevProductAmount) =>
-  //     prevProductAmount <= discontStart
-  //       ? productAmount * currentPrice
-  //       : productAmount * discountPrice
-  //   );
-  // }, [productAmount, discontStart]);
-
   const navigate = useNavigate();
-
   const mainClasses = useMainStyles();
   const productPageClasses = useProductPageStyles();
   const basketClasses = useBasketStyles();
@@ -194,7 +190,6 @@ export const ProductCardRender = ({ data }) => {
               {"+"}
             </Button>
           </ButtonGroup>
-
           <Typography
             className={basketClasses.productCardName}
             variant="h3"
@@ -411,92 +406,46 @@ export const ProductCardRender = ({ data }) => {
                   )}
                 </Box>
                 <Box className={productPageClasses.productCardActionBtns}>
-                  <Box>
-
-
-    {/* ---------------------------------                 */}
-    {slidesItemId.includes(_id) && (
-              <Box
-                component="img"
-                pl={{ xs: "0vw", sm: "0px" }}
-                pr={"2px"}
-                overflow="visible"
-                width={{ xs: "12px", sm: "12px", md: "12px" }}
-                src={Vector}
-              ></Box>
-            )}
-{slidesItemId.includes(_id) ?
-
-(<Typography
-              className={productPageClasses.productCardPrice}
-              component="div"
-              variant="h5"
-              color="text.primary"
-            >
-              {localPrice.format(productAmount * +discountPrice)}
-            </Typography>
-        
-      )
-            
-:
-(<Typography
-              className={productPageClasses.productCardPrice}
-              component="div"
-              variant="h5"
-              color="text.primary"
-            >
-              {localPrice.format(productAmount * +currentPrice)}
-            </Typography>)
-    
-  }
-
-
-     {/* {slidesItemId.includes(_id) ? (
-     <Typography
-     className={productPageClasses.productCardOldPrice}
-     component="div"
-     variant="h5"
-     color="text.primary"
-   >
-     {localPrice.format(productAmount * +currentPrice)}
-   </Typography>
-            ) : (
-              <Typography
-              className={productPageClasses.productCardPrice}
-              component="div"
-              variant="h5"
-              color="text.primary"
-            >
-              {localPrice.format(currentPrice)}
-            </Typography>
-            )} */}
-                    {/* {productAmount > discontStart && (
+                  <Box display="flex">
+                    {/* ---------------------------------                 */}
+                    {slidesItemId.includes(_id) && (
+                      <Box
+                        component="img"
+                        pl={{ xs: "0vw", sm: "0px" }}
+                        pr={"2px"}
+                        overflow="visible"
+                        width={{ xs: "12px", sm: "12px", md: "12px" }}
+                        src={Vector}
+                      ></Box>
+                    )}
+                    {slidesItemId.includes(_id) ? (
                       <Typography
-                        className={productPageClasses.productCardOldPrice}
+                        className={productPageClasses.productCardPrice}
                         component="div"
                         variant="h5"
                         color="text.primary"
                       >
                         {localPrice.format(productAmount * +discountPrice)}
                       </Typography>
+                    ) : (
+                      <Typography
+                        className={productPageClasses.productCardPrice}
+                        component="div"
+                        variant="h5"
+                        color="text.primary"
+                      >
+                        {localPrice.format(productAmount * +currentPrice)}
+                      </Typography>
                     )}
-                    <Typography
-                      className={productPageClasses.productCardPrice}
-                      component="div"
-                      variant="h5"
-                      color="text.primary"
-                    >
-                     
-                        {localPrice.format(currentPrice)}
-
-                    
-                    </Typography> */}
-{/* ----------------------------------- */}
-
                   </Box>
 
                   {isAdmin === false && (
-                    <Box className={productPageClasses.productCardButtons}>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      className={productPageClasses.productCardButtons}
+                      sx={{ position: "relative" }}
+                    >
                       {isLogin && (
                         <IconButton
                           className={productPageClasses.productCardButton}
@@ -511,14 +460,43 @@ export const ProductCardRender = ({ data }) => {
                           )}
                         </IconButton>
                       )}
-                      <Button
+                      {quantity > 0 ? (
+                        <Button
+                          className={productPageClasses.productCardButtonBasket}
+                          variant="contained"
+                          onClick={() =>
+                            quantity > 0 &&
+                            dispatch(
+                              changeProductQuantity(
+                                _id,
+                                productAmount,
+                                name,
+                                totalPrice / productAmount,
+                                imageUrls,
+                                currentPrice,
+                                discountPrice,
+                                slidesItemId
+                              )
+                            )
+                          }
+                        >
+                          Add to card
+                        </Button>
+                      ) : (
+                        <Typography
+                          component="span"
+                          variant="h6"
+                          paddingRight="10px"
+                          color="text.primary"
+                        >
+                          Out of Stock
+                        </Typography>
+                      )}
+                      {/* <Button
                         className={productPageClasses.productCardButtonBasket}
                         variant="contained"
                         onClick={() =>
-                          // dispatch(
-                          //   addProductToCart(_id, productAmount, slidesItemId)
-                          // )
-                          quantity > 0 &&
+                        quantity > 0 &&
                           dispatch(
                             changeProductQuantity(
                               _id,
@@ -534,14 +512,28 @@ export const ProductCardRender = ({ data }) => {
                         }
                       >
                         Add to card
-                      </Button>
+                      </Button> */}
+                      {addedToCart === "success" && (
+                        <Alert
+                          onClick={() => {
+                            dispatch(addedProductToCart());
+                          }}
+                          color="primary"
+                          variant="filled"
+                          severity="success"
+                          sx={{
+                            position: "absolute",
+                            right: "26px",
+                            bottom: "0px",
+                            width: "55%",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Added to cart
+                        </Alert>
+                      )}
                     </Box>
                   )}
-                  {/* ----------------------------------------- */}
-
-                  {/* это выше будет страничка продукта */}
-
-                  {/* ---------------------------------- */}
                   {isAdmin && <BuiltInActions product={data} />}
                 </Box>
               </CardActions>
@@ -729,7 +721,6 @@ export const ProductCardRender = ({ data }) => {
             )
           }
         />
-
         <CardMedia
           className={mainClasses.productCardMedia}
           component="img"

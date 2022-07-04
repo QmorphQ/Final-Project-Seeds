@@ -101,7 +101,6 @@ export const readyForEditStart = () => ({
   type: READY_FOR_EDIT_START,
 });
 
-
 export const EDIT_START = "EDIT_START";
 export const editStart = () => ({
   type: EDIT_START,
@@ -132,4 +131,9 @@ export const clearProductsInCartSuccess = () => ({
 export const EMPTY_SHOPPING_CART_ERROR = "EMPTY_SHOPPING_CART_ERROR";
 export const clearProductsInCartError = () => ({
   type: EMPTY_SHOPPING_CART_ERROR,
+});
+
+export const ADDED_PRODUCT_TO_CART = "ADDED_PRODUCT_TO_CART";
+export const addedProductToCart = () => ({
+  type: ADDED_PRODUCT_TO_CART,
 });

@@ -60,7 +60,7 @@ import {
           addCommentRequestState: downloadRequestStates.SUCCESS,
           editedComent: action.payload.data,
           comments: [...state.comments, action.payload.data],
-          productComments: [...productComments, action.payload.data]
+          productComments: [...state.productComments, action.payload.data]
         };
   
       case ADD_COMMENT_ERROR:

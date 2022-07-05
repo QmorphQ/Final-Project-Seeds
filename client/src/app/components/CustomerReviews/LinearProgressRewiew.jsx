@@ -16,9 +16,9 @@ export const LinearProgressReview = ({ data }) => {
     
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        product._id && dispatch(fetchProductComments(product._id));
-    }, [ratingComments, product._id]);
+    // useEffect(() => {
+    //     product._id && dispatch(fetchProductComments(product._id));
+    // }, [ratingComments, product._id]);
 
     const classes = useStyles();
 

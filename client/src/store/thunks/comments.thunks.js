@@ -30,6 +30,19 @@ const fetchAllComments =
       });
 };
 
+const fetchProductComments = (productId) => (dispatch) => {
+  dispatch(downloadProductCommentsRequested());
+  axios
+    .get(`${API}comments/product/${productId}`)
+    .then((comments) => {
+      dispatch(downloadProductCommentsSuccess(comments.data));
+      return comments;
+    })
+    .catch(() => {
+      dispatch(downloadProductCommentsError());
+    });
+};
+
 const addComment = (comment) => (dispatch) => {
   dispatch(addCommentRequested());
   const token = localStorage.getItem("jwt");
@@ -43,21 +56,9 @@ const addComment = (comment) => (dispatch) => {
       dispatch(addCommentSuccess(addedComment));
       return addedComment;
     })
-    .catch(() => {
+    .catch((e) => {
+      console.log(e)
       dispatch(addCommentError());
-    });
-};
-
-const fetchProductComments = (productId) => (dispatch) => {
-  dispatch(downloadProductCommentsRequested());
-  axios
-    .get(`${API}comments/product/${productId}`)
-    .then((comments) => {
-      dispatch(downloadProductCommentsSuccess(comments.data));
-      return comments;
-    })
-    .catch(() => {
-      dispatch(downloadProductCommentsError());
     });
 };
 

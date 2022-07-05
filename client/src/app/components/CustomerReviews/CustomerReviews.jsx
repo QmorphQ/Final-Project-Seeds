@@ -70,7 +70,7 @@ const CustomerReviews = () => {
                             className={classes.reviewsQuantity}
                             variant="subtitle1"
                             >
-                                {ratingProductComments.length > 0 ? `${ratingProductComments.length} reviews` : `Loading...`}
+                                {ratingProductComments.length} reviews
                             </Typography>
                             <Rating 
                                 readOnly={loadingCustomer !== downloadRequestStates.SUCCESS}

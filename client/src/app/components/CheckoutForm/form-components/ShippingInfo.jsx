@@ -24,7 +24,6 @@ const ShippingInfo = () => {
   const [shippingData, setShippingData] = useState([]);
   
   let defaultMethod;
-  
 
   useEffect(() => {
     setFieldValue("deliveryMethod", "expressDelivery")
@@ -77,8 +76,9 @@ const ShippingInfo = () => {
                         <Box display="flex" flexDirection="row">
                           <FormControlLabel
                             value={item.customId}
-                            control={<Radio />}
+                            control={<Radio name={item.customId} onChange={ (value) => console.log(value.target)}/>}
                             label={item.name}
+                           
                           />
                           <Box
                             key={item._id}

@@ -76,7 +76,7 @@ const ShippingInfo = () => {
                         <Box display="flex" flexDirection="row">
                           <FormControlLabel
                             value={item.customId}
-                            control={<Radio name={item.customId} onChange={ (value) => console.log(value.target)}/>}
+                            control={<Radio name={item.customId}/>}
                             label={item.name}
                            
                           />

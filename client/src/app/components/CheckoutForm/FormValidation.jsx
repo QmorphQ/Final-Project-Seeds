@@ -16,15 +16,15 @@ import * as Yup from 'yup';
     addressLine: Yup.string()
     .when(['deliveryMethod'], (deliveryMethod, schema) => 
         (deliveryMethod === "expressDelivery") ? schema.required('Required') : schema.min(0)),
-    house: Yup.string()
+    house: Yup.number()
     .when(['deliveryMethod'], (deliveryMethod, schema) => 
-        (deliveryMethod === "expressDelivery") ? schema.number().integer().typeError("Please enter a valid code number") : schema.min(0)),
-    flat: Yup.string()
+        (deliveryMethod === "expressDelivery") ? schema.integer().typeError("Please enter a valid code number") : schema.min(0)),
+    flat: Yup.number()
     .when(['deliveryMethod'], (deliveryMethod, schema) => 
-        (deliveryMethod === "expressDelivery") ? schema.number().integer().typeError("Please enter a valid code number") : schema.min(0)),
-    code: Yup.string()
+        (deliveryMethod === "expressDelivery") ? schema.integer().typeError("Please enter a valid code number") : schema.min(0)),
+    code: Yup.number()
     .when(['deliveryMethod'], (deliveryMethod, schema) => 
-        (deliveryMethod === "expressDelivery") ? schema.number().integer().typeError("Please enter a valid code number") : schema.min(0)),
+        (deliveryMethod === "expressDelivery") ? schema.integer().typeError("Please enter a valid code number") : schema.min(0)),
     city: Yup.string()
     .when(['deliveryMethod'], (deliveryMethod, schema) => 
         (deliveryMethod === "expressDelivery") ? schema.required('Required') : schema.min(0)),

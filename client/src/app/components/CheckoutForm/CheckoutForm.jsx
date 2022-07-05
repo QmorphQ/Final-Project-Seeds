@@ -13,9 +13,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { PropTypes } from "prop-types";
-import OrderSummary from "../../pages/Cart/OrderSummary.jsx";
+import OrderSummary from "../Cart/OrderSummary.jsx";
 import { getCustomer } from "../../../store/thunks/customer.thunks";
-import {clearProductsInCart} from "../../../store/thunks/cart.thunks";
+import { clearProductsInCart } from "../../../store/thunks/cart.thunks";
 import {
   currentCustomerSelector,
   loginStateSelector,
@@ -57,7 +57,6 @@ export default function CheckoutForm() {
   const dispatch = useDispatch();
   const isLogin = useSelector(loginStateSelector);
 
-  
   const fetchProducts = () => {
     axios
       .get(`${API}products`)
@@ -191,92 +190,94 @@ export default function CheckoutForm() {
   return (
     defaultCustomer != null && (
       <>
-      <Box
-      display="flex"
-      flexDirection={{ xs: "column", sm: "row" }}
-      width={{ xs: "100%", sm: "100%" }}
-      position={"relative"}
-      minHeight={"30em"}
-      >
         <Box
-          margin={"auto"}
-          width={{ xs: "100%", sm: "45%" }}
           display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-          padding="20px"
-          sx={{ order: { sm: '1', xs: '2' } }}
+          flexDirection={{ xs: "column", sm: "row" }}
+          width={{ xs: "100%", sm: "100%" }}
+          position={"relative"}
+          minHeight={"30em"}
         >
           <Box
-          position={{ xs: "absolute", sm: "absolute" }}
-          top={"0"}
-          width={{ xs: "100%", sm: "48%" }}
-          marginLeft={{ xs: "auto", sm: "-15px" }}
+            margin={"auto"}
+            width={{ xs: "100%", sm: "45%" }}
+            display="flex"
+            flexDirection="column"
+            justifyContent="space-between"
+            padding="20px"
+            sx={{ order: { sm: "1", xs: "2" } }}
           >
-          <Stepper activeStep={activeStep} >
-            {steps.map((index) => (
-              <Step key={index}>
-                <StepLabel
-                  sx={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setActiveStep(+index - 1);
-                  }}
-                ></StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          </Box>
-          {activeStep === steps.length ? (
-            <>
-              <Typography
-              textAlign="center"
-              sx={{ typography: { sm: 'h2', xs: 'h5' } }} > 
-                Thank You! Your oder #{orderNumber} has been placed!
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Link to={"/"} style={{ textDecoration: "none" }}>
-                  <Button>Go to the Main Page</Button>
-                </Link>
-              </Box>
-            </>
-          ) : (
-            <Formik
-              initialValues={defaultCustomer}
-              validationSchema={FORM_VALIDATION}
-              onSubmit={_handleSubmit}
+            <Box
+              position={{ xs: "absolute", sm: "absolute" }}
+              top={"0"}
+              width={{ xs: "100%", sm: "48%" }}
+              marginLeft={{ xs: "auto", sm: "-15px" }}
             >
-              {(props) => (
-                <Form id={formId}>
-                  {stepContent(activeStep, props.setFieldValue)}
-                  <Box display="flex" mt="20px" justifyContent="flex-end">
-                    {activeStep !== 0 && (
-                      <Button onClick={handleBack}>Back</Button>
-                    )}
-                    <Button
-                      disabled={props.isSubmitting}
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                    >
-                      {isLastStep ? "Place order" : "Next"}
-                    </Button>
-                    {props.isSubmitting && <CircularProgress  size={26} />}
-                  </Box>
-                </Form>
-              )}
-            </Formik>
+              <Stepper activeStep={activeStep}>
+                {steps.map((index) => (
+                  <Step key={index}>
+                    <StepLabel
+                      sx={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setActiveStep(+index - 1);
+                      }}
+                    ></StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            </Box>
+            {activeStep === steps.length ? (
+              <>
+                <Typography
+                  textAlign="center"
+                  sx={{ typography: { sm: "h2", xs: "h5" } }}
+                >
+                  Thank You! Your oder #{orderNumber} has been placed!
+                </Typography>
+                <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                  <Box sx={{ flex: "1 1 auto" }} />
+                  <Link to={"/"} style={{ textDecoration: "none" }}>
+                    <Button>Go to the Main Page</Button>
+                  </Link>
+                </Box>
+              </>
+            ) : (
+              <Formik
+                initialValues={defaultCustomer}
+                validationSchema={FORM_VALIDATION}
+                onSubmit={_handleSubmit}
+              >
+                {(props) => (
+                  <Form id={formId}>
+                    {stepContent(activeStep, props.setFieldValue)}
+                    <Box display="flex" mt="20px" justifyContent="flex-end">
+                      {activeStep !== 0 && (
+                        <Button onClick={handleBack}>Back</Button>
+                      )}
+                      <Button
+                        disabled={props.isSubmitting}
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                      >
+                        {isLastStep ? "Place order" : "Next"}
+                      </Button>
+                      {props.isSubmitting && <CircularProgress size={26} />}
+                    </Box>
+                  </Form>
+                )}
+              </Formik>
+            )}
+          </Box>
+          {activeStep !== steps.length && (
+            <Box
+              width={{ xs: "100%", sm: "30%" }}
+              sx={{ order: { sm: "2", xs: "1" } }}
+            >
+              <OrderSummary visibility={"none"} />
+            </Box>
           )}
-        </Box>
-        {activeStep !== steps.length && 
-        <Box
-        width={{ xs: "100%", sm: "30%" }}
-        sx={{ order: { sm: '2', xs: '1' } }}
-        >
-        <OrderSummary  visibility={"none"} />
-        </Box>}
         </Box>
       </>
     )

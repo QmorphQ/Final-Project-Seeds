@@ -11,11 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { Box, AppBar, Toolbar, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
 // ------------------------------------------------------------------------------------
 // React Components:
 import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
-
 import {
   loginStateSelector,
   cartQuantitySelector,
@@ -26,7 +24,7 @@ import LogoBtn from "./HeaderBtns/LogoBtn.jsx";
 import CartBtn from "./HeaderBtns/CartBtn.jsx";
 import FavoriteBtn from "./HeaderBtns/FavoriteBtn.jsx";
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
-
+import { fetchWishlist } from "../../../store/thunks/wishlist.thunks";
 import { fetchCart } from "../../../store/thunks/cart.thunks";
 // ++++++++++++++++
 // Auth Component:
@@ -45,6 +43,8 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
   const isAdmin = useSelector(isAdminStateSelector);
   const favoriteQuantity = useSelector(wishlistQuantitySelector) ?? 0;
   const cartQuantity = useSelector(cartQuantitySelector) ?? 0;
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
+
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -61,10 +61,14 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
 
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
-      dispatch(fetchCart());
+      dispatch(fetchCart(slidesItemId));
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchWishlist)
+  }, [])
+  
   // =============================================== Render ==============================================
   return (
     <Box sx={classes.Header}>
@@ -106,7 +110,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
               display={{ xs: "none", sm: "none", md: "block" }}
               sx={{ mr: "30px" }}
             >
-              <SearchAppBar />
+              <SearchAppBar onClose={handleClickAway}/>
             </Box>
 
             <Box
@@ -141,7 +145,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
                 ) : isAdmin ? (
                   <ProfileMenuAdmin onClose={handleClickAway} />
                 ) : (
-                  <ProfileMenu />
+                  <ProfileMenu onClose={handleClickAway} />
                 )}
               </Box>
             </Box>

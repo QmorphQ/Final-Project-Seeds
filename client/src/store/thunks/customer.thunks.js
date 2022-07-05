@@ -12,12 +12,13 @@ import {
   customerUpdateRequest,
   getCustomerSuccess,
   customerUpdateSuccess,
-  isRightPassword,
   getUserDetailsRequested, 
   getUserDetailsSuccess, 
   getUserDetailsError,
   getOrdersSuccess,
   getOrdersError,
+  isRightPasswordError,
+  isRightPasswordSuccess,
 } from "../actions/customer.actions";
 
 
@@ -37,19 +38,24 @@ const addCustomer = (customer) => (dispatch) => {
 
 const getUserDetails = () => (dispatch) => {
 
-  dispatch(getUserDetailsRequested()); 
+  const token = localStorage.getItem("jwt"); 
+
+  if (token) {
+  dispatch(getUserDetailsRequested());  
+
   axios
-    .get(`${API}customers/customer`, {
-      headers: {
-        Authorization: `${localStorage.getItem("jwt")}`, 
-      },
-    })
-    .then((userDetails) => {
-        dispatch(getUserDetailsSuccess(userDetails.data.isAdmin));
-    })
-    .catch(() => {
-      dispatch(getUserDetailsError());
-    });
+      .get(`${API}customers/customer`, {
+        headers: {
+          Authorization: `${token}`, 
+        },
+      })
+      .then((userDetails) => {
+          dispatch(getUserDetailsSuccess(userDetails.data.isAdmin));
+      })
+      .catch(() => {
+        dispatch(getUserDetailsError());
+      });
+  }
 };
 
 
@@ -71,19 +77,23 @@ const loginCustomer = (userData) => (dispatch) => {
 
 const getCustomer = () => (dispatch) => {
   const token = localStorage.getItem("jwt");
-  dispatch(getCustomerRequest());
+
+  if (token) {
+  dispatch(getCustomerRequest()); 
+  
   axios
-    .get(`${API}customers/customer`, {
-      headers: {
-        Authorization: `${token}`,
-      },
-    })
-    .then((currentCustomer) => {
-      dispatch(getCustomerSuccess(currentCustomer.data));
-    })
-    .catch(() => {
-      dispatch(customerUpdateError());
-    });
+      .get(`${API}customers/customer`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((currentCustomer) => {
+        dispatch(getCustomerSuccess(currentCustomer.data));
+      })
+      .catch(() => {
+        dispatch(customerUpdateError());
+      });
+  }
 };
 
 const updateCustomer = (modifiedCustomer) => (dispatch) => {
@@ -106,9 +116,9 @@ const updateCustomer = (modifiedCustomer) => (dispatch) => {
       )
       .then((updatedPassword) => {
         if (updatedPassword.data.password === "Password does not match") {
-          dispatch(isRightPassword(false));
+          dispatch(isRightPasswordError());
         } else {
-          dispatch(isRightPassword(true));
+          dispatch(isRightPasswordSuccess());
         }
       })
       .catch(() => console.log("Some error on password change"));

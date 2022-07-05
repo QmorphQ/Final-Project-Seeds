@@ -1,5 +1,6 @@
 const classes = {
     AppLayout: {
+        position: "relative",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',

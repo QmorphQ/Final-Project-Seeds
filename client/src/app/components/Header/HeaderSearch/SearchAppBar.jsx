@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
@@ -56,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar({ onClose }) {
   // -----------------------------------------------------------------------------------
   // Pressets:
   const [inputText, setInputText] = useState("");
@@ -109,7 +110,7 @@ export default function SearchAppBar() {
 
   const getAllProducts = async () => {
     axios
-      .get(`http://localhost:8000/api/products`)
+      .get(`${API}products`)
       .then((r) => {
         setFetchedProducts(r.data);
       })
@@ -225,14 +226,19 @@ export default function SearchAppBar() {
           onChange={inputHandler}
         />
         {loading ? <Spinner left={"70%"} top={"22%"} /> : false}
-        {
+        {products.length !== 0 &&
           <SearchResultContainer
             active={activeSearchContainer}
             products={products}
             oneCard={fetchedProducts.length === 1}
+            onClose={onClose}
           />
         }
       </Search>
     </>
   );
 }
+
+SearchAppBar.propTypes = { 
+  onClose: PropTypes.func, 
+};

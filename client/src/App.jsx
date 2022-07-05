@@ -35,10 +35,13 @@ function App() {
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
 
+  
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCart());
+    dispatch(fetchCart(slidesItemId));
   }, []);
 
   useEffect(() => {
@@ -51,7 +54,9 @@ function App() {
     if (window.location.href !== "http://localhost:3000/login") {
       dispatch(cleanUpLoginState());
     }
-  }, [window.location.href]);
+  }, [window.location.href]); 
+
+  
 
   return (
     <BrowserRouter>
@@ -72,8 +77,8 @@ function App() {
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />
               <Route path="/privacy-policy" element={<StaticPage page={"privacy-policy"} />} />
-              <Route path="/*" element={<PageNotFound/>}/>
-      </Route>
+              <Route path="/*" element={<PageNotFound/>} />
+          </Route>
       </Routes>
 
     </BrowserRouter>

@@ -34,6 +34,7 @@ import {
 } from "../../../store/actions/filters.actions";
 import PriceFilter from "../../../ui/components/FiltersComponents/PriceFilter.jsx";
 
+
 const Filters = () => {
   const classes = useFiltersStyles();
   const [iconClasses, setIconClasses] = useState(classes.filtersIcon);

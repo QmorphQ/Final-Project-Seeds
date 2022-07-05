@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Table,
   TableBody,
@@ -7,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useSelector } from "react-redux";
+import fetchSlides from "../../../store/thunks/slides.thunks";
 import CartItem from "./CartItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +34,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CartList = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchSlides());
+  }, []);
+
   const cart = useSelector((state) => state.cart.cart) || [];
+
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
+
   const classes = useStyles();
 
   const cartList = cart.map((cartItem) => {
@@ -51,6 +61,7 @@ const CartList = () => {
           price: cartItem.currentPrice,
           totalPrice,
         }}
+        slidesItemId={slidesItemId}
       />
     );
   });

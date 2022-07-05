@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 // ------------------------------------------
-import { makeStyles } from "@material-ui/core"; // !!! <-------------- MUI CORE
+import { makeStyles } from "@mui/styles";
 // ------------------------------------------
 import Container from "@mui/material/Container";
 import { Card } from "@mui/material";
@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   searchContainer: { 
     position: "absolute",
-    zIndex: "99999",
+    zIndex: "100",
     right: "0",
     top: "150%",
     padding: '30px', 
@@ -30,13 +30,11 @@ const useStyles = makeStyles((theme) => ({
   }, 
   searchOption: {
     height: 90, 
+    zIndex: "200",
     boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)', 
     width: '300px', 
     '&:hover': { 
       boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.3)', 
-    }, 
-    '@media (max-width: 600px)': {
-      height: 60,
     },
   }, 
 
@@ -83,17 +81,18 @@ const pressets = {
     },
   },
 };
-function RenderUnit({ imgUrl, name, price, itemNo }) {
+function RenderUnit({ imgUrl, name, price, itemNo, onClose }) {
   const classes = useStyles();
 
   const navigate = useNavigate();
 
-  const goToProduct = () => {
+  const goToProduct = (e) => {
     navigate(`products/${itemNo}`);
+    onClose(e); 
   };
 
   return (
-    <Link data-link="search" onClick={goToProduct} className={classes.link}>
+    <Link data-link="search" onClick={e => goToProduct(e)} className={classes.link}>
       <Card className={classes.searchOption} sx={pressets.styles.optionCard}>
         <CardMedia
           className={classes.searchImage}
@@ -140,6 +139,7 @@ RenderUnit.propTypes = {
   price: PropTypes.number,
   style: PropTypes.object,
   itemNo: PropTypes.string,
+  onClose: PropTypes.func, 
 };
 
 
@@ -148,6 +148,7 @@ export default function SearchResultContainer({
   products = 0,
   active,
   oneCard,
+  onClose
 }) {
   const classes = useStyles();
   const [productsToRender, setProductsToRender] = useState([]);
@@ -161,7 +162,7 @@ export default function SearchResultContainer({
       id="search-container"
       sx={{
         position: "absolute",
-        zIndex: "99999",
+        zIndex: "100",
         backgroundColor: "white",
         right: "0",
         top: "150%",
@@ -190,6 +191,7 @@ export default function SearchResultContainer({
               name={prod.name}
               price={prod.currentPrice}
               itemNo={prod.itemNo}
+              onClose={onClose}
             />
           </Grid>
         ))}
@@ -202,4 +204,5 @@ SearchResultContainer.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object),
   active: PropTypes.bool,
   oneCard: PropTypes.bool,
+  onClose: PropTypes.func, 
 };

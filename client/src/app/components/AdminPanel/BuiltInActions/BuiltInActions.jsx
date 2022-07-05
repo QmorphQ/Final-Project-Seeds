@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 
 import PropTypes from 'prop-types'; 
 import { useState, useEffect } from 'react';
@@ -11,6 +12,7 @@ import Vector from '../../MainPageCarousel/carouselImg/Vector.svg';
 import { adminDeleteProduct,
          adminDelProductFromSlider, 
          adminAddProductToSlider, } from '../../../../store/thunks/admin.thunks';
+import { adminAddProductIdle } from '../../../../store/actions/admin.actions'; 
 import { slidesSelector } from '../../../../store/selectors/selectors';
 
 import AddProduct from '../AddUpdProduct/AddProduct.jsx';
@@ -26,6 +28,8 @@ const BuiltInActions = ({ product }) => {
 
     const classes = useStylesBuiltInActions(); 
 
+    
+
     const slideList = useSelector(slidesSelector); 
     const matchedProdSlide = slideList.find(i => i.itemNo === product.itemNo); 
 
@@ -40,7 +44,11 @@ const BuiltInActions = ({ product }) => {
  
 
     const [open, setOpen] = useState(false); 
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => { 
+        dispatch(adminAddProductIdle());
+        setOpen(true);
+    } 
+
     const handleClose = () => setOpen(false); 
 
     const [openSliderModal, setOpenSliderModal] = useState(false); 
@@ -57,7 +65,11 @@ const BuiltInActions = ({ product }) => {
     } 
 
     const [openAd, setOpenAd] = useState(false); 
-    const handleOpenAd = () => setOpenAd(true);
+    const handleOpenAd = () => setOpenAd(true); 
+
+    const [openZeroQuantityModal, setOpenZeroQuantityModal] = useState(false); 
+    const handleOpenZeroQuantityModal = () => setOpenZeroQuantityModal(true);
+    const handleCloseZeroQuantityModal = () => setOpenZeroQuantityModal(false);
 
 
     const handleAddDelToCarousel = () => { 
@@ -69,14 +81,15 @@ const BuiltInActions = ({ product }) => {
                                                  currentPrice: product.currentPrice,
                                                  discountPrice: product.discountPrice,
                                                  categories: product.categories,
-                                                 description: product.description,
+                                                 description: product.itemAbout[0],
                                                  imageUrl: product.imageUrls[0],
                                                  itemNo: product.itemNo, 
+                                                 productId: product._id, 
                                                 })); 
 
         setTimeout(() => {
             navigation('/'); 
-        }, 200);
+        }, 500);
     }
 
 
@@ -86,14 +99,38 @@ const BuiltInActions = ({ product }) => {
 
 
         {/* ---------- ADD TO SLIDER ---------- */} 
-
-        <IconButton onClick={handleOpenSlider}
+        
+        <IconButton onClick={product.quantity > 0 
+                                ? handleOpenSlider 
+                                : ( onSlide 
+                                        ? handleOpenSlider  
+                                        : handleOpenZeroQuantityModal )}
                     disableRipple >
         
             <span className={classes.actionsButton}>
                 {onSlide ? `DEL FROM CAROUSEL` : `ADD TO CAROUSEL`}
             </span>
         </IconButton>
+
+        <Modal
+            open={openZeroQuantityModal}
+            onClose={handleCloseZeroQuantityModal}
+            aria-labelledby='modal-modal-title'
+            aria-describedby='modal-modal-description'
+        >  
+            <Box className={classes.zeroQuantityModalGeneral}> 
+                <Typography 
+                    component='span'
+                    className={classes.addProductToSlideModalLabel}
+                >
+                        You cannot add this product to the carousel, the product is unavailable now. Please use `UPDATE PRODUCT` option first and add quantity before next try to add this product to the carousel
+                </Typography>
+            </Box>
+        </Modal>
+
+
+
+
 
         <Modal
             open={openSliderModal}
@@ -108,7 +145,7 @@ const BuiltInActions = ({ product }) => {
                         <div className={classes.addProductToSlideModalMockData}> 
 
                             <span className={classes.addProductToSlideModalMockDataName}>{product.name.substring(0, 70)} . . .</span>
-                            <span className={classes.addProductToSlideModalMockDataDesc}>{product.description}</span> 
+                            <span className={classes.addProductToSlideModalMockDataDesc}>{product.itemAbout.join().substring(0, 170)} . . .</span> 
 
                             <div className={classes.addProductToSlideModalMockDataPrices}>
                                 <Box
@@ -142,14 +179,16 @@ const BuiltInActions = ({ product }) => {
                                 {onSlide ? `You're about to delete slide from the carousel, confirm?` : `You're about to add new slide on the carousel, confirm?`}
                         </Typography> 
 
-                        <Button
-                            color={onSlide ? 'error' : 'success'} 
-                            variant='contained'
-                            className={classes.addProductToSlideModalLabelButton} 
-                            onClick={handleAddDelToCarousel}
-                        >
-                            {onSlide ? `Del From Carousel` : `Add To Carousel`} 
-                        </Button>
+                        
+                            <Button
+                                color={onSlide ? 'error' : 'success'} 
+                                variant='contained'
+                                className={classes.addProductToSlideModalLabelButton} 
+                                onClick={handleAddDelToCarousel}
+                            >
+                                {onSlide ? `Del From Carousel` : `Add To Carousel`} 
+                            </Button>
+
                     </div>
 
                 </div>

@@ -48,6 +48,7 @@ const useStylesBuiltInActions = makeStyles((theme) => ({
             left: '50%',
             width: '320px', 
             padding: '40px 15px', 
+            overflowX: 'hidden',
         },
     }, 
 
@@ -74,7 +75,8 @@ const useStylesBuiltInActions = makeStyles((theme) => ({
         '@media (max-width: 900px)': {
             width: '300px',
             padding: '20px',
-            height: '90vh', 
+            top: '45%',
+            height: '75vh', 
         },
     }, 
 
@@ -251,6 +253,30 @@ const useStylesBuiltInActions = makeStyles((theme) => ({
         '@media (max-width: 900px)': {
             margin: '0 20px', 
             width: '100px', 
+        },
+    }, 
+
+    zeroQuantityModalGeneral: {
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        position: 'absolute',
+        overflow: 'scroll',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '350px',
+        height: '150px',
+        backgroundColor: 'white',
+        boxShadow: '0px 4px 16px rgba(43, 52, 69, 0.1)',
+        borderRadius: '10px',
+        padding: '40px',
+        '@media (max-width: 900px)': {
+            width: '250px', 
+            height: '30vh', 
+            padding: '40px 20px', 
+
         },
     }, 
 })); 

@@ -49,7 +49,7 @@ export default function OrdersHistory() {
                         <img style={{float:"left",paddingRight:10}} align="top" width={70} src={product.product?.imageUrls[0]} alt="/" />
                       </Link>
                     </Grid> 
-                    <Grid item style={{ display:'inline-block'}}>{(product.product.name).slice(0, 60)}...</Grid>
+                    <Grid item style={{ display:'inline-block'}}>{(product.product.name).slice(0, 35)}...</Grid>
                     <Grid item style={{ display:'inline-block'}}>Quantity: {product.product.quantity}</Grid>
                     <Grid item style={{ display:'inline-block'}}>Price: {product.product.currentPrice}$</Grid>                
                   </Grid>
@@ -66,7 +66,6 @@ export default function OrdersHistory() {
                 </Grid>
               </Typography>
           </Grid>
-
           )}
       </Grid>
     )

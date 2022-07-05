@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   filledInput: {
-    width: "32px",
+    maxWidth: "52px",
     height: "32px",
     borderRadius: "5px",
     backgroundColor: theme.palette.disable.main,
@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MobileCartItem = ({ product }) => {
+const MobileCartItem = ({ product, slidesItemId  }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -145,7 +145,7 @@ const MobileCartItem = ({ product }) => {
           >
             <Button
               onClick={() => {
-                dispatch(decreaseProductQuantity(product.id));
+                dispatch(decreaseProductQuantity(product.id, slidesItemId));
               }}
               variant="text"
               disabled={product.quantity <= 1}
@@ -160,12 +160,12 @@ const MobileCartItem = ({ product }) => {
               hiddenLabel={true}
               value={product.cartQuantity}
               onChange={(e) =>
-                dispatch(changeProductQuantity(product.id, +e.target.value))
+                dispatch(changeProductQuantity(product.id, +e.target.value, product.name, product.currentPrice, product.imageUrls, product.startingPrice, product.discountPrice, slidesItemId))
               }
             />
             <Button
               onClick={() => {
-                dispatch(addProductToCart(product.id));
+                dispatch(addProductToCart(product.id, slidesItemId));
               }}
               variant="text"
               className={classes.btnGroupBtn}
@@ -201,7 +201,13 @@ MobileCartItem.propTypes = {
     cartQuantity: PropTypes.number,
     price: PropTypes.number,
     totalPrice: PropTypes.number,
+    currentPrice: PropTypes.number,
+    imageUrls: PropTypes.array,
+    startingPrice: PropTypes.number, 
+    discountPrice: PropTypes.number,
+    
   }),
+  slidesItemId: PropTypes.array,
 };
 
 export default MobileCartItem;

@@ -16,8 +16,6 @@ import {
   Button,
   FilledInput,
 } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
 import { useModalStyles } from "./useModalStyles";
 import { changeProductQuantity } from "../../../store/thunks/cart.thunks";
 import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
@@ -27,25 +25,14 @@ const AddToCartModal = ({
   discontStart,
   localPrice,
   totalPrice,
-  setTotalPrice,
+  // setTotalPrice,
   isOnModal,
   toggleIsOnModal,
 }) => {
   const { name, currentPrice, imageUrls, quantity, discountPrice, _id } = data;
-  
-  const openModalWindow = useSelector(
-    (state) => state.mainPageCarousel.openModalWindow
-  );
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
   const [productAmount, setProductAmount] = useState(1);
   const dispatch = useDispatch();
-  useEffect(() => {
-    setTotalPrice((prevProductAmount) =>
-      prevProductAmount <= discontStart
-        ? productAmount * currentPrice
-        : productAmount * discountPrice
-    );
-  }, [productAmount, discontStart]);
-
   const [open, setOpen] = useState(true);
   useEffect(() => {
     setOpen(isOnModal);
@@ -60,11 +47,7 @@ const AddToCartModal = ({
 
   const modalClasses = useModalStyles();
 
-
-
   return (
-   
-    
     <Modal
       open={open}
       onClose={() => {
@@ -102,28 +85,27 @@ const AddToCartModal = ({
                 </Typography>
 
                 <Stack direction="row" spacing={1}>
-                  <Chip
-                    color="disable"
+                <Chip
                     label={quantity > 0 ? "AVAILABLE" : "NOT AVAILABLE"}
-                    icon={
-                      quantity > 0 ? (
-                        <CheckIcon className={modalClasses.buttonIcon} />
-                      ) : (
-                        <CloseIcon className={modalClasses.buttonIcon} />
-                      )
-                    }
+                    className={modalClasses.chipLabel}
+                    sx={ quantity > 0 
+                      ? { backgroundColor: 'rgba(53, 151, 64, 0.1)', 
+                          color: 'rgb(53, 151, 64)', } 
+                      : { backgroundColor: 'rgba(254, 109, 109, 0.1)', 
+                          color: 'rgb(254, 109, 109)' }
+                      }
                   />
                 </Stack>
               </CardContent>
               <CardActions className={modalClasses.productActionsBox}>
-                <Box className={modalClasses.productCardActionBtns}>
+              <Box className={modalClasses.productCardActionBtns}>
                   <ButtonGroup
                     className={modalClasses.amountInputGroup}
                     color="primary"
                     variant="outlined"
                     aria-label="outlined primary button group"
                   >
-                    <Button
+                   <Button
                       onClick={() => {
                         setProductAmount(
                           (prevProductAmount) => +prevProductAmount - 1
@@ -156,7 +138,8 @@ const AddToCartModal = ({
 
                   <Box className={modalClasses.productCardButtons}>
                     <Box>
-                      {(productAmount > discontStart && openModalWindow === false) && (
+                      {(productAmount > discontStart ||
+                        slidesItemId.includes(_id)) && (
                         <Typography
                           className={modalClasses.productCardOldPrice}
                           component="div"
@@ -166,33 +149,62 @@ const AddToCartModal = ({
                           {localPrice.format(productAmount * +currentPrice)}
                         </Typography>
                       )}
-                      <Typography
-                        className={modalClasses.productCardPrice}
-                        component="div"
-                        variant="h5"
-                        color="text.primary"
-                      >
-                        {localPrice.format(totalPrice)}
-                      </Typography>
+
+                      {productAmount > discontStart ||
+                      slidesItemId.includes(_id) ? (
+                        <Typography
+                          className={modalClasses.productCardPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
+                          {localPrice.format(productAmount * discountPrice)}
+                        </Typography>
+                      ) : (
+                        <Typography
+                          className={modalClasses.productCardPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
+                          {localPrice.format(productAmount * currentPrice)}
+                        </Typography>
+                      )}
                     </Box>
-                    <Button
-                      className={modalClasses.productCardButtonBasket}
-                      variant="contained"
-                      onClick={() => {
-                        setOpen(false);
-                        quantity > 0 && dispatch(
-                          changeProductQuantity(
-                            _id,
-                            productAmount,
-                            name,
-                            totalPrice / productAmount,
-                            imageUrls
-                          )
-                        );
-                      }}
-                    >
-                      Add to card
-                    </Button>
+                    {quantity <= 0 ? (
+                      <Button
+                        className={modalClasses.productCardButtonBasket}
+                        variant="contained"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        Out of stock
+                      </Button>
+                    ) : (
+                      <Button
+                        className={modalClasses.productCardButtonBasket}
+                        variant="contained"
+                        onClick={() => {
+                          setOpen(false);
+                          quantity > 0 &&
+                            dispatch(
+                              changeProductQuantity(
+                                _id,
+                                productAmount,
+                                name,
+                                totalPrice / productAmount,
+                                imageUrls,
+                                currentPrice,
+                                discountPrice,
+                                slidesItemId
+                              )
+                            );
+                        }}
+                      >
+                        Add to card
+                      </Button>
+                    )}
                   </Box>
                 </Box>
               </CardActions>

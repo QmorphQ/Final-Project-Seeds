@@ -13,8 +13,13 @@ const fetchSlides =
     axios
       .get(uri)
       .then((products) => {
-        dispatch(downloadAllSlidesSuccess(products));
-        return products;
+        const slidesItemId = products.data.map(item => item.productId);
+        const slides = {
+          products,
+          slidesItemId
+        }
+         dispatch(downloadAllSlidesSuccess(slides));
+        return slides;
       })
       .catch(() => {
         dispatch(downloadAllSlidesError());

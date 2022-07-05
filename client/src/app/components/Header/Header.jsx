@@ -11,11 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { Box, AppBar, Toolbar, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
 // ------------------------------------------------------------------------------------
 // React Components:
 import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
-
 import {
   loginStateSelector,
   cartQuantitySelector,

@@ -19,7 +19,7 @@ import { red } from "@mui/material/colors";
 // =======================================================
 
 // =======================================================
-export default function Comment(props) {
+export default function CommentRenderComponent(props) {
   return (
     <Card
       className="comment-card"
@@ -28,6 +28,7 @@ export default function Comment(props) {
         borderRadius: "12px",
         maxHeight: "400px",
         overflow: "auto",
+        userSelect: "none"
       }}
     >
       <Paper square elevation={0} className={"comment-header"}>
@@ -62,7 +63,7 @@ export default function Comment(props) {
 }
 // =======================================================
 
-Comment.propTypes = {
+CommentRenderComponent.propTypes = {
   text: PropTypes.string,
   title: PropTypes.string,
   imgPath: PropTypes.string,

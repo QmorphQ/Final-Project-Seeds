@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper";
 // React Components:
 import { Box } from "@mui/material";
-import Comment from "./Comment.jsx";
+import CommentRenderComponent from "./CommentRenderComponent.jsx";
 // Styles:
 import "./SwiperCSS.css";
 import "swiper/css";
@@ -65,7 +65,7 @@ export default function Comments({ dataToRender }) {
         }}
       >
         {dataToRender.map((el, i) => (
-          <SwiperSlide key={i}>{Comment(el)}</SwiperSlide>
+          <SwiperSlide key={i}>{CommentRenderComponent(el)}</SwiperSlide>
         ))}
       </Swiper>
     </Box>

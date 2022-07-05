@@ -54,15 +54,26 @@ const useFiltersStyles = makeStyles({
   title: {
     borderBottom: "1px",
     borderBottomColor: "#EFEFEF",
-    borderBottomStyle: "solid",
+    fontFamily: "'Lexend', sans-serif",
+    // borderBottomStyle: "solid",
   },
 
   filterContainer: {
     borderBottom: "1px",
     borderBottomColor: "#EFEFEF",
     borderBottomStyle: "solid",
+    paddingTop: "10px",
     paddingBottom: "25px",
     position: "relative",
+  },
+
+  titleWrapper: {
+    borderBottom: "solid gray 1px",
+    "@media (max-width: 780px)": {
+      display: "flex",
+      justifyContent: "space-around",
+      width: "150px",
+    },
   },
 
   filterTitle: {

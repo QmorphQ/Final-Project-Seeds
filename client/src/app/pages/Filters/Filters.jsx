@@ -34,7 +34,6 @@ import {
 } from "../../../store/actions/filters.actions";
 import PriceFilter from "../../../ui/components/FiltersComponents/PriceFilter.jsx";
 
-
 const Filters = () => {
   const classes = useFiltersStyles();
   const [iconClasses, setIconClasses] = useState(classes.filtersIcon);
@@ -42,7 +41,7 @@ const Filters = () => {
     `${classes.filtersIcon} ${classes.isClosed}`
   );
   const [filtersClasses, setFiltersClasses] = useState(classes.filters);
-  
+
   const productsQuantity = useSelector(productsQuantitySelector);
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
   const filteredProducts = useSelector(filteredProductsSelector);
@@ -219,21 +218,24 @@ const Filters = () => {
             classes={{ paper: classes.drawerPaper }}
             anchor="left"
           >
-            <FilterAltIcon
-              color="primary"
-              className={iconClasses}
-              onClick={toggleFilters}
-            />
-            <FilterAltOffIcon
-              color="primary"
-              className={iconOffClasses}
-              onClick={toggleFilters}
-            />
-            <Stack spacing={4} className={filtersClasses}>
+            <Box className={classes.titleWrapper}>
+              <FilterAltIcon
+                color="primary"
+                className={iconClasses}
+                onClick={toggleFilters}
+              />
+              <FilterAltOffIcon
+                color="primary"
+                className={iconOffClasses}
+                onClick={toggleFilters}
+              />
+
               <Typography variant="h5" className={classes.title}>
                 FILTERS
               </Typography>
+            </Box>
 
+            <Stack spacing={4} className={filtersClasses}>
               <SortBySelect />
 
               <CategoryFilter />

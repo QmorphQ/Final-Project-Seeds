@@ -56,9 +56,7 @@ function App() {
     }
   }, [window.location.href]); 
 
-  const getNotFoundPage = () => setTimeout(() => {
-      <PageNotFound/>; 
-    }, 0)
+  
 
   return (
     <BrowserRouter>
@@ -79,8 +77,8 @@ function App() {
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />
               <Route path="/privacy-policy" element={<StaticPage page={"privacy-policy"} />} />
-              <Route path="/*" element={getNotFoundPage()} />
-      </Route>
+              <Route path="/*" element={<PageNotFound/>} />
+          </Route>
       </Routes>
 
     </BrowserRouter>

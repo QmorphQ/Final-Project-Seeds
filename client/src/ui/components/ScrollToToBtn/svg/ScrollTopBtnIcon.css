@@ -6,7 +6,7 @@
   stroke-width: 1;
 }
 
-@media screen and (min-width: 420px) {
+@media screen and (min-width: 720px) {
   .scroll-btn-path {
     stroke-width: 3;
   }

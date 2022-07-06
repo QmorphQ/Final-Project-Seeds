@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     flexGrow: "1",
     "&:not(:last-child)": {
       marginRight: "12px",

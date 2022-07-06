@@ -49,11 +49,6 @@ const validationSchema = yup.object({
         .string()
         .required('required'),
 
-    currentRating: yup
-        .string() 
-        .max(3, 'too long value')
-        .matches(/[0-9\\.]/, 'value is not valid, please, enter a decimal number'),
-
     quantity: yup
         .string()
         .required('required') 
@@ -104,9 +99,8 @@ const AddProduct = ({ product, onClose, match }) => {
             categories: product?.categories || '', 
             currentPrice: product?.currentPrice || '', 
             discountPrice: product?.discountPrice || '', 
-            packageDimensions: product?.packageDimensions || '', 
-            currentRating: product?.currentRating || '', 
-            quantity: product?.quantity || '', 
+            packageDimensions: product?.packageDimensions || '',  
+            quantity: product?.quantity || 0, 
             itemWeight: product?.itemWeight || '', 
             ASIN: product?.ASIN || '', 
             imageUrls0: '', 
@@ -134,8 +128,7 @@ const AddProduct = ({ product, onClose, match }) => {
                 categories: values.categories, 
                 currentPrice: Number(values.currentPrice), 
                 discountPrice: Number(values.discountPrice), 
-                packageDimensions: values.packageDimensions, 
-                currentRating: Number(values.currentRating), 
+                packageDimensions: values.packageDimensions,  
                 quantity: Number(values.quantity), 
                 itemWeight: values.itemWeight, 
                 ASIN: values.ASIN.toUpperCase() };
@@ -262,19 +255,7 @@ const AddProduct = ({ product, onClose, match }) => {
                                 onChange={formik.handleChange}
                                 error={formik.touched.discountPrice && Boolean(formik.errors.discountPrice)}
                                 helperText={formik.touched.discountPrice && formik.errors.discountPrice}
-                            /> 
-
-                            <TextField 
-                                name='currentRating'
-                                id='outlined-basic' 
-                                label='current rating (optional)' 
-                                variant='outlined' 
-                                className='product-input' 
-                                value={formik.values.currentRating} 
-                                onChange={formik.handleChange}
-                                error={formik.touched.currentRating && Boolean(formik.errors.currentRating)}
-                                helperText={formik.touched.currentRating && formik.errors.currentRating}
-                            /> 
+                            />
                         </div>
 
                         <div style={{ margin: '3% 0',

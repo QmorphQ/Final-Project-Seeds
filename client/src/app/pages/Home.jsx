@@ -1,8 +1,7 @@
-import { Box } from "@mui/material";
 import { useEffect } from "react";
-import { 
-  useDispatch, 
-  // useSelector 
+import {
+  useDispatch,
+  // useSelector
 } from "react-redux";
 import OurProducts from "../components/OurProducts/OurProducts.jsx";
 import { API, PRODUCTS_NUMBER_ON_MAIN_PAGE } from "../constants";
@@ -16,24 +15,25 @@ import Comments from "../components/Comments/Comments.jsx";
 // ========================================
 
 const Home = () => {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchSlides());
-    dispatch(fetchProducts(`${API}products/filter?perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`));
+    dispatch(
+      fetchProducts(
+        `${API}products/filter?perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`
+      )
+    );
     dispatch(fetchCategories());
     dispatch(fetchWishlist());
   }, []);
 
   return (
     <>
-      <Box component="main">
-        <MainPageCarousel />
-        <OurProducts />
-        <ProductsList />
-        <Comments />
-      </Box>
+      <MainPageCarousel />
+      <OurProducts />
+      <ProductsList />
+      <Comments />
     </>
   );
 };

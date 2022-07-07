@@ -9,9 +9,7 @@ import ProductsList from "../ProductsList/ProductsList.jsx";
 import { downloadRequestStates } from "../../constants";
 
 const fixed = makeStyles(() => ({
-  ourProducts: {
-    maxWidth: "1110px",
-  },
+  ourProducts: {},
   ourProductHeading: {
     marginBottom: "40px !important",
     fontWeight: "bold !important",
@@ -72,29 +70,31 @@ const TabsSection = ({ loading, productList }) => {
   const classes = fixed();
 
   return (
-    <>
-      <Box component="main">
-        <Box component="section" className={classes.ourProducts}>
+    <Box component="section" className={classes.ourProducts}>
+      <Box>
+        <Box>
+          <Typography
+            className={classes.ourProductHeading}
+            variant="h3"
+            component="h3"
+          >
+            Our products.
+          </Typography>
           <Box>
-            <Box>
-              <Typography
-                className={classes.ourProductHeading}
-                variant="h3"
-                component="h3"
-              >
-                Our products.
-              </Typography>
-              <Box>
-                <Tabs value={value} onChange={handleChange}>
-                  {categoriesTabs}
-                </Tabs>
-              </Box>
-            </Box>
-            <ProductsList products={productList} loading={loading} />
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              variant="scrollable"
+              scrollButtons="auto"
+              
+            >
+              {categoriesTabs}
+            </Tabs>
           </Box>
         </Box>
+        <ProductsList products={productList} loading={loading} />
       </Box>
-    </>
+    </Box>
   );
 };
 
@@ -113,4 +113,4 @@ TabsSection.propTypes = {
   ),
 };
 
-export default TabsSection;
+// export default TabsSection;

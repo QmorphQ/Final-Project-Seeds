@@ -6,7 +6,7 @@ import { useFooterStyles } from "./useFooterStyles.jsx";
 export default function Footer() {
   const FooterClasses = useFooterStyles();
   return (
-    <Container className={FooterClasses.Wrapper}>
+    <Container component={"footer"} disableGutters={true} className={FooterClasses.Wrapper}>
       <Box
         className={FooterClasses.BoxTop}
         sx={{ display: { xs: "flex", sm: "flex", md: "none" } }}

@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Tabs } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import Tab from "../../../ui/components/Tab/Tab.jsx";
-import Tabs from "../../../ui/components/Tabs/Tabs.jsx";
+// import Tabs from "../../../ui/components/Tabs/Tabs.jsx";
 import Icon from "../../../ui/components/Icon/Icon.jsx";
 import {
   downloadRequestStates,
@@ -17,6 +17,11 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
 
 const useStyles = makeStyles((theme) => ({
+  tabsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   tab: {
     display: "flex",
     flexDirection: "row",
@@ -32,9 +37,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   ourProducts: {
-    ...theme.mixins.wrapper,
     paddingTop: "60px",
     paddingBottom: "60px",
+    paddingLeft: "0",
+    paddingRight: "0",
+    width: "auto",
   },
   navigation: {
     marginBottom: "25px",
@@ -87,24 +94,29 @@ const OurProducts = () => {
     );
 
   const handleClick = (event) => {
-    if (event.target.dataset.category === "all") {
-      dispatch(
-        fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`)
-      );
-    } else if (event.target.dataset.category === "bundles") {
-      dispatch(
-        fetchFilteredProducts(
-          `perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${categories
-            .map((category) => category.name)
-            .reduce((acc, curr) => `${acc}${curr}-mix,`)}`
-        )
-      );
-    } else {
-      dispatch(
-        fetchFilteredProducts(
-          `perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${event.target.dataset.category},${event.target.dataset.category}-mono,${event.target.dataset.category}-mix`
-        )
-      );
+    const tabsCategories = Array.from(categories, (obj) => obj.name);
+    const tabCategory = event.target.dataset.category;
+    
+    if (tabsCategories.includes(tabCategory)) {
+      if (tabCategory === "all") {
+        dispatch(
+          fetchFilteredProducts(`perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}`)
+        );
+      } else if (tabCategory === "bundles") {
+        dispatch(
+          fetchFilteredProducts(
+            `perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${tabsCategories.reduce(
+              (acc, curr) => `${acc}${curr}-mix,`
+            )}`
+          )
+        );
+      } else {
+        dispatch(
+          fetchFilteredProducts(
+            `perPage=${PRODUCTS_NUMBER_ON_MAIN_PAGE}&categories=${tabCategory},${tabCategory}-mono,${tabCategory}-mix`
+          )
+        );
+      }
     }
   };
 
@@ -125,31 +137,36 @@ const OurProducts = () => {
   ));
 
   return (
-    <>
-      <Box component="section" className={classes.ourProducts}>
-        <Box>
-          <Box className={classes.navigation}>
-            <Typography
-              className={classes.ourProductHeading}
-              variant="h2"
-              component="h2"
+    <Box component="section" className={classes.ourProducts}>
+      <Box>
+        <Box className={classes.navigation}>
+          <Typography
+            className={classes.ourProductHeading}
+            variant="h2"
+            component="h2"
+          >
+            Our products
+          </Typography>
+          <Box>
+            <Tabs
+              className={classes.tabsContainer}
+              value={value}
+              onChange={handleChange}
+              onClick={handleClick}
+              variant="scrollable"
+              allowScrollButtonsMobile={true}
+              TabIndicatorProps={{
+                style: {
+                  display: "none",
+                },
+              }}
             >
-              Our products
-            </Typography>
-            <Box>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                onClick={handleClick}
-                variant="scrollable"
-              >
-                {categoriesTabs}
-              </Tabs>
-            </Box>
+              {categoriesTabs}
+            </Tabs>
           </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 

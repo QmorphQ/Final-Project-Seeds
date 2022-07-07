@@ -1,9 +1,7 @@
-import {styled, Tabs as MUITabs, tabsClasses } from '@mui/material';
+import { styled, Tabs as MUITabs, tabsClasses } from "@mui/material";
 
-const StyledTabs = styled((props) => (
-<MUITabs {...props} />
-))(
-    () => `
+const StyledTabs = styled((props) => <MUITabs {...props} />)(
+  () => `
     box-sizing: border-box;
     
 
@@ -11,10 +9,8 @@ const StyledTabs = styled((props) => (
         display: none;  
     }
     `
-)
+);
 
-const Tabs = (props) => (
-        <StyledTabs {...props}/>
-    )
+const Tabs = (props) => <StyledTabs {...props} />;
 
 export default Tabs;

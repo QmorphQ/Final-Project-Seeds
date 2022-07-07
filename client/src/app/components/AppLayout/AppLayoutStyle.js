@@ -1,3 +1,7 @@
+import { createTheme } from "@mui/material";
+
+const theme = createTheme();
+
 const classes = {
     AppLayout: {
         position: "relative",
@@ -8,6 +12,9 @@ const classes = {
         justifyContent: 'space-between',
         height: '100Vh',
         margin: 'auto',
+        [theme.breakpoints.down("sm")]:{
+            
+        }
     }
 };
 

@@ -71,7 +71,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
   
   // =============================================== Render ==============================================
   return (
-    <Box sx={classes.Header}>
+    <Box component={"header"} sx={classes.Header}>
       <AppBar position="static" color="inherit" sx={{ boxShadow: "none" }}>
         <Toolbar
           disableGutters={true}

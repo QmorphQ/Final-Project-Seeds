@@ -247,7 +247,11 @@ const Filters = () => {
             {/* links/list section */}
           </Box>
         </Grid>
+        
         <Grid item xs={12} md={8}>
+
+
+
           <InfiniteScroll
             dataLength={filteredProducts.length}
             next={fetchData}
@@ -258,6 +262,9 @@ const Filters = () => {
               productList={filteredProducts}
             />
           </InfiniteScroll>
+
+
+
         </Grid>
       </Grid>
     </>

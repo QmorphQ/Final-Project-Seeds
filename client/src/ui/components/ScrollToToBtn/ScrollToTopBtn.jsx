@@ -23,12 +23,11 @@ const Btn = ({ handler }) => (
   </IconButton>
 );
 
-export default function ScrollToTopBtn() {
+export default function ScrollToTopBtn({ offsetLimit, delay }) {
   // +++++++++++++++++
   // Pressets:
-  const offsetY = 400;
+ 
   // +++++++++++++++++
-
   const [open, setOpen] = useState(null);
   const [start, setStart] = useState(false);
   // --------------------------------------------------
@@ -46,13 +45,11 @@ export default function ScrollToTopBtn() {
     if (target !== btn) {
       setStart(false);
       setOpen(false);
-    } else {
-      setStart(true);
-    }
+    } 
   }
 
   function scrollListener() {
-    if (window.scrollY > offsetY) {
+    if (window.scrollY > offsetLimit) {
       setStart(true);
     } else {
       setStart(false);
@@ -75,7 +72,7 @@ export default function ScrollToTopBtn() {
     if (start) {
       timerID = setTimeout(() => {
         setOpen(true);
-      }, 2000);
+      }, delay);
     } else {
       clearTimeout(timerID);
     }
@@ -84,6 +81,17 @@ export default function ScrollToTopBtn() {
   return <>{open && <Btn handler={moveTop} />}</>;
 }
 // ==================================================
+ScrollToTopBtn.defaultProps = {
+  offsetLimit: 400,
+  delay: 2000
+}
+
 Btn.propTypes = {
-  handler: PropTypes.func,
+  handler: PropTypes.func
+  
 };
+
+ScrollToTopBtn.propTypes = {
+  offsetLimit: PropTypes.number,
+  delay: PropTypes.number
+}

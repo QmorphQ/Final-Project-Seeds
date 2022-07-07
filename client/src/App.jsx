@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { getUserDetails } from "./store/thunks/customer.thunks";
 import {
-  // downloadProductsRequestStateSelector,
   isAdminStateSelector, 
   loginStateSelector, 
 } from "./store/selectors/selectors";
@@ -12,14 +11,10 @@ import Cart from "./app/pages/Cart/Cart.jsx"
 import AppLayout from './app/components/AppLayout/AppLayout.jsx';
 import Filters from "./app/pages/Filters/Filters.jsx";
 import ProductPage from './app/pages/ProductPage.jsx';
-// import TestCartPage from './app/pages/TestCartPage.jsx';
 import PageNotFound from "./ui/components/PageNotFound/PageNotFound.jsx";
 import LogIn from "./app/components/Forms/LogRegModal.jsx";
 import Wishlist from "./app/pages/Wishlist.jsx";
-// import { fetchWishlist } from "./store/thunks/wishlist.thunks";
 import { fetchCart } from "./store/thunks/cart.thunks";
-// import Checkout from "./app/pages/Checkout.jsx"
-// =======================================================================
 import SignUp from "./app/components/Forms/RegLogModal.jsx";
 import PersonalInfo from "./app/components/Forms/PersonalInfo.jsx";
 import OrdersHistory from "./app/components/Forms/OrdersHistory.jsx";
@@ -29,17 +24,16 @@ import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
 import { cleanUpLoginState } from "./store/actions/customer.actions";
 import StaticPage from "./ui/components/StaticPage/StaticPage.jsx";
 import AddProduct from "./app/components/AdminPanel/AddUpdProduct/AddProduct.jsx";
+// ====================================================================================
 
 function App() {
-  // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
-
   
   const slidesItemId = useSelector((state) => state.slides.slidesItemId);
 
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(fetchCart(slidesItemId));
   }, []);
@@ -55,8 +49,6 @@ function App() {
       dispatch(cleanUpLoginState());
     }
   }, [window.location.href]); 
-
-  
 
   return (
     <BrowserRouter>
@@ -84,5 +76,5 @@ function App() {
     </BrowserRouter>
   );
 }
-
+// ====================================================================================
 export default App;

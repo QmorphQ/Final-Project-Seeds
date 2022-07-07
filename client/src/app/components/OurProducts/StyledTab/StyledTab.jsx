@@ -9,8 +9,6 @@ const StyledTab = styled((props) => (
     margin: 10px 0; 
     box-sizing: border-box;
     border-radius: 8px;
-
-
     &:hover {
         border-color: ${theme.palette.action.hover};
         transition: border-color 0.3s;

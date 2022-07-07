@@ -1,9 +1,7 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
 import { Typography, Box, Tabs } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import Tab from "../../../ui/components/Tab/Tab.jsx";
-// import Tabs from "../../../ui/components/Tabs/Tabs.jsx";
+import StyledTab from "./StyledTab/StyledTab.jsx";
 import Icon from "../../../ui/components/Icon/Icon.jsx";
 import {
   downloadRequestStates,
@@ -15,42 +13,7 @@ import {
 } from "../../../store/selectors/selectors";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 import { fetchFilteredProducts } from "../../../store/thunks/products.thunks";
-
-const useStyles = makeStyles((theme) => ({
-  tabsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  tab: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    flexGrow: "1",
-    "&:not(:last-child)": {
-      marginRight: "12px",
-    },
-    "& > svg": {
-      marginRight: "20px",
-      color: theme.palette.primary.main,
-    },
-  },
-
-  ourProducts: {
-    paddingTop: "60px",
-    paddingBottom: "60px",
-    paddingLeft: "0",
-    paddingRight: "0",
-    width: "auto",
-  },
-  navigation: {
-    marginBottom: "25px",
-  },
-  ourProductHeading: {
-    marginBottom: "40px !important",
-    fontWeight: "bold !important",
-  },
-}));
+import useStyles from "./OurProductsStyles";
 
 export const productsSelector = (state) => {
   if (state.products.selectedCategories === "all") {
@@ -80,10 +43,8 @@ const OurProducts = () => {
   const [value, setValue] = React.useState(0);
   const classes = useStyles();
   const dispatch = useDispatch();
-
   const categories = useSelector(mainCategoriesSelector);
-  // if (downloadRequestState === downloadRequestStates.LOADING)
-  //   return <div>Loading...</div>; // Here must be a loader
+
   if (downloadRequestState === downloadRequestStates.ERROR)
     return (
       <ErrorHandler
@@ -96,7 +57,7 @@ const OurProducts = () => {
   const handleClick = (event) => {
     const tabsCategories = Array.from(categories, (obj) => obj.name);
     const tabCategory = event.target.dataset.category;
-    
+
     if (tabsCategories.includes(tabCategory)) {
       if (tabCategory === "all") {
         dispatch(
@@ -120,12 +81,12 @@ const OurProducts = () => {
     }
   };
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     setValue(newValue);
   };
 
   const categoriesTabs = categories.map((category) => (
-    <Tab
+    <StyledTab
       data-category={category.name}
       className={classes.tab}
       label={category.name}
@@ -138,32 +99,31 @@ const OurProducts = () => {
 
   return (
     <Box component="section" className={classes.ourProducts}>
-      <Box>
-        <Box className={classes.navigation}>
-          <Typography
-            className={classes.ourProductHeading}
-            variant="h2"
-            component="h2"
+      <Box className={classes.navigation}>
+        <Typography
+          className={classes.ourProductHeading}
+          variant="h2"
+          component="h2"
+        >
+          Our products
+        </Typography>
+        <Box>
+          <Tabs
+            className={classes.tabsContainer}
+            aria-label={"our-products-nav"}
+            value={value}
+            onChange={handleChange}
+            onClick={handleClick}
+            variant="scrollable"
+            allowScrollButtonsMobile={true}
+            TabIndicatorProps={{
+              style: {
+                display: "none",
+              },
+            }}
           >
-            Our products
-          </Typography>
-          <Box>
-            <Tabs
-              className={classes.tabsContainer}
-              value={value}
-              onChange={handleChange}
-              onClick={handleClick}
-              variant="scrollable"
-              allowScrollButtonsMobile={true}
-              TabIndicatorProps={{
-                style: {
-                  display: "none",
-                },
-              }}
-            >
-              {categoriesTabs}
-            </Tabs>
-          </Box>
+            {categoriesTabs}
+          </Tabs>
         </Box>
       </Box>
     </Box>

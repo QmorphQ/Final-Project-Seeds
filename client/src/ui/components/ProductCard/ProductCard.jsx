@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Alert,
   Button,
   Card,
   CardActions,
@@ -359,100 +358,106 @@ export const ProductCardRender = ({ data }) => {
                 </TableContainer>
               </CardContent>
               <CardActions className={productPageClasses.productActionsBox}>
-                <Box
-                  className={productPageClasses.customScrollbar}
-                  sx={{ width: "100%" }}
-                >
-                  <Typography component="div" color="text.primary">
-                    Size{" "}
-                    <Typography component="span" sx={{ fontSize: "16px" }}>
-                      {+productAmount} PACK
+                {quantity > 0 && (
+                  <Box
+                    className={productPageClasses.customScrollbar}
+                    sx={{ width: "100%" }}
+                  >
+                    <Typography component="div" color="text.primary">
+                      Size{" "}
+                      <Typography component="span" sx={{ fontSize: "16px" }}>
+                        {+productAmount} PACK
+                      </Typography>
                     </Typography>
-                  </Typography>
 
-                  {isAdmin === false && (
-                    <ButtonGroup
-                      className={productPageClasses.amountInputGroup}
-                      color="primary"
-                      variant="outlined"
-                      aria-label="outlined primary button group"
-                    >
-                      <Button
-                        onClick={() => {
-                          setProductAmount(
-                            (prevProductAmount) => +prevProductAmount - 1
-                          );
-                        }}
-                        variant="text"
-                        disabled={productAmount <= 1}
+                    {isAdmin === false && (
+                      <ButtonGroup
+                        className={productPageClasses.amountInputGroup}
+                        color="primary"
+                        variant="outlined"
+                        aria-label="outlined primary button group"
                       >
-                        {"-"}
-                      </Button>
-                      <FilledInput
-                        inputProps={{ sx: { textAlign: "center" } }}
-                        disableUnderline={true}
-                        hiddenLabel={true}
-                        value={productAmount}
-                        onChange={(e) => setProductAmount(+e.target.value)}
-                        id="product-amount"
-                        className={productPageClasses.productAmountInput}
-                      />
-                      <Button
-                        onClick={() => {
-                          setProductAmount(+productAmount + 1);
-                        }}
-                        variant="text"
-                        disabled={productAmount >= quantity}
-                      >
-                        {"+"}
-                      </Button>
-                    </ButtonGroup>
-                  )}
-                </Box>
-                <Box className={productPageClasses.productCardActionBtns}>
-                  <Box display="flex">
-                    {/* ---------------------------------                 */}
-                    {slidesItemId.includes(_id) && (
-                      <Box
-                        component="img"
-                        pl={{ xs: "0vw", sm: "0px" }}
-                        pr={"2px"}
-                        overflow="visible"
-                        width={{ xs: "12px", sm: "12px", md: "12px" }}
-                        src={Vector}
-                      ></Box>
+                        <Button
+                          onClick={() => {
+                            setProductAmount(
+                              (prevProductAmount) => +prevProductAmount - 1
+                            );
+                          }}
+                          variant="text"
+                          disabled={productAmount <= 1}
+                        >
+                          {"-"}
+                        </Button>
+                        <FilledInput
+                          inputProps={{ sx: { textAlign: "center" } }}
+                          disableUnderline={true}
+                          hiddenLabel={true}
+                          value={productAmount}
+                          onChange={(e) => setProductAmount(+e.target.value)}
+                          id="product-amount"
+                          className={productPageClasses.productAmountInput}
+                        />
+                        <Button
+                          onClick={() => {
+                            setProductAmount(+productAmount + 1);
+                          }}
+                          variant="text"
+                          disabled={productAmount >= quantity}
+                        >
+                          {"+"}
+                        </Button>
+                      </ButtonGroup>
                     )}
-                    {slidesItemId.includes(_id) ||
-                    productAmount > discontStart ? (
-                      <>
+                  </Box>
+                )}
+                <Box
+                  className={productPageClasses.productCardActionBtns}
+                  sx={{ flexWrap: "wrap" }}
+                >
+                  {quantity > 0 && (
+                    <Box display="flex">
+                      {slidesItemId.includes(_id) && (
+                        <Box
+                          component="img"
+                          pl={{ xs: "0vw", sm: "0px" }}
+                          pr={"2px"}
+                          overflow="visible"
+                          width={{ xs: "12px", sm: "12px", md: "12px" }}
+                          src={Vector}
+                        ></Box>
+                      )}
+                      {slidesItemId.includes(_id) ||
+                      productAmount > discontStart ? (
+                        <>
+                          <Typography
+                            className={productPageClasses.productCardPrice}
+                            component="div"
+                            variant="h5"
+                            color="text.primary"
+                          >
+                            {localPrice.format(productAmount * +discountPrice)}
+                          </Typography>
+                          <Typography
+                            className={productPageClasses.productCardOldPrice}
+                            component="div"
+                            variant="h5"
+                            color="text.primary"
+                          >
+                            {localPrice.format(productAmount * +currentPrice)}
+                          </Typography>
+                        </>
+                      ) : (
                         <Typography
                           className={productPageClasses.productCardPrice}
                           component="div"
                           variant="h5"
                           color="text.primary"
                         >
-                          {localPrice.format(productAmount * +discountPrice)}
-                        </Typography>
-                        <Typography
-                          className={productPageClasses.productCardOldPrice}
-                          component="div"
-                          variant="h5"
-                          color="text.primary"
-                        >
                           {localPrice.format(productAmount * +currentPrice)}
                         </Typography>
-                      </>
-                    ) : (
-                      <Typography
-                        className={productPageClasses.productCardPrice}
-                        component="div"
-                        variant="h5"
-                        color="text.primary"
-                      >
-                        {localPrice.format(productAmount * +currentPrice)}
-                      </Typography>
-                    )}
-                  </Box>
+                      )}
+                    </Box>
+                  )}
 
                   {isAdmin === false && (
                     <Box
@@ -475,56 +480,46 @@ export const ProductCardRender = ({ data }) => {
                           )}
                         </IconButton>
                       )}
-                      {quantity > 0 ? (
-                        <Button
-                          className={productPageClasses.productCardButtonBasket}
-                          variant="contained"
-                          onClick={() =>
-                            quantity > 0 &&
-                            dispatch(
-                              changeProductQuantity(
-                                _id,
-                                productAmount,
-                                name,
-                                totalPrice / productAmount,
-                                imageUrls,
-                                currentPrice,
-                                discountPrice,
-                                slidesItemId
-                              )
-                            )
-                          }
-                        >
-                          Add to card
-                        </Button>
-                      ) : (
-                        <Typography
-                          component="span"
-                          variant="h6"
-                          paddingRight="10px"
-                          color="text.primary"
-                        >
-                          Out of Stock
-                        </Typography>
-                      )}
-                      {addedToCart === "success" && (
-                        <Alert
-                          onClick={() => {
-                            dispatch(addedProductToCart());
-                          }}
-                          color="primary"
-                          variant="filled"
-                          severity="success"
-                          sx={{
-                            position: "absolute",
-                            right: "26px",
-                            bottom: "0px",
-                            width: "55%",
-                            cursor: "pointer",
-                          }}
-                        >
-                          Added to cart
-                        </Alert>
+                      {quantity > 0 && (
+                        <>
+                          {addedToCart === "success" ? (
+                            <Button
+                              className={
+                                productPageClasses.productCardButtonBasket
+                              }
+                              variant="contained"
+                              onClick={() => {
+                                dispatch(addedProductToCart());
+                              }}
+                            >
+                              Added to card
+                            </Button>
+                          ) : (
+                            <Button
+                              className={
+                                productPageClasses.productCardButtonBasket
+                              }
+                              variant="contained"
+                              onClick={() =>
+                                quantity > 0 &&
+                                dispatch(
+                                  changeProductQuantity(
+                                    _id,
+                                    productAmount,
+                                    name,
+                                    totalPrice / productAmount,
+                                    imageUrls,
+                                    currentPrice,
+                                    discountPrice,
+                                    slidesItemId
+                                  )
+                                )
+                              }
+                            >
+                              Add to card
+                            </Button>
+                          )}
+                        </>
                       )}
                     </Box>
                   )}

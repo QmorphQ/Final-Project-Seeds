@@ -8,7 +8,7 @@ const classes = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        width: '90%',
+        width: '1110px',
         justifyContent: 'space-between',
         height: '100Vh',
         margin: 'auto',

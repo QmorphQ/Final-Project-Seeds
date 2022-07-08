@@ -81,7 +81,7 @@ const OurProducts = () => {
     }
   };
 
-  const handleChange = (newValue) => {
+  const handleChange = (e, newValue) => {
     setValue(newValue);
   };
 

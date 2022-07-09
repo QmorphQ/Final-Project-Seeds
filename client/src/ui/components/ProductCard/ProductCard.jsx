@@ -50,6 +50,7 @@ import {
   loginStateSelector,
   downloadCategoriesRequestStateSelector,
   slidesSelector,
+  productSelector,
 } from "../../../store/selectors/selectors";
 import { addedProductToCart } from "../../../store/actions/cart.actions";
 import {
@@ -96,15 +97,15 @@ export const ProductCardRender = ({ data }) => {
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
-  const slideList = useSelector(slidesSelector);
-  const slidesItemId = slideList.map((item) => item.productId);
+  const slideList = useSelector(productSelector);
+  const slidesItemId = [slideList];
   const addedToCart = useSelector((state) => state.cart.editCartState);
 
   useEffect(() => {
     dispatch(fetchSlides());
     dispatch(fetchCart(slidesItemId));
     dispatch(addedProductToCart());
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   const navigate = useNavigate();
@@ -421,7 +422,7 @@ export const ProductCardRender = ({ data }) => {
                 >
                   {quantity > 0 && (
                     <Box display="flex">
-                      {slidesItemId.includes(_id) && (
+                      {slidesItemId?.includes(_id) && (
                         <Box
                           component="img"
                           pl={{ xs: "0vw", sm: "0px" }}
@@ -431,7 +432,7 @@ export const ProductCardRender = ({ data }) => {
                           src={Vector}
                         ></Box>
                       )}
-                      {slidesItemId.includes(_id) ||
+                      {slidesItemId?.includes(_id) ||
                       productAmount > discontStart ? (
                         <>
                           <Typography
@@ -618,7 +619,7 @@ export const ProductCardRender = ({ data }) => {
                 {name}
               </Typography>
             </Link>
-            {slidesItemId.includes(_id) && (
+            {slidesItemId?.includes(_id) && (
               <Box
                 component="img"
                 pl={{ xs: "0vw", sm: "0px" }}
@@ -628,7 +629,7 @@ export const ProductCardRender = ({ data }) => {
                 src={Vector}
               ></Box>
             )}
-            {slidesItemId.includes(_id) ? (
+            {slidesItemId?.includes(_id) ? (
               <Typography
                 className={mainClasses.productCardPrice}
                 component="span"
@@ -767,7 +768,7 @@ export const ProductCardRender = ({ data }) => {
             }}
           >
             <Box>
-              {slidesItemId.includes(_id) && (
+              {slidesItemId?.includes(_id) && (
                 <Box
                   component="img"
                   pl={{ xs: "0vw", sm: "0px" }}
@@ -777,7 +778,7 @@ export const ProductCardRender = ({ data }) => {
                   src={Vector}
                 ></Box>
               )}
-              {slidesItemId.includes(_id) ? (
+              {slidesItemId?.includes(_id) ? (
                 <Typography
                   className={mainClasses.productCardPrice}
                   component="span"

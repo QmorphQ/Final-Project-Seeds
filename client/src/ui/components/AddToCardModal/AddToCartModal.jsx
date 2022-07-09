@@ -50,6 +50,8 @@ const AddToCartModal = ({
   return (
     <Modal
       open={open}
+      
+
       onClose={() => {
         setOpen(false);
       }}

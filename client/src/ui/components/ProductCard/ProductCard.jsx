@@ -614,6 +614,7 @@ export const ProductCardRender = ({ data }) => {
               </Typography>
             </Link>
             {slidesItemId.includes(_id) && (
+               quantity > 0 &&
               <Box
                 component="img"
                 pl={{ xs: "0vw", sm: "0px" }}
@@ -623,7 +624,18 @@ export const ProductCardRender = ({ data }) => {
                 src={Vector}
               ></Box>
             )}
+              {quantity <= 0 && (
+              <Typography
+                className={mainClasses.productCardPrice}
+                component="span"
+                variant="h6"
+                color="text.primary"
+              >
+                Out of Stock
+              </Typography>
+              )}
             {slidesItemId.includes(_id) ? (
+              quantity > 0 && (
               <Typography
                 className={mainClasses.productCardPrice}
                 component="span"
@@ -631,10 +643,10 @@ export const ProductCardRender = ({ data }) => {
                 color="text.primary"
               >
                 {localPrice.format(discountPrice)}
-                {/* 
-{localPrice.format(currentPrice)} */}
               </Typography>
+              )
             ) : (
+            
               <Typography
                 className={mainClasses.productCardPrice}
                 component="span"
@@ -643,18 +655,12 @@ export const ProductCardRender = ({ data }) => {
               >
                 {localPrice.format(currentPrice)}
               </Typography>
+              
             )}
           </CardContent>
           <CardActions className={mainClasses.productActionsBox}>
-            {quantity <= 0 ? (
-              <ProductionQuantityLimitsOutlinedIcon
-                className={filtersClasses.productCardButtonBurger}
-                aria-label="not available"
-                color="primary"
-                variant="contained"
-              />
-            ) : (
-              <IconButton
+          {quantity > 0 && (
+             <IconButton
                 className={filtersClasses.productCardButtonBasket}
                 aria-label="add to basket"
                 color="primary"
@@ -663,6 +669,7 @@ export const ProductCardRender = ({ data }) => {
                   toggleIsOnModal(true);
                 }}
               >
+        
                 <ShoppingCartOutlinedIcon />
                 <AddToCartModal
                   data={data}
@@ -677,7 +684,9 @@ export const ProductCardRender = ({ data }) => {
                   slidesItemId={slidesItemId}
                 />
               </IconButton>
-            )}
+          )}
+            
+           
           </CardActions>
         </Card>
       </Grid>

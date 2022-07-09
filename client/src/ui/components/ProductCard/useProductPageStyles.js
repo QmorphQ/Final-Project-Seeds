@@ -75,8 +75,10 @@ export const useProductPageStyles = makeStyles((theme) => ({
   }, 
   productCardButtonBasket: {
     margin:"16px 27px 16px 16px",
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    color: "primary",
   },
+ 
   customScrollbar: {
     display:"flex",
     width:"100%",

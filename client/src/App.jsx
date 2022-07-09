@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom"; 
+
+import { notAdmin } from "./app/constants";
 import { getUserDetails } from "./store/thunks/customer.thunks";
 import {
   // downloadProductsRequestStateSelector,
@@ -29,6 +31,10 @@ import { CheckAuth } from "./app/hoc/CheckAuth.jsx";
 import { cleanUpLoginState } from "./store/actions/customer.actions";
 import StaticPage from "./ui/components/StaticPage/StaticPage.jsx";
 import AddProduct from "./app/components/AdminPanel/AddUpdProduct/AddProduct.jsx";
+import ErrorHandler from "./app/components/ErrorHandler/ErrorHandler.jsx";
+
+
+
 
 function App() {
   // const downloadRequestState = useSelector(downloadProductsRequestStateSelector);
@@ -73,7 +79,7 @@ function App() {
               <Route path="history" element={<RequireAuth><OrdersHistory/></RequireAuth>} />
               <Route path="/cart" element={<Cart/>}/>
               <Route path="checkout" element={<Checkout />} />
-              {isAdmin && <Route path="/add-product" element={<AddProduct />} />}
+              <Route path="/add-product" element={isAdmin ? <AddProduct/> : <ErrorHandler errorMessage={notAdmin}/>} />
               <Route path="/about-us" element={<StaticPage page={"about-us"}/>} />
               <Route path="/terms" element={<StaticPage page={"terms"} />} />
               <Route path="/privacy-policy" element={<StaticPage page={"privacy-policy"} />} />

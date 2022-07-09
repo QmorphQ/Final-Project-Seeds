@@ -85,6 +85,7 @@ export default function RenderComponent(props) {
           {props.item.description}
         </Typography>
         <Box className={classes.priceContainer}>
+          
           <Box className={classes.priceContainerImg} component="img" />
           <Typography className={classes.priceContainerDiscount}>
             ${props.item.discountPrice}
@@ -133,6 +134,9 @@ export default function RenderComponent(props) {
         </Box>
       </Box>
       <Box className={classes.RenderItemImageContainer}>
+      <Typography className={classes.nameImg}>
+          {getProductName(props.item.name)}
+        </Typography>
         <Box
           className={classes.RenderItemImage}
           component="img"

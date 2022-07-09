@@ -8,18 +8,19 @@ import { useStyles } from "./styles";
 import { fetchProductComments } from '../../../store/thunks/comments.thunks';
 
 export const LinearProgressReview = ({ data }) => {
-    const { ratingKey, ratingValue } = data;
-    const productComments = useSelector(downloadProductCommentsSelector);
+
+    const {ratingKey, ratingComments} = data;
 
     const product = useSelector(productSelector);
+    const productComments = useSelector(downloadProductCommentsSelector).filter(comment => comment.content === "rate only");
+    
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        product._id && dispatch(fetchProductComments(product._id));
-    }, [ratingValue, product._id]);
+    // useEffect(() => {
+    //     product._id && dispatch(fetchProductComments(product._id));
+    // }, [ratingComments, product._id]);
 
     const classes = useStyles();
-    const rateComments = productComments?.filter(comment => comment.content === "rate only");
 
     return (
         <Box className={classes.ratingWrapper}>
@@ -28,9 +29,9 @@ export const LinearProgressReview = ({ data }) => {
             <LinearProgress 
                 className={classes.ratingLinearProgress} 
                 variant={"determinate"}
-                value={rateComments.filter(item => Math.round(item.rate) === ratingKey).length * 100 / rateComments.length} 
+                value={productComments.filter(item => Math.round(item.rate) === ratingKey).length * 100 / productComments.length} 
             />
-            <Typography className={classes.votesQuantity} variant="subtitle1">{rateComments.filter(item => Math.round(item.rate) === ratingKey).length}</Typography>
+            <Typography className={classes.votesQuantity} variant="subtitle1">{productComments.filter(item => Math.round(item.rate) === ratingKey).length}</Typography>
         </Box>
     )
 } 
@@ -38,6 +39,6 @@ export const LinearProgressReview = ({ data }) => {
 LinearProgressReview.propTypes = {
     data: PropTypes.shape({
         ratingKey: PropTypes.number,
-        ratingValue: PropTypes.number,
+        ratingComments: PropTypes.array,
     })
 } 

@@ -1,28 +1,35 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Paper, Divider, Rating } from '@mui/material';
-import { downloadProductCommentsSelector, downloadProductRequestStateSelector, getCustomerRequestStateSelector, productSelector } from '../../../store/selectors/selectors';
+import { currentCustomerSelector, downloadProductCommentsSelector, downloadProductRequestStateSelector, getCustomerRequestStateSelector, productSelector } from '../../../store/selectors/selectors';
 import Spinner from '../../../ui/components/Spinner/Spinner.jsx';
 import RenderComponent from '../../hoc/RenderComponent.jsx';
 import { getCustomer } from '../../../store/thunks/customer.thunks';
-import { useRating } from '../../../ui/components/ProductCard/useRating.jsx';
 import { useStyles } from "./styles";
 import { LinearProgressReview } from "./LinearProgressRewiew.jsx";
 import { downloadRequestStates } from '../../constants';
+import { useRating } from './useRating.jsx';
+import { fetchProductComments } from '../../../store/thunks/comments.thunks';
 
 const CustomerReviews = () => {
 
     const product = useSelector(productSelector);
-    const [ratingValue, rateProduct] = useRating(product);
-    const productComments = useSelector(downloadProductCommentsSelector);
+    const customer = useSelector(currentCustomerSelector);
     const loadingCustomer = useSelector(getCustomerRequestStateSelector);
-    const loadProductStateSelector = useSelector(downloadProductRequestStateSelector);
+    const loadProductState = useSelector(downloadProductRequestStateSelector);
+    const ratingProductComments = useSelector(downloadProductCommentsSelector)?.filter(comment => comment.content === "rate only");
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getCustomer());
       }, []);
+    
+    const [finalRating, ratingComments, rateProduct] = useRating(product, customer, ratingProductComments);
+    
+    useEffect(() => {
+        product._id && dispatch(fetchProductComments(product._id));
+    }, [ratingComments, product._id]);
 
     const classes = useStyles();
     
@@ -56,20 +63,19 @@ const CustomerReviews = () => {
                         variant="h2"
                         component="h2"
                         >
-                        {ratingValue.toPrecision(2)}
+                        {finalRating.toPrecision(3)}
                         </Typography>
                         <Box className={classes.reviewsQuantityContainer}>
                             <Typography
                             className={classes.reviewsQuantity}
                             variant="subtitle1"
                             >
-                                {productComments.length > 0 ? `${productComments.length} reviews` : `Loading...`}
+                                {ratingProductComments.length} reviews
                             </Typography>
                             <Rating 
-                                defaultValue={0}
                                 readOnly={loadingCustomer !== downloadRequestStates.SUCCESS}
                                 className={classes.customerRating}
-                                name="half-rating" value={ratingValue} precision={1}
+                                name="rating" value={finalRating} precision={1}
                                 onChange={e => {
                                     rateProduct(e);
                                 }}
@@ -81,8 +87,12 @@ const CustomerReviews = () => {
                         {[...Array(5)].map((item, index) => (
                             <RenderComponent 
                                 key={index}
-                                loading={loadProductStateSelector}
-                                data={{ ratingKey: index + 1, ratingValue }}
+                                loading={loadProductState}
+                                data={{ 
+                                    ratingKey: index + 1, 
+                                    ratingVal: 1,
+                                    ratingComments
+                                }}
                                 renderSuccess={LinearProgressReview}
                                 loadingFallback={<span style={{marginLeft: "5px"}}><Spinner /></span>}
                                 renderError={"error"}

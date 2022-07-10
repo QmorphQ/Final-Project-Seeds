@@ -428,51 +428,50 @@ export const ProductCardRender = ({ data }) => {
                   className={productPageClasses.productCardActionBtns}
                   sx={{ flexWrap: "wrap" }}
                 >
-                  {quantity > 0 && (
-                    <Box display="flex">
-                      {slidesItemId.includes(_id) && (
-                        <Box
-                          component="img"
-                          pl={{ xs: "0vw", sm: "0px" }}
-                          pr={"2px"}
-                          overflow="visible"
-                          width={{ xs: "12px", sm: "12px", md: "12px" }}
-                          src={Vector}
-                        ></Box>
-                      )}
-                      {slidesItemId.includes(_id) ||
-                      productAmount > discontStart ? (
-                        <>
-                          <Typography
-                            className={productPageClasses.productCardPrice}
-                            component="div"
-                            variant="h5"
-                            color="text.primary"
-                          >
-                            {localPrice.format(productAmount * +discountPrice)}
-                          </Typography>
-                          <Typography
-                            className={productPageClasses.productCardOldPrice}
-                            component="div"
-                            variant="h5"
-                            color="text.primary"
-                          >
-                            {localPrice.format(productAmount * +currentPrice)}
-                          </Typography>
-                        </>
-                      ) : (
+                  
+                  <Box display="flex">
+                    {slidesItemId.includes(_id) && (
+                      <Box
+                        component="img"
+                        pl={{ xs: "0vw", sm: "0px" }}
+                        pr={"2px"}
+                        overflow="visible"
+                        width={{ xs: "12px", sm: "12px", md: "12px" }}
+                        src={Vector}
+                      ></Box>
+                    )}
+                    {slidesItemId.includes(_id) ||
+                    productAmount > discontStart ? (
+                      <>
                         <Typography
                           className={productPageClasses.productCardPrice}
                           component="div"
                           variant="h5"
                           color="text.primary"
                         >
+                          {localPrice.format(productAmount * +discountPrice)}
+                        </Typography>
+                        <Typography
+                          className={productPageClasses.productCardOldPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
                           {localPrice.format(productAmount * +currentPrice)}
                         </Typography>
-                      )}
-                    </Box>
-                  )}
-
+                      </>
+                    ) : (
+                      <Typography
+                        className={productPageClasses.productCardPrice}
+                        component="div"
+                        variant="h5"
+                        color="text.primary"
+                      >
+                        {localPrice.format(productAmount * +currentPrice)}
+                      </Typography>
+                    )}
+                  </Box>
+                  
                   {isAdmin === false && (
                     <Box
                       display="flex"

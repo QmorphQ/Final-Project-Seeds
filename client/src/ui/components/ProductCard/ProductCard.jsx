@@ -48,6 +48,7 @@ import {
   isAdminStateSelector,
   loginStateSelector,
   downloadCategoriesRequestStateSelector,
+  slidesSelector,
   productSelector,
 } from "../../../store/selectors/selectors";
 import { addedProductToCart } from "../../../store/actions/cart.actions";
@@ -63,6 +64,7 @@ import BuiltInActions from "../../../app/components/AdminPanel/BuiltInActions/Bu
 import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
+import fetchSlides from "../../../store/thunks/slides.thunks";
 import { fetchProductComments } from "../../../store/thunks/comments.thunks";
 import { downloadRequestStates } from "../../../app/constants/index";
 
@@ -99,6 +101,7 @@ export const ProductCardRender = ({ data }) => {
   const addedToCart = useSelector((state) => state.cart.editCartState);
 
   useEffect(() => {
+    dispatch(fetchSlides())
     dispatch(fetchCart(slidesItemId));
     dispatch(addedProductToCart());
   }, []);

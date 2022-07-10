@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Button,
@@ -49,7 +48,7 @@ import {
   isAdminStateSelector,
   loginStateSelector,
   downloadCategoriesRequestStateSelector,
-  slidesSelector,
+  productSelector,
 } from "../../../store/selectors/selectors";
 import { addedProductToCart } from "../../../store/actions/cart.actions";
 import {
@@ -65,11 +64,7 @@ import Spinner from "../Spinner/Spinner.jsx";
 import { useRating } from "./useRating.jsx";
 import { useWishlist } from "./useWishlist.jsx";
 import { fetchProductComments } from "../../../store/thunks/comments.thunks";
-import fetchSlides from "../../../store/thunks/slides.thunks";
 import { downloadRequestStates } from "../../../app/constants/index";
-
- 
-
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -99,15 +94,13 @@ export const ProductCardRender = ({ data }) => {
   const isLogin = useSelector(loginStateSelector);
   const isAdmin = useSelector(isAdminStateSelector);
   const cart = useSelector(cartSelector);
-  const slideList = useSelector(slidesSelector);
-  const slidesItemId = slideList.map((item) => item.productId);
+  const slideList = useSelector(productSelector);
+  const slidesItemId = [slideList];
   const addedToCart = useSelector((state) => state.cart.editCartState);
 
   useEffect(() => {
-    dispatch(fetchSlides());
     dispatch(fetchCart(slidesItemId));
     dispatch(addedProductToCart());
-    window.scrollTo(0, 0);
   }, []);
 
   const navigate = useNavigate();
@@ -402,9 +395,9 @@ export const ProductCardRender = ({ data }) => {
                           hiddenLabel={true}
                           value={productAmount}
                           onChange={(e) => {
-                              if (/[0-9]/.test(+e.target.value)) {
-                                setProductAmount(+e.target.value); 
-                              } 
+                            if (/[0-9]/.test(+e.target.value)) {
+                              setProductAmount(+e.target.value);
+                            }
                           }}
                           id="product-amount"
                           className={productPageClasses.productAmountInput}
@@ -426,7 +419,6 @@ export const ProductCardRender = ({ data }) => {
                   className={productPageClasses.productCardActionBtns}
                   sx={{ flexWrap: "wrap" }}
                 >
-                  
                   <Box display="flex">
                     {slidesItemId.includes(_id) && (
                       <Box
@@ -469,7 +461,7 @@ export const ProductCardRender = ({ data }) => {
                       </Typography>
                     )}
                   </Box>
-                  
+
                   {isAdmin === false && (
                     <Box
                       display="flex"
@@ -512,7 +504,8 @@ export const ProductCardRender = ({ data }) => {
                               }
                               variant="contained"
                               onClick={() =>
-                                productAmount && quantity > 0 &&
+                                productAmount &&
+                                quantity > 0 &&
                                 dispatch(
                                   changeProductQuantity(
                                     _id,

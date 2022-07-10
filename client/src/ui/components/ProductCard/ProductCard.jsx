@@ -35,8 +35,6 @@ import Carousel from "react-material-ui-carousel";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import ProductionQuantityLimitsOutlinedIcon from "@mui/icons-material/ProductionQuantityLimitsOutlined";
-
 import RenderComponent from "../../../app/hoc/RenderComponent.jsx";
 import { useMainStyles } from "./useMainStyles";
 import { useProductPageStyles } from "./useProductPageStyles";
@@ -626,7 +624,7 @@ export const ProductCardRender = ({ data }) => {
                 {name}
               </Typography>
             </Link>
-            {slidesItemId.includes(_id) && (
+            {slidesItemId.includes(_id) && quantity > 0 && (
               <Box
                 component="img"
                 pl={{ xs: "0vw", sm: "0px" }}
@@ -636,62 +634,82 @@ export const ProductCardRender = ({ data }) => {
                 src={Vector}
               ></Box>
             )}
-            {slidesItemId.includes(_id) ? (
-              <Typography
-                className={mainClasses.productCardPrice}
-                component="span"
-                variant="h6"
-                color="text.primary"
+            {slidesItemId.includes(_id)
+              ? quantity > 0 && (
+                  <Typography
+                    className={mainClasses.productCardPrice}
+                    component="span"
+                    variant="h6"
+                    color="text.primary"
+                  >
+                    {localPrice.format(discountPrice)}
+                  </Typography>
+                )
+              : quantity > 0 && (
+                  <Typography
+                    className={mainClasses.productCardPrice}
+                    component="span"
+                    variant="h6"
+                    color="text.primary"
+                  >
+                    {localPrice.format(currentPrice)}
+                  </Typography>
+                )}
+            {quantity <= 0 && (
+              <Box
+                display="flex"
+                flexWrap="wrap"
+                justifyContent="space-between"
+                alignItems="center"
+                paddingTop="16px"
               >
-                {localPrice.format(discountPrice)}
-                {/* 
-{localPrice.format(currentPrice)} */}
-              </Typography>
-            ) : (
-              <Typography
-                className={mainClasses.productCardPrice}
-                component="span"
-                variant="h6"
-                color="text.primary"
-              >
-                {localPrice.format(currentPrice)}
-              </Typography>
+                <Typography
+                  className={mainClasses.notAvailableCardPrice}
+                  component="span"
+                  variant="h6"
+                  color="text.primary"
+                >
+                  {localPrice.format(currentPrice)}
+                </Typography>
+                <Typography
+                  className={mainClasses.notAvailableProduct}
+                  component="span"
+                  variant="h6"
+                  color="text.primary"
+                >
+                  Out of Stock
+                </Typography>
+              </Box>
             )}
+            {/* </CardContent> */}
+            <CardActions className={mainClasses.productActionsBox}>
+              {quantity > 0 && (
+                <IconButton
+                  className={filtersClasses.productCardButtonBasket}
+                  aria-label="add to basket"
+                  color="primary"
+                  variant="contained"
+                  onClick={() => {
+                    toggleIsOnModal(true);
+                  }}
+                >
+                  <ShoppingCartOutlinedIcon />
+                  <AddToCartModal
+                    data={data}
+                    discontStart={discontStart}
+                    localPrice={localPrice}
+                    totalPrice={totalPrice}
+                    setTotalPrice={setTotalPrice}
+                    isOnModal={isOnModal}
+                    toggleIsOnModal={toggleIsOnModal}
+                    cart={cart}
+                    _id={_id}
+                    slidesItemId={slidesItemId}
+                  />
+                </IconButton>
+              )}
+            </CardActions>
           </CardContent>
-          <CardActions className={mainClasses.productActionsBox}>
-            {quantity <= 0 ? (
-              <ProductionQuantityLimitsOutlinedIcon
-                className={filtersClasses.productCardButtonBurger}
-                aria-label="not available"
-                color="primary"
-                variant="contained"
-              />
-            ) : (
-              <IconButton
-                className={filtersClasses.productCardButtonBasket}
-                aria-label="add to basket"
-                color="primary"
-                variant="contained"
-                onClick={() => {
-                  toggleIsOnModal(true);
-                }}
-              >
-                <ShoppingCartOutlinedIcon />
-                <AddToCartModal
-                  data={data}
-                  discontStart={discontStart}
-                  localPrice={localPrice}
-                  totalPrice={totalPrice}
-                  setTotalPrice={setTotalPrice}
-                  isOnModal={isOnModal}
-                  toggleIsOnModal={toggleIsOnModal}
-                  cart={cart}
-                  _id={_id}
-                  slidesItemId={slidesItemId}
-                />
-              </IconButton>
-            )}
-          </CardActions>
         </Card>
       </Grid>
     );
@@ -765,55 +783,67 @@ export const ProductCardRender = ({ data }) => {
               {name}
             </Typography>
           </Link>
-
-          <Box
-            sx={{
-              display: "flex",
-              flexGrow: "1",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Box>
-              {slidesItemId.includes(_id) && (
-                <Box
-                  component="img"
-                  pl={{ xs: "0vw", sm: "0px" }}
-                  pr={"2px"}
-                  overflow="visible"
-                  width={{ xs: "12px", sm: "12px", md: "12px" }}
-                  src={Vector}
-                ></Box>
-              )}
-              {slidesItemId.includes(_id) ? (
+          <Box display="flex" justifyContent="space-between">
+            {slidesItemId.includes(_id) && quantity > 0 && (
+              <Box
+                component="img"
+                pl={{ xs: "0vw", sm: "0px" }}
+                pr={"2px"}
+                overflow="visible"
+                width={{ xs: "12px", sm: "12px", md: "12px" }}
+                src={Vector}
+              ></Box>
+            )}
+            {slidesItemId.includes(_id)
+              ? quantity > 0 && (
+                  <Typography
+                    className={mainClasses.productCardPrice}
+                    component="span"
+                    variant="h6"
+                    color="text.primary"
+                  >
+                    {localPrice.format(discountPrice)}
+                  </Typography>
+                )
+              : quantity > 0 && (
+                  <Typography
+                    className={mainClasses.productCardPrice}
+                    component="span"
+                    variant="h6"
+                    color="text.primary"
+                  >
+                    {localPrice.format(currentPrice)}
+                  </Typography>
+                )}
+            {quantity <= 0 && (
+              <Box
+                display="flex"
+                flexWrap="wrap"
+                justifyContent="space-between"
+                alignItems="center"
+                paddingTop="16px"
+                width="100%"
+              >
                 <Typography
-                  className={mainClasses.productCardPrice}
-                  component="span"
-                  variant="h6"
-                  color="text.primary"
-                >
-                  {localPrice.format(discountPrice)}
-                </Typography>
-              ) : (
-                <Typography
-                  className={mainClasses.productCardPrice}
+                  className={mainClasses.notAvailableCardPrice}
                   component="span"
                   variant="h6"
                   color="text.primary"
                 >
                   {localPrice.format(currentPrice)}
                 </Typography>
-              )}
-            </Box>
+                <Typography
+                  className={mainClasses.notAvailableProduct}
+                  component="span"
+                  variant="h6"
+                  color="text.primary"
+                >
+                  Out of Stock
+                </Typography>
+              </Box>
+            )}
             <CardActions className={mainClasses.productActionsBox}>
-              {quantity <= 0 ? (
-                <ProductionQuantityLimitsOutlinedIcon
-                  className={filtersClasses.productCardButtonBurger}
-                  aria-label="not available"
-                  color="primary"
-                  variant="contained"
-                />
-              ) : (
+              {quantity > 0 && (
                 <IconButton
                   className={mainClasses.productCardButtonBasket}
                   aria-label="add to basket"

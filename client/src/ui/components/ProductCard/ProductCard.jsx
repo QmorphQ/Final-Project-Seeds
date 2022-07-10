@@ -100,7 +100,10 @@ export const ProductCardRender = ({ data }) => {
   const addedToCart = useSelector((state) => state.cart.editCartState);
 
   useEffect(() => {
-    dispatch(fetchSlides())
+    if(isFiltersPage){
+      dispatch(fetchSlides())
+    }
+    
     dispatch(fetchCart(slidesItemId));
     dispatch(addedProductToCart());
   }, []);

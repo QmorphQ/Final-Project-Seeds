@@ -53,7 +53,7 @@ const validationSchema = yup.object({
         .string()
         .required('required') 
         .max(4, 'too long value')
-        .matches(/[0-9]/, 'value is not valid, please, enter a decimal number'), 
+        .matches(/[0-9]/, 'value is not valid, please, enter an integer number'), 
 
     itemWeight: yup
         .string()

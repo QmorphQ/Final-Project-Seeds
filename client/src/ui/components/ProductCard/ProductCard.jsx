@@ -1,5 +1,7 @@
+
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"; 
+
 import {
   Button,
   Card,
@@ -65,6 +67,9 @@ import { useWishlist } from "./useWishlist.jsx";
 import { fetchProductComments } from "../../../store/thunks/comments.thunks";
 import fetchSlides from "../../../store/thunks/slides.thunks";
 import { downloadRequestStates } from "../../../app/constants/index";
+
+ 
+
 
 export const ProductCardRender = ({ data }) => {
   const {
@@ -396,7 +401,11 @@ export const ProductCardRender = ({ data }) => {
                           disableUnderline={true}
                           hiddenLabel={true}
                           value={productAmount}
-                          onChange={(e) => setProductAmount(+e.target.value)}
+                          onChange={(e) => {
+                              if (/[0-9]/.test(+e.target.value)) {
+                                setProductAmount(+e.target.value); 
+                              } 
+                          }}
                           id="product-amount"
                           className={productPageClasses.productAmountInput}
                         />
@@ -417,51 +426,50 @@ export const ProductCardRender = ({ data }) => {
                   className={productPageClasses.productCardActionBtns}
                   sx={{ flexWrap: "wrap" }}
                 >
-                  {quantity > 0 && (
-                    <Box display="flex">
-                      {slidesItemId.includes(_id) && (
-                        <Box
-                          component="img"
-                          pl={{ xs: "0vw", sm: "0px" }}
-                          pr={"2px"}
-                          overflow="visible"
-                          width={{ xs: "12px", sm: "12px", md: "12px" }}
-                          src={Vector}
-                        ></Box>
-                      )}
-                      {slidesItemId.includes(_id) ||
-                      productAmount > discontStart ? (
-                        <>
-                          <Typography
-                            className={productPageClasses.productCardPrice}
-                            component="div"
-                            variant="h5"
-                            color="text.primary"
-                          >
-                            {localPrice.format(productAmount * +discountPrice)}
-                          </Typography>
-                          <Typography
-                            className={productPageClasses.productCardOldPrice}
-                            component="div"
-                            variant="h5"
-                            color="text.primary"
-                          >
-                            {localPrice.format(productAmount * +currentPrice)}
-                          </Typography>
-                        </>
-                      ) : (
+                  
+                  <Box display="flex">
+                    {slidesItemId.includes(_id) && (
+                      <Box
+                        component="img"
+                        pl={{ xs: "0vw", sm: "0px" }}
+                        pr={"2px"}
+                        overflow="visible"
+                        width={{ xs: "12px", sm: "12px", md: "12px" }}
+                        src={Vector}
+                      ></Box>
+                    )}
+                    {slidesItemId.includes(_id) ||
+                    productAmount > discontStart ? (
+                      <>
                         <Typography
                           className={productPageClasses.productCardPrice}
                           component="div"
                           variant="h5"
                           color="text.primary"
                         >
+                          {localPrice.format(productAmount * +discountPrice)}
+                        </Typography>
+                        <Typography
+                          className={productPageClasses.productCardOldPrice}
+                          component="div"
+                          variant="h5"
+                          color="text.primary"
+                        >
                           {localPrice.format(productAmount * +currentPrice)}
                         </Typography>
-                      )}
-                    </Box>
-                  )}
-
+                      </>
+                    ) : (
+                      <Typography
+                        className={productPageClasses.productCardPrice}
+                        component="div"
+                        variant="h5"
+                        color="text.primary"
+                      >
+                        {localPrice.format(productAmount * +currentPrice)}
+                      </Typography>
+                    )}
+                  </Box>
+                  
                   {isAdmin === false && (
                     <Box
                       display="flex"
@@ -504,7 +512,7 @@ export const ProductCardRender = ({ data }) => {
                               }
                               variant="contained"
                               onClick={() =>
-                                quantity > 0 &&
+                                productAmount && quantity > 0 &&
                                 dispatch(
                                   changeProductQuantity(
                                     _id,
@@ -519,7 +527,7 @@ export const ProductCardRender = ({ data }) => {
                                 )
                               }
                             >
-                              Add to card
+                              Add to cart
                             </Button>
                           )}
                         </>

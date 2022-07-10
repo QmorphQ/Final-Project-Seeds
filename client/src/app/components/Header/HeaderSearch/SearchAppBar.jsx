@@ -92,22 +92,7 @@ export default function SearchAppBar({ onClose }) {
   // ++++++
 
   const [searchKeys, setSearchKeys] = useState([]);
-  // Get products from server by itemNo:
-  // const getSearchProducts = async (arrOfProductsItemNo = []) => {
-  //   arrOfProductsItemNo.map(async (itemNo) => {
-  //     await fetch(`http://localhost:8000/api/products/${itemNo}`)
-  //       .then((r) => r.json())
-  //       .then((r) =>
-  //         setFetchedProducts((val) =>
-  //           val.find((prod) => prod.itemNo === r.itemNo) ? val : [...val, r]
-  //         )
-  //       )
-  //       .catch((error) => console.log(error.message));
-  //   });
-  //   setLoading(false);
-  //   setReady(true);
-  // };
-
+  
   const getAllProducts = async () => {
     axios
       .get(`${API}products`)
@@ -147,7 +132,7 @@ export default function SearchAppBar({ onClose }) {
     );
     return filteredProducts.length > 0
       ? setIDsArr([...filteredProducts])
-      : [console.log("no results"), setTrigger(false)];
+      : setTrigger(false);
   }, [searchKeys]);
   // ++++++
   // Fetch products from server:

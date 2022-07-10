@@ -48,8 +48,6 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  console.log(isMenuOpen);
-
   const handleMobileMenuOpen = () => {
     setIsMenuOpen((prevVal) => !prevVal);
   };

@@ -123,7 +123,11 @@ const AddToCartModal = ({
                       disableUnderline={true}
                       hiddenLabel={true}
                       value={productAmount}
-                      onChange={(e) => setProductAmount(+e.target.value)}
+                      onChange={(e) => {
+                        if (/[0-9]/.test(+e.target.value)) {
+                          setProductAmount(+e.target.value)
+                        }
+                      }} 
                       id="product-amount"
                       className={modalClasses.productAmountInput}
                     />

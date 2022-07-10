@@ -7,12 +7,9 @@ const useStylesBuiltInActions = makeStyles((theme) => ({
     
     actionsContainer: {
         display: 'flex', 
-        flexFlow: 'row nowrap', 
+        flexFlow: 'column wrap', 
         marginRight: '20px', 
-        '@media (max-width: 1290px)': {
-            flexFlow: 'column wrap',
-            alignItems: 'flex-start', 
-        }}, 
+    }, 
 
     actionsButton: {
         color: '#FF6D6D', 

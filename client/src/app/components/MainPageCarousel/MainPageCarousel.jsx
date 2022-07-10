@@ -21,36 +21,15 @@ import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions"
 import useStyles from "./MainPageCarouselStyles";
 // =================================================================
 
-
-
 const MainPageCarousel = () => {
-
   const classes = useStyles();
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
 
   return (
     requestState === "success" && (
-      <Box
-      className={classes.CarouselSection}
-        sx={{
-          zIndex: -1,
-        }}
-      >
-        <Box
-        className={classes.CarouselContainer}
-          sx={{
-            overflow: "hidden",
-            pb: "20px",
-            mt: "15px",
-            ml: "15px",
-            mr: "15px",
-            position: "relative",
-            borderRadius: "20px",
-            backgroundColor: "#EAF1EB",
-            maxWidth: 1100,
-          }}
-        >
+      <Box className={classes.CarouselSection}>
+        <Box className={classes.CarouselContainer}>
           <Box
             bottom={{ xs: "65%", sm: "40%" }}
             component="img"

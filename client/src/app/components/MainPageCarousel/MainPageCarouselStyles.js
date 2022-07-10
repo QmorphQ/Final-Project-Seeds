@@ -1,15 +1,18 @@
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   CarouselSection: {
-
+    zIndex: -1,
   },
 
   CarouselContainer: {
-  [theme.breakpoints.up("xs")]:{
-    margin: "auto",
-  },
-
+    overflow: "hidden",
+    paddingBottom: "20px",
+    margin: "28px auto 0 auto",
+    position: "relative",
+    borderRadius: "20px",
+    backgroundColor: "#EAF1EB",
+    maxWidth: 1100,
   },
 
   multiLineEllipsis: {
@@ -32,6 +35,6 @@ const useStyles = makeStyles((theme) => ({
       background: "rgba(53, 151, 64, 0.08);",
     },
   },
-}));
+});
 
 export default useStyles;

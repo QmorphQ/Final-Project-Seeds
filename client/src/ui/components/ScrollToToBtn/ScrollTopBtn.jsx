@@ -3,35 +3,20 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // React Components:
-import { IconButton } from "@mui/material";
-import ScrollTopBtnIcon from "./svg/ScrollTopBtnIcon.jsx";
+import ScrollBtn from "./Btn/ScrollBtn.jsx";
 // Styles:
-import styles from "./ScrollToTopBtnStyles";
+import position from "./ScrollTopBtnPosition";
 // ==================================================
 // --------------------------------------------------
 // ++++++
 // ==================================================
-const Btn = ({ handler }) => (
-  <IconButton
-    className="scroll-top-btn"
-    sx={{ ...styles.scrollTopBtn }}
-    onClick={handler}
-    aria-label="scroll-top"
-    disableRipple={true}
-  >
-    {<ScrollTopBtnIcon />}
-  </IconButton>
-);
 
-export default function ScrollToTopBtn() {
-  // +++++++++++++++++
-  // Pressets:
-  const offsetY = 400;
-  // +++++++++++++++++
-
+export default function ScrollTopBtn({ offsetLimit }) {
+  // Consts:
   const [open, setOpen] = useState(null);
   const [start, setStart] = useState(false);
   // --------------------------------------------------
+  // Funcs:
   function moveTop() {
     window.scrollTo({
       top: 0,
@@ -52,7 +37,7 @@ export default function ScrollToTopBtn() {
   }
 
   function scrollListener() {
-    if (window.scrollY > offsetY) {
+    if (window.scrollY > offsetLimit) {
       setStart(true);
     } else {
       setStart(false);
@@ -60,6 +45,7 @@ export default function ScrollToTopBtn() {
     }
   }
   // --------------------------------------------------
+  // UseEffect:
   useEffect(() => {
     window.addEventListener("scroll", scrollListener);
     return () => window.removeEventListener("scroll", scrollListener);
@@ -81,9 +67,14 @@ export default function ScrollToTopBtn() {
     }
   }, [start]);
   // --------------------------------------------------
-  return <>{open && <Btn handler={moveTop} />}</>;
+  // Render:
+  return <>{open && <ScrollBtn sx={position} handler={moveTop} />}</>;
 }
 // ==================================================
-Btn.propTypes = {
-  handler: PropTypes.func,
+ScrollTopBtn.defaultProps = {
+  offsetLimit: 400,
+};
+
+ScrollTopBtn.propTypes = {
+  offsetLimit: PropTypes.number,
 };

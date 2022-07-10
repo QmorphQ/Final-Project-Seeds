@@ -6,8 +6,9 @@ const classes = {
         alignItems: 'stretch',
         width: '90%',
         justifyContent: 'space-between',
-        height: '100Vh',
+        minHeight: '100Vh',
         margin: 'auto',
+        border: "1px blue solid"
     }
 };
 

@@ -2,8 +2,7 @@ import Carousel from "react-material-ui-carousel";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Typography, Container, Grid, Box } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Typography, Grid, Box } from "@mui/material";
 import PropTypes from "prop-types";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
@@ -18,41 +17,28 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunks";
 import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
 import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
+// Styles:
+import useStyles from "./MainPageCarouselStyles";
+// =================================================================
 
-const useStyles = makeStyles({
-  multiLineEllipsis: {
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    letterSpacing: "-0.05em",
-    color: "#1F2533",
-  },
-  addToCartButton: {
-    background: "#359740",
-    "&:hover": {
-      background: "#2BB159",
-    },
-  },
-  discoverButton: {
-    background: "#FFFFFF",
-    "&:hover": {
-      background: "rgba(53, 151, 64, 0.08);",
-    },
-  },
-});
+
 
 const MainPageCarousel = () => {
+
+  const classes = useStyles();
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
 
   return (
     requestState === "success" && (
-      <Container
+      <Box
+      className={classes.CarouselSection}
         sx={{
-          p: "0",
           zIndex: -1,
         }}
       >
         <Box
+        className={classes.CarouselContainer}
           sx={{
             overflow: "hidden",
             pb: "20px",
@@ -106,7 +92,7 @@ const MainPageCarousel = () => {
             errorMessage={"There is some problem with downloading slides"}
           />
         )}
-      </Container>
+      </Box>
     )
   );
 };

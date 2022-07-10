@@ -16,3 +16,5 @@ export const productCategories = [
   { code: '5', label: 'flowers-mono'},
   { code: '6', label: 'flowers-mix'}, 
 ]; 
+
+export const notAdmin = 'You have to be logged in with admin credentials to access this page';

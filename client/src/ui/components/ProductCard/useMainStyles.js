@@ -39,6 +39,19 @@ export const useMainStyles = makeStyles((theme) => ({
     lineHeight: "54px",
     fontWeight: "bold",
   },
+
+  notAvailableCardPrice: {
+    margin: "0px",
+    lineHeight: "12px",
+    fontWeight: "bold",
+    color: "#70737C;"
+  },
+
+  notAvailableProduct: {
+    margin: "0px",
+    fontWeight: "bold",
+    fontSize: "14px",
+  },
   productCardButtonBasket: {
     // position: "absolute",
     position: "relative",

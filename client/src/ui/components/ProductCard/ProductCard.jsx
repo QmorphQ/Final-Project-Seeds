@@ -48,7 +48,6 @@ import {
   isAdminStateSelector,
   loginStateSelector,
   downloadCategoriesRequestStateSelector,
-  slidesSelector,
   productSelector,
 } from "../../../store/selectors/selectors";
 import { addedProductToCart } from "../../../store/actions/cart.actions";

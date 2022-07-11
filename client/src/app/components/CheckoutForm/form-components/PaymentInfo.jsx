@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import {
   FormControl,
   FormLabel,
@@ -52,7 +53,7 @@ const PaymentInfo = () => {
     axios
       .get(`${API}payment-methods`)
       .then((paymentMethods) => setPaymentData(paymentMethods.data))
-      .catch(() => console.log("Some problem with payment methods fetching"));
+      .catch((err) => Sentry.captureException(err));
   }, []);
 
   field.value === undefined

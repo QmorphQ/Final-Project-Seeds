@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import {
   FormControl,
   FormLabel,
@@ -30,7 +31,7 @@ const ShippingInfo = () => {
     axios
       .get(`${API}shipping-methods`)
       .then((shippingMethods) => setShippingData(shippingMethods.data))
-      .catch(() => console.log("Some problem with shipping methods fetching"));
+      .catch((err) => Sentry.captureException(err));
   }, []);
 
   field.value === undefined

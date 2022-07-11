@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import { API } from "../../app/constants";
 import {
   downloadAllSlidesRequested,
@@ -21,8 +22,9 @@ const fetchSlides =
          dispatch(downloadAllSlidesSuccess(slides));
         return slides;
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(downloadAllSlidesError());
+        Sentry.captureException(err);
       });
   };
 

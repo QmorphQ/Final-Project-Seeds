@@ -1,5 +1,6 @@
 import axios from "axios";
 // import { useSelector } from "react-redux";
+import * as Sentry from "@sentry/react";
 import { API } from "../../app/constants";
 import {
   downloadCartSuccess,
@@ -99,8 +100,9 @@ const fetchCart = (slidesItemId) => async (dispatch, getState) => {
         }
       );
       dispatch(downloadCartSuccess(newCart));
-    } catch (error) {
+    } catch (err) {
       dispatch(downloadCartError());
+      Sentry.captureException(err);
     }
   } else {
     dispatch(downloadCartSuccess(cart));
@@ -138,8 +140,9 @@ const addCart = (cart, slidesItemId) => (dispatch) => {
         }));
         dispatch(addCartSuccess(newCart));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(addCartError());
+        Sentry.captureException(err);
       });
   } else {
     dispatch(addCartSuccess(cart));
@@ -231,8 +234,9 @@ const addProductToCart = (productId, slidesItemId) => (dispatch, getState) => {
         }));
         dispatch(addProductToCartSuccess(cart));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(addProductToCartError());
+        Sentry.captureException(err);
       });
   } else {
     const { cart } = getState().cart;
@@ -313,8 +317,9 @@ const changeProductQuantity =
           }));
           dispatch(editSuccess(newCart));
         })
-        .catch(() => {
+        .catch((err) => {
           dispatch(editError());
+          Sentry.captureException(err);
         });
     } else {
       const calculateQuantity = () => quantity;
@@ -361,8 +366,9 @@ const decreaseProductQuantity =
           }));
           dispatch(decreaseQuantitySuccess(cart));
         })
-        .catch(() => {
+        .catch((err) => {
           dispatch(decreaseQuantityError());
+          Sentry.captureException(err);
         });
     } else {
       const { cart } = getState().cart;
@@ -411,8 +417,9 @@ const deleteProductFromCart =
           }));
           dispatch(deleteProductFromCartSuccess(cart));
         })
-        .catch(() => {
+        .catch((err) => {
           dispatch(deleteProductFromCartError());
+          Sentry.captureException(err);
         });
     } else {
       const { cart } = getState().cart;
@@ -435,8 +442,9 @@ const clearProductsInCart = () => (dispatch) => {
       .then(() => {
         dispatch(clearProductsInCartSuccess());
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(clearProductsInCartError());
+        Sentry.captureException(err);
       });
   } else {
     dispatch(clearProductsInCartSuccess());

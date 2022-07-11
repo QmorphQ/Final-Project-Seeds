@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { styled, alpha } from "@mui/material/styles";
@@ -99,7 +100,7 @@ export default function SearchAppBar({ onClose }) {
       .then((r) => {
         setFetchedProducts(r.data);
       })
-      .catch((error) => console.log(error.message));
+      .catch((err) => Sentry.captureException(err));
 
     setLoading(false);
     setReady(true);

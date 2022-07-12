@@ -12,7 +12,12 @@ const ProductPage = () => {
  
   useEffect(() => {
     dispatch(fetchProductById(id));
-  }, [id]);
+  }, [id]); 
+
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+    
+}, []);
 
   return (
     <>

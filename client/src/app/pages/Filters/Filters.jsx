@@ -73,6 +73,18 @@ const Filters = () => {
     initialParams = defaultParams;
   }
 
+  const setFilterParams = (filter, filterState) => {
+    if (filterState.length !== 0) {
+      dispatch(
+        setQueryParams({ ...queryParams, [filter]: filterState })
+      );
+    } else {
+      const newParams = { ...queryParams };
+      delete newParams[filter];
+      dispatch(setQueryParams(newParams));
+    }
+  }
+
   const fetchData = () => {
     let newParams = {};
     if (productsQuantity !== 0) {
@@ -92,6 +104,7 @@ const Filters = () => {
     }
   };
 
+  
   useEffect(() => {
     dispatch(setQueryParams(initialParams));
 
@@ -159,38 +172,17 @@ const Filters = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    if (selectedCategory.length !== 0) {
-      dispatch(
-        setQueryParams({ ...queryParams, categories: selectedCategory })
-      );
-    } else {
-      const newParams = { ...queryParams };
-      delete newParams.categories;
-      dispatch(setQueryParams(newParams));
-    }
+    setFilterParams("categories", selectedCategory)
   }, [selectedCategory]);
 
   useEffect(() => {
-    if (originCheckBoxState.length > 0) {
-      dispatch(setQueryParams({ ...queryParams, origin: originCheckBoxState }));
-    } else {
-      const newParams = { ...queryParams };
-      delete newParams.origin;
-      dispatch(setQueryParams(newParams));
-    }
+    setFilterParams("origin", originCheckBoxState)
   }, [originCheckBoxState]);
 
   useEffect(() => {
-    if (maturationCheckBoxState.length > 0) {
-      dispatch(
-        setQueryParams({ ...queryParams, maturation: maturationCheckBoxState })
-      );
-    } else {
-      const newParams = { ...queryParams };
-      delete newParams.maturation;
-      dispatch(setQueryParams(newParams));
-    }
+    setFilterParams("maturation", maturationCheckBoxState)
   }, [maturationCheckBoxState]);
+
 
   const toggleFilters = () => {
     if (filtersClasses === classes.filters) {

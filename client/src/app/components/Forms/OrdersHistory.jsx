@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom";
 import { Typography, Container, Grid } from "@mui/material";
-// import { makeStyles } from "@mui/styles";
+
 import { useDispatch, useSelector } from "react-redux"
 import { customerOrdersHistory } from "../../../store/selectors/selectors"
 import { getOrders } from "../../../store/thunks/customer.thunks"
@@ -12,7 +12,6 @@ import Preloader from "../../../ui/components/Preloader/Preloader.jsx"
 export default function OrdersHistory() {
     const dispatch = useDispatch()
     const ordersList = useSelector(customerOrdersHistory)
-    console.log(ordersList);
 
     const getCustomerOrders = orders => {
         dispatch(getOrders(orders))      

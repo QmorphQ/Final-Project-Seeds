@@ -1,5 +1,4 @@
-import axios from "axios";
-// import { useSelector } from "react-redux";
+import axios from "axios"; 
 import * as Sentry from "@sentry/react";
 import { API } from "../../app/constants";
 import {
@@ -25,13 +24,10 @@ import {
   clearProductsInCartSuccess,
   clearProductsInCartError,
 } from "../actions/cart.actions";
-// import {
-//   slidesSelector,
-// } from "../selectors/selectors";
 
-// const slideList = useSelector(slidesSelector);
-// const result = slideList.map(item => item._id);
-// console.log(result);
+
+
+
 const countTotalAmountOrder = () => (dispatch, getState) => {
   const { cart } = getState().cart;
   const sumOrder = cart.reduce(
@@ -84,10 +80,7 @@ const fetchCart = (slidesItemId) => async (dispatch, getState) => {
         newCart = concatCarts(cart, cartFromApi);
       }
       const cartForAPI = newCart.map((item) => ({
-        product: item.id,
-        // imageUrls: item.imageUrls,
-        // name: item.name,
-        // currentPrice: item.currentPrice,
+        product: item.id, 
         cartQuantity: item.cartQuantity,
       }));
       await axios.put(
@@ -121,14 +114,9 @@ const addCart = (cart, slidesItemId) => (dispatch) => {
       })
       .then((response) => {
         const newCart = response.data.products.map((cartProduct) => ({
-          //  --------------------
-          // id: cartProduct.product._id,
-          // cartQuantity: cartProduct.cartQuantity,
-          //   -------------------
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
-          // currentPrice: cartProduct.product.currentPrice,
           currentPrice:
             cartProduct.cartQuantity > 10 ||
             slidesItemId.includes(cartProduct.product._id)
@@ -175,8 +163,7 @@ const changeLocalCart = (
       name,
       currentPrice:
         calculateCartQuantity() > 10 || slidesItemId?.includes(productId)
-          ? // currentPrice: (calculateCartQuantity() > 10)
-            discountPrice
+          ? discountPrice
           : startingPrice,
       cartQuantity: calculateCartQuantity(product.cartQuantity),
       startingPrice,
@@ -195,8 +182,7 @@ const changeLocalCart = (
     name,
     currentPrice:
       calculateCartQuantity() > 10 || slidesItemId?.includes(productId)
-        ? // currentPrice: (calculateCartQuantity() > 10)
-          discountPrice
+        ? discountPrice
         : startingPrice,
     cartQuantity: calculateCartQuantity(),
     startingPrice,
@@ -221,8 +207,7 @@ const addProductToCart = (productId, slidesItemId) => (dispatch, getState) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
-          name: cartProduct.product.name,
-          // currentPrice: cartProduct.product.currentPrice,
+          name: cartProduct.product.name, 
           currentPrice:
             cartProduct.cartQuantity > 10 ||
             slidesItemId?.includes(cartProduct.product._id)
@@ -286,9 +271,6 @@ const changeProductQuantity =
       );
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
-        // imageUrls: item.imageUrls,
-        // name: item.name,
-        // currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       axios
@@ -306,7 +288,6 @@ const changeProductQuantity =
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            // currentPrice: cartProduct.product.currentPrice,
             currentPrice:
               cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
                 ? cartProduct.product.discountPrice
@@ -355,7 +336,6 @@ const decreaseProductQuantity =
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            // currentPrice: cartProduct.product.currentPrice,
             currentPrice:
               cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
                 ? cartProduct.product.discountPrice
@@ -406,7 +386,6 @@ const deleteProductFromCart =
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            // currentPrice: cartProduct.product.currentPrice,
             currentPrice:
               cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
                 ? cartProduct.product.discountPrice
@@ -429,7 +408,7 @@ const deleteProductFromCart =
   };
 
 const clearProductsInCart = () => (dispatch) => {
-  // dispatch(deleteProductFromCartRequest());
+ 
   const token = localStorage.getItem("jwt");
 
   if (token) {

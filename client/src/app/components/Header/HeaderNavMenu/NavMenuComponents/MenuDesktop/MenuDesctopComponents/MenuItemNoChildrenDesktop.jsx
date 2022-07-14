@@ -32,7 +32,7 @@ export default function MenuItemNoChildrenDesktop({ arrOfOptions }) {
   );
 }
 
-// ==========================================================
+
 MenuItemNoChildrenDesktop.defaultProps ={
   arrOfOptions: [['option1-1', 'option1-2', 'option2-1', 'option2-2']],
 };

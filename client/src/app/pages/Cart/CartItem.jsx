@@ -104,7 +104,6 @@ const CartItem = ({ product, slidesItemId }) => {
         >
           <Button
             onClick={() => {
-              // dispatch(decreaseProductQuantity(product.id, decreaseProductQuantity, slidesItemId));
               dispatch(decreaseProductQuantity(product.id, slidesItemId));
             }}
             variant="text"

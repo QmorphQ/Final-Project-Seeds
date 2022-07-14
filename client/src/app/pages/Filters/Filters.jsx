@@ -246,7 +246,7 @@ const Filters = () => {
 
               <MaturationFilter />
             </Stack>
-            {/* links/list section */}
+            
           </Box>
         </Grid>
         <Grid item xs={12} md={8}>

@@ -1,11 +1,8 @@
 import PropTypes from "prop-types";
-// import { Box, MenuList } from "@mui/material";
-// import MenuItemNoChildrenDesktop from "./NavMenuComponents/MenuItemNoChildrenDesktop.jsx";
-// import MenuItemWithChildrenDesctop from "./NavMenuComponents/MenuItemWithChildrenDesctop.jsx";
 import MenuDesktop from './NavMenuComponents/MenuDesktop/MenuDesktop.jsx';
 import MenuTable from './NavMenuComponents/MenuTable/MenuTable.jsx';
 import MenuMobile from './NavMenuComponents/MenuMobile/MenuMobile.jsx';
-// import classes from "./HeaderNavMenuStyles.jsx";
+
 
 export default function HeaderNavMenu({
   parentsListWithoutChildren,
@@ -15,7 +12,7 @@ export default function HeaderNavMenu({
   admin, 
   onClose, 
 }) {
-  // ------------------------------- RENDER -----------------------------
+  
   switch(resolution) {
   case 'desktop': 
    return (
@@ -30,7 +27,7 @@ export default function HeaderNavMenu({
    }
 }
 
-// ====================================================================================
+
 HeaderNavMenu.defaultProps = {
   resolution: "desktop",
 };

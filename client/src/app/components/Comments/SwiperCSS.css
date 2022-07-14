@@ -36,9 +36,7 @@
   background-color: #07bc0c !important;
 }
 
-/*
- **@media
- */
+
 @media screen and (min-width: 320px) {
   .comments {
     width: auto;

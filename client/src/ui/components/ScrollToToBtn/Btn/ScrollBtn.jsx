@@ -1,13 +1,12 @@
 import PropTypes from "prop-types";
 import { Box } from "@mui/material";
 import useStyles from "./ScrollBtnStyles";
-// ================================================================================
-// --------------------------------------------------------------------------------
-// ++++++
-// ================================================================================
+
+
+
 export default function ScrollBtn({ handler, ...props }) {
     const classes = useStyles();
-// --------------------------------------------------------------------------------
+
   return (
     <Box className={classes.ScrollToTopBtn} onClick={handler} {...props}>
       <svg
@@ -39,7 +38,7 @@ export default function ScrollBtn({ handler, ...props }) {
   );
 }
 
-// ================================================================================
+
 ScrollBtn.propTypes = {
   handler: PropTypes.func
 }

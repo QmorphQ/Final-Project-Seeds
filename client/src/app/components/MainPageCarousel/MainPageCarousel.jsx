@@ -17,9 +17,9 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunks";
 import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
 import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
-// Styles:
+
 import useStyles from "./MainPageCarouselStyles";
-// =================================================================
+
 
 const MainPageCarousel = () => {
   const classes = useStyles();
@@ -190,10 +190,7 @@ function Item(props) {
           md={2}
           pr={{ xs: "10px", sm: "30px" }}
           order={{ xs: 0, sm: 1 }}
-          // position={{ xs: 'static', sm: 'absolute' }}
           position={{ xs: "relative", sm: "absolute" }}
-          // left={'72%'}
-          // left="-17%"
           left={{ xs: "10vw", sm: "73%" }}
           justifySelf="center"
           alignSelf="center"

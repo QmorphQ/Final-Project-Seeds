@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
-// ------------------------------------------
+
 import { makeStyles } from "@mui/styles";
-// ------------------------------------------
+
 import Container from "@mui/material/Container";
 import { Card } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
@@ -116,7 +116,6 @@ function RenderUnit({ imgUrl, name, price, itemNo, onClose }) {
                   textDecorationColor: 'white' }}
             className={classes.searchPrice}
             variant="body1"
-            // color="text.primary"
           >
             {price} $
           </Typography>

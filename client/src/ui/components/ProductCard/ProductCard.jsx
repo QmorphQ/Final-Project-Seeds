@@ -895,18 +895,18 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     name: PropTypes.string,
     currentPrice: PropTypes.number,
-    imageUrls: PropTypes.array, // !!! MVP: string ---> array
+    imageUrls: PropTypes.array, 
     isProductPage: PropTypes.bool,
     isFiltersPage: PropTypes.bool,
     categories: PropTypes.string,
     quantity: PropTypes.number,
     isBasket: PropTypes.bool,
     discountPrice: PropTypes.number,
-    itemNo: PropTypes.string, // MVP: string ---> number
+    itemNo: PropTypes.string, 
     _id: PropTypes.string,
     cartQuantity: PropTypes.number,
   }),
-  loading: PropTypes.any, // !!! < -----MVP: oneOf(Object.values) ---> any;
+  loading: PropTypes.any, 
 };
 ProductCardRender.propTypes = {
   data: PropTypes.object,

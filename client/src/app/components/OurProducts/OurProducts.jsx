@@ -45,8 +45,7 @@ const OurProducts = () => {
   const dispatch = useDispatch();
 
   const categories = useSelector(mainCategoriesSelector);
-  // if (downloadRequestState === downloadRequestStates.LOADING)
-  //   return <div>Loading...</div>; // Here must be a loader
+
   if (downloadRequestState === downloadRequestStates.ERROR)
     return (
       <ErrorHandler

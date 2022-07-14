@@ -1,11 +1,8 @@
-// Import:
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import styles from "./MainStyles";
-// =========================================
-// -----------------------------------------
-// ++++++
-// =========================================
+
+
 export default function Main({ children }) {
   return (
     <Box component={"main"} sx={styles}>
@@ -13,7 +10,7 @@ export default function Main({ children }) {
     </Box>
   );
 }
-// =========================================
+
 
 Main.propTypes = {
   children: PropTypes.element,

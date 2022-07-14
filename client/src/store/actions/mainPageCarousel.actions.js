@@ -1,9 +1,3 @@
-// export const RECEIVING_ITEM_ADD_TO_CART = "RECEIVING_ITEM_ADD_TO_CART";
-// export const receivingHtmlStaticPage = (responseHtml) => ({
-//   type: RECEIVING_ITEM_ADD_TO_CART,
-//   payload: responseHtml,
-// });
-
 
 export const RECEIVED_ITEM_ADD_TO_CART = "RECEIVED_ITEM_ADD_TO_CART";
 export const receivedItemAddToCart = (item) => ({
@@ -28,6 +22,3 @@ export const ITEM_IN_CART = "ITEM_IN_CART";
 export  const sentItemToCart = () => ({
     type:  ITEM_IN_CART ,
   });
-
-
-

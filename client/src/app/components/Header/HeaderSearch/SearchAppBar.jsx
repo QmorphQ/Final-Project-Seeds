@@ -7,14 +7,11 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchResultContainer from "./SearchComponent/SearchResultsContainer.jsx";
 import Spinner from "../../../../ui/components/Spinner/Spinner.jsx";
-// import SearchBtn from './SearchBtns/SearchBtn.jsx';
-// =========================================================
-// import searchDB from "./SearchComponent/SearchLogic/searchDB";
+
 import searchObserver from "./SearchComponent/SearchLogic/searchObserver";
-// import searchNormalize from "./SearchComponent/SearchLogic/searchNormalize";
 import { API } from "../../../constants/index";
 
-// =========================================================
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -45,40 +42,31 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       width: "15ch",
-      // "&:focus": {
-      //   width: "20ch",
-      // },
     },
   },
 }));
 
 export default function SearchAppBar({ onClose }) {
-  // -----------------------------------------------------------------------------------
-  // Pressets:
+  
   const [inputText, setInputText] = useState("");
-  const [trigger, setTrigger] = useState(false); // Start searching
+  const [trigger, setTrigger] = useState(false); 
   const [arrIDs, setIDsArr] = useState([]);
   const [products, setProducts] = useState([]);
-  const [fetchedProducts, setFetchedProducts] = useState([]); // Array of products
-  const [loading, setLoading] = useState(false); // Request status
-  const [activeSearchContainer, setActiveSearchContainer] = useState(false); // Render container
+  const [fetchedProducts, setFetchedProducts] = useState([]); 
+  const [loading, setLoading] = useState(false); 
+  const [activeSearchContainer, setActiveSearchContainer] = useState(false);
   const [ready, setReady] = useState(false);
 
-  // -----------------------------------------------------------------------------------
-  // Functions:
-  // ++++++
-  // Input controller:
+  
   const inputHandler = (event) => {
     setInputText(event.target.value);
   };
-  // ++++++
-  // +++
+  
   const searchContainerHandler = () => {
     setActiveSearchContainer(false);
     setTrigger(false);
@@ -90,7 +78,7 @@ export default function SearchAppBar({ onClose }) {
     setReady(false);
     setInputText("");
   };
-  // ++++++
+  
 
   const [searchKeys, setSearchKeys] = useState([]);
   
@@ -105,14 +93,10 @@ export default function SearchAppBar({ onClose }) {
     setLoading(false);
     setReady(true);
   };
-  // ++++++
-  // -----------------------------------------------------------------------------------
-  // Hooks:
-  // ++++++
-  // Start of searching process:
+  
   useEffect(() => {
     if (!trigger && searchObserver(inputText)) {
-      // Clear previous results:
+      
       setFetchedProducts([]);
       setIDsArr([]);
       setActiveSearchContainer(false);
@@ -120,8 +104,7 @@ export default function SearchAppBar({ onClose }) {
     }
     return false;
   }, [inputText]);
-  // ++++++
-  // Loading:
+  
   useEffect(() => {
     const regEx = new RegExp(`${inputText.trim()}`, "gi");
     const filteredProducts = Array.from(
@@ -135,8 +118,7 @@ export default function SearchAppBar({ onClose }) {
       ? setIDsArr([...filteredProducts])
       : setTrigger(false);
   }, [searchKeys]);
-  // ++++++
-  // Fetch products from server:
+  
   useEffect(() => {
     if (trigger) {
       setLoading(true);
@@ -169,8 +151,7 @@ export default function SearchAppBar({ onClose }) {
 
     setProducts(productsToShow);
   }, [arrIDs]);
-  // ++++++
-  // Rendering results:
+  
   useEffect(() => {
     if (ready === true) {
       setActiveSearchContainer(true);
@@ -195,7 +176,7 @@ export default function SearchAppBar({ onClose }) {
 
     setSearchKeys(keys);
   }, []);
-  // ---------------------------------------------------------------------------------
+  
   return (
     <>
       <Search

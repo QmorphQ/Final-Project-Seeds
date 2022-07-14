@@ -1,7 +1,5 @@
-// Imports:
-// Libraries:
 import PropTypes from "prop-types";
-// React Components:
+
 import {
   Box,
   Typography,
@@ -12,13 +10,12 @@ import {
   Rating,
   Card,
 } from "@mui/material";
-// Styles:
+
 import "./SwiperCSS.css";
 import { red } from "@mui/material/colors";
-// Others:
-// =======================================================
 
-// =======================================================
+
+
 export default function CommentRenderComponent(props) {
   return (
     <Card
@@ -61,7 +58,7 @@ export default function CommentRenderComponent(props) {
     </Card>
   );
 }
-// =======================================================
+
 
 CommentRenderComponent.propTypes = {
   text: PropTypes.string,

@@ -109,7 +109,7 @@ const productsReducer = (state = initialState, action) => {
             (product) => product.itemNo !== action.payload.data.itemNo
           ),
           action.payload.data,
-        ] /* MVP - added state.product */,
+        ],
       };
 
     case UPLOAD_PRODUCT_RATING_ERROR:

@@ -1,18 +1,13 @@
 /* eslint-disable no-nested-ternary */
-// Import:
-// =======================================================================================
-// ------------------------------------------------------------------------------------
-// Libraries Components:
+
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// ------------------------------------------------------------------------------------
-// MUI Components:
+
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { Box, AppBar, Toolbar, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-// ------------------------------------------------------------------------------------
-// React Components:
+
 import SearchAppBar from "./HeaderSearch/SearchAppBar.jsx";
 import {
   loginStateSelector,
@@ -26,16 +21,13 @@ import FavoriteBtn from "./HeaderBtns/FavoriteBtn.jsx";
 import HeaderNavMenu from "./HeaderNavMenu/HeaderNavMenu.jsx";
 import { fetchWishlist } from "../../../store/thunks/wishlist.thunks";
 import { fetchCart } from "../../../store/thunks/cart.thunks";
-// ++++++++++++++++
-// Auth Component:
+
 import Auth from "../Forms/Auth.jsx";
 import ProfileMenu from "./ProfileMenu.jsx";
 import ProfileMenuAdmin from "./ProfileMenuAdmin.jsx";
-// ++++++++++++++++
-// ------------------------------------------------------------------------------------
-// Styles:
+
 import classes from "./HeaderStyles.jsx";
-// =======================================================================================
+
 
 const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
   const dispatch = useDispatch();
@@ -67,7 +59,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
     dispatch(fetchWishlist)
   }, [])
   
-  // =============================================== Render ==============================================
+  
   return (
     <Box sx={classes.Header}>
       <AppBar position="static" color="inherit" sx={{ boxShadow: "none" }}>
@@ -81,7 +73,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
         >
           {logoPath ? <LogoBtn linkPath={logoPath} /> : <LogoBtn />}
           <Box display={{ xs: "none", sm: "none", md: "none", lg: "block" }}>
-            {/* <MenuDesktop /> */}
+            
             <HeaderNavMenu
               resolution={"desktop"}
               parentsListWithoutChildren={arrNoChildrenBlock}
@@ -90,7 +82,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
             />
           </Box>
           <Box display={{ xs: "none", sm: "none", md: "flex", lg: "none" }}>
-            {/* <MenuTable /> */}
+            
             <HeaderNavMenu
               resolution={"table"}
               parentsListWithoutChildren={arrNoChildrenBlock}
@@ -98,7 +90,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
               admin={isAdmin}
             />
           </Box>
-          <Box /* Search AppBar Block */
+          <Box 
             sx={{
               display: "flex",
               alignItems: "center",
@@ -184,7 +176,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
   );
 };
 
-// =====================================================================
+
 Header.defaultProps = {
   arrWithChildrenBlock: [
     { parentId: "herbs", name: ["herbs-mono", "herbs-mix"] },

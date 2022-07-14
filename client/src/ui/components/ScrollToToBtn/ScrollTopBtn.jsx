@@ -1,22 +1,18 @@
-// Import:
-// Libraries:
+
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-// React Components:
+
 import ScrollBtn from "./Btn/ScrollBtn.jsx";
-// Styles:
+
 import position from "./ScrollTopBtnPosition";
-// ==================================================
-// --------------------------------------------------
-// ++++++
-// ==================================================
+
+
 
 export default function ScrollTopBtn({ offsetLimit }) {
-  // Consts:
+  
   const [open, setOpen] = useState(null);
   const [start, setStart] = useState(false);
-  // --------------------------------------------------
-  // Funcs:
+  
   function moveTop() {
     window.scrollTo({
       top: 0,
@@ -44,8 +40,7 @@ export default function ScrollTopBtn({ offsetLimit }) {
       setOpen(false);
     }
   }
-  // --------------------------------------------------
-  // UseEffect:
+  
   useEffect(() => {
     window.addEventListener("scroll", scrollListener);
     return () => window.removeEventListener("scroll", scrollListener);
@@ -66,11 +61,10 @@ export default function ScrollTopBtn({ offsetLimit }) {
       clearTimeout(timerID);
     }
   }, [start]);
-  // --------------------------------------------------
-  // Render:
+  
   return <>{open && <ScrollBtn sx={position} handler={moveTop} />}</>;
 }
-// ==================================================
+
 ScrollTopBtn.defaultProps = {
   offsetLimit: 400,
 };

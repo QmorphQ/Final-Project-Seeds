@@ -55,7 +55,6 @@ const useFiltersStyles = makeStyles({
     borderBottom: "1px",
     borderBottomColor: "#EFEFEF",
     fontFamily: "'Lexend', sans-serif",
-    // borderBottomStyle: "solid",
   },
 
   filterContainer: {

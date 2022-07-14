@@ -13,7 +13,7 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 
 export default function MenuItemWithChildrenMobile({ arrOfOptions, onClose }) {
-  // ==========================
+  
   const AccordionSummary = styled((props) => (
     <MuiAccordionSummary
       expandIcon={
@@ -44,8 +44,8 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions, onClose }) {
       marginLeft: theme.spacing(0),
     },
   }));
-  // =========================
-  // ============================= Render ============================
+  
+
   return (
     <Box>
       {arrOfOptions.map((item, index) => (
@@ -101,7 +101,7 @@ export default function MenuItemWithChildrenMobile({ arrOfOptions, onClose }) {
     </Box>
   );
 }
-// ==================================================================
+
 MenuItemWithChildrenMobile.defaultProps = {
   arrOfOptions: [
     { parentId: "option1", name: ["subOption1-1", "subOption1-2"] },

@@ -63,5 +63,3 @@ export const setProductsQuantity = (productsQuantity) => ({
   type: SET_PRODUCTS_QUANTITY,
   payload: productsQuantity,
 });
-
-

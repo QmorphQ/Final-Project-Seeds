@@ -139,10 +139,6 @@ export default function CheckoutForm() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
-
   const placeOrderToDB = (values, actions) => {
     const newOrder = createOrder(values);
     axios

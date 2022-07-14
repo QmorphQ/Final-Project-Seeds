@@ -4,7 +4,7 @@ import { Divider, MenuItem, Link } from "@mui/material";
 import Box from "@mui/material/Box";
 
 export default function MenuItemNoChildrenMobile({ arrOfOptions, onClose }) {
-  // =========================== Render ===============================
+  
   return (
     <Box>
       {arrOfOptions.map((item, index) => (
@@ -35,7 +35,7 @@ export default function MenuItemNoChildrenMobile({ arrOfOptions, onClose }) {
   );
 }
 
-// =========================================================
+
 MenuItemNoChildrenMobile.propTypes = {
   arrOfOptions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   onClose: PropTypes.func, 

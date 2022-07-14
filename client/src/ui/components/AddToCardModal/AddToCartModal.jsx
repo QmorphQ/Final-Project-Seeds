@@ -25,7 +25,6 @@ const AddToCartModal = ({
   discontStart,
   localPrice,
   totalPrice,
-  // setTotalPrice,
   isOnModal,
   toggleIsOnModal,
 }) => {
@@ -230,7 +229,7 @@ AddToCartModal.propTypes = {
   setTotalPrice: PropTypes.func.isRequired,
   isOnModal: PropTypes.bool.isRequired,
   toggleIsOnModal: PropTypes.func.isRequired,
-  _id: PropTypes.string.isRequired, // !!! MVP: number---> string
+  _id: PropTypes.string.isRequired,
 };
 
 AddToCartModal.defaultProps = {

@@ -124,5 +124,3 @@ export const GET_USERDETAILS_ERROR = "GET_USERDETAILS_ERROR";
 export const getUserDetailsError = () => ({
   type: GET_USERDETAILS_ERROR,
 });
-
-

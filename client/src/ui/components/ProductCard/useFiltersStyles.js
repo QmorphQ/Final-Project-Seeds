@@ -59,7 +59,6 @@ export const useFiltersStyles = makeStyles(() => ({
     height: "24px",
     border: "1px solid #EFEFEF",
     padding: "11px"
-    // padding: "0px important",
   },
   productCardButtons: {
     display: "flex",

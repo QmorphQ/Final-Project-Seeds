@@ -8,7 +8,7 @@ import position from "./ScrollTopBtnPosition";
 
 
 
-export default function ScrollTopBtn({ offsetLimit }) {
+export default function ScrollTopBtn({ offsetLimit, delay }) {
   
   const [open, setOpen] = useState(null);
   const [start, setStart] = useState(false);
@@ -56,7 +56,7 @@ export default function ScrollTopBtn({ offsetLimit }) {
     if (start) {
       timerID = setTimeout(() => {
         setOpen(true);
-      }, 2000);
+      }, delay);
     } else {
       clearTimeout(timerID);
     }
@@ -67,8 +67,10 @@ export default function ScrollTopBtn({ offsetLimit }) {
 
 ScrollTopBtn.defaultProps = {
   offsetLimit: 400,
+  delay: 500
 };
 
 ScrollTopBtn.propTypes = {
   offsetLimit: PropTypes.number,
+  delay: PropTypes.number
 };

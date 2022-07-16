@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 import {
   Box,
   Typography,
@@ -10,11 +9,7 @@ import {
   Rating,
   Card,
 } from "@mui/material";
-
-import "./SwiperCSS.css";
 import { red } from "@mui/material/colors";
-
-
 
 export default function CommentRenderComponent(props) {
   return (
@@ -25,7 +20,7 @@ export default function CommentRenderComponent(props) {
         borderRadius: "12px",
         maxHeight: "400px",
         overflow: "auto",
-        userSelect: "none"
+        userSelect: "none",
       }}
     >
       <Paper square elevation={0} className={"comment-header"}>
@@ -58,7 +53,6 @@ export default function CommentRenderComponent(props) {
     </Card>
   );
 }
-
 
 CommentRenderComponent.propTypes = {
   text: PropTypes.string,

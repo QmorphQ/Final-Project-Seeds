@@ -12,8 +12,6 @@ import "swiper/css/autoplay";
 
 import examples from "./examples";
 
-
-
 export default function Comments({ dataToRender }) {
   return (
     <Box component="section" className="comments">
@@ -68,7 +66,6 @@ export default function Comments({ dataToRender }) {
     </Box>
   );
 }
-
 
 Comments.defaultProps = {
   dataToRender: examples,

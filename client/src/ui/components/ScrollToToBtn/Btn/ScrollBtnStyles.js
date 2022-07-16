@@ -10,16 +10,16 @@ const useStyles = makeStyles({
     borderRadius: "50%",
     cursor: "pointer",
     "&:hover svg": {
-      backgroundColor: "rgb(7, 188, 13)",
-      stroke: "white",
+      backgroundColor: "rgb(53, 151, 64)",
+      stroke: "rgba(255, 255, 255)",
     },
   },
   BtnSvgIcon: {
-    stroke: "rgb(7, 188, 13)",
+    stroke: "rgb(53, 151, 64)",
     strokeWidth: "1.5",
     width: "30px",
     height: "30px",
-    transition: "backgroundColor 0.3s, stroke 0.3s",
+    transition: "backgroundColor 0.2s, stroke 0.2s",
     borderRadius: "50%",
 
     "@media (min-width: 420px)": {

@@ -9,7 +9,10 @@ import {
   queryParamsSelector,
   sortedByPriceSelector,
 } from "../../../store/selectors/selectors";
-import { setQueryParams, sortProductsByPrice } from "../../../store/actions/filters.actions";
+import {
+  setQueryParams,
+  sortProductsByPrice,
+} from "../../../store/actions/filters.actions";
 import useFiltersStyles from "../../../app/pages/Filters/useFiltersStyles";
 
 const SortBySelect = () => {
@@ -30,7 +33,7 @@ const SortBySelect = () => {
   };
 
   return (
-    <Container className={classes.filterContainer}>
+    <Container className={classes.sortBySelect}>
       <Typography variant="h5">Sort by</Typography>
       <FormControl>
         <NativeSelect

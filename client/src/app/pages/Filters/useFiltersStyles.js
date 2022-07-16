@@ -54,7 +54,8 @@ const useFiltersStyles = makeStyles({
   title: {
     borderBottom: "1px",
     borderBottomColor: "#EFEFEF",
-    fontFamily: "'Lexend', sans-serif",
+    marginTop: "32px",
+    marginBottom: "32px",
   },
 
   filterContainer: {
@@ -64,6 +65,17 @@ const useFiltersStyles = makeStyles({
     paddingTop: "10px",
     paddingBottom: "25px",
     position: "relative",
+  },
+
+  sortBySelect: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    marginTop: "32px",
+    borderBottom: "1px",
+    borderBottomColor: "#EFEFEF",
+    borderBottomStyle: "solid",
+    paddingTop: "10px",
+    paddingBottom: "25px",
   },
 
   titleWrapper: {

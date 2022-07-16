@@ -70,6 +70,7 @@ const useFiltersStyles = makeStyles({
   sortBySelect: {
     display: "flex",
     justifyContent: "space-evenly",
+    alignItems: "center",
     marginTop: "32px",
     borderBottom: "1px",
     borderBottomColor: "#EFEFEF",
@@ -83,6 +84,7 @@ const useFiltersStyles = makeStyles({
     "@media (max-width: 780px)": {
       display: "flex",
       justifyContent: "space-around",
+      alignItems: "center",
       width: "150px",
     },
   },

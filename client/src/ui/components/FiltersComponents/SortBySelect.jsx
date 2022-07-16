@@ -1,14 +1,10 @@
-import {
-  Container,
-  Typography,
-  FormControl,
-  NativeSelect,
-} from "@mui/material";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Container, Typography, FormControl } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  queryParamsSelector,
-  sortedByPriceSelector,
-} from "../../../store/selectors/selectors";
+import { queryParamsSelector } from "../../../store/selectors/selectors";
 import {
   setQueryParams,
   sortProductsByPrice,
@@ -19,9 +15,21 @@ const SortBySelect = () => {
   const classes = useFiltersStyles();
 
   const queryParams = useSelector(queryParamsSelector);
-  const sortedByPrice = useSelector(sortedByPriceSelector);
+
+  const [sortedByPrice, setSortedByPrice] = useState(null);
 
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("sort") === "currentPrice") {
+      dispatch(sortProductsByPrice("less"));
+      setSortedByPrice("less");
+    } else {
+      dispatch(sortProductsByPrice("most"));
+      setSortedByPrice("most");
+    }
+  }, []);
 
   const handleChange = (event) => {
     dispatch(sortProductsByPrice(event.target.value));
@@ -33,22 +41,26 @@ const SortBySelect = () => {
   };
 
   return (
-    <Container className={classes.sortBySelect}>
-      <Typography variant="h5">Sort by</Typography>
-      <FormControl>
-        <NativeSelect
-          onChange={handleChange}
-          defaultValue={sortedByPrice}
-          inputProps={{
-            name: "Sort by",
-            id: "uncontrolled-native",
-          }}
-        >
-          <option value={"most"}>Most expensive</option>
-          <option value={"less"}>Less expensive</option>
-        </NativeSelect>
-      </FormControl>
-    </Container>
+    <>
+      {sortedByPrice !== null && (
+        <Container className={classes.sortBySelect}>
+          <Typography variant="h5">Sort by</Typography>
+          <FormControl>
+            <Select
+              onChange={handleChange}
+              defaultValue={sortedByPrice}
+              variant="outlined"
+              sx={{ outline: "solid 1px rgba(53, 151, 64, 1)" }}
+            >
+              <MenuItem value={"most"}>Most expensive</MenuItem>
+              <MenuItem value={"less"}>Less expensive</MenuItem>
+            </Select>
+          </FormControl>
+        </Container>
+      )}
+
+      {null}
+    </>
   );
 };
 

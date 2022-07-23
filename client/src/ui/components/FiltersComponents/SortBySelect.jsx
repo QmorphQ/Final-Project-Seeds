@@ -5,10 +5,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
 import { queryParamsSelector } from "../../../store/selectors/selectors";
-import {
-  setQueryParams,
-  sortProductsByPrice,
-} from "../../../store/actions/filters.actions";
+import { setQueryParams } from "../../../store/actions/filters.actions";
 import useFiltersStyles from "../../../app/pages/Filters/useFiltersStyles";
 
 const SortBySelect = () => {
@@ -23,16 +20,14 @@ const SortBySelect = () => {
 
   useEffect(() => {
     if (searchParams.get("sort") === "currentPrice") {
-      dispatch(sortProductsByPrice("less"));
       setSortedByPrice("less");
     } else {
-      dispatch(sortProductsByPrice("most"));
       setSortedByPrice("most");
     }
   }, []);
 
   const handleChange = (event) => {
-    dispatch(sortProductsByPrice(event.target.value));
+    setSortedByPrice(event.target.value);
     if (event.target.value === "less") {
       dispatch(setQueryParams({ ...queryParams, sort: "currentPrice" }));
     } else {

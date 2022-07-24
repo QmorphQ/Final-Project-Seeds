@@ -1,13 +1,18 @@
 {
   "name": "fe-final-backend",
   "version": "1.0.0",
+  "engines": {
+    "node": "v18.0.0",
+    "npm": "8.6.0"
+  },
   "description": "Back End code for final projects of Front End groups\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[DDANIT\u001b[3~ Front End groups",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server.js",
     "server:dev": "nodemon server.js",
-    "start": "npm start --prefix client"
+    "start": "node server.js && cd client && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",

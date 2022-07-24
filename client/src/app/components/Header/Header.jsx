@@ -100,7 +100,7 @@ const Header = ({ arrNoChildrenBlock, arrWithChildrenBlock, logoPath }) => {
               display={{ xs: "none", sm: "none", md: "block" }}
               sx={{ mr: "30px" }}
             >
-              <SearchAppBar onClose={handleClickAway}/>
+              <SearchAppBar />
             </Box>
 
             <Box

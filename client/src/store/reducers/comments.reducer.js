@@ -101,7 +101,7 @@ import {
           ...state,
           editCommentRequestState: downloadRequestStates.SUCCESS,
           comments: [...state.comments.filter(comment => comment._id !== action.payload.data._id), action.payload.data],
-          productComments: [...state.comments.filter(comment => comment._id !== action.payload.data._id), action.payload.data]
+          productComments: [...state.productComments.filter(comment => comment._id !== action.payload.data._id), action.payload.data]
         };
       case EDIT_PRODUCT_COMMENT_ERROR:
         return {

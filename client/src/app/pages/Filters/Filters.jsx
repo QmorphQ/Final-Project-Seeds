@@ -75,15 +75,13 @@ const Filters = () => {
 
   const setFilterParams = (filter, filterState) => {
     if (filterState.length !== 0) {
-      dispatch(
-        setQueryParams({ ...queryParams, [filter]: filterState })
-      );
+      dispatch(setQueryParams({ ...queryParams, [filter]: filterState }));
     } else {
       const newParams = { ...queryParams };
       delete newParams[filter];
       dispatch(setQueryParams(newParams));
     }
-  }
+  };
 
   const fetchData = () => {
     let newParams = {};
@@ -104,7 +102,6 @@ const Filters = () => {
     }
   };
 
-  
   useEffect(() => {
     dispatch(setQueryParams(initialParams));
 
@@ -172,17 +169,16 @@ const Filters = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    setFilterParams("categories", selectedCategory)
+    setFilterParams("categories", selectedCategory);
   }, [selectedCategory]);
 
   useEffect(() => {
-    setFilterParams("origin", originCheckBoxState)
+    setFilterParams("origin", originCheckBoxState);
   }, [originCheckBoxState]);
 
   useEffect(() => {
-    setFilterParams("maturation", maturationCheckBoxState)
+    setFilterParams("maturation", maturationCheckBoxState);
   }, [maturationCheckBoxState]);
-
 
   const toggleFilters = () => {
     if (filtersClasses === classes.filters) {
@@ -223,12 +219,12 @@ const Filters = () => {
               />
 
               <Typography variant="h5" className={classes.title}>
-                FILTERS
+                Filters
               </Typography>
             </Box>
 
             <Stack spacing={4} className={filtersClasses}>
-              <SortBySelect />
+              <SortBySelect className={classes.sortBySelect} />
 
               <CategoryFilter />
 
@@ -238,7 +234,6 @@ const Filters = () => {
 
               <MaturationFilter />
             </Stack>
-            
           </Box>
         </Grid>
         <Grid item xs={12} md={8}>

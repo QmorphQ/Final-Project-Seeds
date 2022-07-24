@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useState, useEffect, useRef } from "react";
+import { IconButton } from "@mui/material";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchResultContainer from "./SearchComponents/SearchResultsContainer.jsx";
 import SearchIconWrapper from "./SearchComponents/StyledComponents/SearchIconWrapper";
@@ -14,6 +15,7 @@ import {
 } from "./SearchComponents/SearchHelper";
 // ==========================================================================
 export default function SearchAppBar() {
+  const searchInput = useRef();
   const [inputText, setInputText] = useState("");
   const [prevInputText, setPrevInputText] = useState("");
   const [formatedInputText, setFormatedInputText] = useState("");
@@ -31,7 +33,7 @@ export default function SearchAppBar() {
     searchKeysEndPoint: undefined,
     searchInputID: "search-input",
     timerID: null,
-    typedMoreThen: (n) => {
+    typedMoreOrEqualThen: (n) => {
       const regEx = new RegExp(`^.{${n},}`, "gi");
       return { in: (str) => regEx.test(str) };
     },
@@ -72,7 +74,6 @@ export default function SearchAppBar() {
   }
 
   function clearSearch() {
-    setIDsArr([]);
     setSearchStatus(false);
   }
 
@@ -98,6 +99,17 @@ export default function SearchAppBar() {
       setIDsArr(nextArrOfIDs);
     }
   }
+
+  function clearInputText() {
+    if (downloadState !== "pending") {
+      setInputText("");
+      searchInput.current.focus();
+    }
+  }
+
+  function setInitSearchState() {
+    setIDsArr([]);
+  }
   // ---------------------------------------------------------
   // useEffect:
   useEffect(() => {
@@ -110,6 +122,9 @@ export default function SearchAppBar() {
     if (inputText.length < prevInputText.length) {
       clearSearch();
       updateFormattedInputText();
+      if (inputText.length < 3) {
+        setInitSearchState();
+      }
     } else {
       launchNextSearch();
       updateFormattedInputText();
@@ -118,7 +133,7 @@ export default function SearchAppBar() {
 
   useEffect(() => {
     if (searchStatus === true) {
-      if (init.typedMoreThen(3).in(formatedInputText)) {
+      if (init.typedMoreOrEqualThen(3).in(formatedInputText)) {
         updateIDsFrom(arrIDs);
       }
     }
@@ -131,7 +146,8 @@ export default function SearchAppBar() {
           () => {
             fetchProductsBy()
               .then((r) => setProducts(r))
-              .then(() => enterPressed && setEnterPressed(false));
+              .then(() => enterPressed && setEnterPressed(false))
+              .then(() => searchInput.current.focus());
           },
           enterPressed === true ? 0 : init.searchDelay
         );
@@ -174,18 +190,28 @@ export default function SearchAppBar() {
         <StyledInputBase
           id={init.searchInputID}
           disabled={downloadState === "pending"}
+          inputRef={searchInput}
           required
           autoFocus
           value={downloadState === "pending" ? "searching..." : inputText}
           placeholder={"search"}
           onChange={inputHandler}
+          sx={{ cursor: "pointer" }}
         />
-        {downloadState === "pending" && (
-          <CircularProgress
-            sx={{ position: "absolute", right: "40px", top: "12px" }}
-            size={15}
-            color="inherit"
-          />
+        {inputText && (
+          <IconButton
+            className="clearInputBtn"
+            onClick={clearInputText}
+            disableRipple
+            sx={{
+              position: "absolute",
+              top: "0px",
+              right: "-29px",
+              color: "#000",
+            }}
+          >
+            <CloseOutlinedIcon />
+          </IconButton>
         )}
         {products.length !== 0 && (
           <SearchResultContainer

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import * as Sentry from "@sentry/react";
 import axios from "axios";
 import {
   Stepper,
@@ -63,7 +64,7 @@ export default function CheckoutForm() {
       .then((response) => {
         setProducts(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch((err) => Sentry.captureException(err));
   };
 
   useEffect(() => {
@@ -149,13 +150,10 @@ export default function CheckoutForm() {
       .then((response) => {
         actions.setSubmitting(false);
         setActiveStep(activeStep + 1);
-        console.log(response);
         setOrderNumber(response.data.order.orderNo);
         dispatch(clearProductsInCart());
       })
-      .catch(() => {
-        console.log("error");
-      });
+      .catch((err) => Sentry.captureException(err));
   };
 
   function _handleSubmit(values, actions) {

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import * as Sentry from "@sentry/react";
 import {
   Stepper,
   Step,
@@ -64,7 +63,7 @@ export default function CheckoutForm() {
       .then((response) => {
         setProducts(response.data);
       })
-      .catch((err) => Sentry.captureException(err));
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -139,6 +138,10 @@ export default function CheckoutForm() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
+
   const placeOrderToDB = (values, actions) => {
     const newOrder = createOrder(values);
     axios
@@ -146,11 +149,12 @@ export default function CheckoutForm() {
       .then((response) => {
         actions.setSubmitting(false);
         setActiveStep(activeStep + 1);
+        console.log(response);
         setOrderNumber(response.data.order.orderNo);
         dispatch(clearProductsInCart());
       })
-      .catch((err) => {
-        Sentry.captureException(err);
+      .catch(() => {
+        console.log("error");
       });
   };
 
@@ -189,10 +193,10 @@ export default function CheckoutForm() {
         <Box
           display="flex"
           flexDirection={{ xs: "column", sm: "row" }}
-          width={{ xs: "95%", sm: "100%" }}
+          width={{ xs: "92%", sm: "100%" }}
           position={"relative"}
           minHeight={"30em"}
-          // marginLeft={"-30px"}
+          margin={"auto"}
         >
           <Box
             margin={"auto"}

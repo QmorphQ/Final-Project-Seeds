@@ -5,7 +5,7 @@ export const downloadRequestStates = {
   IDLE: "idle",
 };
 
-export const API = "http://localhost:8000/api/"; 
+export const API = process.env.BUILD ? "https://test-fps-server.herokuapp.com/api/" : "http://localhost:8000/api/"; 
 export const PRODUCTS_NUMBER_ON_MAIN_PAGE = 6
 
 export const productCategories = [

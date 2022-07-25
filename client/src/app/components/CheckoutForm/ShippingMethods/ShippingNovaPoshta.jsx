@@ -31,7 +31,6 @@ const ShippingNovaPoshta = () => {
       data: settings,
       redirect: "follow",
     };
-
     axios(config).then((response) => func(response));
   };
 

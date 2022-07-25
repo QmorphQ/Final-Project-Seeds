@@ -273,7 +273,7 @@ export default function CheckoutForm() {
           </Box>
           {activeStep !== steps.length && (
             <Box
-              width={{ xs: "100%", sm: "30%" }}
+              width={{ xs: "100%", sm: "40%" }}
               sx={{ order: { sm: "2", xs: "1" } }}
             >
               <OrderSummary visibility={"none"} />

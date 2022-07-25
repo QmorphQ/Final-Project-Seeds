@@ -9,14 +9,14 @@
 4. **Ogniev Anton**
 5. **Rakhil Igor** - Developer;
 6. **Koshelivskiy Alexey** - Developer;
-7. **Motsnyi Yurii** - Developer;
-8. **Stavnyackij Valerij** - Developer;
-9. **Makovskij Vladislav** - Developer;
+7. **Franchuk Nikolay**;
+8. **Makovskij Vladislav** - Developer;
 
 ### List of technologies:
 
 - ***
-- **React, Redux**
+- **React, Redux, React Router**
 - **Material UI**
-- **Jest, Enzyme**
-- Project configuration: **Webpack, ESLint, Stylelint, Travis CI**
+- **Sentry**
+- **MongoDB, Express**
+- Project configuration: **Webpack, ESLint, Prettier**

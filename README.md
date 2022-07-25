@@ -1,4 +1,5 @@
-# Seed group
+## You can check at this <a target="blank" src="https://final-project-seeds-q2mcjjy5u-qmorphq.vercel.app/">DEMO</a>
+# Seeds group 
 
 ## Group members:
 
@@ -14,9 +15,8 @@
 
 ### List of technologies:
 
-- ***
-- **React, Redux, React Router**
-- **Material UI**
-- **Sentry**
-- **MongoDB, Express**
-- Project configuration: **Webpack, ESLint, Prettier**
+- **React, Redux, React Router**;
+- **Material UI**;
+- **Sentry**;
+- **MongoDB, Express**;
+- Project configuration: **Webpack, ESLint, Prettier**;

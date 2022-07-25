@@ -1,4 +1,4 @@
-## You can check <a target="blank" style="color: rgb(53, 151, 64);" src="https://final-project-seeds-3xbvm5vrj-qmorphq.vercel.app/">DEMO</a>
+## You can check [DEMO](https://final-project-seeds-3xbvm5vrj-qmorphq.vercel.app/)
 # Seeds group 
 
 ## Group members:

@@ -1,90 +1,35 @@
-
-// import axios, { Axios } from "axios";
-// import { API } from "../../../app/constants/index";
-// import { useState, useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Typography, Container, Grid, Box } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { Typography, Grid, Box } from "@mui/material";
 import PropTypes from "prop-types";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
 import {
-  // cartSelector, 
+  cartSelector,
   downloadSlidesRequestStateSelector,
   slidesSelector,
 } from "../../../store/selectors/selectors";
+import { readyForEditStart } from "../../../store/actions/cart.actions";
 import { downloadRequestStates } from "../../constants";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
-// import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
+import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunks";
+import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
+import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
 
+import useStyles from "./MainPageCarouselStyles";
 
-const useStyles = makeStyles({
-  multiLineEllipsis: {
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    letterSpacing: "-0.05em",
-    color: "#1F2533",
-  },
-  addToCartButton: {
-      background: "#359740",
-      '&:hover': {
-         background: "#2BB159",
-      },
-    },
-    discoverButton: {
-      background: "#FFFFFF",
-      '&:hover': {
-         background: "rgba(53, 151, 64, 0.08);",
-      },
-    },
-});
 
 const MainPageCarousel = () => {
+  const classes = useStyles();
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
 
-
-//   useEffect(() => {
-//  const sld = [
-//    {itemNo: "954601"},
-//    {itemNo: "351153"},
-//    {itemNo: "219571"}
-//  ];
-// const sldNew = sld.map((item) => {
-//   axios
-//   .get(`${API}/products/${item.itemNo}`)
-//   .then((response) => {
-//     console.log(response);
-//     return response.data
-//     });
-// });
-
-//   }, []);
-  
-
   return (
     requestState === "success" && (
-      <Container
-        sx={{
-          p: "0",
-          zIndex: -1,
-        }}
-      >
-        <Box
-          sx={{
-            overflow: "hidden",
-            pb: "20px",
-            mt: "15px",
-            ml: "15px",
-            mr: "15px",
-            position: "relative",
-            borderRadius: "20px",
-            backgroundColor: "#EAF1EB",
-            maxWidth: 1100,
-          }}
-        >
+      <Box className={classes.CarouselSection}>
+        <Box className={classes.CarouselContainer}>
           <Box
             bottom={{ xs: "65%", sm: "40%" }}
             component="img"
@@ -126,7 +71,7 @@ const MainPageCarousel = () => {
             errorMessage={"There is some problem with downloading slides"}
           />
         )}
-      </Container>
+      </Box>
     )
   );
 };
@@ -134,55 +79,38 @@ const MainPageCarousel = () => {
 function Item(props) {
   const classes = useStyles();
   const navigate = useNavigate();
-  // const cart = useSelector(cartSelector);
-  // const [isOnModal, toggleIsOnModal] = useState(false);
-  // const [totalPrice, setTotalPrice] = useState(props.item.currentPrice);
-  // const localPrice = Intl.NumberFormat("en-US", {
-  //   style: "currency",
-  //   currency: "USD",
-  //   currencyDisplay: "symbol",
-  // });
+  const dispatch = useDispatch();
+  const cart = useSelector(cartSelector);
+  const openModalWindow = useSelector(
+    (state) => state.mainPageCarousel.openModalWindow
+  );
+  const itemAddToCart = useSelector(
+    (state) => state.mainPageCarousel.itemAddToCart
+  );
+  const editCartState = useSelector((state) => state.cart.editCartState);
+  const slidesItemId = useSelector((state) => state.slides.slidesItemId);
+  const [isOnModal, toggleIsOnModal] = useState(false);
+  const [discountStart] = useState(10);
+  const [totalPrice, setTotalPrice] = useState(itemAddToCart.discountPrice);
+  const localPrice = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    currencyDisplay: "symbol",
+  });
 
+  useEffect(() => {
+    toggleIsOnModal(!isOnModal);
+    if (!isOnModal) {
+      dispatch(sentItemToCart());
+      dispatch(readyForEditStart());
+    }
+  }, [openModalWindow]);
 
-//   const data = {
-//     "enabled": true,
-//     "imageUrls": [
-//         "https://res.cloudinary.com/danbeavers/image/upload/v1643484123/9125PQypA4S._AC_SL1500__ektwec.jpg"
-//     ],
-//     "quantity": 12,
-//     "_id": "61f6c1ef481e16304cbbbd7a",
-//     "name": "seedra 70 corn seeds for indoor and outdoor planting - home garden - gmo-free and heirloom seeds - 1 pack",
-//     "currentPrice": 10,
-//     "categories": "vegetables-mono",
-//     "description": "SEEDRA Corn - Bodacious Hybrid - contains 70 seeds in 1 Pack and professional instructions",
-//     "currentRating": 4.5,
-//     "itemNo": "601020",
-//     "date": "2022-01-30T16:50:55.902Z",
-//     "__v": 0,
-//     "discountPrice": 7,
-//     "origin": "english",
-//     "maturation": "late",
-//     "faq": [
-//         {
-//             "question": "Can they be grown on hydraponic systems?",
-//             "answer": "I have heat mats and artificial light. I planted them in all purpose of potting soil. Moist not wet. Placed them on heat mat. If not available, somewhere where it's 72 degrees. Add natural light, but i used artificial light."
-//         },
-//         {
-//             "question": "For seller: are this seeds organic? It does matter if they are organic, seeds can hold pesticides from the plant they grow from.",
-//             "answer": "Yes, this seeds 100% organic. Usually the don't hold any pesticides from the soil"
-//         }
-//     ],
-//     "itemWeight": "0.317 ounces",
-//     "packageDimensions": "5.43 x 3.5 x 0.35 inches",
-//     "ASIN": "B0968P124N",
-//     "itemAbout": [
-//         "SEEDRA Corn - Bodacious Hybrid - contains 70 seeds in 1 Pack and professional instructions",
-//         "Be Sure Of Our Quality - the freshest batches of this season. Non-GMO, Heirloom - our seeds were tested and have the best germination ratings. Your easy growing experience is our guarantee",
-//         "Corn Common Culinary Uses: salads, stir-fries, pastas, dips, succotash, pudding, tacos, soups, pizzas, and more",
-//         "Proudly Sourced in the USA - our garden seeds are grown, harvested, and packaged in the USA. We support local farmers and are happy to produce this American-made product",
-//         "SEEDRA Customer Service - please contact us directly through Amazon with any questions or concerns about our products. We care about each customer and do our best to provide you with 100% satisfaction"
-//     ]
-// }
+  useEffect(() => {
+    if (editCartState === "success") {
+      dispatch(sentItemToCart());
+    }
+  }, [editCartState]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -219,7 +147,7 @@ function Item(props) {
                 width={{ xs: "19px", sm: "19px", md: "28px" }}
                 src={Vector}
               ></Box>
-              ${props.item.currentPrice}
+              ${props.item.discountPrice}
             </Typography>
             <Typography
               component="span"
@@ -230,7 +158,7 @@ function Item(props) {
               pl={{ xs: "12px", sm: "12px", md: "21px" }}
               style={{ textDecoration: "line-through" }}
             >
-              ${(props.item.currentPrice * 1.1).toFixed(2)}
+              ${props.item.currentPrice}
             </Typography>
           </Box>
         </Grid>
@@ -262,10 +190,7 @@ function Item(props) {
           md={2}
           pr={{ xs: "10px", sm: "30px" }}
           order={{ xs: 0, sm: 1 }}
-          // position={{ xs: 'static', sm: 'absolute' }}
           position={{ xs: "relative", sm: "absolute" }}
-          // left={'72%'}
-          // left="-17%"
           left={{ xs: "10vw", sm: "73%" }}
           justifySelf="center"
           alignSelf="center"
@@ -305,36 +230,40 @@ function Item(props) {
           xs={6}
           md={2}
         >
-          <Box className={classes.addToCartButton}
+          <Box
+            className={classes.addToCartButton}
             component="button"
             width="142px"
             height="47px"
             border="none"
             fontSize="14px"
             color="#FFFFFF"
-            // backgroundColor="#359740"
             borderRadius="10px"
-            sx={{ cursor: "pointer"}}
+            sx={{ cursor: "pointer" }}
             marginRight={{ xs: "12px", md: "15px" }}
             marginBottom="6px"
-            // onClick={() => {
-            //   toggleIsOnModal(true);
-            // }}
+            onClick={() => {
+              dispatch(fetchItemAddToCart(props.item.itemNo));
+            }}
           >
             Add to cart
-            {/* <AddToCartModal
-              data={props.item}
-              discontStart={10}
+          </Box>
+          {openModalWindow && (
+            <AddToCartModal
+              data={itemAddToCart}
+              discontStart={discountStart}
               localPrice={localPrice}
               totalPrice={totalPrice}
               setTotalPrice={setTotalPrice}
-              isOnModal={isOnModal}
+              isOnModal={true}
               toggleIsOnModal={toggleIsOnModal}
               cart={cart}
-              _id={props.item._id}
-            /> */}
-          </Box>
-          <Box className={classes.discoverButton}
+              _id={itemAddToCart._id}
+              slidesItemId={slidesItemId}
+            />
+          )}
+          <Box
+            className={classes.discoverButton}
             component="button"
             width="142px"
             height="47px"
@@ -343,9 +272,14 @@ function Item(props) {
             color="#359740"
             backgroundColor="#FFFFFF"
             borderRadius="10px"
-            sx={{ cursor: "pointer"}}
-            onClick={() => navigate( `/products/${props.item.itemNo}`)}
-            // onClick={() => navigate(`/products/699319`)}
+            sx={{ cursor: "pointer" }}
+            onClick={() =>
+              navigate(
+                props.item.itemNo
+                  ? `/products/${props.item.itemNo}`
+                  : "/will-not-match"
+              )
+            }
           >
             Discover
           </Box>

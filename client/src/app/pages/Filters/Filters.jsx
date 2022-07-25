@@ -41,8 +41,6 @@ const Filters = () => {
     `${classes.filtersIcon} ${classes.isClosed}`
   );
   const [filtersClasses, setFiltersClasses] = useState(classes.filters);
-  console.log(iconClasses)
-  console.log(iconOffClasses)
 
   const productsQuantity = useSelector(productsQuantitySelector);
   const loading = useSelector(downloadFilteredProductsRequestStateSelector);
@@ -74,6 +72,16 @@ const Filters = () => {
   } else {
     initialParams = defaultParams;
   }
+
+  const setFilterParams = (filter, filterState) => {
+    if (filterState.length !== 0) {
+      dispatch(setQueryParams({ ...queryParams, [filter]: filterState }));
+    } else {
+      const newParams = { ...queryParams };
+      delete newParams[filter];
+      dispatch(setQueryParams(newParams));
+    }
+  };
 
   const fetchData = () => {
     let newParams = {};
@@ -161,37 +169,15 @@ const Filters = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    if (selectedCategory.length !== 0) {
-      dispatch(
-        setQueryParams({ ...queryParams, categories: selectedCategory })
-      );
-    } else {
-      const newParams = { ...queryParams };
-      delete newParams.categories;
-      dispatch(setQueryParams(newParams));
-    }
+    setFilterParams("categories", selectedCategory);
   }, [selectedCategory]);
 
   useEffect(() => {
-    if (originCheckBoxState.length > 0) {
-      dispatch(setQueryParams({ ...queryParams, origin: originCheckBoxState }));
-    } else {
-      const newParams = { ...queryParams };
-      delete newParams.origin;
-      dispatch(setQueryParams(newParams));
-    }
+    setFilterParams("origin", originCheckBoxState);
   }, [originCheckBoxState]);
 
   useEffect(() => {
-    if (maturationCheckBoxState.length > 0) {
-      dispatch(
-        setQueryParams({ ...queryParams, maturation: maturationCheckBoxState })
-      );
-    } else {
-      const newParams = { ...queryParams };
-      delete newParams.maturation;
-      dispatch(setQueryParams(newParams));
-    }
+    setFilterParams("maturation", maturationCheckBoxState);
   }, [maturationCheckBoxState]);
 
   const toggleFilters = () => {
@@ -220,22 +206,25 @@ const Filters = () => {
             classes={{ paper: classes.drawerPaper }}
             anchor="left"
           >
-            <FilterAltIcon
-              color="primary"
-              className={iconClasses}
-              onClick={toggleFilters}
-            />
-            <FilterAltOffIcon
-              color="primary"
-              className={iconOffClasses}
-              onClick={toggleFilters}
-            />
-            <Stack spacing={4} className={filtersClasses}>
-              <Typography variant="h5" className={classes.title}>
-                FILTERS
-              </Typography>
+            <Box className={classes.titleWrapper}>
+              <FilterAltIcon
+                color="primary"
+                className={iconClasses}
+                onClick={toggleFilters}
+              />
+              <FilterAltOffIcon
+                color="primary"
+                className={iconOffClasses}
+                onClick={toggleFilters}
+              />
 
-              <SortBySelect />
+              <Typography variant="h5" className={classes.title}>
+                Filters
+              </Typography>
+            </Box>
+
+            <Stack spacing={4} className={filtersClasses}>
+              <SortBySelect className={classes.sortBySelect} />
 
               <CategoryFilter />
 
@@ -245,7 +234,6 @@ const Filters = () => {
 
               <MaturationFilter />
             </Stack>
-            {/* links/list section */}
           </Box>
         </Grid>
         <Grid item xs={12} md={8}>

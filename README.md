@@ -1,4 +1,5 @@
-# Seed group
+## You can check [DEMO](https://final-project-seeds-3xbvm5vrj-qmorphq.vercel.app/)
+# Seeds group 
 
 ## Group members:
 
@@ -9,14 +10,13 @@
 4. **Ogniev Anton**
 5. **Rakhil Igor** - Developer;
 6. **Koshelivskiy Alexey** - Developer;
-7. **Motsnyi Yurii** - Developer;
-8. **Stavnyackij Valerij** - Developer;
-9. **Makovskij Vladislav** - Developer;
+7. **Franchuk Nikolay**;
+8. **Makovskij Vladislav** - Developer;
 
 ### List of technologies:
 
-- ***
-- **React, Redux**
-- **Material UI**
-- **Jest, Enzyme**
-- Project configuration: **Webpack, ESLint, Stylelint, Travis CI**
+- **React, Redux, React Router**;
+- **Material UI**;
+- **Sentry**;
+- **MongoDB, Express**;
+- Project configuration: **Webpack, ESLint, Prettier**;

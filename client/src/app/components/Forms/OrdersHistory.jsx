@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom";
 import { Typography, Container, Grid } from "@mui/material";
-// import { makeStyles } from "@mui/styles";
+
 import { useDispatch, useSelector } from "react-redux"
 import { customerOrdersHistory } from "../../../store/selectors/selectors"
 import { getOrders } from "../../../store/thunks/customer.thunks"
@@ -12,7 +12,6 @@ import Preloader from "../../../ui/components/Preloader/Preloader.jsx"
 export default function OrdersHistory() {
     const dispatch = useDispatch()
     const ordersList = useSelector(customerOrdersHistory)
-    console.log(ordersList);
 
     const getCustomerOrders = orders => {
         dispatch(getOrders(orders))      
@@ -37,22 +36,36 @@ export default function OrdersHistory() {
     }
 
     return(
-      <Grid style={{maxWidth:1150,margin:"30px auto"}} container direction="column" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid style={{maxWidth:1000,margin:"30px auto"}} container direction="column" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {ordersList === undefined ? <Preloader/> : ordersList.map((order, index) => 
           <Grid item style={{border:"2px solid green", borderRadius:"5px", padding:10, margin:10, height:"auto"}} key={index}>
             <Typography style={{paddingBottom:15}}  variant="h6">OrderNo: {order?.orderNo}</Typography>
-                {order.products.map((product,key) =>
-                  <Grid style={{paddingBottom:15, maxWidth:"100%", height:"auto"}}  container key={key}>
-                    <Typography  style={{paddingLeft:10}}>
-                     <Link to={`/products/${product.product?.itemNo}`}>
-                      <img style={{float:"left",paddingRight:10}} align="top" width={70} src={product.product?.imageUrls[0]} alt="/" />
-                     </Link> {product.product?.name}
-                    </Typography>
+            {order.products.map((product, key) =>
+                <Typography key={key} style={{paddingLeft:10}}>
+                  <Grid  alignItems="center" justifyContent="space-around" direction='row' style={{ paddingBottom: 15, maxWidth: "100%", height:"auto" }} container >                   
+                    <Grid item>
+                      <Link to={`/products/${product.product?.itemNo}`}>
+                        <img style={{float:"left",paddingRight:10}} align="top" width={70} src={product.product?.imageUrls[0]} alt="/" />
+                      </Link>
+                    </Grid> 
+                    <Grid item style={{ display:'inline-block'}}>{(product.product.name).slice(0, 35)}...</Grid>
+                    <Grid item style={{ display:'inline-block'}}>Quantity: {product.product.quantity}</Grid>
+                    <Grid item style={{ display:'inline-block'}}>Price: {product.product.currentPrice}$</Grid>                
                   </Grid>
-                )}
+                </Typography>
+            )}
+             <Typography style={{ padding: '10px 20px'}} variant="h6">
+                <Grid  container alignItems="center" justifyContent="space-between" direction='row'>           
+                  <Grid item style={{ display:'inline-block'}}>
+                   {order?.status}
+                  </Grid>
+                  <Grid item style={{ display:'inline-block'}}>
+                    Total: {order?.totalSum}$
+                  </Grid>               
+                </Grid>
+              </Typography>
           </Grid>
           )}
-      
       </Grid>
     )
 }

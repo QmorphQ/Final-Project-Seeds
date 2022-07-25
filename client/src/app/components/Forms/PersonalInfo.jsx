@@ -10,15 +10,17 @@ import {
   getCustomer,
   updateCustomer,
 } from "../../../store/thunks/customer.thunks";
-import { currentCustomerSelector, isRightPasswordSelector, UpdateCurrentCustomerSelector } from "../../../store/selectors/selectors";
+import { currentCustomerSelector, isRightPasswordSelector } from "../../../store/selectors/selectors";
 import ErrorHandler from "../ErrorHandler/ErrorHandler.jsx";
 import { cleanUpIsRightPassword } from "../../../store/actions/customer.actions";
 
-function PersonalInfo() {
+function PersonalInfo() { 
+
   const currentCustomer = useSelector(currentCustomerSelector);
   const rightPassword = useSelector(isRightPasswordSelector);
-  const updateCurrentCustomer = useSelector(UpdateCurrentCustomerSelector)
-  const dispatch = useDispatch();
+  
+  const dispatch = useDispatch(); 
+
   const [open, setOpen] = useState(false);
   const reopen = () => {
     setOpen(!open);
@@ -47,8 +49,6 @@ function PersonalInfo() {
       setPassword(!open);
     }
   };
-
-  console.log(updateCurrentCustomer);
   
 
   const INITIAL_FORM_STATE = {

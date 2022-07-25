@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import { API } from "../../app/constants";
 import {
   addCustomerRequested,
@@ -29,8 +30,9 @@ const addCustomer = (customer) => (dispatch) => {
     .then((savedCustomer) => {
       dispatch(addCustomerSuccess(savedCustomer));
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(addCustomerError());
+      Sentry.captureException(err);
     });
 }; 
 
@@ -52,8 +54,9 @@ const getUserDetails = () => (dispatch) => {
       .then((userDetails) => {
           dispatch(getUserDetailsSuccess(userDetails.data.isAdmin));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(getUserDetailsError());
+        Sentry.captureException(err);
       });
   }
 };
@@ -69,8 +72,9 @@ const loginCustomer = (userData) => (dispatch) => {
       dispatch(loginCustomerSuccess(loginResult));
       dispatch(getUserDetails());      
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(loginCustomerError());
+      Sentry.captureException(err);
     });
 }; 
 
@@ -90,8 +94,9 @@ const getCustomer = () => (dispatch) => {
       .then((currentCustomer) => {
         dispatch(getCustomerSuccess(currentCustomer.data));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(customerUpdateError());
+        Sentry.captureException(err);
       });
   }
 };
@@ -121,7 +126,7 @@ const updateCustomer = (modifiedCustomer) => (dispatch) => {
           dispatch(isRightPasswordSuccess());
         }
       })
-      .catch(() => console.log("Some error on password change"));
+      .catch((err) => Sentry.captureException(err));
   }
 
   const customerToPut = { ...modifiedCustomer };
@@ -137,8 +142,9 @@ const updateCustomer = (modifiedCustomer) => (dispatch) => {
     .then((updatedCustomer) => {
       dispatch(customerUpdateSuccess(updatedCustomer));
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(customerUpdateError());
+      Sentry.captureException(err);
     });
 };
 
@@ -154,8 +160,9 @@ const getOrders = () => (dispatch) =>  {
     .then((orders) => {
       dispatch(getOrdersSuccess(orders.data));
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(getOrdersError())
+      Sentry.captureException(err);
     })
 
   }

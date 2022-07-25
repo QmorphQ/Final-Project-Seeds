@@ -1,5 +1,5 @@
+
 import { Card, CardActions, CardContent, CardHeader, Grid, IconButton, Skeleton, Box } from "@mui/material";
-// import PropTypes from 'prop-types';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useMainStyles } from "./useMainStyles";
@@ -57,5 +57,3 @@ export const ProductCardLoader = () => {
 };
 
 export default ProductCardLoader;
-
-

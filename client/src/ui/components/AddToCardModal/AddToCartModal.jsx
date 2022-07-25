@@ -25,7 +25,6 @@ const AddToCartModal = ({
   discontStart,
   localPrice,
   totalPrice,
-  // setTotalPrice,
   isOnModal,
   toggleIsOnModal,
 }) => {
@@ -50,6 +49,8 @@ const AddToCartModal = ({
   return (
     <Modal
       open={open}
+      
+
       onClose={() => {
         setOpen(false);
       }}
@@ -121,7 +122,11 @@ const AddToCartModal = ({
                       disableUnderline={true}
                       hiddenLabel={true}
                       value={productAmount}
-                      onChange={(e) => setProductAmount(+e.target.value)}
+                      onChange={(e) => {
+                        if (/[0-9]/.test(+e.target.value)) {
+                          setProductAmount(+e.target.value)
+                        }
+                      }} 
                       id="product-amount"
                       className={modalClasses.productAmountInput}
                     />
@@ -224,7 +229,7 @@ AddToCartModal.propTypes = {
   setTotalPrice: PropTypes.func.isRequired,
   isOnModal: PropTypes.bool.isRequired,
   toggleIsOnModal: PropTypes.func.isRequired,
-  _id: PropTypes.string.isRequired, // !!! MVP: number---> string
+  _id: PropTypes.string.isRequired,
 };
 
 AddToCartModal.defaultProps = {

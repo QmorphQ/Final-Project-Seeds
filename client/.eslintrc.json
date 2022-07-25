@@ -38,7 +38,7 @@
             2,
             {
                 "caseSensitive": false,
-                "ignore": ["swiper/css", "swiper/react"]
+                "ignore": ["swiper/css", "swiper/react", "@sentry/react"]
             }
         ],
         "no-underscore-dangle": "off",

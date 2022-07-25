@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import { API } from "../../app/constants";
 import {
   receivedItemAddToCart,
@@ -16,5 +17,6 @@ export const fetchItemAddToCart = (itemNo) => (dispatch) => {
     })
     .catch((err) => {
       dispatch(receivedFailureItemAddToCart(err.message));
+      Sentry.captureException(err);
     });
 };

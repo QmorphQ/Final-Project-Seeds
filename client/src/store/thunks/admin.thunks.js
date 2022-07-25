@@ -1,4 +1,4 @@
-
+import * as Sentry from "@sentry/react";
 import axios from 'axios';
 import { API } from '../../app/constants';
 import { adminAddProductRequested, 
@@ -38,8 +38,9 @@ const adminAddProduct = (product) => (dispatch) => {
         .then(() => {
             dispatch(adminAddProductSuccess()); 
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(adminAddProductError());
+            Sentry.captureException(err);
         });
     }
 };  
@@ -61,8 +62,9 @@ const adminDeleteProduct = (productID) => (dispatch) => {
         .then(() => {
             dispatch(adminDeleteProductSuccess()); 
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(adminDeleteProductError());
+            Sentry.captureException(err);
         });
     }
 }; 
@@ -84,8 +86,9 @@ const adminUpdateProduct = (id, product) => (dispatch) => {
         .then(() => {
             dispatch(adminUpdateProductSuccess()); 
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(adminUpdateProductError());
+            Sentry.captureException(err);
         });
     }
 }; 
@@ -107,8 +110,9 @@ const adminAddProductToSlider = (slide) => (dispatch) => {
         .then(() => {
             dispatch(adminAddToSliderSuccess()); 
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(adminAddToSliderError());
+            Sentry.captureException(err);
         });
     }
 };  
@@ -130,8 +134,9 @@ const adminDelProductFromSlider = (slideID) => (dispatch) => {
         .then(() => {
             dispatch(adminDelFromSliderSuccess()); 
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(adminDelFromSliderError());
+            Sentry.captureException(err);
         });
     }
 }; 
@@ -153,8 +158,9 @@ const adminUpdateSlider = (slide) => (dispatch) => {
         .then(() => {
             dispatch(adminUpdateSliderSuccess()); 
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(adminUpdateSliderError());
+            Sentry.captureException(err);
         });
     }
 }; 

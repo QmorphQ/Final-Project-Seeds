@@ -1,5 +1,5 @@
-import axios from "axios";
-// import { useSelector } from "react-redux";
+import axios from "axios"; 
+import * as Sentry from "@sentry/react";
 import { API } from "../../app/constants";
 import {
   downloadCartSuccess,
@@ -24,13 +24,10 @@ import {
   clearProductsInCartSuccess,
   clearProductsInCartError,
 } from "../actions/cart.actions";
-// import {
-//   slidesSelector,
-// } from "../selectors/selectors";
 
-// const slideList = useSelector(slidesSelector);
-// const result = slideList.map(item => item._id);
-// console.log(result);
+
+
+
 const countTotalAmountOrder = () => (dispatch, getState) => {
   const { cart } = getState().cart;
   const sumOrder = cart.reduce(
@@ -83,10 +80,7 @@ const fetchCart = (slidesItemId) => async (dispatch, getState) => {
         newCart = concatCarts(cart, cartFromApi);
       }
       const cartForAPI = newCart.map((item) => ({
-        product: item.id,
-        // imageUrls: item.imageUrls,
-        // name: item.name,
-        // currentPrice: item.currentPrice,
+        product: item.id, 
         cartQuantity: item.cartQuantity,
       }));
       await axios.put(
@@ -99,8 +93,9 @@ const fetchCart = (slidesItemId) => async (dispatch, getState) => {
         }
       );
       dispatch(downloadCartSuccess(newCart));
-    } catch (error) {
+    } catch (err) {
       dispatch(downloadCartError());
+      Sentry.captureException(err);
     }
   } else {
     dispatch(downloadCartSuccess(cart));
@@ -119,14 +114,9 @@ const addCart = (cart, slidesItemId) => (dispatch) => {
       })
       .then((response) => {
         const newCart = response.data.products.map((cartProduct) => ({
-          //  --------------------
-          // id: cartProduct.product._id,
-          // cartQuantity: cartProduct.cartQuantity,
-          //   -------------------
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
           name: cartProduct.product.name,
-          // currentPrice: cartProduct.product.currentPrice,
           currentPrice:
             cartProduct.cartQuantity > 10 ||
             slidesItemId.includes(cartProduct.product._id)
@@ -138,8 +128,9 @@ const addCart = (cart, slidesItemId) => (dispatch) => {
         }));
         dispatch(addCartSuccess(newCart));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(addCartError());
+        Sentry.captureException(err);
       });
   } else {
     dispatch(addCartSuccess(cart));
@@ -172,8 +163,7 @@ const changeLocalCart = (
       name,
       currentPrice:
         calculateCartQuantity() > 10 || slidesItemId?.includes(productId)
-          ? // currentPrice: (calculateCartQuantity() > 10)
-            discountPrice
+          ? discountPrice
           : startingPrice,
       cartQuantity: calculateCartQuantity(product.cartQuantity),
       startingPrice,
@@ -192,8 +182,7 @@ const changeLocalCart = (
     name,
     currentPrice:
       calculateCartQuantity() > 10 || slidesItemId?.includes(productId)
-        ? // currentPrice: (calculateCartQuantity() > 10)
-          discountPrice
+        ? discountPrice
         : startingPrice,
     cartQuantity: calculateCartQuantity(),
     startingPrice,
@@ -218,8 +207,7 @@ const addProductToCart = (productId, slidesItemId) => (dispatch, getState) => {
         const cart = response.data.products.map((cartProduct) => ({
           id: cartProduct.product._id,
           imageUrls: cartProduct.product.imageUrls,
-          name: cartProduct.product.name,
-          // currentPrice: cartProduct.product.currentPrice,
+          name: cartProduct.product.name, 
           currentPrice:
             cartProduct.cartQuantity > 10 ||
             slidesItemId?.includes(cartProduct.product._id)
@@ -231,8 +219,9 @@ const addProductToCart = (productId, slidesItemId) => (dispatch, getState) => {
         }));
         dispatch(addProductToCartSuccess(cart));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(addProductToCartError());
+        Sentry.captureException(err);
       });
   } else {
     const { cart } = getState().cart;
@@ -282,9 +271,6 @@ const changeProductQuantity =
       );
       const cartForAPI = updatedCart.map((item) => ({
         product: item.id,
-        // imageUrls: item.imageUrls,
-        // name: item.name,
-        // currentPrice: item.currentPrice,
         cartQuantity: item.cartQuantity,
       }));
       axios
@@ -302,7 +288,6 @@ const changeProductQuantity =
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            // currentPrice: cartProduct.product.currentPrice,
             currentPrice:
               cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
                 ? cartProduct.product.discountPrice
@@ -313,8 +298,9 @@ const changeProductQuantity =
           }));
           dispatch(editSuccess(newCart));
         })
-        .catch(() => {
+        .catch((err) => {
           dispatch(editError());
+          Sentry.captureException(err);
         });
     } else {
       const calculateQuantity = () => quantity;
@@ -350,7 +336,6 @@ const decreaseProductQuantity =
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            // currentPrice: cartProduct.product.currentPrice,
             currentPrice:
               cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
                 ? cartProduct.product.discountPrice
@@ -361,8 +346,9 @@ const decreaseProductQuantity =
           }));
           dispatch(decreaseQuantitySuccess(cart));
         })
-        .catch(() => {
+        .catch((err) => {
           dispatch(decreaseQuantityError());
+          Sentry.captureException(err);
         });
     } else {
       const { cart } = getState().cart;
@@ -400,7 +386,6 @@ const deleteProductFromCart =
             id: cartProduct.product._id,
             imageUrls: cartProduct.product.imageUrls,
             name: cartProduct.product.name,
-            // currentPrice: cartProduct.product.currentPrice,
             currentPrice:
               cartProduct.cartQuantity > 10 || slidesItemId?.includes(productId)
                 ? cartProduct.product.discountPrice
@@ -411,8 +396,9 @@ const deleteProductFromCart =
           }));
           dispatch(deleteProductFromCartSuccess(cart));
         })
-        .catch(() => {
+        .catch((err) => {
           dispatch(deleteProductFromCartError());
+          Sentry.captureException(err);
         });
     } else {
       const { cart } = getState().cart;
@@ -422,7 +408,7 @@ const deleteProductFromCart =
   };
 
 const clearProductsInCart = () => (dispatch) => {
-  // dispatch(deleteProductFromCartRequest());
+ 
   const token = localStorage.getItem("jwt");
 
   if (token) {
@@ -435,8 +421,9 @@ const clearProductsInCart = () => (dispatch) => {
       .then(() => {
         dispatch(clearProductsInCartSuccess());
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(clearProductsInCartError());
+        Sentry.captureException(err);
       });
   } else {
     dispatch(clearProductsInCartSuccess());

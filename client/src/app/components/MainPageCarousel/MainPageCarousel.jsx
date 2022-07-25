@@ -2,8 +2,7 @@ import Carousel from "react-material-ui-carousel";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Typography, Container, Grid, Box } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Typography, Grid, Box } from "@mui/material";
 import PropTypes from "prop-types";
 import img from "./carouselImg/leaf.png";
 import Vector from "./carouselImg/Vector.svg";
@@ -19,52 +18,18 @@ import { fetchItemAddToCart } from "../../../store/thunks/mainPageCarousel.thunk
 import AddToCartModal from "../../../ui/components/AddToCardModal/AddToCartModal.jsx";
 import { sentItemToCart } from "../../../store/actions/mainPageCarousel.actions";
 
-const useStyles = makeStyles({
-  multiLineEllipsis: {
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    letterSpacing: "-0.05em",
-    color: "#1F2533",
-  },
-  addToCartButton: {
-    background: "#359740",
-    "&:hover": {
-      background: "#2BB159",
-    },
-  },
-  discoverButton: {
-    background: "#FFFFFF",
-    "&:hover": {
-      background: "rgba(53, 151, 64, 0.08);",
-    },
-  },
-});
+import useStyles from "./MainPageCarouselStyles";
+
 
 const MainPageCarousel = () => {
+  const classes = useStyles();
   const requestState = useSelector(downloadSlidesRequestStateSelector);
   const slideList = useSelector(slidesSelector);
 
   return (
     requestState === "success" && (
-      <Container
-        sx={{
-          p: "0",
-          zIndex: -1,
-        }}
-      >
-        <Box
-          sx={{
-            overflow: "hidden",
-            pb: "20px",
-            mt: "15px",
-            ml: "15px",
-            mr: "15px",
-            position: "relative",
-            borderRadius: "20px",
-            backgroundColor: "#EAF1EB",
-            maxWidth: 1100,
-          }}
-        >
+      <Box className={classes.CarouselSection}>
+        <Box className={classes.CarouselContainer}>
           <Box
             bottom={{ xs: "65%", sm: "40%" }}
             component="img"
@@ -106,7 +71,7 @@ const MainPageCarousel = () => {
             errorMessage={"There is some problem with downloading slides"}
           />
         )}
-      </Container>
+      </Box>
     )
   );
 };
@@ -225,10 +190,7 @@ function Item(props) {
           md={2}
           pr={{ xs: "10px", sm: "30px" }}
           order={{ xs: 0, sm: 1 }}
-          // position={{ xs: 'static', sm: 'absolute' }}
           position={{ xs: "relative", sm: "absolute" }}
-          // left={'72%'}
-          // left="-17%"
           left={{ xs: "10vw", sm: "73%" }}
           justifySelf="center"
           alignSelf="center"

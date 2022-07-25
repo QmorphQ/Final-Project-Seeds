@@ -1,21 +1,17 @@
-// Imports:
-// Libraries:
 import PropTypes from "prop-types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper";
-// React Components:
+
 import { Box } from "@mui/material";
 import CommentRenderComponent from "./CommentRenderComponent.jsx";
-// Styles:
+
 import "./SwiperCSS.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-// Others:
-import examples from "./examples";
-// =======================================================
 
-// =======================================================
+import examples from "./examples";
+
 export default function Comments({ dataToRender }) {
   return (
     <Box component="section" className="comments">
@@ -41,7 +37,6 @@ export default function Comments({ dataToRender }) {
             width: 640,
             slidesPerView: 1,
           },
-          // when window width is >= 768px
           720: {
             width: 600,
             slidesPerView: 2,
@@ -71,7 +66,6 @@ export default function Comments({ dataToRender }) {
     </Box>
   );
 }
-// =======================================================
 
 Comments.defaultProps = {
   dataToRender: examples,

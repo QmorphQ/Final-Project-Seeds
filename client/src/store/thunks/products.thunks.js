@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import { API } from "../../app/constants";
 import { setProductsQuantity } from "../actions/filters.actions";
 import {
@@ -32,9 +33,10 @@ const fetchProducts =
         dispatch(downloadFilteredProductsSuccess(products.data.products));
         return products;
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(downloadAllProductsError());
         dispatch(downloadFilteredProductsError());
+        Sentry.captureException(err);
       });
   };
 
@@ -53,8 +55,9 @@ const fetchFilteredProducts = (queryParams) => (dispatch) => {
 
       return filteredProducts;
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(downloadFilteredProductsError());
+      Sentry.captureException(err);
     });
 };
 
@@ -71,8 +74,9 @@ const addProduct = (product) => (dispatch) => {
       dispatch(addProductSuccess(addedProduct));
       return addedProduct;
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(addProductError());
+      Sentry.captureException(err);
     });
 };
 
@@ -86,8 +90,9 @@ const rateProduct = (id, updatedProduct) => (dispatch) => {
       dispatch(uploadProductRatingSuccess(product));
       return product;
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(uploadProductRatingError());
+      Sentry.captureException(err);
     });
 };
 
@@ -104,8 +109,9 @@ const fetchProductById = (id) => (dispatch) => {
       dispatch(downloadProductByIdSuccess(product));
       return product;
     })
-    .catch(() => {
+    .catch((err) => {
       dispatch(downloadProductByIdError());
+      Sentry.captureException(err);
     });
 };
 

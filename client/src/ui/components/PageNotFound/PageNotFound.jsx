@@ -58,15 +58,5 @@ function PageNotFound() {
   );
 }
 
-// const routesConfig = [
-//     {
-//         path: '/not-found',
-//         element: <PageNotFound />
-//     },
-//     {
-//         path: '*',
-//         element: <PageNotFound />
-//     },
-// ];
 
 export default PageNotFound;

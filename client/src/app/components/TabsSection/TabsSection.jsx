@@ -52,7 +52,7 @@ const categoriies = [
 ];
 
 const TabsSection = ({ loading, productList }) => {
-  if (loading === downloadRequestStates.LOADING) return <div>Loading...</div>; // Here must be a loader
+  if (loading === downloadRequestStates.LOADING) return <div>Loading...</div>;
   if (loading === downloadRequestStates.ERROR) return <div>Error :(</div>;
 
   const [value, setValue] = React.useState(0);

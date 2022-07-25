@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 import {
   FormControl,
   FormLabel,
@@ -14,8 +15,6 @@ import {
   TextField,
 } from "@mui/material";
 import { useField, useFormikContext } from "formik";
-// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-// import { styled } from "@mui/styles";
 import { PropTypes } from "prop-types";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import PayPal from "./PayPal.jsx";
@@ -52,7 +51,7 @@ const PaymentInfo = () => {
     axios
       .get(`${API}payment-methods`)
       .then((paymentMethods) => setPaymentData(paymentMethods.data))
-      .catch(() => console.log("Some problem with payment methods fetching"));
+      .catch((err) => Sentry.captureException(err));
   }, []);
 
   field.value === undefined

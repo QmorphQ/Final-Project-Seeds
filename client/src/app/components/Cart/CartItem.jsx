@@ -102,7 +102,6 @@ const CartItem = ({ product, slidesItemId }) => {
         >
           <Button
             onClick={() => {
-              // dispatch(decreaseProductQuantity(product.id, decreaseProductQuantity, slidesItemId));
               dispatch(decreaseProductQuantity(product.id, slidesItemId));
             }}
             variant="text"
@@ -117,19 +116,22 @@ const CartItem = ({ product, slidesItemId }) => {
             disableUnderline={true}
             hiddenLabel={true}
             value={product.cartQuantity}
-            onChange={(e) =>
-              dispatch(
-                changeProductQuantity(
-                  product.id,
-                  +e.target.value,
-                  product.name,
-                  product.currentPrice,
-                  product.imageUrls,
-                  product.startingPrice,
-                  product.discountPrice,
-                  slidesItemId
+            onChange={(e) => {
+              if (/[0-9]/.test(+e.target.value)) { 
+                dispatch(
+                  changeProductQuantity(
+                    product.id,
+                    +e.target.value,
+                    product.name,
+                    product.currentPrice,
+                    product.imageUrls,
+                    product.startingPrice,
+                    product.discountPrice,
+                    slidesItemId
+                  )
                 )
-              )
+              }
+            }
             }
           />
           <Button

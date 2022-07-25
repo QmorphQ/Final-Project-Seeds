@@ -54,15 +54,39 @@ const useFiltersStyles = makeStyles({
   title: {
     borderBottom: "1px",
     borderBottomColor: "#EFEFEF",
-    borderBottomStyle: "solid",
+    marginTop: "32px",
+    marginBottom: "32px",
   },
 
   filterContainer: {
     borderBottom: "1px",
     borderBottomColor: "#EFEFEF",
     borderBottomStyle: "solid",
+    paddingTop: "10px",
     paddingBottom: "25px",
     position: "relative",
+  },
+
+  sortBySelect: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop: "32px",
+    borderBottom: "1px",
+    borderBottomColor: "#EFEFEF",
+    borderBottomStyle: "solid",
+    paddingTop: "10px",
+    paddingBottom: "25px",
+  },
+
+  titleWrapper: {
+    borderBottom: "solid gray 1px",
+    "@media (max-width: 780px)": {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+      width: "150px",
+    },
   },
 
   filterTitle: {

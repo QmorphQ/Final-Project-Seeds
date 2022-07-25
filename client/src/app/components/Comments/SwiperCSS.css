@@ -36,14 +36,7 @@
   background-color: #07bc0c !important;
 }
 
-/*
- **@media
- */
 @media screen and (min-width: 320px) {
-  .comments {
-    width: auto;
-  }
-
   .swiper-container {
     height: 380px;
     width: 260px;

@@ -27,7 +27,6 @@ export const useRating = (data) => {
     const rateProduct = (e) => {
       if(!customer) return;
       const productRateComments = comments.filter(comment => comment.product._id === data._id).filter(comment => comment.content === "rate only");
-      console.log("productRateComments", productRateComments);
       productRateComments.filter(comment => comment.customerId !== customer._id).length === productRateComments.length ? 
       dispatch(addComment({customerId: customer._id, product: data, content: "rate only", date: Date.now(), rate: +e.target.value})) :
       dispatch(editComment(productRateComments.find(comment => comment.customerId === customer._id)._id, {rate: +e.target.value}));

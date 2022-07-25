@@ -193,9 +193,10 @@ export default function CheckoutForm() {
         <Box
           display="flex"
           flexDirection={{ xs: "column", sm: "row" }}
-          width={{ xs: "100%", sm: "100%" }}
+          width={{ xs: "95%", sm: "100%" }}
           position={"relative"}
           minHeight={"30em"}
+          // marginLeft={"-30px"}
         >
           <Box
             margin={"auto"}
@@ -203,7 +204,7 @@ export default function CheckoutForm() {
             display="flex"
             flexDirection="column"
             justifyContent="space-between"
-            padding="20px"
+            padding="10px"
             sx={{ order: { sm: "1", xs: "2" } }}
           >
             <Box

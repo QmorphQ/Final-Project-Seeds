@@ -10,7 +10,7 @@
 4. **Ogniev Anton**
 5. **Rakhil Igor** - Developer;
 6. **Koshelivskiy Alexey** - Developer;
-7. **Franchuk Nikolay**;
+7. **Franchuk Nikolay** - Developer;
 8. **Makovskij Vladislav** - Developer;
 
 ### List of technologies:
